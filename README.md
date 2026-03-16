@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/26038640/README.md)
+[README.md](https://github.com/user-attachments/files/26038764/README.md)
 # Studio Content — Firm Ecosystem
 
 Single source of truth for **Aubyn Architecture LLC** and **Merge 4 Design LLC**.
@@ -9,9 +9,9 @@ All brand assets, templates, project files, websites, and AI workflows live here
 
 | | Link |
 |---|---|
-| Aubyn Architecture | [Visit site](https://werm4d.github.io/studio-content/aubyn-architecture/website/aubyn-architecture.html) |
-| Merge 4 Design | [Visit site](https://werm4d.github.io/studio-content/merge4design/website/merge4design.html) |
-| Social Post Generator | [Open tool](https://werm4d.github.io/studio-content/shared/tools/social-post-generator.html) |
+| Aubyn Architecture | <a href="https://werm4d.github.io/studio-content/aubyn-architecture/website/aubyn-architecture.html" target="_blank">Visit site ↗</a> |
+| Merge 4 Design | <a href="https://werm4d.github.io/studio-content/merge4design/website/merge4design.html" target="_blank">Visit site ↗</a> |
+| Social Post Generator | <a href="https://werm4d.github.io/studio-content/shared/tools/social-post-generator.html" target="_blank">Open tool ↗</a> |
 
 ## Quick links
 
