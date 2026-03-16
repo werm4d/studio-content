@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M4Di™ — Merge 4 Development Institute | Predevelopment Intelligence for Community Builders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --purple:       #534AB7;
+  --purple-dk:    #3d3589;
+  --purple-lt:    #7B74D4;
+  --purple-ghost: #EEEDFE;
+  --teal:         #0F6E56;
+  --teal-lt:      #E1F5EE;
+  --amber:        #854F0B;
+  --amber-lt:     #FAEEDA;
+
+  --ink:          #1B1B24;
+  --ink-mid:      #3C3C4A;
+  --ink-muted:    #68687A;
+  --surface:      #F5F4F0;
+  --surface-mid:  #ECEAE3;
+  --surface-dk:   #E0DDD5;
+  --white:        #FFFFFF;
+  --rule:         #D6D3CB;
+
+  --font-display: 'Century Gothic', 'Trebuchet MS', 'Gill Sans', 'Futura', sans-serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'DM Mono', 'Courier New', monospace;
+
+  --h1:    clamp(2.6rem, 5.8vw, 5.4rem);
+  --h2:    clamp(1.8rem, 3vw, 2.8rem);
+  --h3:    clamp(1rem, 1.5vw, 1.35rem);
+  --body:  1rem;
+  --small: 0.8125rem;
+  --label: 0.6875rem;
+
+  --sp-1:4px;  --sp-2:8px;   --sp-3:16px;
+  --sp-4:24px; --sp-5:32px;  --sp-6:48px;
+  --sp-7:64px; --sp-8:96px;  --sp-9:128px;
+  --section: clamp(var(--sp-7), 9vw, var(--sp-9));
+  --max-w:   1300px;
+  --gutter:  clamp(var(--sp-4), 5vw, var(--sp-7));
+  --ease:    cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+html { scroll-behavior:smooth }
+body {
+  font-family: var(--font-body);
+  font-size: var(--body);
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { display:block; max-width:100% }
+a { color:inherit; text-decoration:none }
+
+.container {
+  width: min(var(--max-w), 100%);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+h1, h2, h3, .cg {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+/* ============================================================
+   UTILITY ATOMS
+   ============================================================ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: var(--label);
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: var(--sp-4);
+}
+.eyebrow-dash { width:24px; height:1.5px; background:var(--purple); flex-shrink:0 }
+.rule-bar { width:48px; height:3px; background:var(--purple); margin-block:var(--sp-4) }
+.tm { font-size:.55em; vertical-align:super; font-family:var(--font-mono); font-weight:400; letter-spacing:0 }
+.draft-note {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  background: var(--amber-lt);
+  padding: 2px 8px;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  border-radius: 3px; padding: 13px 28px;
+  transition: background .2s, transform .3s var(--ease), box-shadow .3s;
+  cursor: pointer; border: none;
+}
+.btn-primary { background:var(--purple); color:var(--white) }
+.btn-primary:hover {
+  background:var(--purple-dk);
+  transform:translateY(-3px);
+  box-shadow:0 12px 36px rgba(83,74,183,.38);
+}
+.btn-ghost-light {
+  background:transparent; color:rgba(255,255,255,.7);
+  border:1.5px solid rgba(255,255,255,.22);
+}
+.btn-ghost-light:hover { border-color:rgba(255,255,255,.55); color:var(--white) }
+.btn-white { background:var(--white); color:var(--purple-dk) }
+.btn-white:hover { background:var(--purple-ghost); transform:translateY(-2px) }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  padding-block: var(--sp-3);
+  background: rgba(245,244,240,0.94);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-inner {
+  display:flex; align-items:center; justify-content:space-between;
+  width:min(var(--max-w),100%); margin-inline:auto; padding-inline:var(--gutter);
+}
+.nav-logo { display:flex; align-items:center; gap:var(--sp-3) }
+.nav-logo-mark {
+  width:38px; height:38px; background:var(--ink); border-radius:4px;
+  overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.nav-logo-mark img { width:100%; height:100%; object-fit:contain; filter:invert(1) }
+.nav-logo-text { display:flex; flex-direction:column; gap:2px }
+.nav-wordmark {
+  font-family:var(--font-display); font-size:1.05rem; font-weight:700;
+  letter-spacing:-.01em; color:var(--ink); line-height:1;
+}
+.nav-wordmark span { color:var(--purple) }
+.nav-submark {
+  font-family:var(--font-mono); font-size:0.52rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--ink-muted); line-height:1;
+}
+.nav-links {
+  display:flex; align-items:center; gap:var(--sp-5); list-style:none;
+}
+.nav-links a {
+  font-family:var(--font-display); font-size:0.72rem; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-muted); transition:color .2s;
+}
+.nav-links a:hover { color:var(--purple) }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  min-height:100vh; background:var(--ink);
+  display:grid; grid-template-columns:1fr 1fr;
+  padding-top:68px; position:relative; overflow:hidden;
+}
+.hero-grid {
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,.02) 79px,rgba(255,255,255,.02) 80px),
+    repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,.02) 79px,rgba(255,255,255,.02) 80px);
+  pointer-events:none;
+}
+.hero-glow {
+  position:absolute; top:-15%; left:-8%;
+  width:60%; height:75%;
+  background:radial-gradient(ellipse, rgba(83,74,183,.2) 0%, transparent 65%);
+  pointer-events:none;
+}
+.hero-left {
+  display:flex; flex-direction:column; justify-content:center;
+  padding: var(--section) var(--sp-7) var(--section) var(--gutter);
+  position:relative; z-index:2;
+}
+.hero-fullname {
+  font-family:var(--font-mono); font-size:0.58rem;
+  letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(123,116,212,.45); margin-bottom:var(--sp-3);
+}
+.hero h1 {
+  font-size:var(--h1); line-height:1.0; letter-spacing:-.03em;
+  color:var(--white); margin-bottom:var(--sp-5);
+  animation:fadeUp .5s ease both;
+}
+.hero h1 .accent { color:var(--purple-lt); display:block }
+.hero-sub {
+  font-size:1.05rem; font-weight:300;
+  color:rgba(255,255,255,.5); max-width:500px;
+  line-height:1.8; margin-bottom:var(--sp-6);
+  animation:fadeUp .5s .12s ease both;
+}
+.hero-actions { display:flex; gap:var(--sp-3); flex-wrap:wrap; animation:fadeUp .5s .22s ease both }
+
+/* Hero right panel */
+.hero-right {
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding: var(--section) var(--gutter) var(--sp-8) var(--sp-5);
+  position:relative; z-index:2;
+  animation:fadeUp .55s .18s ease both;
+}
+.hero-bg-icon {
+  position:absolute; right:calc(var(--gutter) - 20px);
+  top:50%; transform:translateY(-52%);
+  opacity:.04; pointer-events:none;
+}
+.hero-bg-icon img { width:clamp(200px,26vw,340px); filter:invert(1) }
+.hero-tag-mono {
+  font-family:var(--font-mono); font-size:0.58rem;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:rgba(123,116,212,.55); margin-bottom:var(--sp-4);
+}
+.hero-right-headline {
+  font-family:var(--font-display);
+  font-size:clamp(1.9rem,3.2vw,3.5rem);
+  font-weight:700; letter-spacing:-.03em;
+  color:rgba(255,255,255,.8); line-height:1.08; margin-bottom:var(--sp-6);
+}
+.hero-right-headline em {
+  font-style:italic; font-weight:400; color:rgba(123,116,212,.85);
+}
+.hero-stats {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-4);
+  padding-top:var(--sp-5); border-top:1px solid rgba(255,255,255,.08);
+}
+.stat-val {
+  font-family:var(--font-display); font-size:1.6rem; font-weight:700;
+  letter-spacing:-.03em; color:var(--purple-lt); line-height:1; margin-bottom:4px;
+}
+.stat-lbl {
+  font-family:var(--font-mono); font-size:0.55rem;
+  letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.3);
+}
+.stat-full {
+  font-family:var(--font-mono); font-size:0.5rem;
+  letter-spacing:.08em; color:rgba(255,255,255,.16); margin-top:2px;
+}
+
+/* ============================================================
+   TRADEMARK REFERENCE STRIP  (immediately below hero)
+   ============================================================ */
+.tm-strip {
+  background:var(--purple);
+  padding-block:var(--sp-4);
+  overflow:hidden;
+}
+.tm-strip-inner {
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:var(--sp-4);
+}
+.tm-org {
+  font-family:var(--font-display); font-size:clamp(.7rem,1vw,.9rem); font-weight:700;
+  letter-spacing:.04em; text-transform:uppercase;
+  color:rgba(255,255,255,.9);
+}
+.tm-marks { display:flex; gap:var(--sp-3); flex-wrap:wrap }
+.tm-pill {
+  font-family:var(--font-mono); font-size:0.58rem;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:rgba(255,255,255,.55);
+  padding:3px 12px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:40px;
+}
+.tm-pill strong {
+  color:rgba(255,255,255,.85);
+  font-weight:500;
+}
+
+/* ============================================================
+   TRADEMARK REFERENCE TABLE  (standalone section)
+   ============================================================ */
+.tm-reference {
+  padding-block:var(--sp-6);
+  background:var(--surface-mid);
+  border-bottom:1px solid var(--rule);
+}
+.tm-ref-header {
+  display:flex; align-items:baseline; gap:var(--sp-4);
+  margin-bottom:var(--sp-4);
+}
+.tm-ref-header span {
+  font-family:var(--font-mono); font-size:var(--label);
+  letter-spacing:.2em; text-transform:uppercase; color:var(--amber);
+}
+.tm-ref-note {
+  font-family:var(--font-mono); font-size:0.58rem;
+  letter-spacing:.1em; color:var(--ink-muted);
+}
+.tm-table {
+  width:100%; border-collapse:collapse;
+  font-size:var(--small);
+}
+.tm-table th {
+  font-family:var(--font-mono); font-size:0.58rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-muted); font-weight:500;
+  padding:8px 16px 8px 0;
+  border-bottom:2px solid var(--purple);
+  text-align:left;
+}
+.tm-table td {
+  padding:10px 16px 10px 0;
+  border-bottom:1px solid var(--rule);
+  vertical-align:top;
+  color:var(--ink-mid);
+  line-height:1.55;
+}
+.tm-table tr:last-child td { border-bottom:none }
+.tm-abbr {
+  font-family:var(--font-display); font-weight:700;
+  font-size:.9rem; letter-spacing:-.02em;
+  color:var(--purple); white-space:nowrap;
+}
+.tm-abbr sup {
+  font-size:.45em; vertical-align:super;
+  font-family:var(--font-mono); font-weight:400;
+}
+.tm-full {
+  font-family:var(--font-display); font-weight:700;
+  font-size:.85rem; letter-spacing:-.01em; color:var(--ink);
+}
+.tm-desc { font-size:.78rem; color:var(--ink-muted); line-height:1.55 }
+.status-draft {
+  display:inline-block; padding:2px 8px;
+  background:var(--amber-lt); color:var(--amber);
+  font-family:var(--font-mono); font-size:.52rem;
+  letter-spacing:.12em; text-transform:uppercase; border-radius:2px;
+}
+
+/* ============================================================
+   SERVICES (FeasOps™ Packages)
+   ============================================================ */
+.services { padding-block:var(--section); background:var(--white) }
+.services-top {
+  display:grid; grid-template-columns:5fr 7fr; gap:var(--sp-8);
+  align-items:start; margin-bottom:var(--sp-7);
+}
+.services-intro h2 {
+  font-size:var(--h2); line-height:1.1; letter-spacing:-.03em;
+  color:var(--ink); margin-bottom:var(--sp-4);
+}
+.services-intro h2 em { font-style:italic; font-weight:400; color:var(--purple) }
+.services-intro p { font-size:1rem; color:var(--ink-muted); line-height:1.78; margin-bottom:var(--sp-3) }
+.services-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-5) }
+.pkg-card {
+  padding:var(--sp-5); border:1px solid var(--surface-dk);
+  border-top:4px solid var(--purple); background:var(--surface);
+  transition:transform .35s var(--ease), box-shadow .35s;
+}
+.pkg-card:hover { transform:translateY(-6px); box-shadow:0 18px 52px rgba(83,74,183,.12) }
+.pkg-code {
+  font-family:var(--font-display); font-size:2.4rem; font-weight:700;
+  letter-spacing:-.04em; line-height:1; margin-bottom:var(--sp-3);
+  -webkit-text-stroke:2px var(--purple); color:transparent;
+}
+.pkg-name {
+  font-family:var(--font-display); font-size:1.05rem; font-weight:700;
+  letter-spacing:-.01em; color:var(--ink); margin-bottom:var(--sp-2);
+}
+.pkg-fee {
+  font-family:var(--font-mono); font-size:0.68rem;
+  letter-spacing:.1em; color:var(--purple); margin-bottom:var(--sp-3);
+}
+.pkg-desc { font-size:var(--small); color:var(--ink-muted); line-height:1.7; margin-bottom:var(--sp-4) }
+.pkg-tags { display:flex; flex-wrap:wrap; gap:var(--sp-2) }
+.tag {
+  padding:3px 10px; background:var(--white); border:1px solid var(--rule);
+  font-family:var(--font-mono); font-size:0.55rem;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--ink-muted); border-radius:2px;
+}
+
+/* ============================================================
+   M4Di.Oi™ TOOL SECTION
+   ============================================================ */
+.oi { padding-block:var(--section); background:var(--surface); position:relative; overflow:hidden }
+.oi-watermark { position:absolute; right:-40px; bottom:-40px; opacity:.035; pointer-events:none }
+.oi-watermark img { width:380px; filter:grayscale(1) }
+.oi-inner {
+  display:grid; grid-template-columns:5fr 7fr; gap:var(--sp-8); align-items:start;
+}
+.oi-intro h2 {
+  font-size:var(--h2); line-height:1.1; letter-spacing:-.03em;
+  color:var(--ink); margin-bottom:var(--sp-4);
+}
+.oi-intro h2 em { font-style:italic; font-weight:400; color:var(--purple) }
+.oi-intro p { color:var(--ink-muted); line-height:1.78; margin-bottom:var(--sp-4) }
+.oi-tm-box {
+  padding:var(--sp-4); background:var(--purple-ghost);
+  border-left:3px solid var(--purple); margin-top:var(--sp-4);
+}
+.oi-tm-box p {
+  font-family:var(--font-mono); font-size:0.62rem;
+  letter-spacing:.08em; color:var(--purple-dk); line-height:1.65; margin:0;
+}
+.pipeline { display:flex; flex-direction:column; gap:0 }
+.pipe {
+  display:grid; grid-template-columns:80px 1fr; gap:var(--sp-4);
+  padding:var(--sp-4) var(--sp-3); border-bottom:1px solid var(--rule);
+  border-radius:3px; transition:background .18s;
+}
+.pipe:last-child { border-bottom:none }
+.pipe:hover { background:rgba(83,74,183,.04) }
+.pipe-col { display:flex; flex-direction:column; align-items:flex-start; gap:4px }
+.pipe-letter {
+  font-family:var(--font-display); font-size:2rem; font-weight:700;
+  letter-spacing:-.04em; color:var(--purple); line-height:1;
+}
+.pipe-gate {
+  font-family:var(--font-mono); font-size:0.52rem;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-muted); background:var(--surface-mid); padding:2px 7px; border-radius:2px;
+}
+.pipe-title {
+  font-family:var(--font-display); font-size:.88rem; font-weight:700;
+  letter-spacing:-.01em; color:var(--ink); margin-bottom:4px;
+}
+.pipe-desc { font-size:var(--small); color:var(--ink-muted); line-height:1.65 }
+.pipe-badge {
+  display:inline-flex; align-items:center; gap:4px; margin-top:6px;
+  font-family:var(--font-mono); font-size:0.52rem;
+  letter-spacing:.12em; text-transform:uppercase;
+  padding:2px 8px; border-radius:2px;
+}
+
+/* ============================================================
+   WHY M4Di — dark section
+   ============================================================ */
+.why {
+  padding-block:var(--section); background:var(--ink);
+  color:var(--white); position:relative; overflow:hidden;
+}
+.why::before {
+  content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(-45deg,transparent,transparent 60px,rgba(83,74,183,.025) 60px,rgba(83,74,183,.025) 61px);
+  pointer-events:none;
+}
+.why-inner { display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-8); position:relative; z-index:1 }
+.why-left h2 {
+  font-size:var(--h2); letter-spacing:-.03em; line-height:1.1;
+  color:var(--white); margin-bottom:var(--sp-4);
+}
+.why-left h2 em { font-style:italic; font-weight:400; color:var(--purple-lt) }
+.why-left > p { color:rgba(255,255,255,.5); line-height:1.78; margin-bottom:var(--sp-5) }
+.quote-pull {
+  padding:var(--sp-5); border-left:3px solid var(--purple);
+  background:rgba(83,74,183,.08); margin-bottom:var(--sp-5);
+}
+.quote-pull p {
+  font-family:var(--font-display); font-size:1.1rem;
+  font-style:italic; font-weight:400;
+  color:rgba(255,255,255,.82); line-height:1.5; margin:0;
+}
+.adv-list { display:flex; flex-direction:column; gap:var(--sp-3) }
+.adv {
+  display:grid; grid-template-columns:44px 1fr; gap:var(--sp-4);
+  padding:var(--sp-4); border:1px solid rgba(255,255,255,.07);
+  transition:border-color .2s, transform .3s var(--ease);
+}
+.adv:hover { border-color:rgba(83,74,183,.45); transform:translateX(5px) }
+.adv-n {
+  font-family:var(--font-display); font-size:1.5rem; font-weight:700;
+  letter-spacing:-.04em; color:var(--purple); line-height:1; padding-top:2px;
+}
+.adv-title {
+  font-family:var(--font-display); font-size:.85rem; font-weight:700;
+  letter-spacing:-.01em; color:var(--white); margin-bottom:4px;
+}
+.adv-desc { font-size:var(--small); color:rgba(255,255,255,.42); line-height:1.65 }
+.region-stack { display:flex; flex-direction:column; gap:var(--sp-3); margin-top:var(--sp-5) }
+.region {
+  display:grid; grid-template-columns:52px 1fr; gap:var(--sp-4);
+  padding:var(--sp-4); border:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.02); transition:background .2s;
+}
+.region:hover { background:rgba(83,74,183,.08) }
+.region-abbr {
+  font-family:var(--font-display); font-size:1.5rem; font-weight:700;
+  letter-spacing:-.04em; color:var(--purple-lt); line-height:1; padding-top:2px;
+}
+.region-name {
+  font-family:var(--font-display); font-size:.82rem; font-weight:700;
+  letter-spacing:-.01em; color:rgba(255,255,255,.75); margin-bottom:3px;
+}
+.region-desc { font-size:0.75rem; color:rgba(255,255,255,.38); line-height:1.55 }
+.types-block {
+  margin-top:var(--sp-5); padding:var(--sp-4);
+  border:1px solid rgba(255,255,255,.07); background:rgba(83,74,183,.08);
+}
+.types-label {
+  font-family:var(--font-mono); font-size:0.55rem;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:rgba(123,116,212,.6); margin-bottom:var(--sp-3);
+}
+.pill-dk {
+  display:inline-flex; align-items:center; padding:4px 14px;
+  border:1.5px solid rgba(83,74,183,.4);
+  font-family:var(--font-mono); font-size:0.56rem;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(255,255,255,.52); border-radius:40px;
+}
+
+/* ============================================================
+   PARTNERS
+   ============================================================ */
+.partners { padding-block:var(--section); background:var(--white) }
+.partners-header { max-width:640px; margin-bottom:var(--sp-7) }
+.partners-header h2 {
+  font-size:var(--h2); letter-spacing:-.03em; line-height:1.1;
+  color:var(--ink); margin-bottom:var(--sp-4);
+}
+.partners-header h2 em { font-style:italic; font-weight:400; color:var(--purple) }
+.partners-header p { color:var(--ink-muted); line-height:1.78 }
+.eco-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-5) }
+.eco-card {
+  padding:var(--sp-5); border:1px solid var(--rule); border-radius:3px;
+  position:relative; overflow:hidden;
+  transition:box-shadow .3s, transform .3s var(--ease);
+}
+.eco-card:hover { box-shadow:0 14px 44px rgba(83,74,183,.1); transform:translateY(-5px) }
+.eco-card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--purple); transform:scaleX(0); transform-origin:left;
+  transition:transform .35s var(--ease);
+}
+.eco-card:hover::after { transform:scaleX(1) }
+.eco-lbl {
+  font-family:var(--font-mono); font-size:0.56rem;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--purple); margin-bottom:var(--sp-3);
+}
+.eco-card h3 { font-size:1.08rem; letter-spacing:-.02em; color:var(--ink); margin-bottom:2px }
+.eco-full {
+  font-family:var(--font-mono); font-size:0.58rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-muted); margin-bottom:var(--sp-3);
+}
+.eco-card p { font-size:var(--small); color:var(--ink-muted); line-height:1.7 }
+.eco-link {
+  display:inline-flex; align-items:center; gap:5px; margin-top:var(--sp-4);
+  font-family:var(--font-display); font-size:0.7rem; font-weight:700;
+  letter-spacing:.04em; color:var(--purple); transition:gap .25s;
+}
+.eco-link:hover { gap:9px }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact {
+  padding-block:var(--section); background:var(--purple);
+  color:var(--white); position:relative; overflow:hidden;
+}
+.contact::after {
+  content:''; position:absolute; bottom:-80px; right:-80px;
+  width:380px; height:380px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.08); pointer-events:none;
+}
+.contact-inner { display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-8); align-items:start }
+.contact-left h2 {
+  font-size:var(--h2); letter-spacing:-.03em; line-height:1.1;
+  color:var(--white); margin-bottom:var(--sp-4);
+}
+.contact-left h2 em { font-style:italic; font-weight:400 }
+.contact-left > p { color:rgba(255,255,255,.7); line-height:1.78; margin-bottom:var(--sp-5) }
+.ci-list { display:flex; flex-direction:column; gap:var(--sp-3) }
+.ci {
+  display:grid; grid-template-columns:76px 1fr; gap:var(--sp-3);
+  padding:var(--sp-3) var(--sp-4); align-items:start;
+  background:rgba(255,255,255,.1); border-left:3px solid rgba(255,255,255,.3);
+}
+.ci-lbl {
+  font-family:var(--font-mono); font-size:0.55rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(255,255,255,.42); padding-top:2px;
+}
+.ci-val { font-size:var(--small); color:rgba(255,255,255,.85); font-weight:500; line-height:1.55 }
+.contact-right {
+  padding:var(--sp-6); background:rgba(255,255,255,.11);
+  backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.18);
+}
+.contact-right h3 {
+  font-family:var(--font-display); font-size:1.5rem; font-weight:700;
+  letter-spacing:-.02em; color:var(--white); margin-bottom:var(--sp-5);
+}
+.form-row { margin-bottom:var(--sp-4) }
+.form-row label {
+  display:block; font-family:var(--font-mono); font-size:0.56rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(255,255,255,.45); margin-bottom:8px;
+}
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width:100%; padding:11px 14px;
+  background:rgba(255,255,255,.14); border:1.5px solid rgba(255,255,255,.2);
+  color:var(--white); font-family:var(--font-body); font-size:var(--small);
+  outline:none; border-radius:2px;
+  transition:border-color .18s, background .18s; appearance:none;
+}
+.form-row input::placeholder,
+.form-row textarea::placeholder { color:rgba(255,255,255,.28) }
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  border-color:rgba(255,255,255,.55); background:rgba(255,255,255,.2);
+}
+.form-row select option { background:var(--purple-dk); color:var(--white) }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer { background:var(--ink); padding:var(--sp-6) var(--gutter) var(--sp-5) }
+.footer-inner {
+  width:min(var(--max-w),100%); margin-inline:auto;
+  display:grid; gap:var(--sp-5);
+}
+.footer-top {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  flex-wrap:wrap; gap:var(--sp-5);
+  padding-bottom:var(--sp-5); border-bottom:1px solid rgba(255,255,255,.07);
+}
+.footer-brand { display:flex; align-items:center; gap:var(--sp-3) }
+.footer-mark {
+  width:32px; height:32px; background:var(--purple); border-radius:3px;
+  overflow:hidden; display:flex; align-items:center; justify-content:center;
+}
+.footer-mark img { width:100%; object-fit:contain; filter:invert(1) }
+.footer-brand-text { display:flex; flex-direction:column; gap:3px }
+.footer-name {
+  font-family:var(--font-display); font-size:.8rem; font-weight:700;
+  letter-spacing:.04em; text-transform:uppercase; color:rgba(255,255,255,.35); line-height:1;
+}
+.footer-legal {
+  font-family:var(--font-mono); font-size:.5rem;
+  letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.16); line-height:1;
+}
+.footer-nav { display:flex; gap:var(--sp-5); flex-wrap:wrap }
+.footer-nav a {
+  font-family:var(--font-display); font-size:.62rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(255,255,255,.22); transition:color .2s;
+}
+.footer-nav a:hover { color:var(--purple-lt) }
+.footer-bottom {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  flex-wrap:wrap; gap:var(--sp-4);
+}
+.footer-tm-list {
+  display:flex; flex-direction:column; gap:5px;
+}
+.footer-tm-row {
+  font-family:var(--font-mono); font-size:.5rem;
+  letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.16);
+}
+.footer-tm-row strong { color:rgba(255,255,255,.3); margin-right:6px }
+.footer-copy {
+  font-family:var(--font-mono); font-size:.5rem;
+  letter-spacing:.09em; text-transform:uppercase;
+  color:rgba(255,255,255,.14); text-align:right;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px) }
+  to   { opacity:1; transform:none }
+}
+.reveal {
+  opacity:0; transform:translateY(22px);
+  transition:opacity .7s var(--ease), transform .7s var(--ease);
+}
+.reveal.visible { opacity:1; transform:none }
+.d1 { transition-delay:.08s }
+.d2 { transition-delay:.16s }
+.d3 { transition-delay:.24s }
+.d4 { transition-delay:.32s }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:960px) {
+  .hero { grid-template-columns:1fr }
+  .hero-right { display:none }
+  .hero-left { padding-inline:var(--gutter); padding-block:var(--sp-8) }
+  .services-top, .oi-inner, .why-inner, .contact-inner { grid-template-columns:1fr }
+  .eco-cards { grid-template-columns:1fr 1fr }
+  nav .nav-links { display:none }
+  .tm-marks { display:none }
+  .tm-table td:nth-child(3) { display:none }
+  .tm-table th:nth-child(3) { display:none }
+}
+@media(max-width:580px) {
+  .services-grid { grid-template-columns:1fr }
+  .eco-cards { grid-template-columns:1fr }
+  .footer-top { flex-direction:column }
+  .footer-bottom { flex-direction:column }
+  .footer-copy { text-align:left }
+}
+</style>
+</head>
+<body>
+
+<!-- ====================================================
+     NAV
+     ==================================================== -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="nav-logo-mark">
+        <img src="data:image/jpeg;base64,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TLBn1uU9K9nrk/iv4At/ij8Ote8L3Ept/wC0bYpDcqPmtpwQ0My/7SSKjg+qigDrKw/HPg/T/iD4N1vwzqsZk03VrOWynAOCEdSpIPYjOQexArx/wH+2B8PZPCOmx+N/GOh+FvGVtGbXWtHv7tYZbW9iJjnXa2Dt3qxU91IPet//AIa7+Cv/AEVDwv8A+DKP/GgDS/Z78Yaj4q+HMFprzhvFXh64l0HWv9q7tzsMv0lTy5l/2ZVr0uvnT4Z/Efwt4p/ad1uX4fa9YeJ9G1/w+t7rr6ZOskVne20qQwSMRxumilKYznFqpxivougAryn9q/8A5Nk+Kn/Ytah/6IevVq8q/asRpP2Z/imqKWY+GtQwFGSf3D0Aem6d/wAg+2/65L/IVYrxux/a4+CyWVurfE/wwGEagg6lHwcfWp/+Gu/gr/0VDwv/AODKP/GgD12ivH5P2vvgugGz4leH7hycCO1uxM5+ipkn8qiP7Vvg7UFH/CO6X4u8XyE7Qui+F750z/11kiSIfUvigD2WsvxN4p0fwXol1rGvana6PpVqm+a8vZVijQe7H+XevMm8V/GDxuoTQvB2meALOQ86j4svFvLtFz1WztWKE46brhcdx2qz4f8A2d9HGuWviLxrql98RvE9s4lt73XthtrNwOttaIBDCRzhgpfnlzQBz9xqPiv9pINaaUup+BPhhJxPq0qNbatrkf8ActkOHtYGHWVgJWB+RUB317L4Z8M6V4M8P2Gh6Hp9vpWkWEQgtrO1QJHEg6AAf5JJJrTooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//2Q==" alt="M4Di" width="38" height="38">
+      </div>
+      <div class="nav-logo-text">
+        <div class="nav-wordmark"><span>M4</span>Di<span class="tm">™</span></div>
+        <div class="nav-submark">Merge 4 Development Institute</div>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#services">FeasOps™</a></li>
+      <li><a href="#oi">M4Di.Oi™</a></li>
+      <li><a href="#why">Why M4Di</a></li>
+      <li><a href="#partners">Partners</a></li>
+      <li><a href="#contact" class="btn btn-primary" style="padding:9px 22px;font-size:.68rem">Start a Project →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ====================================================
+     HERO
+     ==================================================== -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-bg-icon" aria-hidden="true">
+    <img src="data:image/jpeg;base64,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" alt="" width="340">
+  </div>
+
+  <div class="hero-left">
+    <div class="hero-fullname">
+      M4Di™ &nbsp;—&nbsp; Merge 4 Development Institute &nbsp;·&nbsp; [Draft — Names Pending Confirmation]
+    </div>
+    <div class="eyebrow" style="color:rgba(123,116,212,.75)">
+      <div class="eyebrow-dash" style="background:var(--purple-lt)"></div>
+      FeasOps™ · M4Di.Oi™ · ALDi™ · ALDDB™
+    </div>
+    <h1>
+      The predevelopment<br>
+      <span class="accent">backbone</span><br>
+      for community builders.
+    </h1>
+    <p class="hero-sub">M4Di — Merge 4 Development Institute — equips under-resourced nonprofit owners, CDFIs, and mission-driven developers with the cost intelligence, delivery controls, and grant strategy they need to build with confidence — from first numbers to final certificate.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn btn-primary">Explore FeasOps™ Services →</a>
+      <a href="#contact" class="btn btn-ghost-light">Talk to the Team</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <span class="hero-tag-mono">// M4Di.Oi™ — M4Di Operational Intelligence · 4-Column Cost Control</span>
+    <p class="hero-right-headline">
+      Your ROM.<br>
+      Every design gate.<br>
+      <em>One independent<br>record.</em>
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-val">FeasOps™</div>
+        <div class="stat-lbl">P1 · P2 · P3</div>
+        <div class="stat-full">Feasibility Operations</div>
+      </div>
+      <div>
+        <div class="stat-val">ALDi™</div>
+        <div class="stat-lbl">Delivery Backbone</div>
+        <div class="stat-full">Architect Led Delivery Integrator</div>
+      </div>
+      <div>
+        <div class="stat-val">ALDDB™</div>
+        <div class="stat-lbl">Cost Intelligence</div>
+        <div class="stat-full">ALDi Delivery Dashboard &amp; Backbone</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     TRADEMARK STRIP
+     ==================================================== -->
+<div class="tm-strip">
+  <div class="container">
+    <div class="tm-strip-inner">
+      <span class="tm-org">M4Di™ — Merge 4 Development Institute, Inc. &nbsp;·&nbsp; Wilmington, Delaware</span>
+      <div class="tm-marks">
+        <span class="tm-pill"><strong>M4Di™</strong> Merge 4 Development Institute</span>
+        <span class="tm-pill"><strong>M4Di.Oi™</strong> M4Di Operational Intelligence</span>
+        <span class="tm-pill"><strong>ALDi™</strong> Architect Led Delivery Integrator</span>
+        <span class="tm-pill"><strong>ALDDB™</strong> ALDi Delivery Dashboard &amp; Backbone</span>
+        <span class="tm-pill"><strong>FeasOps™</strong> Feasibility Operations</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================================
+     TRADEMARK REFERENCE TABLE
+     ==================================================== -->
+<div class="tm-reference" id="trademarks">
+  <div class="container">
+    <div class="tm-ref-header">
+      <span>Brand &amp; Trademark Reference</span>
+      <span class="tm-ref-note">· All names are working drafts pending legal confirmation of final registered marks</span>
+    </div>
+    <table class="tm-table">
+      <thead>
+        <tr>
+          <th style="width:120px">Mark</th>
+          <th style="width:280px">Full Name</th>
+          <th>Description &amp; Use</th>
+          <th style="width:100px">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tm-abbr">M4Di<sup>™</sup></span></td>
+          <td><span class="tm-full">Merge 4 Development Institute</span></td>
+          <td class="tm-desc">The organization name and master brand. Used on all deliverables, agreements, and communications as the primary identity mark.</td>
+          <td><span class="status-draft">Draft</span></td>
+        </tr>
+        <tr>
+          <td><span class="tm-abbr">M4Di.Oi<sup>™</sup></span></td>
+          <td><span class="tm-full">M4Di Operational Intelligence</span></td>
+          <td class="tm-desc">The proprietary estimating and cost control platform. The four-column ROM-to-Actual workbook and methodology. Used in all predevelopment and ALDi™ engagements.</td>
+          <td><span class="status-draft">Draft</span></td>
+        </tr>
+        <tr>
+          <td><span class="tm-abbr">ALDi<sup>™</sup></span></td>
+          <td><span class="tm-full">Architect Led Delivery Integrator</span></td>
+          <td class="tm-desc">The integrated delivery methodology and gate-based controls backbone. The ALDi™ process governs all design and construction phase engagements from Gate 0 through closeout.</td>
+          <td><span class="status-draft">Draft</span></td>
+        </tr>
+        <tr>
+          <td><span class="tm-abbr">ALDDB<sup>™</sup></span></td>
+          <td><span class="tm-full">ALDi Delivery Dashboard &amp; Backbone</span></td>
+          <td class="tm-desc">The proprietary cost intelligence database and reporting system. Aggregates closed-project data from all M4Di engagements to produce the Mid-Atlantic community facility cost benchmarks.</td>
+          <td><span class="status-draft">Draft</span></td>
+        </tr>
+        <tr>
+          <td><span class="tm-abbr">FeasOps<sup>™</sup></span></td>
+          <td><span class="tm-full">Feasibility Operations</span></td>
+          <td class="tm-desc">The fixed-fee predevelopment package family (P1, P2, P3). Covers zoning scan through full feasibility analysis and procurement-ready RFP/RFQ package delivery.</td>
+          <td><span class="status-draft">Draft</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ====================================================
+     FEASOPS™ SERVICES
+     ==================================================== -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-top">
+      <div class="services-intro reveal">
+        <div class="eyebrow">
+          <div class="eyebrow-dash"></div>
+          FeasOps™ — Feasibility Operations
+        </div>
+        <div class="rule-bar"></div>
+        <h2>Predevelopment<br><em>done right.</em></h2>
+        <p>M4Di — Merge 4 Development Institute — serves as the independent predevelopment and delivery backbone for community facility projects. We set the budget before design begins, hold it accountable at every ALDi™ gate, and close the loop at construction completion.</p>
+        <p>Our nonprofit structure opens CDFI, HUD, CDBG, and philanthropic grant channels unavailable to for-profit advisors.</p>
+      </div>
+      <div class="services-grid">
+        <div class="pkg-card reveal d1">
+          <div class="pkg-code">P1</div>
+          <div class="pkg-name">Zoning + ROM Budget</div>
+          <div class="pkg-fee">FeasOps™ P1 · $8,000 Fixed Fee</div>
+          <p class="pkg-desc">Site-specific code scan, conceptual hard cost estimate, risk memo, and go/no-go recommendation before any design fees are committed.</p>
+          <div class="pkg-tags">
+            <span class="tag">Zoning Analysis</span>
+            <span class="tag">ROM Estimate</span>
+            <span class="tag">Risk Register</span>
+          </div>
+        </div>
+        <div class="pkg-card reveal d2">
+          <div class="pkg-code">P2</div>
+          <div class="pkg-name">Test Fit + ROM Update</div>
+          <div class="pkg-fee">FeasOps™ P2 · $14,000 Fixed Fee</div>
+          <p class="pkg-desc">Refined program validation, updated cost model with phasing options, and preliminary RFP structure for AE selection.</p>
+          <div class="pkg-tags">
+            <span class="tag">Test Fit</span>
+            <span class="tag">Phasing Options</span>
+            <span class="tag">RFP Prep</span>
+          </div>
+        </div>
+        <div class="pkg-card reveal d3">
+          <div class="pkg-code">P3</div>
+          <div class="pkg-name">Full Feasibility + RFP Package</div>
+          <div class="pkg-fee">FeasOps™ P3 · $22,000 Fixed Fee</div>
+          <p class="pkg-desc">Detailed conceptual budget, grant funding strategy, schedule band, procurement-ready RFP/RFQ package, and ALDi™ Option Exhibit for delivery backbone engagement.</p>
+          <div class="pkg-tags">
+            <span class="tag">Full Budget</span>
+            <span class="tag">Grant Strategy</span>
+            <span class="tag">RFP Package</span>
+          </div>
+        </div>
+        <div class="pkg-card reveal d4">
+          <div class="pkg-code" style="-webkit-text-stroke-width:1.5px;font-size:1.9rem">ALDi</div>
+          <div class="pkg-name">ALDi™ Delivery Backbone</div>
+          <div class="pkg-fee">Architect Led Delivery Integrator · Retainer</div>
+          <p class="pkg-desc">Gate-based delivery integration from Gate 0 through construction closeout. Independent cost controls, change order governance, ALDDB™ reporting, and CDFI compliance.</p>
+          <div class="pkg-tags">
+            <span class="tag">Gate Reviews</span>
+            <span class="tag">M4Di.Oi™ Tracker</span>
+            <span class="tag">CO Governance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     M4Di.Oi™ TOOL
+     ==================================================== -->
+<section class="oi" id="oi">
+  <div class="oi-watermark" aria-hidden="true">
+    <img src="data:image/jpeg;base64,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" alt="" width="380">
+  </div>
+  <div class="container">
+    <div class="oi-inner">
+      <div class="oi-intro reveal">
+        <div class="eyebrow">
+          <div class="eyebrow-dash"></div>
+          M4Di.Oi™ — M4Di Operational Intelligence
+        </div>
+        <div class="rule-bar"></div>
+        <h2>A living budget<br>from day one<br><em>to closeout.</em></h2>
+        <p>The M4Di.Oi™ — M4Di Operational Intelligence tool — connects your FeasOps™ ROM estimate to every ALDi™ design gate, the contractor's Schedule of Values, and running actual costs. One independent document, maintained by M4Di throughout the project lifecycle.</p>
+        <p>No more discovering a gap at GMP. The M4Di.Oi™ tool makes cost drift visible at the point it happens — not after it becomes a crisis.</p>
+        <div class="oi-tm-box">
+          <p>M4Di.Oi™ (M4Di Operational Intelligence) is a proprietary cost intelligence methodology of M4Di — Merge 4 Development Institute, Inc. All benchmark data is drawn from the ALDDB™ (ALDi Delivery Dashboard &amp; Backbone), M4Di's growing Mid-Atlantic community facility cost dataset. All marks are draft pending confirmation.</p>
+        </div>
+      </div>
+      <div class="pipeline reveal d1">
+        <div class="pipe">
+          <div class="pipe-col">
+            <div class="pipe-letter">D</div>
+            <span class="pipe-gate">ALDi™ Gate 0</span>
+          </div>
+          <div>
+            <div class="pipe-title">Column D — M4Di.Oi™ ROM</div>
+            <p class="pipe-desc">Locked at ALDi™ Gate 0. The number committed to your board and CDFI. Never changes after issue — all downstream variance is measured against this column.</p>
+            <span class="pipe-badge" style="background:var(--purple-ghost);color:var(--purple)">⬛ Locked at Gate 0</span>
+          </div>
+        </div>
+        <div class="pipe">
+          <div class="pipe-col">
+            <div class="pipe-letter">E</div>
+            <span class="pipe-gate">ALDi™ Gate 2</span>
+          </div>
+          <div>
+            <div class="pipe-title">Column E — 75% DD Estimate</div>
+            <p class="pipe-desc">First design-informed reality check. Variance over 15% vs. the ROM triggers a documented explanation and ALDi™ gate review before design work continues.</p>
+            <span class="pipe-badge" style="background:var(--teal-lt);color:var(--teal)">Design Development</span>
+          </div>
+        </div>
+        <div class="pipe">
+          <div class="pipe-col">
+            <div class="pipe-letter">F</div>
+            <span class="pipe-gate">ALDi™ Gate 3</span>
+          </div>
+          <div>
+            <div class="pipe-title">Column F — 100% CD / Contractor SOV</div>
+            <p class="pipe-desc">The contracted GMP. Entered from the executed Schedule of Values. Every dollar above the ROM baseline is documented in the ALDDB™ Variance Log.</p>
+            <span class="pipe-badge" style="background:var(--amber-lt);color:var(--amber)">GMP Executed</span>
+          </div>
+        </div>
+        <div class="pipe">
+          <div class="pipe-col">
+            <div class="pipe-letter">G</div>
+            <span class="pipe-gate">ALDi™ Gate 4</span>
+          </div>
+          <div>
+            <div class="pipe-title">Column G — Actual Cost</div>
+            <p class="pipe-desc">Updated monthly from pay applications and approved change orders. Running total of committed costs only — never projected. The most honest number in the project.</p>
+            <span class="pipe-badge" style="background:var(--purple-ghost);color:var(--purple)">Monthly · Closeout</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     WHY M4Di
+     ==================================================== -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="why-inner">
+      <div class="why-left reveal">
+        <div class="eyebrow" style="color:rgba(123,116,212,.7)">
+          <div class="eyebrow-dash" style="background:var(--purple)"></div>
+          Why M4Di™
+        </div>
+        <div class="rule-bar"></div>
+        <h2>The party that<br><em>holds the baseline.</em></h2>
+        <p>Every AE has a fee agreement. Every contractor has a schedule of values. Every owner has a checkbook. What none of them has is a single, independent document connecting all three to the original FeasOps™ estimate. That is what M4Di — Merge 4 Development Institute — provides.</p>
+        <div class="quote-pull">
+          <p>"M4Di is the only party on any project who started from quantities before drawings existed. That analytical position cannot be replicated by any other advisor."</p>
+        </div>
+        <div class="adv-list">
+          <div class="adv">
+            <div class="adv-n">01</div>
+            <div>
+              <div class="adv-title">Nonprofit Structure Opens Funding</div>
+              <div class="adv-desc">M4Di's 501(c)(3) status opens CDFI, HUD, CDBG, DDDS, and philanthropic grant channels that for-profit advisors cannot access. Your budget gets supplemented, not just managed.</div>
+            </div>
+          </div>
+          <div class="adv">
+            <div class="adv-n">02</div>
+            <div>
+              <div class="adv-title">ALDDB™ — Real Bid Data</div>
+              <div class="adv-desc">The ALDDB™ (ALDi Delivery Dashboard &amp; Backbone) aggregates actual bid and GMP data from every closed M4Di project. Mid-Atlantic benchmarks from real numbers — not national averages.</div>
+            </div>
+          </div>
+          <div class="adv">
+            <div class="adv-n">03</div>
+            <div>
+              <div class="adv-title">Independent of the Architect</div>
+              <div class="adv-desc">M4Di works alongside the AE, not above them. Our independence is exactly what makes the M4Di.Oi™ cost record credible to CDFIs and HUD funders — and protects the AE's professional record.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-right reveal d2">
+        <div class="eyebrow" style="color:rgba(123,116,212,.7)">
+          <div class="eyebrow-dash" style="background:var(--purple)"></div>
+          Service Region — Mid-Atlantic
+        </div>
+        <div class="rule-bar"></div>
+        <div class="region-stack">
+          <div class="region">
+            <div class="region-abbr">DE</div>
+            <div>
+              <div class="region-name">Delaware — Home Base</div>
+              <div class="region-desc">New Castle County baseline. DDDS, DSHA, DEDO, DHSS programs. M4Di.Oi™ calibrated to Delaware competitive-bid market.</div>
+            </div>
+          </div>
+          <div class="region">
+            <div class="region-abbr">PA</div>
+            <div>
+              <div class="region-name">Pennsylvania — Philadelphia Metro</div>
+              <div class="region-desc">Regional labor factor applied. PHFA, DCED, and regional CDFI coverage. AIA fee schedule and ENR regional cost index.</div>
+            </div>
+          </div>
+          <div class="region">
+            <div class="region-abbr">NJ</div>
+            <div>
+              <div class="region-name">New Jersey</div>
+              <div class="region-desc">NJ HMFA, DCA, and South Jersey market coverage. Regional factor built into M4Di.Oi™ unit price library.</div>
+            </div>
+          </div>
+          <div class="region">
+            <div class="region-abbr">MD</div>
+            <div>
+              <div class="region-name">Maryland — Baltimore Area</div>
+              <div class="region-desc">DHCD, MHEC, and Baltimore Metro market. Expanding as ALDDB™ closed-project data grows.</div>
+            </div>
+          </div>
+        </div>
+        <div class="types-block">
+          <div class="types-label">Project Types Served</div>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--sp-2)">
+            <span class="pill-dk">IDD Residential</span>
+            <span class="pill-dk">Community Medical</span>
+            <span class="pill-dk">Athletic + Recreation</span>
+            <span class="pill-dk">Faith-Based Facilities</span>
+            <span class="pill-dk">Affordable Housing</span>
+            <span class="pill-dk">Adaptive Reuse</span>
+            <span class="pill-dk">Mixed-Use Community</span>
+            <span class="pill-dk">New Construction</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     PARTNERS
+     ==================================================== -->
+<section class="partners" id="partners">
+  <div class="container">
+    <div class="partners-header reveal">
+      <div class="eyebrow">
+        <div class="eyebrow-dash"></div>
+        The M4Di™ Ecosystem
+      </div>
+      <div class="rule-bar"></div>
+      <h2>Built alongside<br><em>trusted partners.</em></h2>
+      <p>M4Di — Merge 4 Development Institute — is the predevelopment intelligence layer of a broader design and delivery ecosystem. Our partner firms bring the architecture and engineering expertise that the M4Di.Oi™ and ALDi™ control platforms support.</p>
+    </div>
+    <div class="eco-cards">
+      <div class="eco-card reveal d1">
+        <div class="eco-lbl">Architecture · AE Services</div>
+        <h3>Merge 4 Design LLC</h3>
+        <div class="eco-full">M4D — Wilmington, Delaware</div>
+        <p>Architecture and development consulting rooted in Wilmington. M4D brings design leadership, IDD and institutional project expertise, and construction delivery discipline across DE, MD, PA, and NJ. M4Di's primary AE partner on community facility and ALDi™ engagements.</p>
+        <a href="https://merge4design.com" class="eco-link">merge4design.com →</a>
+      </div>
+      <div class="eco-card reveal d2">
+        <div class="eco-lbl">Architecture · Form, Function, Fusion</div>
+        <h3>Aubyn Architecture LLC</h3>
+        <div class="eco-full">Multi-Disciplinary Architecture Practice</div>
+        <p>A design-forward architecture firm bringing innovation and technical rigor to community-serving projects. Aubyn Architecture brings complementary AE capacity and independent client relationships to the M4Di™ delivery ecosystem across the Mid-Atlantic.</p>
+        <a href="https://aubynarchitecture.com" class="eco-link">aubynarchitecture.com →</a>
+      </div>
+      <div class="eco-card reveal d3">
+        <div class="eco-lbl">Data Intelligence · Launching 2026</div>
+        <h3>ALDDB™ Annual Cost Report</h3>
+        <div class="eco-full">ALDi Delivery Dashboard &amp; Backbone — M4Di, Inc.</div>
+        <p>The M4Di™ Community Facility Construction Cost Report: actual $/SF benchmarks, soft cost ratios, and ROM-to-GMP variance from closed Mid-Atlantic projects. Free to CDFIs and housing intermediaries. Practitioner subscription tier launching 2026.</p>
+        <a href="#contact" class="eco-link">Get notified →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     CONTACT
+     ==================================================== -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-left reveal">
+        <div class="eyebrow" style="color:rgba(255,255,255,.42)">
+          <div class="eyebrow-dash" style="background:rgba(255,255,255,.3)"></div>
+          Start a Conversation
+        </div>
+        <div class="rule-bar" style="background:rgba(255,255,255,.3)"></div>
+        <h2><em>Ready to build</em><br>with confidence?</h2>
+        <p>Tell us about your project. Whether you need a FeasOps™ P1 package or a full ALDi™ delivery backbone, M4Di — Merge 4 Development Institute — will give you an honest assessment before any engagement begins.</p>
+        <div class="ci-list">
+          <div class="ci">
+            <span class="ci-lbl">Entity</span>
+            <span class="ci-val">M4Di™ — Merge 4 Development Institute, Inc.</span>
+          </div>
+          <div class="ci">
+            <span class="ci-lbl">Location</span>
+            <span class="ci-val">Wilmington, Delaware · Mid-Atlantic Region</span>
+          </div>
+          <div class="ci">
+            <span class="ci-lbl">Serving</span>
+            <span class="ci-val">Delaware · Pennsylvania · New Jersey · Maryland</span>
+          </div>
+          <div class="ci">
+            <span class="ci-lbl">Social</span>
+            <span class="ci-val">
+              <a href="#" style="color:rgba(255,255,255,.75);text-decoration:underline">LinkedIn</a> &nbsp;·&nbsp;
+              <a href="#" style="color:rgba(255,255,255,.75);text-decoration:underline">Instagram</a> &nbsp;·&nbsp;
+              <a href="#" style="color:rgba(255,255,255,.75);text-decoration:underline">Facebook</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right reveal d2">
+        <h3>Tell us about your project.</h3>
+        <form onsubmit="return false">
+          <div class="form-row">
+            <label>Your Name</label>
+            <input type="text" placeholder="Full name">
+          </div>
+          <div class="form-row">
+            <label>Organization</label>
+            <input type="text" placeholder="Nonprofit, CDFI, developer...">
+          </div>
+          <div class="form-row">
+            <label>Email</label>
+            <input type="email" placeholder="you@organization.org">
+          </div>
+          <div class="form-row">
+            <label>Engagement Type</label>
+            <select>
+              <option value="" disabled selected>Select service</option>
+              <option>FeasOps™ P1 — Zoning + ROM Budget ($8K)</option>
+              <option>FeasOps™ P2 — Test Fit + ROM Update ($14K)</option>
+              <option>FeasOps™ P3 — Full Feasibility + RFP Package ($22K)</option>
+              <option>ALDi™ Delivery Backbone — Retainer</option>
+              <option>ALDDB™ Data Subscription (2026)</option>
+              <option>CDFI / Funder Partnership</option>
+              <option>Not sure — tell me what fits</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Project Brief</label>
+            <textarea rows="3" placeholder="Location, size, project type, and where you are in the process..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-white" style="width:100%;justify-content:center">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     FOOTER
+     ==================================================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-mark">
+          <img src="data:image/jpeg;base64,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TLBn1uU9K9nrk/iv4At/ij8Ote8L3Ept/wC0bYpDcqPmtpwQ0My/7SSKjg+qigDrKw/HPg/T/iD4N1vwzqsZk03VrOWynAOCEdSpIPYjOQexArx/wH+2B8PZPCOmx+N/GOh+FvGVtGbXWtHv7tYZbW9iJjnXa2Dt3qxU91IPet//AIa7+Cv/AEVDwv8A+DKP/GgDS/Z78Yaj4q+HMFprzhvFXh64l0HWv9q7tzsMv0lTy5l/2ZVr0uvnT4Z/Efwt4p/ad1uX4fa9YeJ9G1/w+t7rr6ZOskVne20qQwSMRxumilKYznFqpxivougAryn9q/8A5Nk+Kn/Ytah/6IevVq8q/asRpP2Z/imqKWY+GtQwFGSf3D0Aem6d/wAg+2/65L/IVYrxux/a4+CyWVurfE/wwGEagg6lHwcfWp/+Gu/gr/0VDwv/AODKP/GgD12ivH5P2vvgugGz4leH7hycCO1uxM5+ipkn8qiP7Vvg7UFH/CO6X4u8XyE7Qui+F750z/11kiSIfUvigD2WsvxN4p0fwXol1rGvana6PpVqm+a8vZVijQe7H+XevMm8V/GDxuoTQvB2meALOQ86j4svFvLtFz1WztWKE46brhcdx2qz4f8A2d9HGuWviLxrql98RvE9s4lt73XthtrNwOttaIBDCRzhgpfnlzQBz9xqPiv9pINaaUup+BPhhJxPq0qNbatrkf8ActkOHtYGHWVgJWB+RUB317L4Z8M6V4M8P2Gh6Hp9vpWkWEQgtrO1QJHEg6AAf5JJJrTooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//2Q==" alt="M4Di" width="32">
+        </div>
+        <div class="footer-brand-text">
+          <div class="footer-name">M4Di™</div>
+          <div class="footer-legal">Merge 4 Development Institute, Inc. · [Draft — Pending Legal Confirmation]</div>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <a href="#services">FeasOps™</a>
+        <a href="#oi">M4Di.Oi™</a>
+        <a href="#why">Why M4Di</a>
+        <a href="#trademarks">Trademarks</a>
+        <a href="#partners">Partners</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-tm-list">
+        <div class="footer-tm-row"><strong>M4Di™</strong> Merge 4 Development Institute</div>
+        <div class="footer-tm-row"><strong>M4Di.Oi™</strong> M4Di Operational Intelligence</div>
+        <div class="footer-tm-row"><strong>ALDi™</strong> Architect Led Delivery Integrator</div>
+        <div class="footer-tm-row"><strong>ALDDB™</strong> ALDi Delivery Dashboard &amp; Backbone</div>
+        <div class="footer-tm-row"><strong>FeasOps™</strong> Feasibility Operations</div>
+      </div>
+      <div class="footer-copy">
+        © 2026 M4Di — Merge 4 Development Institute, Inc.<br>
+        All marks are draft placeholders pending legal confirmation.<br>
+        Wilmington, Delaware · Mid-Atlantic Region
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(el => el.classList.add('visible'));
+    return;
+  }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => obs.observe(el));
+})();
+</script>
+
+</body>
+</html>
