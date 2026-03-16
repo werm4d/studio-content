@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aubyn Architecture LLC — Form, Function, Fusion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+/* ========================================================
+   SHARED DESIGN TOKENS — Shared System
+   ======================================================== */
+:root {
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --text-h1: clamp(3rem, 8vw, 6.5rem);
+  --text-h2: clamp(1.9rem, 3.5vw, 3.25rem);
+  --text-h3: clamp(1.1rem, 1.8vw, 1.6rem);
+  --text-body: 1rem;
+  --text-small: 0.8125rem;
+  --text-label: 0.6875rem;
+  --leading-tight: 1.06;
+  --leading-snug: 1.28;
+  --leading-body: 1.7;
+
+  /* Spacing */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 16px;
+  --sp-4: 24px; --sp-5: 32px; --sp-6: 48px;
+  --sp-7: 64px; --sp-8: 96px; --sp-9: 128px;
+  --section: clamp(var(--sp-7), 10vw, var(--sp-9));
+
+  /* Grid */
+  --grid-max: 1320px;
+  --grid-gutter: clamp(var(--sp-4), 5vw, var(--sp-7));
+
+  /* Aubyn Architecture Colors */
+  --AA-primary:       #9eab05;
+  --AA-primary-dk:    #7a8504;
+  --AA-primary-lt:    #c8d44a;
+  --AA-neutral-dark:  #63666a;
+  --AA-neutral-dkr:   #3a3c3f;
+  --AA-neutral-light: #f4f3ef;
+  --AA-neutral-mid:   #e6e4de;
+  --AA-white:         #ffffff;
+
+  --ease-out: cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ========================================================
+   BASE
+   ======================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);font-size:var(--text-body);line-height:var(--leading-body);color:var(--AA-neutral-dkr);background:var(--AA-neutral-light);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+.container{width:min(var(--grid-max),100%);margin-inline:auto;padding-inline:var(--grid-gutter)}
+.label{font-size:var(--text-label);font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--AA-primary)}
+.divider{width:40px;height:3px;background:var(--AA-primary);margin-block:var(--sp-4)}
+.section-hd{margin-bottom:var(--sp-7)}
+.section-hd h2{font-family:var(--font-display);font-size:var(--text-h2);font-weight:300;line-height:var(--leading-snug);color:var(--AA-neutral-dkr);max-width:620px}
+
+/* ========================================================
+   NAV
+   ======================================================== */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding-block:var(--sp-3);background:rgba(244,243,239,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--AA-neutral-mid)}
+nav .container{display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--font-display);font-size:1.45rem;font-weight:600;color:var(--AA-neutral-dkr)}
+.nav-logo span{color:var(--AA-primary)}
+.nav-links{display:flex;gap:var(--sp-5);list-style:none}
+.nav-links a{font-size:var(--text-small);font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--AA-neutral-dark);transition:color .18s}
+.nav-links a:hover{color:var(--AA-primary)}
+.nav-cta{background:var(--AA-primary)!important;color:var(--AA-white)!important;padding:var(--sp-2) var(--sp-4)!important;border-radius:2px;transition:background .18s!important}
+.nav-cta:hover{background:var(--AA-primary-dk)!important}
+
+/* ========================================================
+   HERO
+   ======================================================== */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;padding-top:64px}
+.hero-content{display:flex;flex-direction:column;justify-content:center;padding:var(--section) var(--sp-8) var(--section) var(--grid-gutter);background:var(--AA-neutral-light)}
+.hero h1{font-family:var(--font-display);font-size:var(--text-h1);font-weight:300;line-height:var(--leading-tight);color:var(--AA-neutral-dkr);margin-bottom:var(--sp-5)}
+.hero h1 em{font-style:italic;color:var(--AA-primary)}
+.hero-sub{font-size:1.1rem;font-weight:300;color:var(--AA-neutral-dark);max-width:460px;margin-bottom:var(--sp-6);line-height:1.75}
+.hero-actions{display:flex;gap:var(--sp-3);flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:var(--sp-2);background:var(--AA-primary);color:var(--AA-white);padding:13px 28px;font-size:var(--text-small);font-weight:500;letter-spacing:.09em;text-transform:uppercase;border-radius:2px;transition:background .18s,transform .18s var(--ease-out)}
+.btn-primary:hover{background:var(--AA-primary-dk);transform:translateY(-2px)}
+.btn-outline{display:inline-flex;align-items:center;gap:var(--sp-2);background:transparent;color:var(--AA-neutral-dkr);padding:13px 28px;font-size:var(--text-small);font-weight:500;letter-spacing:.09em;text-transform:uppercase;border:1.5px solid var(--AA-neutral-dark);border-radius:2px;transition:border-color .18s,color .18s}
+.btn-outline:hover{border-color:var(--AA-primary);color:var(--AA-primary)}
+.hero-visual{background:var(--AA-neutral-dkr);position:relative;overflow:hidden}
+.hero-grid-bg{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 72px,rgba(255,255,255,.03) 72px,rgba(255,255,255,.03) 73px),repeating-linear-gradient(90deg,transparent,transparent 72px,rgba(255,255,255,.03) 72px,rgba(255,255,255,.03) 73px)}
+.hero-glow{position:absolute;top:0;left:0;width:60%;height:60%;background:radial-gradient(ellipse at top left,rgba(158,171,5,.25) 0%,transparent 65%)}
+.hero-text-block{position:absolute;bottom:var(--sp-8);left:var(--sp-6);right:var(--sp-6)}
+.hero-tagline{font-family:var(--font-display);font-size:clamp(2.5rem,4.5vw,5rem);font-weight:300;color:var(--AA-white);line-height:1.1;opacity:.9}
+.hero-tagline em{font-style:italic;color:var(--AA-primary-lt)}
+.hero-stats{display:flex;gap:var(--sp-6);margin-top:var(--sp-5);padding-top:var(--sp-4);border-top:1px solid rgba(255,255,255,.12)}
+.stat-num{font-family:var(--font-display);font-size:2.5rem;font-weight:300;color:var(--AA-primary-lt);line-height:1}
+.stat-label{font-size:var(--text-small);color:rgba(255,255,255,.5);margin-top:4px;letter-spacing:.05em}
+
+/* ========================================================
+   WHAT WE BRING
+   ======================================================== */
+.bring{padding-block:var(--section);background:var(--AA-white)}
+.bring-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)}
+.bring-card{padding:var(--sp-5);border:1px solid var(--AA-neutral-mid);border-top:3px solid var(--AA-primary);transition:transform .35s var(--ease-out),box-shadow .35s}
+.bring-card:hover{transform:translateY(-5px);box-shadow:0 16px 48px rgba(99,102,106,.11)}
+.bring-icon{width:42px;height:42px;border-radius:50%;background:var(--AA-primary);display:flex;align-items:center;justify-content:center;margin-bottom:var(--sp-4);font-family:var(--font-display);font-size:1.3rem;color:var(--AA-white);font-weight:300}
+.bring-card h3{font-family:var(--font-display);font-size:var(--text-h3);font-weight:400;margin-bottom:var(--sp-3);color:var(--AA-neutral-dkr)}
+.bring-card p{font-size:var(--text-body);color:var(--AA-neutral-dark);line-height:var(--leading-body)}
+
+/* ========================================================
+   ABOUT
+   ======================================================== */
+.about{padding-block:var(--section);background:var(--AA-neutral-light)}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:center}
+.about-content h2{font-family:var(--font-display);font-size:var(--text-h2);font-weight:300;line-height:var(--leading-snug);color:var(--AA-neutral-dkr);margin-bottom:var(--sp-5)}
+.about-content p{color:var(--AA-neutral-dark);margin-bottom:var(--sp-4);line-height:var(--leading-body)}
+.about-meta{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);margin-top:var(--sp-5)}
+.meta-item{padding:var(--sp-3) var(--sp-4);background:var(--AA-white);border-left:3px solid var(--AA-primary)}
+.meta-item strong{display:block;font-size:var(--text-label);font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--AA-primary);margin-bottom:var(--sp-1)}
+.meta-item span{font-size:var(--text-small);color:var(--AA-neutral-dark)}
+.about-visual{position:relative}
+.about-accent{position:absolute;top:-14px;right:-14px;width:70px;height:70px;background:var(--AA-primary);z-index:1}
+.about-box{aspect-ratio:3/4;background:var(--AA-neutral-dkr);position:relative;overflow:hidden}
+.about-pattern{position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 22px,rgba(158,171,5,.07) 22px,rgba(158,171,5,.07) 23px)}
+.about-quote{position:absolute;bottom:var(--sp-4);left:var(--sp-4);right:var(--sp-4);padding:var(--sp-4);background:rgba(244,243,239,.96);backdrop-filter:blur(8px)}
+.about-quote p{font-family:var(--font-display);font-size:1.4rem;font-weight:300;font-style:italic;color:var(--AA-neutral-dkr);margin:0;line-height:1.4}
+
+/* ========================================================
+   MISSION
+   ======================================================== */
+.mission{padding-block:var(--section);background:var(--AA-neutral-dkr);color:var(--AA-white);position:relative;overflow:hidden}
+.mission::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 48px,rgba(158,171,5,.035) 48px,rgba(158,171,5,.035) 49px)}
+.mission .container{position:relative}
+.mission-inner{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:start}
+.mission-left h2{font-family:var(--font-display);font-size:var(--text-h2);font-weight:300;line-height:var(--leading-snug);margin-bottom:var(--sp-5)}
+.mission-left h2 em{font-style:italic;color:var(--AA-primary-lt)}
+.mission-left p{color:rgba(255,255,255,.7);line-height:var(--leading-body);margin-bottom:var(--sp-4)}
+.elements{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-4)}
+.el-tag{padding:3px 12px;border:1px solid rgba(158,171,5,.35);font-size:var(--text-small);color:rgba(255,255,255,.6);letter-spacing:.05em}
+.quote-block{border-left:3px solid var(--AA-primary);padding-left:var(--sp-4);margin-bottom:var(--sp-5)}
+.quote-block p{font-family:var(--font-display);font-size:1.2rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.82);line-height:1.6}
+.m-value{padding:var(--sp-4);border:1px solid rgba(255,255,255,.07);margin-bottom:var(--sp-3);transition:border-color .18s}
+.m-value:hover{border-color:rgba(158,171,5,.35)}
+.m-value h3{font-size:var(--text-small);font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--AA-primary-lt);margin-bottom:var(--sp-2)}
+.m-value p{font-size:var(--text-small);color:rgba(255,255,255,.58);line-height:1.65}
+.mission .label{color:rgba(158,171,5,.8)}
+.mission .divider{background:rgba(158,171,5,.5)}
+
+/* ========================================================
+   HIGHLIGHTS
+   ======================================================== */
+.highlights{padding-block:var(--section);background:var(--AA-white)}
+.tabs{display:flex;border-bottom:1px solid var(--AA-neutral-mid);margin-bottom:var(--sp-6)}
+.tab-btn{padding:var(--sp-3) var(--sp-5);font-size:var(--text-small);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--AA-neutral-dark);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:color .18s,border-color .18s;margin-bottom:-1px}
+.tab-btn.active,.tab-btn:hover{color:var(--AA-primary);border-bottom-color:var(--AA-primary)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-4)}
+.proj-card{display:grid;grid-template-columns:4px 1fr;gap:var(--sp-4);padding:var(--sp-4) var(--sp-4) var(--sp-4) 0;border-bottom:1px solid var(--AA-neutral-mid);transition:background .15s}
+.proj-card:hover{background:var(--AA-neutral-light)}
+.proj-stripe{background:var(--AA-primary);border-radius:1px}
+.proj-name{font-family:var(--font-display);font-size:1.2rem;font-weight:400;color:var(--AA-neutral-dkr);margin-bottom:var(--sp-1)}
+.proj-meta{font-size:var(--text-small);color:var(--AA-neutral-dark);margin-bottom:var(--sp-2)}
+.proj-tag{display:inline-block;padding:2px 10px;background:var(--AA-neutral-light);border:1px solid var(--AA-neutral-mid);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--AA-neutral-dark)}
+
+/* ========================================================
+   ALDB
+   ======================================================== */
+.aldb{padding-block:var(--section);background:var(--AA-neutral-light)}
+.aldb-inner{display:grid;grid-template-columns:1fr 2fr;gap:var(--sp-8);align-items:start}
+.aldb-sticky{position:sticky;top:80px;z-index:10}
+.aldb-btn{display:inline-block;margin-top:var(--sp-5);background:var(--AA-primary);color:#fff;text-decoration:none;font-size:var(--text-small);font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:14px 22px;box-shadow:0 4px 24px rgba(0,0,0,.15);transition:background .18s,box-shadow .18s}
+.aldb-btn:hover{background:var(--AA-primary-dk,#7a8a28);box-shadow:0 6px 32px rgba(0,0,0,.24)}
+.aldb-sticky h2{font-family:var(--font-display);font-size:var(--text-h2);font-weight:300;line-height:var(--leading-snug);color:var(--AA-neutral-dkr);margin-bottom:var(--sp-4)}
+.aldb-sticky h2 em{font-style:italic;color:var(--AA-primary)}
+.aldb-sticky p{font-size:var(--text-small);color:var(--AA-neutral-dark);line-height:var(--leading-body);margin-bottom:var(--sp-4)}
+.benefits{display:flex;flex-direction:column;gap:var(--sp-3);position:relative;z-index:0}
+.benefit{display:grid;grid-template-columns:48px 1fr;gap:var(--sp-4);padding:var(--sp-4);background:var(--AA-white);border:1px solid var(--AA-neutral-mid);transition:border-color .18s,transform .3s var(--ease-out)}
+.benefit:hover{border-color:var(--AA-primary);transform:translateX(5px)}
+.ben-num{font-family:var(--font-display);font-size:2rem;font-weight:300;color:var(--AA-primary);line-height:1;padding-top:4px}
+.benefit h3{font-size:var(--text-small);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--AA-neutral-dkr);margin-bottom:var(--sp-2)}
+.benefit p{font-size:var(--text-small);color:var(--AA-neutral-dark);line-height:1.65}
+
+/* ========================================================
+   CONTACT
+   ======================================================== */
+.contact{padding-block:var(--section);background:var(--AA-primary);color:var(--AA-white)}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:center}
+.contact-left h2{font-family:var(--font-display);font-size:var(--text-h2);font-weight:300;line-height:var(--leading-snug);margin-bottom:var(--sp-4)}
+.contact-left p{color:rgba(255,255,255,.8);margin-bottom:var(--sp-5);line-height:var(--leading-body)}
+.c-details{display:flex;flex-direction:column;gap:var(--sp-3);margin-top:var(--sp-5)}
+.c-line{display:flex;align-items:center;gap:var(--sp-3);font-size:var(--text-small);color:rgba(255,255,255,.85)}
+.c-line strong{font-size:var(--text-label);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);min-width:72px}
+.contact-form{padding:var(--sp-6);background:rgba(255,255,255,.12);backdrop-filter:blur(10px)}
+.form-title{font-family:var(--font-display);font-size:1.5rem;font-weight:300;margin-bottom:var(--sp-5);color:var(--AA-white)}
+.form-row{margin-bottom:var(--sp-3)}
+.form-row label{display:block;font-size:var(--text-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-bottom:var(--sp-2)}
+.form-row input,.form-row textarea,.form-row select{width:100%;padding:11px 15px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);color:var(--AA-white);font-family:var(--font-body);font-size:var(--text-body);outline:none;transition:border-color .18s,background .18s}
+.form-row input::placeholder,.form-row textarea::placeholder{color:rgba(255,255,255,.38)}
+.form-row input:focus,.form-row textarea:focus{border-color:rgba(255,255,255,.65);background:rgba(255,255,255,.2)}
+.form-row textarea{resize:vertical;min-height:110px}
+.form-row select{color:rgba(255,255,255,.8);cursor:pointer}
+.form-row select option{background:var(--AA-neutral-dkr);color:var(--AA-white)}
+.btn-submit{width:100%;padding:13px;background:var(--AA-neutral-dkr);color:var(--AA-white);border:none;font-family:var(--font-body);font-size:var(--text-small);font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .18s;margin-top:var(--sp-3)}
+.btn-submit:hover{background:#1a1c1f}
+.contact .label{color:rgba(255,255,255,.6)}
+.contact .divider{background:rgba(255,255,255,.35)}
+
+/* ========================================================
+   FOOTER
+   ======================================================== */
+footer{background:var(--AA-neutral-dkr);padding-block:var(--sp-5)}
+footer .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-4)}
+.footer-brand{font-family:var(--font-display);font-size:1.2rem;font-weight:300;color:rgba(255,255,255,.65)}
+.footer-brand span{color:var(--AA-primary-lt)}
+footer p{font-size:var(--text-small);color:rgba(255,255,255,.35)}
+.footer-nav{display:flex;gap:var(--sp-4);list-style:none}
+.footer-nav a{font-size:var(--text-small);color:rgba(255,255,255,.35);transition:color .18s}
+.footer-nav a:hover{color:var(--AA-primary-lt)}
+
+/* ========================================================
+   RESPONSIVE
+   ======================================================== */
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-visual{min-height:380px}
+  .about-inner,.mission-inner,.aldb-inner,.contact-inner{grid-template-columns:1fr}
+  .bring-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .bring-grid,.proj-grid,.about-meta{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hero-stats{flex-direction:column;gap:var(--sp-3)}
+}
+
+/* ========================================================
+   ANIMATIONS
+   ======================================================== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{animation:fadeUp .6s var(--ease-out) .1s both}
+.hero h1{animation:fadeUp .7s var(--ease-out) .22s both}
+.hero-sub{animation:fadeUp .7s var(--ease-out) .38s both}
+.hero-actions{animation:fadeUp .7s var(--ease-out) .52s both}
+.hero-tagline{animation:fadeUp .8s var(--ease-out) .3s both}
+.hero-stats{animation:fadeUp .8s var(--ease-out) .5s both}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="#" class="nav-logo" aria-label="Aubyn Architecture home" style="display:flex;align-items:center;line-height:0">
+      <div style="height:36px;display:flex;align-items:center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="190 0 352 84" height="100%" width="auto" style="display:block" role="img" aria-label="Aubyn Architecture">
+  <g
+         id="g1"
+         transform="translate(-28.87931,-0.86206897)">
+        <path
+           d="m 348.16832,15.659038 h -8.88574 V 3.2718864 h -3.09532 V 34.359906 h 3.09532 V 18.87836 h 8.88574 c 4.8993,0 8.88575,4.139452 8.88575,9.227914 0,5.088408 -3.98597,9.227915 -8.88575,9.227915 l -8.99954,0.0048 -0.10596,3.214508 h 9.1055 c 6.60888,0 11.98569,-5.583853 11.98569,-12.447236 0,-6.863382 -5.37681,-12.447236 -11.98569,-12.447236 z"
+           fill="#59595c"
+           id="path5"
+           style="stroke-width:0.0542905" />
+        <path
+           d="m 382.96987,15.472495 -4.98317,14.405532 -11.3762,-14.382838 -0.0177,-0.02269 h -4.17303 l 14.29707,18.07626 -6.6183,19.120661 -0.0293,0.08468 h 3.41174 l 12.87572,-37.196921 0.0298,-0.08468 z"
+           fill="#59595c"
+           id="path6"
+           style="stroke-width:0.056602" />
+        <path
+           d="m 397.3053,15.472495 h -7.8586 v 25.564529 h 3.23831 V 18.778467 h 4.62029 c 5.12614,0 9.29626,4.250869 9.29626,9.476292 v 12.782265 h 3.24316 V 28.254759 c 0,-7.048116 -5.62521,-12.782264 -12.53942,-12.782264 z"
+           fill="#59595c"
+           id="path7"
+           style="stroke-width:0.0562729" />
+        <path
+           d="m 319.13156,55.621857 c -1.49184,-0.412528 -3.04415,-0.197373 -4.3853,0.605413 v -0.809717 h -3.00566 v 0.0617 h -0.0527 v 25.502346 h 3.06335 V 61.839387 c 0,-0.542747 0.13323,-1.081574 0.38599,-1.557678 0.79862,-1.489671 2.57069,-2.001795 3.9517,-1.141797 l 0.0861,0.05329 v -3.559529 l -0.0431,-0.01182 z"
+           fill="#59595c"
+           id="path9"
+           style="stroke-width:0.0547315" />
+        <path
+           d="m 340.71016,74.428338 -0.0397,0.0454 c -0.14692,0.167802 -0.27229,0.304975 -0.3953,0.431807 -3.58435,3.695848 -9.4163,3.695848 -13.00065,0 -1.73646,-1.790417 -2.69272,-4.170612 -2.69272,-6.702755 0,-2.5322 0.95626,-4.912339 2.69272,-6.702812 1.73641,-1.790417 4.04474,-2.77643 6.50055,-2.77643 2.45581,0 4.76414,0.986013 6.50054,2.77643 l 0.0422,0.04348 2.22462,-2.293822 0.0972,-0.105126 h -0.1197 c -2.34041,-2.40389 -5.44663,-3.727439 -8.75008,-3.727439 -3.3034,0 -6.42493,1.32997 -8.76727,3.745226 -4.83451,4.984845 -4.83451,13.095647 0,18.080496 2.41751,2.492704 5.59217,3.738806 8.76777,3.738806 3.17466,0 6.35031,-1.246102 8.76683,-3.738297 0.18666,-0.187066 0.36042,-0.386916 0.53363,-0.58529 l 0.0402,-0.04637 -2.4012,-2.18381 z"
+           fill="#59595c"
+           id="path10"
+           style="stroke-width:0.0559602" />
+        <path
+           d="m 359.19964,56.08714 c -3.38774,0 -6.61768,1.491483 -8.88574,4.09718 V 43.699995 h -3.09531 v 37.221522 h 0.0624 v 0.06008 h 3.03751 V 68.53437 c 0,-5.08846 3.98597,-9.22791 8.88575,-9.22791 4.89972,0 8.88573,4.13945 8.88573,9.22791 v 12.447229 h 3.09532 V 68.53437 c 0,-6.863379 -5.3768,-12.44723 -11.98569,-12.44723 z"
+           fill="#59595c"
+           id="path11"
+           style="stroke-width:0.0542911" />
+        <path
+           d="M 380.04577,80.981599 V 55.417071 h -3.2753 v 25.564528 z"
+           fill="#59595c"
+           id="path12"
+           style="stroke-width:0.0565935" />
+        <path
+           d="M 392.719,56.087141 V 43.699995 h -3.2848 v 12.387146 h -4.74873 v 3.214507 h 4.74873 v 21.679951 h 3.2848 V 59.301648 h 4.74873 v -3.214507 z"
+           fill="#59595c"
+           id="path13"
+           style="stroke-width:0.055932" />
+        <path
+           d="m 419.53657,74.469677 c -1.82508,2.04101 -4.45216,3.211524 -7.2073,3.211524 -5.27714,0 -9.57416,-4.218222 -9.60821,-9.415532 h 15.56926 v -3.306304 h -14.9879 c 0.98755,-2.674625 3.10631,-4.74723 5.82544,-5.693244 4.99349,-1.741451 10.49524,0.849305 12.26278,5.775691 l 0.0145,0.04091 h 3.49209 l -0.0205,-0.07693 c -1.7866,-6.82137 -8.8678,-10.939931 -15.7854,-9.183648 -6.91559,1.762191 -11.09262,8.747375 -9.31051,15.570221 1.50785,5.756881 6.78602,9.589235 12.55444,9.589235 1.06715,0 2.1513,-0.131257 3.23091,-0.405643 2.52148,-0.642987 4.76236,-1.999079 6.48036,-3.922131 l 0.0415,-0.04645 -2.51048,-2.183631 -0.0415,0.04643 z"
+           fill="#59595c"
+           id="path14"
+           style="stroke-width:0.0572123" />
+        <path
+           d="m 485.30705,55.478772 v -0.0617 h -3.11497 v 22.258557 h -4.52888 c -5.02468,0 -9.11235,-4.25087 -9.11235,-9.476293 V 55.417071 h -3.17375 v 12.782264 c 0,7.048117 5.51392,12.782262 12.29085,12.782262 h 7.70314 V 55.478772 Z"
+           fill="#59595c"
+           id="path17"
+           style="stroke-width:0.0557136" />
+        <path
+           d="M 458.31051,56.087141 V 43.699995 h -3.28479 v 12.387146 h -4.74874 v 3.214507 h 4.74874 v 21.679956 h 3.28479 V 59.301648 h 4.74874 v -3.214507 z"
+           fill="#59595c"
+           id="path20"
+           style="stroke-width:0.055932" />
+        <path
+           d="m 446.22839,74.428338 -0.0397,0.0454 c -0.14692,0.167802 -0.27229,0.304975 -0.3953,0.431807 -3.58435,3.695848 -9.4163,3.695848 -13.00065,0 -1.73646,-1.790417 -2.69273,-4.170612 -2.69273,-6.702755 0,-2.5322 0.95627,-4.912339 2.69273,-6.702812 1.73641,-1.790417 4.04474,-2.77643 6.50055,-2.77643 2.45581,0 4.76414,0.986013 6.50054,2.77643 l 0.0422,0.04348 2.22463,-2.293822 0.0971,-0.105126 h -0.1197 c -2.3404,-2.40389 -5.44662,-3.727439 -8.75007,-3.727439 -3.3034,0 -6.42494,1.32997 -8.76728,3.745226 -4.83451,4.984845 -4.83451,13.095647 0,18.080496 2.41751,2.492704 5.59218,3.738806 8.76777,3.738806 3.17467,0 6.35032,-1.246102 8.76684,-3.738297 0.18665,-0.187066 0.36042,-0.386916 0.53362,-0.58529 l 0.0402,-0.04637 -2.4012,-2.18381 z"
+           fill="#59595c"
+           id="path21"
+           style="stroke-width:0.0559602" />
+        <path
+           d="m 497.58824,55.621857 c -1.49183,-0.412528 -3.04415,-0.197373 -4.3853,0.605413 v -0.809717 h -3.00566 v 0.0617 h -0.0527 v 25.502346 h 3.06334 V 61.839387 c 0,-0.542747 0.13324,-1.081574 0.38599,-1.557678 0.79862,-1.489671 2.57069,-2.001795 3.9517,-1.141797 l 0.0861,0.05329 v -3.559529 l -0.0431,-0.01182 z"
+           fill="#59595c"
+           id="path22"
+           style="stroke-width:0.0547315" />
+        <path
+           d="m 519.40608,74.469677 c -1.82508,2.04101 -4.45216,3.211524 -7.2073,3.211524 -5.27714,0 -9.57417,-4.218222 -9.60821,-9.415532 h 15.56926 v -3.306304 h -14.9879 c 0.98755,-2.674625 3.1063,-4.74723 5.82544,-5.693244 4.99348,-1.741451 10.49524,0.849305 12.26277,5.775691 l 0.0145,0.04091 h 3.4921 l -0.0205,-0.07693 c -1.78661,-6.82137 -8.86781,-10.939931 -15.7854,-9.183648 -6.91559,1.762191 -11.09262,8.747375 -9.31051,15.570221 1.50785,5.756881 6.78602,9.589235 12.55443,9.589235 1.06716,0 2.15131,-0.131257 3.23091,-0.405643 2.52149,-0.642987 4.76237,-1.999079 6.48037,-3.922131 l 0.0415,-0.04645 -2.51048,-2.183631 -0.0415,0.04643 z"
+           fill="#59595c"
+           id="path23"
+           style="stroke-width:0.0572123" />
+        <path
+           d="m 331.61788,15.534197 v -0.0617 h -3.11497 v 22.258557 h -4.52889 c -5.02467,0 -9.11234,-4.25087 -9.11234,-9.476293 V 15.472495 h -3.17376 v 12.782264 c 0,7.048117 5.51393,12.782262 12.29086,12.782262 h 7.70314 V 15.534197 Z"
+           fill="#59595c"
+           id="path25"
+           style="stroke-width:0.0557136" />
+      </g>
+  <path
+         style="fill:#9dab3a;fill-opacity:1"
+         d="M 230.93469,79.664542 C 229.642,79.443436 227.75355,79.047835 226.7381,78.785433 212.16733,75.02014 200.66443,63.249872 197.62381,48.99442 c -1.05575,-4.949696 -1.12669,-9.24329 -0.24015,-14.534174 2.46277,-14.697837 14.28732,-27.2302591 29.3587,-31.1162496 5.07422,-1.308335 5.93859,-1.3562674 24.45767,-1.3562674 h 16.89232 v 4.910727 4.910727 l -17.17982,0.08978 c -16.40212,0.08572 -17.27608,0.110918 -19.30632,0.556611 -6.32921,1.389443 -11.06418,3.840563 -15.36893,7.955939 -4.76499,4.555361 -7.64613,9.939702 -8.70401,16.266279 -0.57089,3.414175 -0.36412,7.731703 0.53933,11.261771 1.22087,4.770338 3.67236,9.132059 7.17744,12.77024 2.6,2.698721 5.20023,4.608846 8.40981,6.17784 3.04595,1.488999 4.66531,2.054407 7.84802,2.740159 2.14026,0.461145 2.87366,0.482786 19.29274,0.569315 l 17.06791,0.08995 V 45.874501 21.461931 h 5.14835 5.14835 v 29.323221 29.32322 l -22.4401,-0.02093 c -20.50972,-0.01912 -22.64228,-0.05548 -24.79043,-0.42292 z"
+         id="path4" />
+</svg>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#highlights">Projects</a></li>
+      <li><a href="#aldb">ALDB</a></li>
+      <li><a href="#contact" class="nav-cta">Start a Project</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="label">Architecture · Landscape · Consulting</span></div>
+    <h1>Design that<br><em>fuses</em> form<br>with function.</h1>
+    <p class="hero-sub">Aubyn Architecture LLC is a multi-discipline firm delivering full-service architecture, landscape design, and consulting across Delaware, Pennsylvania, and Connecticut.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start a Project</a>
+      <a href="#highlights" class="btn-outline">View Our Work</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-text-block">
+      <p class="hero-tagline"><em>Form.</em><br>Function.<br>Fusion.</p>
+      <div class="hero-stats">
+        <div><div class="stat-num">20+</div><div class="stat-label">Years Experience</div></div>
+        <div><div class="stat-num">3</div><div class="stat-label">States Licensed</div></div>
+        <div><div class="stat-num">AIA</div><div class="stat-label">Certified</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE BRING -->
+<section class="bring" id="what-we-bring">
+  <div class="container">
+    <div class="section-hd">
+      <span class="label">What We Bring</span>
+      <div class="divider"></div>
+      <h2>Every project benefits from three core strengths.</h2>
+    </div>
+    <div class="bring-grid">
+      <div class="bring-card">
+        <div class="bring-icon">V</div>
+        <h3>Versatility</h3>
+        <p>From intimate residential renovations to complex $70M healthcare programs, we manage diverse project types, scales, and program requirements with equal depth and rigor. No project is too specialized — our portfolio proves it.</p>
+      </div>
+      <div class="bring-card">
+        <div class="bring-icon">S</div>
+        <h3>Strategic Thinking</h3>
+        <p>Our owner's-side project leadership experience means we see the full picture — navigating regulatory processes, managing stakeholder expectations, and integrating design decisions with long-term operational and financial goals.</p>
+      </div>
+      <div class="bring-card">
+        <div class="bring-icon">C</div>
+        <h3>Collaboration</h3>
+        <p>Great buildings are built by great teams. We thrive in multidisciplinary environments, working seamlessly with engineers, general contractors, landscape consultants, and community stakeholders toward a unified result.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-content">
+        <span class="label">About the Firm</span>
+        <div class="divider"></div>
+        <h2>Architect. Landscape Designer. Entrepreneur.</h2>
+        <p>Aubyn Architecture LLC is led by David C. Ainsworth AIA — a registered architect with over 20 years of experience spanning residential, commercial, and healthcare design. The firm's multi-discipline practice reflects a core belief: exceptional environments require integrated thinking across design, landscape, and strategy.</p>
+        <p>Registered in Delaware, Pennsylvania, and Connecticut, we bring the full range of architectural services — from early feasibility studies through construction administration — to every project we take on.</p>
+        <p>Our work spans sectors because great design principles are universal. Whether it's a 3,200 SF beach residence or a $70M inpatient neonatal wing, our commitment to quality and client service never wavers.</p>
+        <div class="about-meta">
+          <div class="meta-item"><strong>Principal</strong><span>David C. Ainsworth AIA, NCARB</span></div>
+          <div class="meta-item"><strong>Office</strong><span>Wilmington, Delaware</span></div>
+          <div class="meta-item"><strong>Licensed In</strong><span>DE · PA · CT</span></div>
+          <div class="meta-item"><strong>Services</strong><span>Architecture · Landscape · Consulting</span></div>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="about-accent"></div>
+        <div class="about-box" style="display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <div style="width:90%;height:90%;display:flex;align-items:center;justify-content:center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%" style="display:block" role="img" aria-label="Aubyn Architecture icon">
+  <path
+       style="fill:#9dab3a;fill-opacity:1"
+       d="m 204.375,468.14652 c -7.21875,-1.23473 -17.76451,-3.4439 -23.43504,-4.90923 C 99.57222,442.21072 35.33644,376.48189 18.35666,296.875 12.46104,269.23436 12.06487,245.25759 17.01559,215.71164 30.76848,133.63435 96.80045,63.649401 180.96371,41.948817 209.29977,34.64267 214.1267,34.375 317.54298,34.375 H 411.875 v 27.42303 27.42303 l -95.9375,0.50138 c -91.59459,0.47869 -96.47506,0.6194 -107.8125,3.10829 -35.3443,7.75908 -61.78582,21.4469 -85.82493,44.42843 -26.60919,25.43855 -42.69834,55.5064 -48.60587,90.83598 -3.18803,19.06581 -2.03338,43.17624 3.01177,62.88923 6.81773,26.63905 20.50758,50.99627 40.08108,71.31299 14.51919,15.0705 29.03967,25.73724 46.96295,34.49898 17.00953,8.31505 26.05256,11.47245 43.82586,15.30191 11.95185,2.57517 16.04737,2.69602 107.73664,3.17924 l 95.3125,0.50231 V 279.4524 143.125 h 28.75 28.75 v 163.75 163.75 l -125.3125,-0.11675 c -114.53267,-0.1067 -126.44156,-0.30986 -138.4375,-2.36173 z"
+       id="path4" />
+  <g
+       id="g1"
+       transform="matrix(0,-0.69610799,0.69610799,0,285.80765,471.53776)">
+      <path
+         d="m 129.38729,130.00743 v 30.0274 h -18.54262 c -10.22466,0 -18.542599,-7.98512 -18.542599,-17.8009 0,-9.81567 8.317939,-17.8009 18.542599,-17.8009 h 18.78398 v -6.20087 h -18.78398 c -13.791299,0 -25.011519,10.7714 -25.011519,24.01106 0,13.23965 11.22022,24.01106 25.011519,24.01106 h 25.01152 v -36.07449 h -6.28935 z"
+         fill="#59595c"
+         id="path8-4"
+         style="display:inline;stroke-width:0.108926" />
+      <path
+         d="m 157.8425,118.61684 c -2.80236,-0.77492 -5.71833,-0.37076 -8.23764,1.13725 v -1.52103 h -5.64604 v 0.11591 h -0.0989 v 47.90531 h 5.75439 v -35.95801 c 0,-1.01954 0.25027,-2.03171 0.72507,-2.92605 1.50018,-2.7983 4.82896,-3.76031 7.42313,-2.14483 l 0.16174,0.1001 v -6.68645 l -0.0809,-0.0222 z"
+         fill="#59595c"
+         id="path9-5"
+         style="display:inline;stroke-width:0.102811" />
+      <path
+         d="m 198.37718,153.94419 -0.0746,0.0853 c -0.27598,0.31521 -0.51149,0.57289 -0.74256,0.81114 -6.73308,6.94253 -17.6882,6.94253 -24.42129,0 -3.26188,-3.36324 -5.0582,-7.83436 -5.0582,-12.59091 0,-4.75665 1.79632,-9.22766 5.0582,-12.591 3.26179,-3.36324 7.59791,-5.21544 12.21107,-5.21544 4.61315,0 8.94928,1.8522 12.21105,5.21544 l 0.0792,0.0817 4.17888,-4.30887 0.18251,-0.19747 h -0.22486 c -4.39637,-4.51563 -10.2313,-7.00187 -16.43672,-7.00187 -6.20532,0 -12.06902,2.4983 -16.46903,7.03528 -9.08147,9.36387 -9.08147,24.59974 0,33.96361 4.54121,4.68246 10.50471,7.02323 16.46996,7.02323 5.9635,0 11.92886,-2.34077 16.46821,-7.02227 0.35062,-0.3514 0.67703,-0.72681 1.00239,-1.09945 l 0.0755,-0.0871 -4.51057,-4.10221 z"
+         fill="#59595c"
+         id="path10-5"
+         style="display:inline;stroke-width:0.105119" />
+      <path
+         d="m 233.10906,119.49086 c -6.36375,0 -12.43109,2.8017 -16.69156,7.69642 V 96.222023 h -5.81445 v 69.919387 h 0.11728 v 0.11287 h 5.70586 v -23.38171 c 0,-9.5585 7.48751,-17.33432 16.69158,-17.33432 9.20397,0 16.69156,7.77582 16.69156,17.33432 v 23.38171 h 5.81446 v -23.38171 c 0,-12.89263 -10.10016,-23.38171 -22.51473,-23.38171 z"
+         fill="#59595c"
+         id="path11-1"
+         style="display:inline;stroke-width:0.101984" />
+      <path
+         d="m 272.26782,166.25428 v -48.02212 h -6.15254 v 48.02212 z"
+         fill="#59595c"
+         id="path12-7"
+         style="display:inline;stroke-width:0.106309" />
+      <path
+         d="M 296.07407,119.49086 V 96.222023 h -6.17038 v 23.268837 h -8.92034 v 6.03835 h 8.92034 v 40.72507 h 6.17038 v -40.72507 h 8.92034 v -6.03835 z"
+         fill="#59595c"
+         id="path13-1"
+         style="display:inline;stroke-width:0.105066" />
+      <path
+         d="m 346.44999,154.02185 c -3.42836,3.83397 -8.36324,6.03274 -13.53868,6.03274 -9.91293,0 -17.98475,-7.92379 -18.04871,-17.68677 h 29.24634 v -6.21078 h -28.15427 c 1.85508,-5.02419 5.83509,-8.91751 10.94289,-10.69457 9.3801,-3.27126 19.71496,1.59539 23.03522,10.84944 l 0.0273,0.0769 h 6.55979 l -0.0385,-0.14452 c -3.35608,-12.81372 -16.65787,-20.5503 -29.65235,-17.25118 -12.9907,3.31022 -20.83711,16.43166 -17.48948,29.24815 2.83244,10.81411 12.74732,18.01306 23.58309,18.01306 2.00461,0 4.04115,-0.24657 6.06915,-0.76199 4.73653,-1.20783 8.94595,-3.7552 12.17315,-7.36759 l 0.078,-0.0872 -4.71585,-4.10188 -0.078,0.0872 z"
+         fill="#59595c"
+         id="path14-1"
+         style="display:inline;stroke-width:0.107472" />
+      <path
+         d="m 469.99765,118.34806 v -0.1159 h -5.85137 v 41.81196 h -8.50736 c -9.43869,0 -17.11723,-7.98512 -17.11723,-17.8009 v -24.01106 h -5.9618 v 24.01106 c 0,13.23965 10.35772,24.01105 23.08796,24.01105 h 14.47009 v -47.90621 z"
+         fill="#59595c"
+         id="path17-5"
+         style="display:inline;stroke-width:0.104656" />
+      <path
+         d="M 419.28555,119.49086 V 96.222023 h -6.17039 v 23.268837 h -8.92033 v 6.03835 h 8.92033 v 40.72508 h 6.17039 v -40.72508 h 8.92034 v -6.03835 z"
+         fill="#59595c"
+         id="path20"
+         style="display:inline;stroke-width:0.105066" />
+      <path
+         d="m 396.58968,153.94419 -0.0746,0.0853 c -0.27599,0.31521 -0.5115,0.57289 -0.74256,0.81114 -6.73308,6.94253 -17.68821,6.94253 -24.42129,0 -3.26188,-3.36324 -5.0582,-7.83436 -5.0582,-12.59091 0,-4.75665 1.79632,-9.22766 5.0582,-12.591 3.26178,-3.36324 7.59791,-5.21544 12.21106,-5.21544 4.61316,0 8.94928,1.8522 12.21106,5.21544 l 0.0792,0.0817 4.17889,-4.30887 0.1825,-0.19747 h -0.22485 c -4.39638,-4.51563 -10.2313,-7.00187 -16.43672,-7.00187 -6.20533,0 -12.06903,2.4983 -16.46904,7.03528 -9.08147,9.36387 -9.08147,24.59974 0,33.96361 4.54121,4.68246 10.50471,7.02323 16.46997,7.02323 5.9635,0 11.92885,-2.34077 16.4682,-7.02227 0.35063,-0.3514 0.67704,-0.72681 1.0024,-1.09945 l 0.0755,-0.0871 -4.51057,-4.10221 z"
+         fill="#59595c"
+         id="path21"
+         style="display:inline;stroke-width:0.105119" />
+      <path
+         d="m 493.06746,118.61684 c -2.80236,-0.77492 -5.71833,-0.37076 -8.23764,1.13725 v -1.52103 h -5.64603 v 0.11591 h -0.099 v 47.90531 h 5.75439 v -35.95801 c 0,-1.01954 0.25028,-2.03171 0.72507,-2.92605 1.50018,-2.7983 4.82896,-3.76031 7.42313,-2.14483 l 0.16174,0.1001 v -6.68645 l -0.0809,-0.0222 z"
+         fill="#59595c"
+         id="path22"
+         style="display:inline;stroke-width:0.102811" />
+      <path
+         d="m 534.05155,154.02185 c -3.42836,3.83397 -8.36325,6.03274 -13.53868,6.03274 -9.91293,0 -17.98475,-7.92379 -18.04871,-17.68677 h 29.24634 v -6.21078 h -28.15427 c 1.85508,-5.02419 5.83509,-8.91751 10.94289,-10.69457 9.3801,-3.27126 19.71496,1.59539 23.03522,10.84944 l 0.0273,0.0769 h 6.55979 l -0.0385,-0.14452 c -3.35608,-12.81372 -16.65788,-20.5503 -29.65235,-17.25118 -12.9907,3.31022 -20.83712,16.43166 -17.48949,29.24815 2.83245,10.81411 12.74733,18.01306 23.5831,18.01306 2.00461,0 4.04115,-0.24657 6.06915,-0.76199 4.73652,-1.20783 8.94595,-3.7552 12.17315,-7.36759 l 0.078,-0.0872 -4.71585,-4.10188 -0.078,0.0872 z"
+         fill="#59595c"
+         id="path23"
+         style="display:inline;stroke-width:0.107472" />
+    </g>
+</svg>
+          </div>
+          <div class="about-quote">
+            <p>"Design begins with listening and ends with buildings that endure."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION & VALUES -->
+<section class="mission" id="mission">
+  <div class="container">
+    <div class="mission-inner">
+      <div class="mission-left">
+        <span class="label">Mission &amp; Values</span>
+        <div class="divider"></div>
+        <h2><em>Form, Function,</em><br>Fusion.</h2>
+        <p>Our work finds balance and harmony between the natural and built environment — elegance in simplicity, beauty in the subtle. The best architecture doesn't compete with its surroundings; it completes them.</p>
+        <p>A dedication to efficient resource use and zero-waste design is not a constraint. It is a creative discipline that consistently produces more thoughtful, enduring results.</p>
+        <div class="elements">
+          <span class="el-tag">Orientation</span><span class="el-tag">Light</span><span class="el-tag">Color</span>
+          <span class="el-tag">Air</span><span class="el-tag">Soil</span><span class="el-tag">Water</span>
+          <span class="el-tag">Fire</span><span class="el-tag">Sight</span><span class="el-tag">Sound</span>
+          <span class="el-tag">Touch</span><span class="el-tag">Smell</span>
+        </div>
+      </div>
+      <div class="mission-right">
+        <div class="quote-block">
+          <p>"Architecture is the sole profession qualified to design and advise — with technical and aesthetic judgment — on the built environment, thereby inspiring the community and its citizens."</p>
+        </div>
+        <div class="m-value">
+          <h3>Public Health &amp; Safety</h3>
+          <p>Architects are obligated to protect the public interest. That obligation now encompasses sustainability of the global environment and accessibility for all persons — not just code compliance.</p>
+        </div>
+        <div class="m-value">
+          <h3>Design Excellence</h3>
+          <p>We create functional layouts, energy-efficient construction, and visually compelling environments that increase market value while delivering genuine human benefit to occupants and community.</p>
+        </div>
+        <div class="m-value">
+          <h3>Client Advocacy</h3>
+          <p>Architecture is largely self-regulated. We take that responsibility seriously. Every decision is made in service of your interests, in accordance with the highest professional standards.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREER HIGHLIGHTS -->
+<section class="highlights" id="highlights">
+  <div class="container">
+    <div class="section-hd">
+      <span class="label">Career Highlights</span>
+      <div class="divider"></div>
+      <h2>Selected projects across design and management.</h2>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(event,'design')">Design Projects</button>
+      <button class="tab-btn" onclick="switchTab(event,'pm')">Project Management</button>
+    </div>
+    <div id="design" class="tab-panel active">
+      <div class="proj-grid">
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">Private Residence, Broadkill Beach</div>
+          <div class="proj-meta">Milton, DE · 3,200 SF · Raised 2-Story New Construction</div>
+          <span class="proj-tag">Residential</span></div></div>
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">Snow's Mixed-Use</div>
+          <div class="proj-meta">Southbridge, Wilmington, DE · 2,000 SF · 2-Story Commercial</div>
+          <span class="proj-tag">Mixed-Use</span></div></div>
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">WHACC Parks &amp; Recreation</div>
+          <div class="proj-meta">Wilmington, DE · 10,000 SF+ · Interior Improvements &amp; Upgrades</div>
+          <span class="proj-tag">Institutional</span></div></div>
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">St. Vincent's Medical Center</div>
+          <div class="proj-meta">New Haven, CT · 1,180 SF · Physicians Lounge</div>
+          <span class="proj-tag">Healthcare</span></div></div>
+      </div>
+    </div>
+    <div id="pm" class="tab-panel">
+      <div class="proj-grid">
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">LWS: The Cut, Temple University</div>
+          <div class="proj-meta">Philadelphia, PA · Full City Block · $8M Landscape Renovation</div>
+          <span class="proj-tag">Landscape</span></div></div>
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">NNICU / Maternity &amp; Newborn</div>
+          <div class="proj-meta">New Haven, CT · 120,000 SF · $70M Multi-Floor In-Patient Program</div>
+          <span class="proj-tag">Healthcare</span></div></div>
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">Smilow Phase 1 Clinical Trials</div>
+          <div class="proj-meta">New Haven, CT · 7,000 SF · $3.8M Out-Patient Infusion Clinic</div>
+          <span class="proj-tag">Healthcare</span></div></div>
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">Pediatric Specialty Center</div>
+          <div class="proj-meta">Trumbull, CT · 10,000 SF · $3.5M Out-Patient Clinic</div>
+          <span class="proj-tag">Healthcare</span></div></div>
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">Zeego OR</div>
+          <div class="proj-meta">New Haven, CT · 900 SF · $3.8M Robotic Operating Room</div>
+          <span class="proj-tag">Healthcare</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALDB -->
+<section class="aldb" id="aldb">
+  <div class="container">
+    <div class="aldb-inner">
+      <div class="aldb-sticky">
+        <span class="label">Beyond Basics</span>
+        <div class="divider"></div>
+        <h2>Architect-Led<br><em>Design-Build.</em></h2>
+        <p>Our preferred delivery method — and your best path to a successful project. With ALDB, you sign one contract, communicate with one team, and receive a building that remains true to the original design from concept through completion.</p>
+        <a href="#contact" class="aldb-btn">Discuss Your Project →</a>
+      </div>
+      <div class="benefits">
+        <div class="benefit"><div class="ben-num">01</div><div>
+          <h3>Single Point of Contact</h3>
+          <p>One contract, one team, one accountable partner. We eliminate the miscommunication that commonly occurs between separate architects and contractors — protecting your time, budget, and peace of mind.</p></div></div>
+        <div class="benefit"><div class="ben-num">02</div><div>
+          <h3>Streamlined Communication</h3>
+          <p>When architects and builders collaborate from day one, design intent travels perfectly from drawing board to job site. Fewer change orders. Fewer surprises. More of what you envisioned.</p></div></div>
+        <div class="benefit"><div class="ben-num">03</div><div>
+          <h3>Cost Control</h3>
+          <p>We involve the builder during design — not after. Potential cost issues are identified and resolved before construction begins, not as expensive mid-project corrections.</p></div></div>
+        <div class="benefit"><div class="ben-num">04</div><div>
+          <h3>Faster Delivery</h3>
+          <p>Overlapping design and construction phases compresses the schedule without cutting corners. You get to your ribbon-cutting sooner without compromising quality.</p></div></div>
+        <div class="benefit"><div class="ben-num">05</div><div>
+          <h3>Design Integrity</h3>
+          <p>The original design intent is faithfully maintained throughout construction. Our architects are present, engaged, and empowered to solve problems that honor your vision.</p></div></div>
+        <div class="benefit"><div class="ben-num">06</div><div>
+          <h3>Innovation On-Site</h3>
+          <p>When field challenges arise, our architects develop creative solutions in real time — fixes that serve the project's design goals, not just the path of least resistance.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <span class="label">Get in Touch</span>
+        <div class="divider"></div>
+        <h2>Let's build something extraordinary together.</h2>
+        <p>Whether you're planning a new build, navigating a complex renovation, or exploring whether architecture services are right for your project — we're ready to listen first and design second.</p>
+        <div class="c-details">
+          <div class="c-line"><strong>Principal</strong>David C. Ainsworth AIA</div>
+          <div class="c-line"><strong>Phone</strong>203 506 2413</div>
+          <div class="c-line"><strong>Email</strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="20415542594e4152434860504d0e4d45">[email&#160;protected]</a></div>
+          <div class="c-line"><strong>Address</strong>215 N Market St. Suite 317, Wilmington DE 19801</div>
+          <div class="c-line"><strong>Licensed</strong>Delaware · Pennsylvania · Connecticut</div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-title">Tell us about your project</div>
+        <div class="form-row"><label>Your Name</label><input type="text" placeholder="Full name"></div>
+        <div class="form-row"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+        <div class="form-row"><label>Project Type</label>
+          <select><option value="" disabled selected>Select a category</option>
+          <option>Residential</option><option>Commercial</option><option>Healthcare</option>
+          <option>Landscape Design</option><option>Consulting / Owner's Rep</option>
+          <option>Architect-Led Design-Build</option><option>Other</option></select></div>
+        <div class="form-row"><label>Project Description</label><textarea placeholder="Tell us about your project, site, timeline, and goals..."></textarea></div>
+        <button class="btn-submit">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-brand" style="line-height:0">
+      <div style="height:28px;width:auto;opacity:0.75">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="190 0 352 84" height="100%" width="auto" style="display:block" role="img" aria-label="Aubyn Architecture">
+  <g
+         id="g1"
+         transform="translate(-28.87931,-0.86206897)">
+        <path
+           d="m 348.16832,15.659038 h -8.88574 V 3.2718864 h -3.09532 V 34.359906 h 3.09532 V 18.87836 h 8.88574 c 4.8993,0 8.88575,4.139452 8.88575,9.227914 0,5.088408 -3.98597,9.227915 -8.88575,9.227915 l -8.99954,0.0048 -0.10596,3.214508 h 9.1055 c 6.60888,0 11.98569,-5.583853 11.98569,-12.447236 0,-6.863382 -5.37681,-12.447236 -11.98569,-12.447236 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path5"
+           style="stroke-width:0.0542905" />
+        <path
+           d="m 382.96987,15.472495 -4.98317,14.405532 -11.3762,-14.382838 -0.0177,-0.02269 h -4.17303 l 14.29707,18.07626 -6.6183,19.120661 -0.0293,0.08468 h 3.41174 l 12.87572,-37.196921 0.0298,-0.08468 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path6"
+           style="stroke-width:0.056602" />
+        <path
+           d="m 397.3053,15.472495 h -7.8586 v 25.564529 h 3.23831 V 18.778467 h 4.62029 c 5.12614,0 9.29626,4.250869 9.29626,9.476292 v 12.782265 h 3.24316 V 28.254759 c 0,-7.048116 -5.62521,-12.782264 -12.53942,-12.782264 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path7"
+           style="stroke-width:0.0562729" />
+        <path
+           d="m 319.13156,55.621857 c -1.49184,-0.412528 -3.04415,-0.197373 -4.3853,0.605413 v -0.809717 h -3.00566 v 0.0617 h -0.0527 v 25.502346 h 3.06335 V 61.839387 c 0,-0.542747 0.13323,-1.081574 0.38599,-1.557678 0.79862,-1.489671 2.57069,-2.001795 3.9517,-1.141797 l 0.0861,0.05329 v -3.559529 l -0.0431,-0.01182 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path9"
+           style="stroke-width:0.0547315" />
+        <path
+           d="m 340.71016,74.428338 -0.0397,0.0454 c -0.14692,0.167802 -0.27229,0.304975 -0.3953,0.431807 -3.58435,3.695848 -9.4163,3.695848 -13.00065,0 -1.73646,-1.790417 -2.69272,-4.170612 -2.69272,-6.702755 0,-2.5322 0.95626,-4.912339 2.69272,-6.702812 1.73641,-1.790417 4.04474,-2.77643 6.50055,-2.77643 2.45581,0 4.76414,0.986013 6.50054,2.77643 l 0.0422,0.04348 2.22462,-2.293822 0.0972,-0.105126 h -0.1197 c -2.34041,-2.40389 -5.44663,-3.727439 -8.75008,-3.727439 -3.3034,0 -6.42493,1.32997 -8.76727,3.745226 -4.83451,4.984845 -4.83451,13.095647 0,18.080496 2.41751,2.492704 5.59217,3.738806 8.76777,3.738806 3.17466,0 6.35031,-1.246102 8.76683,-3.738297 0.18666,-0.187066 0.36042,-0.386916 0.53363,-0.58529 l 0.0402,-0.04637 -2.4012,-2.18381 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path10"
+           style="stroke-width:0.0559602" />
+        <path
+           d="m 359.19964,56.08714 c -3.38774,0 -6.61768,1.491483 -8.88574,4.09718 V 43.699995 h -3.09531 v 37.221522 h 0.0624 v 0.06008 h 3.03751 V 68.53437 c 0,-5.08846 3.98597,-9.22791 8.88575,-9.22791 4.89972,0 8.88573,4.13945 8.88573,9.22791 v 12.447229 h 3.09532 V 68.53437 c 0,-6.863379 -5.3768,-12.44723 -11.98569,-12.44723 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path11"
+           style="stroke-width:0.0542911" />
+        <path
+           d="M 380.04577,80.981599 V 55.417071 h -3.2753 v 25.564528 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path12"
+           style="stroke-width:0.0565935" />
+        <path
+           d="M 392.719,56.087141 V 43.699995 h -3.2848 v 12.387146 h -4.74873 v 3.214507 h 4.74873 v 21.679951 h 3.2848 V 59.301648 h 4.74873 v -3.214507 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path13"
+           style="stroke-width:0.055932" />
+        <path
+           d="m 419.53657,74.469677 c -1.82508,2.04101 -4.45216,3.211524 -7.2073,3.211524 -5.27714,0 -9.57416,-4.218222 -9.60821,-9.415532 h 15.56926 v -3.306304 h -14.9879 c 0.98755,-2.674625 3.10631,-4.74723 5.82544,-5.693244 4.99349,-1.741451 10.49524,0.849305 12.26278,5.775691 l 0.0145,0.04091 h 3.49209 l -0.0205,-0.07693 c -1.7866,-6.82137 -8.8678,-10.939931 -15.7854,-9.183648 -6.91559,1.762191 -11.09262,8.747375 -9.31051,15.570221 1.50785,5.756881 6.78602,9.589235 12.55444,9.589235 1.06715,0 2.1513,-0.131257 3.23091,-0.405643 2.52148,-0.642987 4.76236,-1.999079 6.48036,-3.922131 l 0.0415,-0.04645 -2.51048,-2.183631 -0.0415,0.04643 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path14"
+           style="stroke-width:0.0572123" />
+        <path
+           d="m 485.30705,55.478772 v -0.0617 h -3.11497 v 22.258557 h -4.52888 c -5.02468,0 -9.11235,-4.25087 -9.11235,-9.476293 V 55.417071 h -3.17375 v 12.782264 c 0,7.048117 5.51392,12.782262 12.29085,12.782262 h 7.70314 V 55.478772 Z"
+           fill="rgba(255,255,255,0.75)"
+           id="path17"
+           style="stroke-width:0.0557136" />
+        <path
+           d="M 458.31051,56.087141 V 43.699995 h -3.28479 v 12.387146 h -4.74874 v 3.214507 h 4.74874 v 21.679956 h 3.28479 V 59.301648 h 4.74874 v -3.214507 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path20"
+           style="stroke-width:0.055932" />
+        <path
+           d="m 446.22839,74.428338 -0.0397,0.0454 c -0.14692,0.167802 -0.27229,0.304975 -0.3953,0.431807 -3.58435,3.695848 -9.4163,3.695848 -13.00065,0 -1.73646,-1.790417 -2.69273,-4.170612 -2.69273,-6.702755 0,-2.5322 0.95627,-4.912339 2.69273,-6.702812 1.73641,-1.790417 4.04474,-2.77643 6.50055,-2.77643 2.45581,0 4.76414,0.986013 6.50054,2.77643 l 0.0422,0.04348 2.22463,-2.293822 0.0971,-0.105126 h -0.1197 c -2.3404,-2.40389 -5.44662,-3.727439 -8.75007,-3.727439 -3.3034,0 -6.42494,1.32997 -8.76728,3.745226 -4.83451,4.984845 -4.83451,13.095647 0,18.080496 2.41751,2.492704 5.59218,3.738806 8.76777,3.738806 3.17467,0 6.35032,-1.246102 8.76684,-3.738297 0.18665,-0.187066 0.36042,-0.386916 0.53362,-0.58529 l 0.0402,-0.04637 -2.4012,-2.18381 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path21"
+           style="stroke-width:0.0559602" />
+        <path
+           d="m 497.58824,55.621857 c -1.49183,-0.412528 -3.04415,-0.197373 -4.3853,0.605413 v -0.809717 h -3.00566 v 0.0617 h -0.0527 v 25.502346 h 3.06334 V 61.839387 c 0,-0.542747 0.13324,-1.081574 0.38599,-1.557678 0.79862,-1.489671 2.57069,-2.001795 3.9517,-1.141797 l 0.0861,0.05329 v -3.559529 l -0.0431,-0.01182 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path22"
+           style="stroke-width:0.0547315" />
+        <path
+           d="m 519.40608,74.469677 c -1.82508,2.04101 -4.45216,3.211524 -7.2073,3.211524 -5.27714,0 -9.57417,-4.218222 -9.60821,-9.415532 h 15.56926 v -3.306304 h -14.9879 c 0.98755,-2.674625 3.1063,-4.74723 5.82544,-5.693244 4.99348,-1.741451 10.49524,0.849305 12.26277,5.775691 l 0.0145,0.04091 h 3.4921 l -0.0205,-0.07693 c -1.78661,-6.82137 -8.86781,-10.939931 -15.7854,-9.183648 -6.91559,1.762191 -11.09262,8.747375 -9.31051,15.570221 1.50785,5.756881 6.78602,9.589235 12.55443,9.589235 1.06716,0 2.15131,-0.131257 3.23091,-0.405643 2.52149,-0.642987 4.76237,-1.999079 6.48037,-3.922131 l 0.0415,-0.04645 -2.51048,-2.183631 -0.0415,0.04643 z"
+           fill="rgba(255,255,255,0.75)"
+           id="path23"
+           style="stroke-width:0.0572123" />
+        <path
+           d="m 331.61788,15.534197 v -0.0617 h -3.11497 v 22.258557 h -4.52889 c -5.02467,0 -9.11234,-4.25087 -9.11234,-9.476293 V 15.472495 h -3.17376 v 12.782264 c 0,7.048117 5.51393,12.782262 12.29086,12.782262 h 7.70314 V 15.534197 Z"
+           fill="rgba(255,255,255,0.75)"
+           id="path25"
+           style="stroke-width:0.0557136" />
+      </g>
+  <path
+         style="fill:#9dab3a;fill-opacity:1"
+         d="M 230.93469,79.664542 C 229.642,79.443436 227.75355,79.047835 226.7381,78.785433 212.16733,75.02014 200.66443,63.249872 197.62381,48.99442 c -1.05575,-4.949696 -1.12669,-9.24329 -0.24015,-14.534174 2.46277,-14.697837 14.28732,-27.2302591 29.3587,-31.1162496 5.07422,-1.308335 5.93859,-1.3562674 24.45767,-1.3562674 h 16.89232 v 4.910727 4.910727 l -17.17982,0.08978 c -16.40212,0.08572 -17.27608,0.110918 -19.30632,0.556611 -6.32921,1.389443 -11.06418,3.840563 -15.36893,7.955939 -4.76499,4.555361 -7.64613,9.939702 -8.70401,16.266279 -0.57089,3.414175 -0.36412,7.731703 0.53933,11.261771 1.22087,4.770338 3.67236,9.132059 7.17744,12.77024 2.6,2.698721 5.20023,4.608846 8.40981,6.17784 3.04595,1.488999 4.66531,2.054407 7.84802,2.740159 2.14026,0.461145 2.87366,0.482786 19.29274,0.569315 l 17.06791,0.08995 V 45.874501 21.461931 h 5.14835 5.14835 v 29.323221 29.32322 l -22.4401,-0.02093 c -20.50972,-0.01912 -22.64228,-0.05548 -24.79043,-0.42292 z"
+         id="path4" />
+</svg>
+      </div>
+    </div>
+    <p>© 2026 Aubyn Architecture LLC · Reg. Architect: David C. Ainsworth AIA</p>
+    <ul class="footer-nav">
+      <li><a href="#about">About</a></li>
+      <li><a href="#highlights">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function switchTab(e,id){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classL

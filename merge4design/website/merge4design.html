@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merge 4 Design LLC — Wilmington-Rooted. Built to Deliver.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --text-h1:    clamp(2.75rem, 5.5vw, 4.5rem);
+  --text-h2:    clamp(1.6rem, 2.8vw, 2.5rem);
+  --text-h3:    1.15rem;
+  --text-body:  1rem;
+  --text-small: 0.8125rem;
+  --text-label: 0.6875rem;
+  --space-1:4px;--space-2:8px;--space-3:16px;--space-4:24px;
+  --space-5:32px;--space-6:48px;--space-7:64px;--space-8:96px;--space-9:128px;
+  --max-w: 1240px;
+  --gutter: clamp(24px, 5vw, 64px);
+  --transition: 200ms ease;
+  /* M4D color tokens */
+  --m4d-primary:       #5a6b2c;
+  --m4d-primary-dark:  #3f4c1e;
+  --m4d-primary-light: #7d9140;
+  --m4d-black:         #111111;
+  --m4d-dark:          #1c1c1c;
+  --m4d-mid:           #444444;
+  --m4d-light:         #f2f1ee;
+  --m4d-rule:          #d8d7d4;
+  --m4d-bg:            #f2f1ee;
+  --m4d-text:          #111111;
+  --m4d-muted:         #555550;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);font-size:var(--text-body);line-height:1.65;color:var(--m4d-text);background:var(--m4d-bg);-webkit-font-smoothing:antialiased}
+
+.container{max-width:var(--max-w);margin:0 auto;padding:0 var(--gutter)}
+.label{display:inline-block;font-size:var(--text-label);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m4d-primary);margin-bottom:var(--space-4)}
+.divider{width:40px;height:3px;background:var(--m4d-primary);margin-bottom:var(--space-5)}
+.rule{border:none;border-top:1px solid var(--m4d-rule);margin:var(--space-6) 0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:var(--space-3) var(--gutter);display:flex;justify-content:space-between;align-items:center;background:rgba(242,241,238,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--m4d-rule)}
+.nav-logo{display:flex;align-items:center;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m4d-text);text-decoration:none}
+.nav-links{display:flex;gap:var(--space-6);list-style:none}
+.nav-links a{font-size:var(--text-small);font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--m4d-muted);text-decoration:none;transition:color var(--transition)}
+.nav-links a:hover{color:var(--m4d-primary)}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--m4d-black);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:64px;position:relative;overflow:hidden}
+.hero-bg-icon{position:absolute;right:-40px;top:50%;transform:translateY(-50%);pointer-events:none}
+.hero-content{padding:var(--space-9) 0 var(--space-8) var(--gutter);max-width:580px;position:relative;z-index:2}
+.hero h1{font-size:var(--text-h1);font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:#ffffff;margin-bottom:var(--space-5)}
+.hero h1 strong{font-weight:600;color:var(--m4d-primary-light)}
+.hero-sub{font-size:1.0625rem;color:rgba(255,255,255,.6);max-width:460px;margin-bottom:var(--space-6);line-height:1.7}
+.btn{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--text-small);font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:var(--space-3) var(--space-5);background:var(--m4d-primary);color:#fff;border:2px solid var(--m4d-primary);transition:all var(--transition)}
+.btn:hover{background:var(--m4d-primary-dark);border-color:var(--m4d-primary-dark)}
+.btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-outline:hover{background:var(--m4d-primary);border-color:var(--m4d-primary)}
+.btn-dark{background:var(--m4d-black);border-color:var(--m4d-black);color:#fff}
+.btn-dark:hover{background:var(--m4d-primary);border-color:var(--m4d-primary)}
+
+.hero-right{padding:var(--space-9) var(--gutter) var(--space-9) var(--space-7);position:relative;z-index:2}
+.hero-stats{display:flex;flex-direction:column;gap:var(--space-6)}
+.hero-stat{border-left:3px solid var(--m4d-primary);padding-left:var(--space-4)}
+.hero-stat-num{font-size:2.5rem;font-weight:200;line-height:1;color:#fff;letter-spacing:-0.02em}
+.hero-stat-lbl{font-size:var(--text-small);color:rgba(255,255,255,.45);margin-top:var(--space-1);letter-spacing:.04em}
+
+/* SECTIONS */
+section{padding:var(--space-9) 0}
+section h2{font-size:var(--text-h2);font-weight:300;line-height:1.1;letter-spacing:-0.015em;margin-bottom:var(--space-5)}
+
+/* WHY */
+.why{background:#fff}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);align-items:start}
+.why-points{display:flex;flex-direction:column;gap:var(--space-5);margin-top:var(--space-6)}
+.why-point{display:flex;gap:var(--space-4);align-items:flex-start}
+.why-point-marker{flex-shrink:0;width:32px;height:32px;background:var(--m4d-primary);display:flex;align-items:center;justify-content:center}
+.why-point-marker svg{width:16px;height:16px}
+.why-point-text h4{font-size:var(--text-h3);font-weight:600;margin-bottom:var(--space-1)}
+.why-point-text p{font-size:var(--text-small);color:var(--m4d-muted);line-height:1.6}
+.why-intro p{font-size:1.0625rem;color:var(--m4d-muted);margin-bottom:var(--space-4)}
+
+/* PROCESS */
+.process{background:var(--m4d-bg)}
+.process-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:var(--space-7);border:1px solid var(--m4d-rule)}
+.process-step{padding:var(--space-6) var(--space-5);border-right:1px solid var(--m4d-rule);position:relative}
+.process-step:last-child{border-right:none}
+.process-step-num{font-size:3.5rem;font-weight:200;line-height:1;color:var(--m4d-primary);opacity:.35;margin-bottom:var(--space-3);letter-spacing:-0.03em}
+.process-step h3{font-size:1.1rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:var(--space-4);color:var(--m4d-black)}
+.process-step ul{list-style:none;display:flex;flex-direction:column;gap:var(--space-2)}
+.process-step ul li{font-size:var(--text-small);color:var(--m4d-muted);padding-left:var(--space-4);position:relative}
+.process-step ul li::before{content:'—';position:absolute;left:0;color:var(--m4d-primary);font-weight:600}
+.process-principle{margin-top:var(--space-6);padding:var(--space-5);background:var(--m4d-primary);color:#fff;font-size:var(--text-small);font-weight:500;letter-spacing:.04em}
+
+/* SERVICES */
+.services{background:#fff}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);margin-top:var(--space-7)}
+.service-block{padding:var(--space-5) 0;border-top:3px solid var(--m4d-primary)}
+.service-block h3{font-size:var(--text-h3);font-weight:600;margin-bottom:var(--space-4)}
+.service-block ul{list-style:none;display:flex;flex-direction:column;gap:var(--space-2)}
+.service-block ul li{font-size:var(--text-small);color:var(--m4d-muted);padding-left:var(--space-3);position:relative}
+.service-block ul li::before{content:'·';position:absolute;left:0;color:var(--m4d-primary);font-weight:700}
+
+/* TEAM */
+.team{background:var(--m4d-bg)}
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-6) var(--space-8);margin-top:var(--space-7)}
+.team-card{display:grid;grid-template-columns:auto 1fr;gap:var(--space-5);align-items:start;padding:var(--space-5);background:#fff;border-top:3px solid transparent;transition:border-color var(--transition)}
+.team-card:hover{border-color:var(--m4d-primary)}
+.team-card-avatar{width:64px;height:64px;background:var(--m4d-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.team-card-avatar span{font-size:1.4rem;font-weight:300;color:#fff;letter-spacing:-0.02em}
+.team-card-name{font-size:var(--text-h3);font-weight:600;margin-bottom:2px}
+.team-card-role{font-size:var(--text-small);color:var(--m4d-primary);font-weight:500;margin-bottom:var(--space-3)}
+.team-card-bio{font-size:var(--text-small);color:var(--m4d-muted);line-height:1.6;margin-bottom:var(--space-3)}
+.team-card-strength{font-size:var(--text-small);font-weight:600;color:var(--m4d-black);font-style:italic}
+
+/* CONTACT */
+.contact{background:var(--m4d-black);color:#fff}
+.contact .label{color:var(--m4d-primary-light)}
+.contact h2{color:#fff}
+.contact .divider{background:var(--m4d-primary)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8)}
+.contact-team{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5) var(--space-6)}
+.contact-person h4{font-size:var(--text-h3);font-weight:500;color:#fff;margin-bottom:4px}
+.contact-person-role{font-size:var(--text-small);color:var(--m4d-primary-light);margin-bottom:var(--space-2)}
+.contact-person a{display:block;font-size:var(--text-small);color:rgba(255,255,255,.5);text-decoration:none;transition:color var(--transition)}
+.contact-person a:hover{color:var(--m4d-primary-light)}
+.contact-company{border-top:1px solid rgba(255,255,255,.1);padding-top:var(--space-6);margin-top:var(--space-6)}
+.contact-company h4{color:#fff;font-size:1rem;font-weight:600;margin-bottom:var(--space-3)}
+.contact-company p{font-size:var(--text-small);color:rgba(255,255,255,.45);line-height:1.7}
+.contact-company a{color:rgba(255,255,255,.45);text-decoration:none}
+.contact-cta{background:var(--m4d-primary);padding:var(--space-8);display:flex;flex-direction:column;justify-content:center}
+.contact-cta h3{font-size:1.75rem;font-weight:300;color:#fff;margin-bottom:var(--space-4);line-height:1.2}
+.contact-cta p{color:rgba(255,255,255,.75);font-size:var(--text-small);margin-bottom:var(--space-5);line-height:1.7}
+.contact-cta .btn{background:var(--m4d-black);border-color:var(--m4d-black);align-self:flex-start}
+.contact-cta .btn:hover{background:#fff;border-color:#fff;color:var(--m4d-black)}
+
+/* FOOTER */
+footer{background:var(--m4d-black);border-top:1px solid rgba(255,255,255,.08);padding:var(--space-5) var(--gutter);display:flex;justify-content:space-between;align-items:center}
+.footer-logo{display:flex;align-items:center;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.footer-meta{font-size:var(--text-small);color:rgba(255,255,255,.25)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.hero-content .label{animation:fadeUp .5s ease both}
+.hero-content h1{animation:fadeUp .5s .1s ease both}
+.hero-content .hero-sub{animation:fadeUp .5s .2s ease both}
+.hero-content .btn{animation:fadeUp .5s .3s ease both}
+.hero-right{animation:fadeUp .6s .2s ease both}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-content{padding:calc(64px + var(--space-7)) var(--gutter) var(--space-6);max-width:100%}
+  .hero-right{padding:var(--space-6) var(--gutter)}
+  .hero-stats{flex-direction:row;flex-wrap:wrap;gap:var(--space-5)}
+  .why-grid,.contact-grid{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr}
+  .process-step{border-right:none;border-bottom:1px solid var(--m4d-rule)}
+  .services-grid,.team-grid,.contact-team{grid-template-columns:1fr}
+  nav .nav-links{display:none}
+  footer{flex-direction:column;gap:var(--space-3);text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="data:image/jpeg;base64,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" alt="M4D" height="34" width="auto" style="display:block;margin-right:10px">
+    Merge 4 Design
+  </a>
+  <ul class="nav-links">
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0">
+  <div class="hero-bg-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="320" height="320" style="opacity:0.06">
+  <path d="M 28,320 L 28,80 L 122,220 L 216,80 L 216,320" fill="none" stroke="white" stroke-width="32" stroke-linejoin="miter" stroke-linecap="butt"/>
+  <line x1="330" y1="80" x2="242" y2="222" stroke="white" stroke-width="32" stroke-linecap="butt"/>
+  <line x1="228" y1="222" x2="372" y2="222" stroke="white" stroke-width="32" stroke-linecap="butt"/>
+  <line x1="330" y1="155" x2="330" y2="320" stroke="white" stroke-width="32" stroke-linecap="butt"/>
+  <path d="M 240,80 L 240,320 M 240,80 Q 410,80 410,200 Q 410,320 240,320" fill="none" stroke="white" stroke-width="32" stroke-linejoin="round" stroke-linecap="butt"/>
+</svg></div>
+  <div class="hero-content">
+    <span class="label">Architecture · Compliance · Delivery</span>
+    <h1><strong>Wilmington-rooted.</strong><br>Built to deliver.</h1>
+    <p class="hero-sub">A right-sized team combining design leadership, construction expertise, and deep regulatory fluency across Delaware, Maryland, Pennsylvania, and New Jersey.</p>
+    <a href="#contact" class="btn btn-outline">Talk to Our Team →</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">100+</div>
+        <div class="hero-stat-lbl">Combined years of experience</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">30+</div>
+        <div class="hero-stat-lbl">Years inside Wilmington L&amp;I</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">DE · MD · PA · NJ</div>
+        <div class="hero-stat-lbl">Service area</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-intro">
+        <span class="label">The Difference</span>
+        <div class="divider"></div>
+        <h2>Projects don't fail because someone couldn't draw.</h2>
+        <p>They fail because decisions get delayed, approvals get messy, scope drifts, and the team loses alignment.</p>
+        <p>Merge 4 Design was built to reduce those failure points — by pairing senior design leadership with Wilmington-specific regulatory fluency from day one.</p>
+      </div>
+      <div>
+        <div style="font-size:var(--text-small);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m4d-primary);margin-bottom:var(--space-5)">What Owners Get</div>
+        <div class="why-points">
+          <div class="why-point">
+            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="why-point-text"><h4>Clear direction early</h4><p>Options with real consequences, not endless iterations.</p></div>
+          </div>
+          <div class="why-point">
+            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="why-point-text"><h4>Fewer approval surprises</h4><p>Code, scope, and permitting flagged early — not at the counter.</p></div>
+          </div>
+          <div class="why-point">
+            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="why-point-text"><h4>Right-sized team</h4><p>Accountable, and built to fit the project — not padded for overhead.</p></div>
+          </div>
+          <div class="why-point">
+            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="why-point-text"><h4>Wilmington fluency</h4><p>Deep roots in the local building and policy community means we understand how review actually works — on paper and in practice.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="container">
+    <span class="label">Our Process</span>
+    <div class="divider"></div>
+    <h2>Discover. Decide. Deliver.</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="process-step-num">01</div>
+        <h3>Discover</h3>
+        <p style="font-size:var(--text-small);color:var(--m4d-muted);margin-bottom:var(--space-4)">Align goals, constraints, and stakeholders fast.</p>
+        <ul>
+          <li>Site and context review</li>
+          <li>Existing conditions check</li>
+          <li>Early code/ADA/life safety flags</li>
+          <li>Decision priorities: budget, schedule, approvals, operations</li>
+        </ul>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">02</div>
+        <h3>Decide</h3>
+        <p style="font-size:var(--text-small);color:var(--m4d-muted);margin-bottom:var(--space-4)">Present clear options and define the pathway.</p>
+        <ul>
+          <li>Concept options with pros and cons</li>
+          <li>Permitting and entitlement strategy</li>
+          <li>Phased approach for occupied facilities</li>
+          <li>ROM cost/schedule: range-based, reality-based</li>
+        </ul>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">03</div>
+        <h3>Deliver</h3>
+        <p style="font-size:var(--text-small);color:var(--m4d-muted);margin-bottom:var(--space-4)">Execute with discipline.</p>
+        <ul>
+          <li>Coordinated documentation and review readiness</li>
+          <li>Stakeholder and agency coordination</li>
+          <li>Construction support mindset</li>
+          <li>Fewer surprises, fewer rework loops</li>
+        </ul>
+      </div>
+    </div>
+    <div class="process-principle">Senior leadership stays involved — from first conversation through delivery.</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <span class="label">Services</span>
+    <div class="divider"></div>
+    <h2>Services that match real project needs.</h2>
+    <div class="services-grid">
+      <div class="service-block">
+        <h3>Design + Documentation</h3>
+        <ul>
+          <li>Programming and space planning</li>
+          <li>Concept through construction documents</li>
+          <li>Specifications and buildability integration</li>
+          <li>Visualization and BIM support</li>
+        </ul>
+      </div>
+      <div class="service-block">
+        <h3>Regulatory + Compliance Strategy</h3>
+        <ul>
+          <li>Approvals pathway planning</li>
+          <li>Code and amendment fluency</li>
+          <li>Review readiness support</li>
+          <li>Historic and preservation review navigation</li>
+        </ul>
+      </div>
+      <div class="service-block">
+        <h3>Owner Advocacy + Coordination</h3>
+        <ul>
+          <li>Project management and coordination</li>
+          <li>Stakeholder alignment and meeting leadership</li>
+          <li>Scope clarity and decision tracking</li>
+          <li>Phasing and logistics planning</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="container">
+    <span class="label">Who We Are</span>
+    <div class="divider"></div>
+    <h2>Decades of experience. Deep local roots.</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card-avatar"><span>TK</span></div>
+        <div>
+          <div class="team-card-name">Trevor Knight</div>
+          <div class="team-card-role">Business Development | Regulatory Compliance</div>
+          <div class="team-card-bio">30 years in the City of Wilmington's License &amp; Inspection Department. Critical role in adopting Wilmington's current Building Code Amendments. Board of Standards and Appeals. Historic Review &amp; Preservation Board.</div>
+          <div class="team-card-strength">Regulatory strategy + approvals clarity</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-avatar"><span>LL</span></div>
+        <div>
+          <div class="team-card-name">Leo L. Lynch</div>
+          <div class="team-card-role">Architecture &amp; Construction Management | Design Lead</div>
+          <div class="team-card-bio">40 years across architecture, construction management, and compliance on the East Coast. Over 30 years in Wilmington's Department of License &amp; Inspection — Deputy Commissioner and Acting Director.</div>
+          <div class="team-card-strength">Buildable documents + review-ready delivery</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-avatar"><span>DA</span></div>
+        <div>
+          <div class="team-card-name">David C. Ainsworth</div>
+          <div class="team-card-role">Architecture &amp; Design Lead | Estimates &amp; Specifications</div>
+          <div class="team-card-bio">20+ years across architecture, landscape design, and project management. Key role in a 120,000 SF, $75M NICU / Labor &amp; Birth / Maternal Special Care program. AIA + NCARB.</div>
+          <div class="team-card-strength">Complex coordination + execution discipline</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-avatar"><span>TD</span></div>
+        <div>
+          <div class="team-card-name">Travis Davis</div>
+          <div class="team-card-role">Architecture &amp; Project Management | BIM + Visualization</div>
+          <div class="team-card-bio">8+ years in architectural design, BIM technology, project management, and 3D rendering. Extensive experience collaborating with community citizen groups. NCARB.</div>
+          <div class="team-card-strength">Visualization + BIM coordination + stakeholder communication</div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:var(--space-6);font-size:var(--text-small);color:var(--m4d-muted);font-style:italic">Selected experience reflects work performed by team members in prior roles and organizations.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container" style="padding:0">
+    <div class="contact-grid">
+      <div style="padding:var(--space-8) var(--gutter)">
+        <span class="label">Start the Conversation</span>
+        <div class="divider"></div>
+        <h2>Let's talk about your project.</h2>
+        <div class="contact-team">
+          <div class="contact-person">
+            <h4>Trevor Knight</h4>
+            <div class="contact-person-role">Business Development</div>
+            <a href="/cdn-cgi/l/email-protection#b7c3c5d2c1d8c583d3f7dad2c5d0d283d3d2c4ded0d999d4d8da"><span class="__cf_email__" data-cfemail="bacec8dfccd5c88edefad7dfc8dddf8ededfc9d3ddd494d9d5d7">[email&#160;protected]</span></a>
+            <a href="tel:3023675726">302.367.5726</a>
+          </div>
+          <div class="contact-person">
+            <h4>Leo L. Lynch</h4>
+            <div class="contact-person-role">Architecture &amp; Construction</div>
+            <a href="/cdn-cgi/l/email-protection#29454c461d4d69444c5b4e4c1d4d4c5a404e47074a4644"><span class="__cf_email__" data-cfemail="38545d570c5c78555d4a5f5d0c5c5d4b515f56165b5755">[email&#160;protected]</span></a>
+            <a href="tel:3023451072">302.345.1072</a>
+          </div>
+          <div class="contact-person">
+            <h4>David C. Ainsworth</h4>
+            <div class="contact-person-role">Architecture &amp; Design Lead</div>
+            <a href="/cdn-cgi/l/email-protection#81e5e0f7e8e5b5e5c1ece4f3e6e4b5e5e4f2e8e6efafe2eeec"><span class="__cf_email__" data-cfemail="254144534c411141654840574240114140564c424b0b464a48">[email&#160;protected]</span></a>
+            <a href="tel:2035062413">203.506.2413</a>
+          </div>
+          <div class="contact-person">
+            <h4>Travis Davis</h4>
+            <div class="contact-person-role">Project Management &amp; BIM</div>
+            <a href="/cdn-cgi/l/email-protection#74000615021d074010341911061311401011071d131a5a171b19"><span class="__cf_email__" data-cfemail="a0d4d2c1d6c9d394c4e0cdc5d2c7c594c4c5d3c9c7ce8ec3cfcd">[email&#160;protected]</span></a>
+            <a href="tel:3023176608">302.317.6608</a>
+          </div>
+        </div>
+        <div class="contact-company">
+          <h4>Merge 4 Design LLC</h4>
+          <p>500 Delaware Ave. Ste 1 #1551<br>Wilmington, DE 19899<br><a href="tel:13023675726">+1 302 367 5726</a><br><a href="http://merge4design.com">merge4design.com</a></p>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <h3>Give us a call — we are ready to discuss how we can make your project a success.</h3>
+        <p>Whether you have a site, a program, or just a question about the approval process — we'll give you a straight answer in the first conversation.</p>
+        <a href="/cdn-cgi/l/email-protection#21555344574e531545614c445346441545445248464f0f424e4c" class="btn">Send a Message →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <img src="data:image/jpeg;base64,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" alt="M4D" height="22" width="auto" style="display:block;margin-right:8px;opacity:0.6">
+    Merge 4 Design LLC
+  </div>
+  <p>© 2026 Merge 4 Design LLC · Registered Architect: Delaware</p>
+  <ul class="footer-nav">
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

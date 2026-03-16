@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Post Generator — Studio Content</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --aa-green: #9dab3a;
+    --aa-dark: #59595c;
+    --m4d-green: #196b23;
+    --m4d-black: #111111;
+    --bg: #f4f3ef;
+    --surface: #ffffff;
+    --border: #e2e1dc;
+    --text: #1a1a1a;
+    --muted: #888;
+    --radius: 3px;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--m4d-black);
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 2px solid var(--aa-green);
+  }
+  .header-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    padding: 4px 8px;
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .header-title {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .header-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--aa-green);
+    margin-left: auto;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+  /* ── Main layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    min-height: calc(100vh - 57px);
+  }
+
+  /* ── Input panel ── */
+  .input-panel {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+  }
+
+  .panel-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .firm-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .firm-btn {
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: all .15s;
+    text-align: left;
+  }
+  .firm-btn .firm-abbr { display: block; font-size: 18px; font-weight: 300; letter-spacing: .02em; margin-bottom: 2px; }
+  .firm-btn.active[data-firm="aa"] { border-color: var(--aa-green); color: var(--aa-green); background: rgba(157,171,58,.05); }
+  .firm-btn.active[data-firm="m4d"] { border-color: var(--m4d-green); color: var(--m4d-green); background: rgba(25,107,35,.05); }
+
+  .content-type {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+  .type-btn {
+    padding: 8px 6px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: all .15s;
+  }
+  .type-btn.active { border-color: var(--text); color: var(--text); background: rgba(0,0,0,.03); }
+
+  .platform-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .plat-btn {
+    padding: 10px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .plat-btn svg { flex-shrink: 0; }
+  .plat-btn.active { border-color: var(--text); color: var(--text); }
+  .plat-btn.active[data-plat="instagram"] { border-color: #c13584; color: #c13584; }
+  .plat-btn.active[data-plat="linkedin"] { border-color: #0a66c2; color: #0a66c2; }
+
+  .field { display: flex; flex-direction: column; }
+  label { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  input[type="text"], textarea, select {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--text);
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color .15s;
+    resize: vertical;
+    border-radius: var(--radius);
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--text); }
+  textarea { min-height: 120px; line-height: 1.6; }
+
+  .generate-btn {
+    margin-top: auto;
+    padding: 14px;
+    background: var(--text);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .generate-btn:hover { background: #333; }
+  .generate-btn:disabled { opacity: .5; cursor: not-allowed; }
+  .generate-btn[data-firm="aa"]:not(:disabled) { background: var(--aa-green); }
+  .generate-btn[data-firm="m4d"]:not(:disabled) { background: var(--m4d-green); }
+
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Output panel ── */
+  .output-panel {
+    padding: 32px 36px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .output-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 16px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .output-empty svg { opacity: .2; }
+  .output-empty p { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+
+  .output-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .output-firm-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    font-weight: 500;
+  }
+  .output-firm-tag.aa { background: rgba(157,171,58,.12); color: var(--aa-green); }
+  .output-firm-tag.m4d { background: rgba(25,107,35,.1); color: var(--m4d-green); }
+  .output-meta { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+
+  .post-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .post-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .post-platform {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .post-platform.instagram { color: #c13584; }
+  .post-platform.linkedin { color: #0a66c2; }
+
+  .copy-btn {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all .15s;
+  }
+  .copy-btn:hover { border-color: var(--text); color: var(--text); }
+  .copy-btn.copied { border-color: #22c55e; color: #22c55e; }
+
+  .post-body {
+    padding: 20px;
+  }
+  .post-section { margin-bottom: 16px; }
+  .post-section:last-child { margin-bottom: 0; }
+  .post-section-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .post-text {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+  .post-text.hashtags {
+    color: #0a66c2;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .post-text.hashtags.instagram { color: #c13584; }
+
+  .char-count {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .char-count.warn { color: #f59e0b; }
+  .char-count.over { color: #ef4444; }
+
+  .error-msg {
+    padding: 16px 20px;
+    background: rgba(239,68,68,.05);
+    border: 1px solid rgba(239,68,68,.2);
+    color: #ef4444;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    .input-panel { border-right: none; border-bottom: 1px solid var(--border); }
+    header { padding: 14px 20px; }
+    .output-panel { padding: 24px 20px; }
+    .input-panel { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="header-title">Studio Content — Social Post Generator</span>
+  <span class="header-badge">Prototype</span>
+  <div class="header-dot"></div>
+</header>
+
+<div class="layout">
+  <!-- INPUT PANEL -->
+  <div class="input-panel">
+
+    <div>
+      <div class="panel-label">Firm</div>
+      <div class="firm-toggle">
+        <button class="firm-btn active" data-firm="aa" onclick="setFirm('aa')">
+          <span class="firm-abbr">AA</span>Aubyn Architecture
+        </button>
+        <button class="firm-btn" data-firm="m4d" onclick="setFirm('m4d')">
+          <span class="firm-abbr">M4D</span>Merge 4 Design
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-label">Content Type</div>
+      <div class="content-type">
+        <button class="type-btn active" data-type="project" onclick="setType('project')">Project</button>
+        <button class="type-btn" data-type="article" onclick="setType('article')">Article</button>
+        <button class="type-btn" data-type="update" onclick="setType('update')">Update</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-label">Platforms</div>
+      <div class="platform-toggle">
+        <button class="plat-btn active" data-plat="instagram" onclick="togglePlat('instagram')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </button>
+        <button class="plat-btn active" data-plat="linkedin" onclick="togglePlat('linkedin')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label id="title-label">Project Name</label>
+      <input type="text" id="title-input" placeholder="e.g. Broadkill Beach Residence">
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      <textarea id="desc-input" placeholder="Describe the project, article, or update in your own words. Include any details you want highlighted — location, materials, design challenges, innovations, client goals..."></textarea>
+    </div>
+
+    <div class="field">
+      <label>Keywords / Tags (optional)</label>
+      <input type="text" id="tags-input" placeholder="e.g. coastal, passive house, net-zero, adaptive reuse">
+    </div>
+
+    <button class="generate-btn" data-firm="aa" onclick="generate()" id="gen-btn">
+      <span id="btn-label">Generate Posts</span>
+    </button>
+
+  </div>
+
+  <!-- OUTPUT PANEL -->
+  <div class="output-panel" id="output-panel">
+    <div class="output-empty" id="empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M3 9h18M9 21V9"/>
+      </svg>
+      <p>Fill in the form and<br>generate your posts</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── State ──────────────────────────────────────────────────────────────────
+  let state = {
+    firm: 'aa',
+    type: 'project',
+    platforms: new Set(['instagram', 'linkedin'])
+  };
+
+  // ── UI Controls ────────────────────────────────────────────────────────────
+  function setFirm(firm) {
+    state.firm = firm;
+    document.querySelectorAll('.firm-btn').forEach(b => b.classList.toggle('active', b.dataset.firm === firm));
+    document.getElementById('gen-btn').dataset.firm = firm;
+  }
+
+  function setType(type) {
+    state.type = type;
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === type));
+    const labels = { project: 'Project Name', article: 'Article Title', update: 'Update Headline' };
+    const placeholders = {
+      project: 'e.g. Broadkill Beach Residence',
+      article: 'e.g. Why Architect-Led Design-Build Changes Everything',
+      update: 'e.g. Breaking Ground on Our First Net-Zero Commercial Build'
+    };
+    document.getElementById('title-label').textContent = labels[type];
+    document.getElementById('title-input').placeholder = placeholders[type];
+  }
+
+  function togglePlat(plat) {
+    const btn = document.querySelector(`.plat-btn[data-plat="${plat}"]`);
+    if (state.platforms.has(plat) && state.platforms.size === 1) return; // keep at least one
+    if (state.platforms.has(plat)) {
+      state.platforms.delete(plat);
+      btn.classList.remove('active');
+    } else {
+      state.platforms.add(plat);
+      btn.classList.add('active');
+    }
+  }
+
+  // ── Firm brand context ─────────────────────────────────────────────────────
+  const FIRM_CONTEXT = {
+    aa: {
+      name: 'Aubyn Architecture LLC',
+      tagline: 'Form Function Fusion',
+      principal: 'David C. Ainsworth AIA',
+      focus: 'multi-discipline architecture, landscape, and consulting firm licensed in Delaware, Pennsylvania, and Connecticut. Known for Architect-Led Design-Build (ALDB) — one contract, one team, from concept through completion.',
+      voice: 'sophisticated, design-forward, confident but not arrogant. Emphasizes design integrity, craft, and the architect as guide throughout the entire process. Avoids jargon. Speaks to discerning clients.',
+      ig_handle: '@aubynarchitecture',
+      li_handle: 'Aubyn Architecture LLC',
+      hashtags_project: '#architecture #architecturalphotography #designbuild #residentialdesign #architectled #formfunctionfusion #aubynarchitecture',
+      hashtags_article: '#architecture #designthinking #architecturalblog #ALDB #designbuild #AubynArchitecture',
+      hashtags_update: '#architecture #constructionupdate #designbuild #aubynarchitecture #wilmingtonDE',
+    },
+    m4d: {
+      name: 'Merge 4 Design LLC',
+      tagline: 'Wilmington-Rooted. Built to Deliver.',
+      principal: 'Senior leadership team (4 principals)',
+      focus: 'senior-led design firm rooted in Wilmington, DE. Four principals with deep local regulatory fluency. Focused on affordable, community-centered architecture with no junior hand-off — senior leadership from first call to delivery.',
+      voice: 'direct, community-focused, trustworthy. Emphasizes accessibility, local knowledge, and accountability. Speaks plainly without sacrificing professional credibility. Warm but no-nonsense.',
+      ig_handle: '@merge4design',
+      li_handle: 'Merge 4 Design LLC',
+      hashtags_project: '#architecture #wilmington #delawarearchitecture #communitydesign #merge4design #affordablehousing #designmatters',
+      hashtags_article: '#architecture #designleadership #wilmington #communitybuilding #merge4design',
+      hashtags_update: '#merge4design #wilmington #architecture #constructionupdate #delawarebuilds',
+    }
+  };
+
+  // ── Prompt builder ─────────────────────────────────────────────────────────
+  function buildPrompt(platform, firm, type, title, desc, tags) {
+    const f = FIRM_CONTEXT[firm];
+    const typeLabel = { project: 'completed/in-progress project', article: 'informative article', update: 'company update or innovation announcement' }[type];
+
+    const igInstructions = `Write an Instagram caption for this ${typeLabel}.
+- Opening line must stop the scroll — bold, visual, or unexpected. No generic openers.
+- 3–5 sentences max body copy. Evocative, specific, not generic.
+- End with a clear CTA (e.g. link in bio, DM us, tag a friend who needs this).
+- Then on a new line: provide 10–14 highly relevant hashtags.
+- Total caption under 2,200 characters.
+- Tone: ${f.voice}
+- Format your response as JSON: {"caption": "...", "hashtags": "..."}`;
+
+    const liInstructions = `Write a LinkedIn post for this ${typeLabel}.
+- Professional but human. Not stiff corporate speak.
+- Hook in the first line (people see this before "see more").
+- 3–6 short paragraphs or structured with line breaks for readability.
+- Include 1–2 specific details that demonstrate expertise or local knowledge.
+- End with a question or invitation to engage, or a clear CTA.
+- 5–8 hashtags at the end, professional and relevant.
+- Ideal length: 150–300 words.
+- Tone: ${f.voice}
+- Format your response as JSON: {"post": "...", "hashtags": "..."}`;
+
+    const instructions = platform === 'instagram' ? igInstructions : liInstructions;
+
+    return `You are a social media content writer for ${f.name} — ${f.focus}
+
+Brand voice: ${f.voice}
+
+Content to post:
+Type: ${typeLabel}
+Title: ${title}
+Description: ${desc}
+Keywords/Tags: ${tags || 'none provided'}
+
+${instructions}
+
+Respond ONLY with valid JSON. No markdown, no preamble.`;
+  }
+
+  // ── Generate ───────────────────────────────────────────────────────────────
+  async function generate() {
+    const title = document.getElementById('title-input').value.trim();
+    const desc  = document.getElementById('desc-input').value.trim();
+    const tags  = document.getElementById('tags-input').value.trim();
+
+    if (!title || !desc) {
+      alert('Please fill in the title and description fields.');
+      return;
+    }
+
+    const btn = document.getElementById('gen-btn');
+    const btnLabel = document.getElementById('btn-label');
+    btn.disabled = true;
+    btnLabel.textContent = 'Generating...';
+    btn.insertAdjacentHTML('afterbegin', '<span class="spinner" id="spin"></span>');
+
+    document.getElementById('empty-state')?.remove();
+    document.getElementById('output-panel').innerHTML = `
+      <div class="output-header">
+        <span class="output-firm-tag ${state.firm}">${state.firm === 'aa' ? 'Aubyn Architecture' : 'Merge 4 Design'}</span>
+        <span class="output-firm-tag" style="background:rgba(0,0,0,.05);color:var(--muted)">${state.type}</span>
+        <span class="output-meta" style="margin-left:auto">Generating ${state.platforms.size} post${state.platforms.size>1?'s':''}...</span>
+      </div>
+      <div id="posts-container"></div>
+    `;
+
+    const platforms = [...state.platforms];
+    const container = document.getElementById('posts-container');
+
+    for (const platform of platforms) {
+      // Add loading placeholder
+      const placeholderId = `post-${platform}`;
+      container.insertAdjacentHTML('beforeend', `
+        <div id="${placeholderId}" class="post-card" style="opacity:.5">
+          <div class="post-card-header">
+            <span class="post-platform ${platform}">
+              ${platform === 'instagram' 
+                ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>'
+                : '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>'
+              }
+              ${platform.charAt(0).toUpperCase() + platform.slice(1)}
+            </span>
+            <span style="font-family:var(--mono);font-size:10px;color:var(--muted)">Generating...</span>
+          </div>
+          <div class="post-body" style="color:var(--muted);font-family:var(--mono);font-size:11px;padding:20px">
+            Calling Claude API...
+          </div>
+        </div>
+      `);
+
+      try {
+        const prompt = buildPrompt(platform, state.firm, state.type, title, desc, tags);
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 1000,
+            messages: [{ role: 'user', content: prompt }]
+          })
+        });
+
+        const data = await response.json();
+        const rawText = data.content?.map(b => b.text || '').join('') || '';
+
+        // Parse JSON response
+        let parsed;
+        try {
+          const cleaned = rawText.replace(/```json|```/g, '').trim();
+          parsed = JSON.parse(cleaned);
+        } catch(e) {
+          throw new Error('Could not parse response. Raw: ' + rawText.slice(0, 200));
+        }
+
+        const mainText = platform === 'instagram' ? parsed.caption : parsed.post;
+        const hashtags = parsed.hashtags || '';
+        const charCount = (mainText + '\n\n' + hashtags).length;
+        const limit = platform === 'instagram' ? 2200 : 3000;
+        const countClass = charCount > limit ? 'over' : charCount > limit * 0.9 ? 'warn' : '';
+
+        document.getElementById(placeholderId).outerHTML = `
+          <div class="post-card">
+            <div class="post-card-header">
+              <span class="post-platform ${platform}">
+                ${platform === 'instagram'
+                  ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>'
+                  : '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>'
+                }
+                ${platform.charAt(0).toUpperCase() + platform.slice(1)}
+              </span>
+              <button class="copy-btn" onclick="copyPost('${platform}-text', '${platform}-hashtags', this)">Copy All</button>
+            </div>
+            <div class="post-body">
+              <div class="post-section">
+                <div class="post-section-label">${platform === 'instagram' ? 'Caption' : 'Post'}</div>
+                <div class="post-text" id="${platform}-text">${escHtml(mainText)}</div>
+              </div>
+              <div class="post-section">
+                <div class="post-section-label">Hashtags</div>
+                <div class="post-text hashtags ${platform}" id="${platform}-hashtags">${escHtml(hashtags)}</div>
+              </div>
+              <div class="char-count ${countClass}">${charCount} / ${limit} characters</div>
+            </div>
+          </div>
+        `;
+
+      } catch(err) {
+        document.getElementById(placeholderId).outerHTML = `
+          <div class="post-card">
+            <div class="post-card-header">
+              <span class="post-platform ${platform}">${platform}</span>
+            </div>
+            <div class="post-body">
+              <div class="error-msg">Error: ${escHtml(err.message)}</div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Reset button
+    btn.disabled = false;
+    btnLabel.textContent = 'Regenerate';
+    document.getElementById('spin')?.remove();
+    document.querySelector('.output-meta').textContent = `Generated ${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+  }
+
+  // ── Copy to clipboard ──────────────────────────────────────────────────────
+  function copyPost(textId, hashId, btn) {
+    const text = document.getElementById(textId)?.textContent || '';
+    const hash = document.getElementById(hashId)?.textContent || '';
+    const full = text + '\n\n' + hash;
+    navigator.clipboard.writeText(full).then(() => {
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy All'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  // ── Utility ────────────────────────────────────────────────────────────────
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>
