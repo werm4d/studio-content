@@ -170,7 +170,8 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
    ======================================================== */
 .aldb{padding-block:var(--section);background:var(--AA-neutral-light)}
 .aldb-inner{display:grid;grid-template-columns:1fr 2fr;gap:var(--sp-8);align-items:start}
-.aldb-sticky{position:sticky;top:80px;z-index:10}
+.aldb-sticky{position:static}
+.aldb-btn-wrap{position:sticky;top:80px;z-index:10}
 .aldb-btn{display:inline-block;margin-top:var(--sp-5);background:var(--AA-primary);color:#fff;text-decoration:none;font-size:var(--text-small);font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:14px 22px;box-shadow:0 4px 24px rgba(0,0,0,.15);transition:background .18s,box-shadow .18s}
 .aldb-btn:hover{background:var(--AA-primary-dk,#7a8a28);box-shadow:0 6px 32px rgba(0,0,0,.24)}
 .aldb-sticky h2{font-family:var(--font-display);font-size:var(--text-h2);font-weight:300;line-height:var(--leading-snug);color:var(--AA-neutral-dkr);margin-bottom:var(--sp-4)}
@@ -611,7 +612,9 @@ footer p{font-size:var(--text-small);color:rgba(255,255,255,.35)}
         <div class="divider"></div>
         <h2>Architect-Led<br><em>Design-Build.</em></h2>
         <p>Our preferred delivery method — and your best path to a successful project. With ALDB, you sign one contract, communicate with one team, and receive a building that remains true to the original design from concept through completion.</p>
-        <a href="#contact" class="aldb-btn">Discuss Your Project →</a>
+        <div class="aldb-btn-wrap">
+          <a href="#contact" class="aldb-btn">Discuss Your Project →</a>
+        </div>
       </div>
       <div class="benefits">
         <div class="benefit"><div class="ben-num">01</div><div>
@@ -770,6 +773,13 @@ footer p{font-size:var(--text-small);color:rgba(255,255,255,.35)}
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 function switchTab(e,id){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classL
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>
