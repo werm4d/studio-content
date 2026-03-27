@@ -143,7 +143,7 @@ _Append a line here at the end of every Claude session._
 | 2026-03 | Brand system, both websites | aubyn-architecture.html, merge4design.html | Deploy websites |
 | 2026-03 | Social post generator prototype | social-post-generator.html | GitHub Pages setup |
 | 2026-03 | GitHub repo structure | This repo | Upload all files, set up Pages |
-
+| 2026-03-26 | Domain migration + site deployment | aubyn-architecture.html, merge4design.html, M4Di_Website_v3.html, all index.html redirects | See below |
 ---
 
 ## How to Resume in a New Claude Session
@@ -151,3 +151,19 @@ _Append a line here at the end of every Claude session._
 2. Paste the full contents into a new Claude chat
 3. Say what you want to work on
 4. Claude will have full context immediately
+## Domains & Hosting (updated 2026-03-26)
+
+| Site | Domain | Repo | Registrar | Hosting |
+|------|--------|------|-----------|---------|
+| Aubyn Architecture | aubynarch.com | werm4d/aubynarch | Bluehost | GitHub Pages |
+| Merge 4 Design | merge4design.com | werm4d/merge4design | Hostinger | GitHub Pages |
+| M4Di | m4di.org | werm4d/m4di | Cloudflare | GitHub Pages |
+| Merge4Ward | merge4ward.com | werm4d/merge4ward | Cloudflare | GitHub Pages |
+
+## Tomorrow's checklist
+- [ ] merge4ward.com DNS in Cloudflare (same 4 A records + CNAME)
+- [ ] Check aubynarch.com HTTPS (padlock)
+- [ ] Check merge4design.com HTTPS (padlock)
+- [ ] Cancel Bluehost HOSTING auto-renew (keep domain)
+- [ ] Cancel Hostinger HOSTING auto-renew (keep domain)
+- [ ] fun2form.com ecommerce strategy — new project folder
