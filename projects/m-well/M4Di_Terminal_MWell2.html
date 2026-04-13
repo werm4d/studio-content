@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M4Di Terminal™ — M-Well Community Health Campus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ── DESIGN TOKENS ── */
+:root {
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+
+  /* Brand */
+  --purple:       #534AB7;
+  --purple-dk:    #3d3589;
+  --purple-lt:    #7B74D4;
+  --purple-ghost: #EEEDFE;
+  --teal:         #0F6E56;
+  --teal-lt:      #E1F5EE;
+  --teal-mid:     #1D9E75;
+  --amber:        #854F0B;
+  --amber-lt:     #FAEEDA;
+  --amber-mid:    #BA7517;
+  --green:        #196b23;
+  --green-lt:     #7d9140;
+  --red:          #A32D2D;
+  --red-lt:       #F7C1C1;
+
+  /* Spacing */
+  --sp-1:4px; --sp-2:8px; --sp-3:16px; --sp-4:24px;
+  --sp-5:32px; --sp-6:48px; --sp-7:64px;
+  --ease: cubic-bezier(0.16,1,0.3,1);
+  --nav-w: 220px;
+}
+
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --bg:         #F5F4F0;
+  --bg-mid:     #ECEAE3;
+  --surface:    #FFFFFF;
+  --surface2:   #F5F4F0;
+  --border:     #D6D3CB;
+  --border-mid: #C8C5BC;
+  --text:       #1B1B24;
+  --text-mid:   #3C3C4A;
+  --muted:      #68687A;
+  --dimmed:     #9898A8;
+  --accent:     var(--purple);
+  --accent-lt:  var(--purple-lt);
+  --accent-bg:  var(--purple-ghost);
+  --nav-bg:     #1B1B24;
+  --nav-text:   rgba(255,255,255,.55);
+  --nav-active: #FFFFFF;
+  --nav-border: rgba(255,255,255,.08);
+  --nav-hover:  rgba(255,255,255,.06);
+  --gate-done:  #196b23;
+  --gate-active:#534AB7;
+  --gate-future:#9898A8;
+}
+
+/* ── DARK THEME ── */
+[data-theme="dark"] {
+  --bg:         #0f0f0f;
+  --bg-mid:     #161616;
+  --surface:    #1a1a1a;
+  --surface2:   #222222;
+  --border:     #2e2e2e;
+  --border-mid: #3a3a3a;
+  --text:       #e8e8e8;
+  --text-mid:   #c0c0c0;
+  --muted:      #888880;
+  --dimmed:     #555550;
+  --accent:     #7B74D4;
+  --accent-lt:  #AFA9EC;
+  --accent-bg:  rgba(83,74,183,.15);
+  --nav-bg:     #0a0a0a;
+  --nav-text:   rgba(255,255,255,.45);
+  --nav-active: #FFFFFF;
+  --nav-border: rgba(255,255,255,.06);
+  --nav-hover:  rgba(255,255,255,.04);
+  --gate-done:  #7d9140;
+  --gate-active:#7B74D4;
+  --gate-future:#555550;
+}
+
+/* ── RESET ── */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { height:100%; }
+body {
+  font-family: var(--font-body);
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-4);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-left { display: flex; align-items: center; gap: var(--sp-3); }
+.logo-mark {
+  width: 28px; height: 28px;
+  background: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 500;
+  color: #fff; letter-spacing: .04em;
+  flex-shrink: 0;
+}
+.logo-text {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,.8);
+  text-transform: uppercase;
+}
+.logo-sep { width: 1px; height: 20px; background: var(--nav-border); }
+.project-name {
+  font-family: var(--font-body);
+  font-size: 12px; font-weight: 500;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .02em;
+}
+.project-name span { color: rgba(255,255,255,.85); }
+.topbar-right { display: flex; align-items: center; gap: var(--sp-3); }
+.project-id {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(255,255,255,.3);
+  letter-spacing: .06em;
+}
+.theme-toggle {
+  background: none; border: 1px solid var(--nav-border);
+  color: rgba(255,255,255,.5); cursor: pointer;
+  padding: 4px 10px; font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: .08em; text-transform: uppercase;
+  transition: all .2s;
+}
+.theme-toggle:hover { border-color: rgba(255,255,255,.2); color: rgba(255,255,255,.8); }
+
+/* ── LAYOUT ── */
+.shell { display: flex; flex: 1; min-height: 0; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--nav-w);
+  flex-shrink: 0;
+  background: var(--nav-bg);
+  border-right: 1px solid var(--nav-border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.sidebar-section-label {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.25);
+  padding: var(--sp-4) var(--sp-4) var(--sp-2);
+}
+.gate-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px var(--sp-4);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background .15s, border-color .15s;
+  position: relative;
+}
+.gate-item:hover { background: var(--nav-hover); }
+.gate-item.active {
+  background: rgba(83,74,183,.12);
+  border-left-color: var(--accent);
+}
+[data-theme="dark"] .gate-item.active { background: rgba(123,116,212,.08); }
+.gate-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.gate-dot.done    { background: var(--gate-done); }
+.gate-dot.active  { background: var(--gate-active); box-shadow: 0 0 0 3px rgba(83,74,183,.2); }
+.gate-dot.projected { background: transparent; border: 1.5px solid var(--gate-future); }
+.gate-info { flex: 1; min-width: 0; }
+.gate-code {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--nav-text);
+  margin-bottom: 2px;
+}
+.gate-item.active .gate-code { color: var(--accent-lt); }
+.gate-title {
+  font-size: 11px; font-weight: 500;
+  color: rgba(255,255,255,.4);
+  line-height: 1.4;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.gate-item.active .gate-title { color: var(--nav-active); }
+.gate-item.done .gate-title { color: rgba(255,255,255,.55); }
+.gate-badge-sm {
+  font-family: var(--font-mono);
+  font-size: 8px; font-weight: 500;
+  letter-spacing: .05em; text-transform: uppercase;
+  padding: 1px 5px;
+  margin-top: 3px;
+  display: inline-block;
+}
+.badge-done     { background: rgba(25,107,35,.2);  color: #7d9140; }
+.badge-active   { background: rgba(83,74,183,.2);  color: #7B74D4; }
+.badge-hold     { background: rgba(186,117,23,.2); color: #EF9F27; }
+.badge-proj     { background: rgba(100,100,90,.2); color: #888880; }
+
+.sidebar-divider { height: 1px; background: var(--nav-border); margin: var(--sp-2) var(--sp-4); }
+.sidebar-meta {
+  padding: var(--sp-4);
+  margin-top: auto;
+  border-top: 1px solid var(--nav-border);
+}
+.sidebar-meta-row {
+  font-size: 10px; color: rgba(255,255,255,.25);
+  font-family: var(--font-mono);
+  line-height: 1.8;
+}
+.sidebar-meta-row span { color: rgba(255,255,255,.45); }
+
+/* ── MAIN CONTENT ── */
+.main { flex: 1; overflow-y: auto; }
+.view { display: none; padding: var(--sp-5) var(--sp-6); max-width: 1200px; }
+.view.active { display: block; }
+
+/* ── VIEW HEADER ── */
+.view-header {
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-5);
+}
+.view-header-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: var(--sp-4);
+  margin-bottom: var(--sp-2);
+}
+.view-gate-code {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--sp-1);
+}
+.view-title {
+  font-family: var(--font-body);
+  font-size: 22px; font-weight: 300;
+  color: var(--text);
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+.view-title strong { font-weight: 600; color: var(--accent-lt); }
+.view-desc {
+  font-size: 13px; color: var(--muted);
+  max-width: 640px; line-height: 1.7;
+  margin-top: var(--sp-2);
+}
+.status-pill {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pill-done     { background: rgba(25,107,35,.15);   color: #7d9140;   border: 1px solid rgba(25,107,35,.3); }
+.pill-active   { background: rgba(83,74,183,.15);   color: #7B74D4;   border: 1px solid rgba(83,74,183,.3); }
+.pill-hold     { background: rgba(186,117,23,.15);  color: #EF9F27;   border: 1px solid rgba(186,117,23,.3); }
+.pill-proj     { background: rgba(100,100,90,.12);  color: var(--muted); border: 1px solid var(--border); }
+[data-theme="light"] .pill-done  { background: #EAF3DE; color: #196b23; border-color: #C0DD97; }
+[data-theme="light"] .pill-active{ background: #EEEDFE; color: #534AB7; border-color: #AFA9EC; }
+[data-theme="light"] .pill-hold  { background: #FAEEDA; color: #854F0B; border-color: #FAC775; }
+
+/* ── GATE PROGRESS STRIP ── */
+.gate-strip {
+  display: flex; gap: 0;
+  margin-bottom: var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.strip-step {
+  flex: 1; padding: 10px 12px;
+  border-right: 1px solid var(--border);
+  cursor: pointer; transition: background .15s;
+}
+.strip-step:last-child { border-right: none; }
+.strip-step:hover { background: var(--surface2); }
+.strip-step.active { background: var(--accent-bg); }
+.strip-step-code {
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--dimmed);
+  letter-spacing: .07em; margin-bottom: 3px;
+}
+.strip-step.active .strip-step-code { color: var(--accent); }
+.strip-step.done .strip-step-code { color: var(--gate-done); }
+.strip-step-name { font-size: 11px; font-weight: 500; color: var(--muted); }
+.strip-step.active .strip-step-name { color: var(--text); }
+.strip-step.done .strip-step-name { color: var(--text-mid); }
+
+/* ── CONTENT GRID ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); margin-bottom: var(--sp-4); }
+.three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-4); margin-bottom: var(--sp-4); }
+.col-wide { grid-column: span 2; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: var(--sp-4);
+}
+.card-title {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-3);
+}
+[data-theme="light"] .card-title { color: var(--purple); }
+
+/* ── STAT BLOCKS ── */
+.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 12px; margin-bottom: var(--sp-4); }
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--dimmed); margin-bottom: 6px;
+}
+.stat-val { font-size: 20px; font-weight: 300; color: var(--text); letter-spacing: -.02em; line-height: 1.1; }
+.stat-sub { font-size: 10px; color: var(--muted); margin-top: 4px; font-family: var(--font-mono); }
+.stat-purple .stat-val { color: var(--accent-lt); }
+.stat-teal   .stat-val { color: #5DCAA5; }
+.stat-amber  .stat-val { color: #EF9F27; }
+.stat-green  .stat-val { color: #7d9140; }
+
+/* ── TABLES ── */
+.tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.tbl th {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--dimmed); padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+.tbl td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; line-height: 1.5; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: var(--surface2); }
+.tbl .num { text-align: right; font-family: var(--font-mono); font-size: 12px; }
+.tbl .mono { font-family: var(--font-mono); font-size: 11px; }
+.tbl .muted { color: var(--muted); }
+.tbl .green { color: #7d9140; font-family: var(--font-mono); }
+.tbl .amber { color: #EF9F27; }
+.tbl .red   { color: #F09595; }
+.tbl .total td { background: rgba(83,74,183,.08); font-weight: 600; border-top: 1px solid var(--accent); border-bottom: none; }
+.tbl .total .num { color: var(--accent-lt); }
+[data-theme="light"] .tbl .total td { background: var(--purple-ghost); }
+[data-theme="light"] .tbl .total .num { color: var(--purple); }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .05em; text-transform: uppercase;
+  padding: 2px 7px;
+}
+.badge-green  { background: rgba(25,107,35,.15);   color: #7d9140; }
+.badge-purple { background: rgba(83,74,183,.15);   color: #7B74D4; }
+.badge-amber  { background: rgba(186,117,23,.15);  color: #EF9F27; }
+.badge-red    { background: rgba(163,45,45,.15);   color: #F09595; }
+.badge-blue   { background: rgba(24,95,165,.15);   color: #85B7EB; }
+.badge-gray   { background: rgba(100,100,90,.12);  color: var(--muted); }
+[data-theme="light"] .badge-green  { background: #EAF3DE; color: #196b23; }
+[data-theme="light"] .badge-purple { background: #EEEDFE; color: #534AB7; }
+[data-theme="light"] .badge-amber  { background: #FAEEDA; color: #854F0B; }
+[data-theme="light"] .badge-red    { background: #FCEBEB; color: #A32D2D; }
+[data-theme="light"] .badge-blue   { background: #E6F1FB; color: #185FA5; }
+[data-theme="light"] .badge-gray   { background: #F1EFE8; color: #5F5E5A; }
+
+/* ── ALERT BOXES ── */
+.alert {
+  padding: 12px 16px;
+  border-left: 3px solid;
+  margin-bottom: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.alert strong { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 4px; }
+.alert-purple { border-color: var(--purple);    background: rgba(83,74,183,.08);   color: var(--accent-lt); }
+.alert-teal   { border-color: var(--teal-mid);  background: rgba(15,110,86,.08);   color: #5DCAA5; }
+.alert-amber  { border-color: var(--amber-mid); background: rgba(186,117,23,.08);  color: #EF9F27; }
+.alert-red    { border-color: var(--red);        background: rgba(163,45,45,.08);  color: #F09595; }
+.alert-green  { border-color: var(--green);     background: rgba(25,107,35,.08);   color: #7d9140; }
+[data-theme="light"] .alert-purple { background: var(--purple-ghost); color: var(--purple-dk); }
+[data-theme="light"] .alert-teal   { background: var(--teal-lt);     color: var(--teal); }
+[data-theme="light"] .alert-amber  { background: var(--amber-lt);    color: var(--amber); }
+
+/* ── RISK REGISTER ── */
+.risk-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.risk-item:last-child { border-bottom: none; }
+.risk-level {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .05em; text-transform: uppercase;
+  padding: 3px 7px; flex-shrink: 0; margin-top: 2px;
+}
+.risk-high   { background: rgba(163,45,45,.15);  color: #F09595; }
+.risk-med    { background: rgba(186,117,23,.15); color: #EF9F27; }
+.risk-low    { background: rgba(25,107,35,.15);  color: #7d9140; }
+[data-theme="light"] .risk-high { background: #FCEBEB; color: #A32D2D; }
+[data-theme="light"] .risk-med  { background: #FAEEDA; color: #854F0B; }
+[data-theme="light"] .risk-low  { background: #EAF3DE; color: #196b23; }
+.risk-body { flex: 1; }
+.risk-title { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.risk-desc  { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+/* ── DELIVERABLE CHECKLIST ── */
+.deliv-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.deliv-item:last-child { border-bottom: none; }
+.deliv-check {
+  width: 14px; height: 14px;
+  flex-shrink: 0; margin-top: 1px;
+}
+.deliv-check.done { color: #7d9140; }
+.deliv-check.pending { color: var(--dimmed); }
+.deliv-label { color: var(--text); line-height: 1.5; }
+.deliv-label span { font-family: var(--font-mono); font-size: 10px; color: var(--muted); margin-left: 6px; }
+
+/* ── PROGRAM TABLE SPECIAL ── */
+.prog-section-head {
+  background: var(--surface2);
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--accent-lt);
+  padding: 6px 10px;
+}
+[data-theme="light"] .prog-section-head { background: var(--purple-ghost); color: var(--purple); }
+
+/* ── FORWARD BRIDGE ── */
+.bridge {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  padding: var(--sp-4);
+  margin-top: var(--sp-5);
+}
+.bridge-label {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: var(--sp-2);
+}
+.bridge-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: var(--sp-2); }
+.bridge-items { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--sp-3); }
+.bridge-item {
+  font-size: 11px; padding: 4px 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+/* ── AI PANEL ── */
+.ai-layout { display: flex; gap: var(--sp-4); }
+.ai-ctx {
+  width: 240px; flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: var(--sp-3);
+  max-height: 520px; overflow-y: auto;
+}
+.ai-ctx-label {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--dimmed); margin-bottom: var(--sp-2);
+}
+.ctx-row { font-size: 11px; color: var(--muted); padding: 5px 0; border-bottom: 1px solid var(--border); line-height: 1.5; }
+.ctx-row:last-child { border-bottom: none; }
+.ctx-row strong { display: block; color: var(--text-mid); font-size: 10px; font-family: var(--font-mono); letter-spacing: .04em; }
+.ai-main { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.ai-messages {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: var(--sp-3);
+  min-height: 320px; max-height: 420px;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.msg-user {
+  align-self: flex-end;
+  max-width: 80%;
+  background: var(--purple);
+  color: #fff;
+  padding: 9px 14px;
+  font-size: 12px; line-height: 1.5;
+}
+.msg-ai {
+  align-self: flex-start;
+  max-width: 90%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 9px 14px;
+  font-size: 12px; line-height: 1.6;
+  color: var(--text);
+}
+.msg-ai strong { color: var(--accent-lt); }
+.msg-thinking { font-size: 11px; color: var(--dimmed); font-style: italic; align-self: flex-start; }
+.ai-input-row { display: flex; gap: 8px; }
+.ai-input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 9px 14px;
+  font-family: var(--font-body);
+  font-size: 12px; outline: none;
+}
+.ai-input:focus { border-color: var(--accent); }
+.ai-btn {
+  background: var(--purple);
+  color: #fff; border: none;
+  padding: 9px 20px;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: .07em; text-transform: uppercase;
+  cursor: pointer; transition: background .15s;
+}
+.ai-btn:hover { background: var(--purple-lt); }
+
+/* ── INTERACTIVE ESTIMATOR ── */
+.estimator {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+.estimator-title {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: var(--sp-3);
+}
+.slider-row {
+  display: grid;
+  grid-template-columns: 160px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.slider-label { font-size: 11px; color: var(--muted); font-family: var(--font-mono); }
+.slider-label strong { display: block; font-size: 12px; color: var(--text); font-weight: 500; }
+input[type=range] {
+  -webkit-appearance: none;
+  height: 4px;
+  background: var(--border-mid);
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+input[type=range]::-moz-range-thumb {
+  width: 16px; height: 16px;
+  background: var(--accent);
+  border: none; border-radius: 50%; cursor: pointer;
+}
+.slider-val {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 500;
+  color: var(--accent-lt);
+  min-width: 52px; text-align: right;
+}
+.slider-cost {
+  font-family: var(--font-mono);
+  font-size: 12px; color: var(--muted);
+  min-width: 100px; text-align: right;
+}
+.estimator-result {
+  display: flex; align-items: baseline;
+  gap: 16px; flex-wrap: wrap;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  margin-top: 4px;
+}
+.est-total-label {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--dimmed);
+  letter-spacing: .07em; text-transform: uppercase;
+}
+.est-total-val {
+  font-size: 26px; font-weight: 300;
+  color: var(--accent-lt); letter-spacing: -.03em;
+}
+.est-phase-vals {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  margin-left: auto;
+}
+.est-phase {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--muted);
+}
+.est-phase span { color: var(--text-mid); font-weight: 500; }
+.est-variance {
+  font-family: var(--font-mono);
+  font-size: 10px; padding: 3px 8px;
+  margin-left: 8px;
+}
+.var-within  { background: rgba(25,107,35,.15); color: #7d9140; }
+.var-over    { background: rgba(186,117,23,.15); color: #EF9F27; }
+.var-warning { background: rgba(163,45,45,.15);  color: #F09595; }
+
+/* ── CAPITAL STACK BUILDER ── */
+.stack-builder {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+.stack-builder-title {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: var(--sp-3);
+}
+.stack-source-row {
+  display: grid;
+  grid-template-columns: 24px 1fr auto auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.stack-source-row:last-child { border-bottom: none; }
+.stack-toggle {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--border-mid);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  font-size: 10px; color: transparent;
+  transition: all .15s;
+  user-select: none;
+}
+.stack-toggle.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.stack-source-name { font-size: 12px; color: var(--text); }
+.stack-source-note { font-size: 10px; color: var(--dimmed); margin-top: 2px; font-family: var(--font-mono); }
+.stack-range {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--muted);
+  text-align: right; white-space: nowrap;
+}
+.stack-amount-input {
+  width: 90px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px; text-align: right;
+  outline: none;
+}
+.stack-amount-input:focus { border-color: var(--accent); }
+.stack-amount-input:disabled { opacity: .35; }
+.stack-status-sel {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 4px 6px;
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: .04em;
+  outline: none; cursor: pointer;
+}
+.stack-status-sel:focus { border-color: var(--accent); }
+.stack-result {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  margin-top: var(--sp-3);
+}
+.stack-res-block { text-align: center; }
+.stack-res-label {
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--dimmed);
+  letter-spacing: .07em; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.stack-res-val {
+  font-size: 20px; font-weight: 300;
+  letter-spacing: -.02em;
+}
+.stack-res-val.green { color: #7d9140; }
+.stack-res-val.amber { color: #EF9F27; }
+.stack-res-val.red   { color: #F09595; }
+.stack-bar-wrap { margin-top: var(--sp-3); }
+.stack-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.stack-bar-name { font-size: 10px; color: var(--muted); min-width: 130px; font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stack-bar-track { flex: 1; height: 6px; background: var(--surface2); border: 1px solid var(--border); overflow: hidden; }
+.stack-bar-fill { height: 100%; transition: width .4s var(--ease); }
+.stack-bar-amt { font-family: var(--font-mono); font-size: 10px; color: var(--muted); min-width: 60px; text-align: right; }
+
+/* ── BENCHMARK VIEW ── */
+.bench-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: var(--sp-4); margin-bottom: var(--sp-4); }
+.bench-card { background: var(--surface); border: 1px solid var(--border); padding: var(--sp-4); }
+.bench-card-title { font-family: var(--font-mono); font-size: 9px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--sp-3); }
+.bench-metric { margin-bottom: 14px; }
+.bench-metric-name { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.bench-metric-sub { font-size: 10px; color: var(--muted); font-family: var(--font-mono); margin-bottom: 6px; }
+.bench-bar-group { position: relative; }
+.bench-range-bar { position: relative; height: 12px; background: var(--surface2); border: 1px solid var(--border); margin-bottom: 4px; }
+.bench-range-fill { position: absolute; top: 0; height: 100%; background: rgba(83,74,183,.25); transition: width .5s; }
+.bench-project-marker { position: absolute; top: -3px; width: 3px; height: 18px; background: var(--accent); }
+.bench-range-labels { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 9px; color: var(--dimmed); }
+.bench-project-val { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--accent-lt); margin-top: 2px; }
+.bench-verdict { display: inline-block; font-family: var(--font-mono); font-size: 9px; padding: 2px 7px; margin-left: 8px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .two-col, .three-col { grid-template-columns: 1fr; }
+  .view { padding: var(--sp-4); }
+  .gate-strip { flex-wrap: wrap; }
+  .ai-layout { flex-direction: column; }
+  .ai-ctx { width: 100%; max-height: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo-mark">M4</div>
+    <div class="logo-text">M4Di Terminal™</div>
+    <div class="logo-sep"></div>
+    <div class="project-name"><span>M-Well Community Health Campus</span></div>
+  </div>
+  <div class="topbar-right">
+    <div class="project-id">AE25-022-3110_PHILA_PIKE</div>
+    <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+  </div>
+</div>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-section-label">Project Journey</div>
+
+  <div class="gate-item done"    data-view="p0"  onclick="nav(this)">
+    <div class="gate-dot done"></div>
+    <div class="gate-info">
+      <div class="gate-code">P0</div>
+      <div class="gate-title">Project Intake</div>
+      <div class="gate-badge-sm badge-done">Complete</div>
+    </div>
+  </div>
+  <div class="gate-item done"    data-view="p1"  onclick="nav(this)">
+    <div class="gate-dot done"></div>
+    <div class="gate-info">
+      <div class="gate-code">P1 · FeasOps™</div>
+      <div class="gate-title">Site Feasibility</div>
+      <div class="gate-badge-sm badge-done">Complete</div>
+    </div>
+  </div>
+  <div class="gate-item done"    data-view="p2"  onclick="nav(this)">
+    <div class="gate-dot done"></div>
+    <div class="gate-info">
+      <div class="gate-code">P2 · FeasOps™</div>
+      <div class="gate-title">Test Fit + ROM Update</div>
+      <div class="gate-badge-sm badge-done">Complete</div>
+    </div>
+  </div>
+  <div class="gate-item done"    data-view="p3"  onclick="nav(this)">
+    <div class="gate-dot done"></div>
+    <div class="gate-info">
+      <div class="gate-code">P3 · FeasOps™</div>
+      <div class="gate-title">Concept Package</div>
+      <div class="gate-badge-sm badge-done">Complete</div>
+    </div>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <div class="gate-item active"  data-view="g0"  onclick="nav(this)">
+    <div class="gate-dot active"></div>
+    <div class="gate-info">
+      <div class="gate-code">Gate 0 · ALDi™</div>
+      <div class="gate-title">ROM Locked</div>
+      <div class="gate-badge-sm badge-hold">Funding Hold</div>
+    </div>
+  </div>
+  <div class="gate-item"         data-view="g1"  onclick="nav(this)">
+    <div class="gate-dot projected"></div>
+    <div class="gate-info">
+      <div class="gate-code">Gate 1 · ALDi™</div>
+      <div class="gate-title">Design Initiation</div>
+      <div class="gate-badge-sm badge-proj">Projected</div>
+    </div>
+  </div>
+  <div class="gate-item"         data-view="bench" onclick="nav(this)">
+    <div class="gate-dot projected"></div>
+    <div class="gate-info">
+      <div class="gate-code">ALDDB™</div>
+      <div class="gate-title">Benchmarks</div>
+      <div class="gate-badge-sm badge-done">Mid-Atlantic Data</div>
+    </div>
+  </div>
+  <div class="gate-item"         data-view="ai"  onclick="nav(this)">
+    <div class="gate-dot projected"></div>
+    <div class="gate-info">
+      <div class="gate-code">CBai™</div>
+      <div class="gate-title">AI Advisor</div>
+      <div class="gate-badge-sm badge-proj">Ask Anything</div>
+    </div>
+  </div>
+
+  <div class="sidebar-meta">
+    <div class="sidebar-meta-row">Client: <span>M-Well Medical Group</span></div>
+    <div class="sidebar-meta-row">Site: <span>3110 Philadelphia Pike</span></div>
+    <div class="sidebar-meta-row">Claymont, DE · NCC</div>
+    <div class="sidebar-meta-row">M4Di Gate: <span>G0 — Funding Hold</span></div>
+  </div>
+</nav>
+
+<!-- VIEWS -->
+<main class="main">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- P0 — PROJECT INTAKE                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="view" id="view-p0">
+  <div class="view-header">
+    <div class="view-header-top">
+      <div>
+        <div class="view-gate-code">P0 — Project Intake</div>
+        <div class="view-title">Before M4Di: <strong>Site, Vision, Owner</strong></div>
+        <div class="view-desc">The starting conditions. What the client brought to the table before any predevelopment analysis was performed. This snapshot establishes the baseline against which all M4Di work is measured.</div>
+      </div>
+      <div class="status-pill pill-done">Complete</div>
+    </div>
+  </div>
+
+  <div class="gate-strip">
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p0]'))"><div class="strip-step-code">P0</div><div class="strip-step-name">Intake</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p1]'))"><div class="strip-step-code">P1</div><div class="strip-step-name">Site Feasibility</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p2]'))"><div class="strip-step-code">P2</div><div class="strip-step-name">Test Fit</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p3]'))"><div class="strip-step-code">P3</div><div class="strip-step-name">Concept Package</div></div>
+    <div class="strip-step active" onclick="nav(document.querySelector('[data-view=g0]'))"><div class="strip-step-code">G0</div><div class="strip-step-name">ROM Lock</div></div>
+    <div class="strip-step"        onclick="nav(document.querySelector('[data-view=g1]'))"><div class="strip-step-code">G1</div><div class="strip-step-name">Design Start</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Client Profile</div>
+      <table class="tbl">
+        <tbody>
+          <tr><td class="muted mono">Client</td><td>M-Well Medical Group</td></tr>
+          <tr><td class="muted mono">Type</td><td>Physician group — private medical practice</td></tr>
+          <tr><td class="muted mono">Experience</td><td>Clinical practice — no prior development experience</td></tr>
+          <tr><td class="muted mono">Financing capacity</td><td>Limited personal qualification for commercial debt</td></tr>
+          <tr><td class="muted mono">Control preference</td><td>Strong preference to avoid equity investors</td></tr>
+          <tr><td class="muted mono">Decision style</td><td>Evidence-based, risk-conscious, phased commitment</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Site Profile</div>
+      <table class="tbl">
+        <tbody>
+          <tr><td class="muted mono">Address</td><td>3110 Philadelphia Pike, Claymont, DE</td></tr>
+          <tr><td class="muted mono">Jurisdiction</td><td>New Castle County, Delaware</td></tr>
+          <tr><td class="muted mono">Site area</td><td>~10.2 acres (approximately 444,312 SF)</td></tr>
+          <tr><td class="muted mono">Existing structure</td><td>2-story masonry school building (1950s)</td></tr>
+          <tr><td class="muted mono">Existing SF</td><td>27,452 SF (13,726 SF per floor)</td></tr>
+          <tr><td class="muted mono">Current ownership</td><td>Church — negotiating lease/purchase with client</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:var(--sp-4)">
+    <div class="card-title">Project Vision (Client Statement at Intake)</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.8;padding:var(--sp-2) 0;">
+      M-Well Medical Group seeks to develop a full-spectrum community health campus on the 10-acre former school site. Phase 1 converts the existing school building into licensed residential care for children and young adults with intellectual and developmental disabilities (IDD). Phase 2 adds a new 4-story Wellness Pavilion providing community medical, behavioral health, occupational therapy, and primary care services. The full campus vision integrates both buildings with a park-like healing landscape — outdoor therapeutic gardens, accessible walking trails, and public green space — serving as both a care environment and a community asset.
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">What the Client Had at Intake</div>
+      <div>
+        <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Site identified and under negotiation</div></div>
+        <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Clinical vision and IDD program concept</div></div>
+        <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Physician group as operating entity</div></div>
+        <div class="deliv-item"><div class="deliv-check pending">○</div><div class="deliv-label">No cost estimate <span>Unknown</span></div></div>
+        <div class="deliv-item"><div class="deliv-check pending">○</div><div class="deliv-label">No zoning or code analysis <span>Unknown</span></div></div>
+        <div class="deliv-item"><div class="deliv-check pending">○</div><div class="deliv-label">No regulatory framework (IDD licensing) <span>Unknown</span></div></div>
+        <div class="deliv-item"><div class="deliv-check pending">○</div><div class="deliv-label">No funding strategy or grant research <span>Unknown</span></div></div>
+        <div class="deliv-item"><div class="deliv-check pending">○</div><div class="deliv-label">No nonprofit entity <span>Required for grants</span></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">M4Di Intake Assessment</div>
+      <div class="risk-item">
+        <div class="risk-level risk-high">High</div>
+        <div class="risk-body">
+          <div class="risk-title">Site control uncertainty</div>
+          <div class="risk-desc">Church owns the building and 10-acre site. Lease/purchase terms not yet resolved. All predevelopment investment is at risk if church declines to sell.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-high">High</div>
+        <div class="risk-body">
+          <div class="risk-title">No nonprofit structure</div>
+          <div class="risk-desc">Physician group LLC cannot access IDD residential grants, USDA Community Facilities, DSHA, or CDBG programs. 501(c)(3) formation is critical path.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-high">High</div>
+        <div class="risk-body">
+          <div class="risk-title">IDD licensing timeline</div>
+          <div class="risk-desc">DDDS licensing for new IDD residential facilities: 6–18 months after application. Pre-application meeting with DDDS required before finalizing Phase 1A bed count.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-med">Med</div>
+        <div class="risk-body">
+          <div class="risk-title">Hazardous materials — pre-1980 building</div>
+          <div class="risk-desc">Asbestos and lead paint survey required before Phase 1A construction. Phase I ESA required for full site. Budget allowance needed, scope TBD.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bridge">
+    <div class="bridge-label">Next — FeasOps™ P1</div>
+    <div class="bridge-title">Intake findings trigger P1 Site Feasibility engagement ($8,000)</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:var(--sp-2);line-height:1.7;">
+      M4Di recommends proceeding with P1 to confirm zoning compliance, establish initial code framework for IDD residential use, generate a preliminary ROM, and produce a risk memo that gives the client a defensible basis for the site control negotiation.
+    </div>
+    <div class="bridge-items">
+      <div class="bridge-item">Zoning + code scan</div>
+      <div class="bridge-item">Initial program</div>
+      <div class="bridge-item">G0 parametric ROM</div>
+      <div class="bridge-item">Risk memo</div>
+      <div class="bridge-item">Go / No-Go recommendation</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- P1 — SITE FEASIBILITY                                  -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="view" id="view-p1">
+  <div class="view-header">
+    <div class="view-header-top">
+      <div>
+        <div class="view-gate-code">P1 · FeasOps™ — $8,000 Package</div>
+        <div class="view-title">Site Feasibility: <strong>Zoning, Code, Initial ROM</strong></div>
+        <div class="view-desc">The first M4Di deliverable. Confirms the regulatory framework, establishes the code path for IDD residential use, generates the first parametric $/SF ROM, and issues a formal risk memo. This package determines whether the project is viable before any design fees are committed.</div>
+      </div>
+      <div class="status-pill pill-done">Complete</div>
+    </div>
+  </div>
+
+  <div class="gate-strip">
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p0]'))"><div class="strip-step-code">P0</div><div class="strip-step-name">Intake</div></div>
+    <div class="strip-step active" onclick="nav(document.querySelector('[data-view=p1]'))"><div class="strip-step-code">P1</div><div class="strip-step-name">Site Feasibility</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p2]'))"><div class="strip-step-code">P2</div><div class="strip-step-name">Test Fit</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p3]'))"><div class="strip-step-code">P3</div><div class="strip-step-name">Concept Package</div></div>
+    <div class="strip-step"        onclick="nav(document.querySelector('[data-view=g0]'))"><div class="strip-step-code">G0</div><div class="strip-step-name">ROM Lock</div></div>
+    <div class="strip-step"        onclick="nav(document.querySelector('[data-view=g1]'))"><div class="strip-step-code">G1</div><div class="strip-step-name">Design Start</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Zoning Compliance Matrix</div>
+      <table class="tbl">
+        <thead><tr><th>Standard</th><th>Requirement</th><th>Finding</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>District</td><td>NCC Suburban (S)</td><td>Confirmed S + TN Overlay</td><td><span class="badge badge-green">Compliant</span></td></tr>
+          <tr><td>Use type</td><td>Institutional Residential + Medical</td><td>Permitted under S district</td><td><span class="badge badge-green">Compliant</span></td></tr>
+          <tr><td>Max FAR</td><td>0.12</td><td>Proposed 0.11</td><td><span class="badge badge-green">Compliant</span></td></tr>
+          <tr><td>Min open space</td><td>0.70</td><td>Proposed 0.74</td><td><span class="badge badge-green">Over-compliant</span></td></tr>
+          <tr><td>Max height</td><td>40 ft</td><td>Phase 1: 28 ft · Phase 2: 52 ft</td><td><span class="badge badge-amber">Phase 2 variance req.</span></td></tr>
+          <tr><td>Setbacks</td><td>Per S/TN standards</td><td>Landscaped buffers provided</td><td><span class="badge badge-green">Compliant</span></td></tr>
+          <tr><td>Parking</td><td>Per UDC calculation</td><td>~170 spaces on 10 acres</td><td><span class="badge badge-green">Compliant</span></td></tr>
+          <tr><td>TN connectivity</td><td>Sidewalks, bike access, trails</td><td>Fully incorporated in concept</td><td><span class="badge badge-green">Compliant</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Code Framework — Phase 1 (School Renovation)</div>
+      <table class="tbl">
+        <thead><tr><th>Code / Standard</th><th>Application</th><th>Flag</th></tr></thead>
+        <tbody>
+          <tr><td>IBC Group R-4</td><td>Residential care — entire building</td><td><span class="badge badge-amber">Full building</span></td></tr>
+          <tr><td>NFPA 101</td><td>Life Safety — Residential Board &amp; Care</td><td><span class="badge badge-amber">Full NFPA 13 req.</span></td></tr>
+          <tr><td>CMS Pediatric Congregate Care</td><td>IDD residential program</td><td><span class="badge badge-red">Checklist gap</span></td></tr>
+          <tr><td>DE DHSS / DDDS Licensing</td><td>IDD residential operation</td><td><span class="badge badge-red">6–18 mo. timeline</span></td></tr>
+          <tr><td>ADA / ICC A117.1</td><td>Full building + campus</td><td><span class="badge badge-amber">Elevator shaft P1A</span></td></tr>
+          <tr><td>DE State Fire Marshal</td><td>R-4 above 2 stories (Phase 2)</td><td><span class="badge badge-amber">Early coordination</span></td></tr>
+          <tr><td>NEPA / Hazmat</td><td>Pre-1980 building — asbestos/lead</td><td><span class="badge badge-red">Phase I ESA required</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:var(--sp-4)">
+    <div class="card-title">P1 Parametric ROM — Initial $/SF Basis</div>
+    <div style="margin-bottom:var(--sp-3)">
+      <div class="alert alert-purple"><strong>M4Di.Oi™ — P1 Parametric Estimate</strong>First ROM produced before test fit or program confirmation. $/SF rates established from ALDDB™ Mid-Atlantic IDD residential and community health benchmarks. Rates will be refined at P2 (test fit) and locked at Gate 0 (full OI Tool output).</div>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Component</th><th>SF</th><th>$/SF (P1 Range)</th><th class="num">Low ROM</th><th class="num">High ROM</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Phase 1 — School Renovation</td><td class="mono">27,452</td><td class="mono">$260–$290/SF</td><td class="num">$7,137,520</td><td class="num">$7,961,080</td><td class="muted">IDD R-4 adaptive reuse</td></tr>
+        <tr><td>Phase 2 — Wellness Pavilion</td><td class="mono">102,900</td><td class="mono">$410–$450/SF</td><td class="num">$42,189,000</td><td class="num">$46,305,000</td><td class="muted">4-story new construction</td></tr>
+        <tr><td>Sitework + Parking</td><td class="mono">444,312</td><td class="mono">—</td><td class="num">$5,200,000</td><td class="num">$6,400,000</td><td class="muted">10-acre campus</td></tr>
+        <tr class="total"><td colspan="3">Total Hard Cost Range (P1)</td><td class="num">~$54.5M</td><td class="num">~$60.7M</td><td></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:var(--sp-3);font-size:11px;color:var(--muted);font-family:var(--font-mono);line-height:1.7;">
+      P1 ROM accuracy: ±20–25% · Sufficient for go/no-go and initial funding conversations · Not for funder submission without P3 refinement
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">P1 Deliverables Issued</div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Zoning compliance matrix <span>NCC S + TN Overlay</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Code framework memo <span>IBC R-4, NFPA 101</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Initial program summary <span>Beds, SF, use types</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Parametric ROM range <span>$54.5M–$60.7M</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Risk register — P1 <span>7 items, 3 High</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Go / No-Go recommendation <span>Proceed to P2</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Go / No-Go Decision</div>
+      <div class="alert alert-green"><strong>Recommendation — Proceed to P2</strong>Site is viable. Zoning supports the proposed uses. Code path is clear though demanding. P1 ROM brackets the project at $54–61M which is consistent with available funding instruments. Three high risks identified — all manageable with structured mitigation. Recommend P2 test fit to confirm $/SF and program.</div>
+      <div style="margin-top:var(--sp-3);">
+        <div style="font-size:11px;font-family:var(--font-mono);color:var(--dimmed);margin-bottom:8px;letter-spacing:.06em;text-transform:uppercase;">Key conditions for P2</div>
+        <div class="bridge-item" style="margin-bottom:6px;display:block;">DDDS pre-application meeting initiated before P2 finalizes bed count</div>
+        <div class="bridge-item" style="margin-bottom:6px;display:block;">Phase I ESA commissioned in parallel</div>
+        <div class="bridge-item" style="display:block;">Site control negotiation — letter of intent preferred before G0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE $/SF ESTIMATOR -->
+  <div class="estimator">
+    <div class="estimator-title">M4Di.Oi™ Interactive Parametric Estimator — Try It</div>
+    <div class="slider-row">
+      <div class="slider-label"><strong>School SF</strong>Adaptive reuse</div>
+      <input type="range" id="s1-school-sf" min="15000" max="45000" step="500" value="27452" oninput="calcEst()">
+      <div class="slider-val" id="s1-school-sf-lbl">27,452</div>
+      <div class="slider-cost" id="s1-school-cost">$7,549,300</div>
+    </div>
+    <div class="slider-row">
+      <div class="slider-label"><strong>School $/SF</strong>IDD R-4 adaptive</div>
+      <input type="range" id="s1-school-rate" min="200" max="375" step="5" value="275" oninput="calcEst()">
+      <div class="slider-val" id="s1-school-rate-lbl">$275</div>
+      <div class="slider-cost" id="s1-school-rate-cost">&nbsp;</div>
+    </div>
+    <div class="slider-row">
+      <div class="slider-label"><strong>Pavilion SF</strong>New construction</div>
+      <input type="range" id="s1-pav-sf" min="50000" max="150000" step="1000" value="102900" oninput="calcEst()">
+      <div class="slider-val" id="s1-pav-sf-lbl">102,900</div>
+      <div class="slider-cost" id="s1-pav-cost">$43,732,500</div>
+    </div>
+    <div class="slider-row">
+      <div class="slider-label"><strong>Pavilion $/SF</strong>4-story medical</div>
+      <input type="range" id="s1-pav-rate" min="325" max="550" step="5" value="425" oninput="calcEst()">
+      <div class="slider-val" id="s1-pav-rate-lbl">$425</div>
+      <div class="slider-cost" id="s1-pav-rate-cost">&nbsp;</div>
+    </div>
+    <div class="slider-row">
+      <div class="slider-label"><strong>Contingency</strong>% of hard costs</div>
+      <input type="range" id="s1-contingency" min="5" max="20" step="1" value="10" oninput="calcEst()">
+      <div class="slider-val" id="s1-cont-lbl">10%</div>
+      <div class="slider-cost" id="s1-cont-cost">&nbsp;</div>
+    </div>
+    <div class="estimator-result">
+      <div>
+        <div class="est-total-label">Total Hard Costs</div>
+        <div class="est-total-val" id="s1-total">$65,414,070</div>
+      </div>
+      <div class="est-phase-vals">
+        <div class="est-phase">Phase 1 school: <span id="s1-p1-val">$7,549,300</span></div>
+        <div class="est-phase">Phase 2 pavilion: <span id="s1-p2-val">$43,732,500</span></div>
+        <div class="est-phase">Contingency: <span id="s1-cont-val">$5,688,180</span></div>
+        <div class="est-phase">vs. Gate 0 ROM: <span id="s1-variance-badge" class="est-variance var-within">Within range</span></div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:var(--dimmed);font-family:var(--font-mono);margin-top:8px;">Note: Sitework ($5.6M) and soft costs excluded from this estimator for clarity. Gate 0 ROM baseline: $59,154,299 total project investment.</div>
+  </div>
+
+  <div class="bridge">
+    <div class="bridge-label">Next — FeasOps™ P2</div>
+    <div class="bridge-title">Test fit confirms program, existing conditions scope established, ROM updated with quantity basis ($14,000)</div>
+    <div class="bridge-items">
+      <div class="bridge-item">Floor plan test fit</div>
+      <div class="bridge-item">Existing conditions lite</div>
+      <div class="bridge-item">Concept massing</div>
+      <div class="bridge-item">ROM update with quantities</div>
+      <div class="bridge-item">Phasing strategy confirmed</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- P2 — TEST FIT + ROM UPDATE                            -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="view" id="view-p2">
+  <div class="view-header">
+    <div class="view-header-top">
+      <div>
+        <div class="view-gate-code">P2 · FeasOps™ — $14,000 Package</div>
+        <div class="view-title">Test Fit: <strong>Program Confirmed, ROM Updated</strong></div>
+        <div class="view-desc">P2 confirms the building program through a test fit of the existing school floor plate, establishes the phasing strategy, and updates the ROM with quantity-informed $/SF rates. The Pavilion massing is conceptualized for the first time.</div>
+      </div>
+      <div class="status-pill pill-done">Complete</div>
+    </div>
+  </div>
+
+  <div class="gate-strip">
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p0]'))"><div class="strip-step-code">P0</div><div class="strip-step-name">Intake</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p1]'))"><div class="strip-step-code">P1</div><div class="strip-step-name">Site Feasibility</div></div>
+    <div class="strip-step active" onclick="nav(document.querySelector('[data-view=p2]'))"><div class="strip-step-code">P2</div><div class="strip-step-name">Test Fit</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p3]'))"><div class="strip-step-code">P3</div><div class="strip-step-name">Concept Package</div></div>
+    <div class="strip-step"        onclick="nav(document.querySelector('[data-view=g0]'))"><div class="strip-step-code">G0</div><div class="strip-step-name">ROM Lock</div></div>
+    <div class="strip-step"        onclick="nav(document.querySelector('[data-view=g1]'))"><div class="strip-step-code">G1</div><div class="strip-step-name">Design Start</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Phase 1 — School Building Program (Confirmed)</div>
+      <table class="tbl">
+        <thead><tr><th>Component</th><th>Floor</th><th class="num">SF</th><th class="num">Beds</th></tr></thead>
+        <tbody>
+          <tr class="prog-section-head"><td colspan="4">Phase 1A — Partial First Floor (~30 beds)</td></tr>
+          <tr><td>Resident sleeping rooms (private + shared)</td><td>1F</td><td class="num">4,200</td><td class="num">30</td></tr>
+          <tr><td>Shared bathrooms + hygiene</td><td>1F</td><td class="num">800</td><td class="num">—</td></tr>
+          <tr><td>Dining + kitchen support</td><td>1F</td><td class="num">1,200</td><td class="num">—</td></tr>
+          <tr><td>Therapy + activity + quiet sensory</td><td>1F</td><td class="num">1,100</td><td class="num">—</td></tr>
+          <tr><td>Staff support + monitoring</td><td>1F</td><td class="num">600</td><td class="num">—</td></tr>
+          <tr><td>Life-safety backbone (full building)</td><td>1F+2F</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr class="prog-section-head"><td colspan="4">Phase 1B — Full Build-Out (112 beds)</td></tr>
+          <tr><td>Balance first floor + full second floor</td><td>1F+2F</td><td class="num">19,552</td><td class="num">82</td></tr>
+          <tr><td>Elevator installation</td><td>Both</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr class="total"><td colspan="2">Total School Building</td><td class="num">27,452</td><td class="num">112</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Phase 2 — Wellness Pavilion Program (Concept)</div>
+      <table class="tbl">
+        <thead><tr><th>Floor / Use</th><th class="num">SF</th><th>Program</th></tr></thead>
+        <tbody>
+          <tr class="prog-section-head"><td colspan="3">New 4-Story Construction — 102,900 SF Total</td></tr>
+          <tr><td>Ground Floor</td><td class="num">25,725</td><td>Community medical clinic, primary care, reception, administration</td></tr>
+          <tr><td>Floor 2</td><td class="num">25,725</td><td>Behavioral health, occupational therapy, outpatient clinical</td></tr>
+          <tr><td>Floor 3</td><td class="num">25,725</td><td>Adult IDD residential (~120 beds)</td></tr>
+          <tr><td>Floor 4</td><td class="num">25,725</td><td>Adult IDD residential (~120 beds) + rooftop terrace</td></tr>
+          <tr class="total"><td>Pavilion Total</td><td class="num">102,900</td><td>~240 adult IDD beds + community medical</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:var(--sp-3);font-size:11px;color:var(--muted);line-height:1.6;">
+        Full campus at build-out: 27,452 SF school (112 pediatric IDD) + 102,900 SF pavilion (240 adult IDD + medical) = 130,352 SF total · 352 IDD beds · 50,000 SF community health
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:var(--sp-4)">
+    <div class="card-title">P2 ROM Update — Quantity-Informed $/SF Rates</div>
+    <div class="alert alert-purple" style="margin-bottom:var(--sp-3)"><strong>P2 ROM Accuracy: ±15%</strong>Test fit confirms floor plate efficiency and program fit. $/SF rates updated from P1 parametric range to quantity-informed rates based on the confirmed room mix, structural assessment, and MEP complexity for IDD residential use. This ROM feeds the P3 detailed estimate.</div>
+    <table class="tbl">
+      <thead><tr><th>Component</th><th>SF</th><th>P1 $/SF</th><th>P2 $/SF</th><th class="num">P2 ROM</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td>School Renovation (Phase 1)</td><td class="mono">27,452</td><td class="mono">$260–$290</td><td class="mono green">$275/SF</td><td class="num green">$7,549,300</td><td><span class="badge badge-green">Tightened</span></td></tr>
+        <tr><td>Wellness Pavilion (Phase 2)</td><td class="mono">102,900</td><td class="mono">$410–$450</td><td class="mono green">$425/SF</td><td class="num green">$43,732,500</td><td><span class="badge badge-green">Tightened</span></td></tr>
+        <tr><td>Sitework + Parking + Stormwater</td><td class="mono">—</td><td class="mono">Lump</td><td class="mono">Lump</td><td class="num">$5,600,000</td><td><span class="badge badge-gray">Held</span></td></tr>
+        <tr><td>Contingency (10%) + Escalation (5%)</td><td class="mono">—</td><td class="mono">—</td><td class="mono">15%</td><td class="num">$8,528,070</td><td><span class="badge badge-amber">Added</span></td></tr>
+        <tr class="total"><td colspan="3">Total Hard Costs (P2 ROM)</td><td></td><td class="num">~$65.4M</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Phasing Strategy (Confirmed at P2)</div>
+      <div class="risk-item">
+        <div class="risk-level" style="background:rgba(83,74,183,.15);color:var(--accent-lt);font-size:9px;padding:3px 7px;">PHASE 1A</div>
+        <div class="risk-body">
+          <div class="risk-title">Partial First Floor — ~30 beds</div>
+          <div class="risk-desc">Full-building life-safety backbone installed. MEP sized for full build-out. Elevator shaft shell. No cab until Phase 1B. Revenue generation begins.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level" style="background:rgba(15,110,86,.15);color:#5DCAA5;font-size:9px;padding:3px 7px;">PHASE 1B</div>
+        <div class="risk-body">
+          <div class="risk-title">Full School — 112 beds</div>
+          <div class="risk-desc">Balance of floors, elevator installation, full HVAC completion. Funded from Phase 1A revenue + additional grant/debt.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level" style="background:rgba(186,117,23,.15);color:#EF9F27;font-size:9px;padding:3px 7px;">PHASE 2</div>
+        <div class="risk-body">
+          <div class="risk-title">Wellness Pavilion — 102,900 SF</div>
+          <div class="risk-desc">New 4-story construction. Requires full site acquisition and investor/developer partnership. Phase 1 revenue demonstrates operational viability.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">P2 Deliverables Issued</div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">School building test fit <span>112-bed program confirmed</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Pavilion concept massing <span>4-story, 102,900 SF</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Updated $/SF rates <span>$275 school · $425 pavilion</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Phasing strategy memo <span>1A/1B/2 confirmed</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Infrastructure directive <span>Full backbone in Phase 1A</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">P2 ROM update <span>$65.4M full campus</span></div></div>
+    </div>
+  </div>
+
+  <div class="bridge">
+    <div class="bridge-label">Next — FeasOps™ P3</div>
+    <div class="bridge-title">P3 produces the full deliverable package — detailed estimate, fee schedule, procurement toolkit, capital stack concept, AE RFP/RFQ ($22,000)</div>
+    <div class="bridge-items">
+      <div class="bridge-item">Full detailed estimate</div>
+      <div class="bridge-item">Architecture + engineering fee schedule</div>
+      <div class="bridge-item">Capital stack concept</div>
+      <div class="bridge-item">AE RFP/RFQ package</div>
+      <div class="bridge-item">Funder-ready budget package</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- P3 — CONCEPT PACKAGE                                   -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="view" id="view-p3">
+  <div class="view-header">
+    <div class="view-header-top">
+      <div>
+        <div class="view-gate-code">P3 · FeasOps™ — $22,000 Package</div>
+        <div class="view-title">Concept Package: <strong>Full Estimate, Fees, Procurement</strong></div>
+        <div class="view-desc">The complete predevelopment intelligence package. Detailed estimate with CSI-organized line items, architecture and engineering fee schedule, procurement toolkit including AE RFP/RFQ, preliminary capital stack concept, and funder-ready budget summary. This package enables the AE selection process and funder conversations to begin.</div>
+      </div>
+      <div class="status-pill pill-done">Complete</div>
+    </div>
+  </div>
+
+  <div class="gate-strip">
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p0]'))"><div class="strip-step-code">P0</div><div class="strip-step-name">Intake</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p1]'))"><div class="strip-step-code">P1</div><div class="strip-step-name">Site Feasibility</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p2]'))"><div class="strip-step-code">P2</div><div class="strip-step-name">Test Fit</div></div>
+    <div class="strip-step active" onclick="nav(document.querySelector('[data-view=p3]'))"><div class="strip-step-code">P3</div><div class="strip-step-name">Concept Package</div></div>
+    <div class="strip-step"        onclick="nav(document.querySelector('[data-view=g0]'))"><div class="strip-step-code">G0</div><div class="strip-step-name">ROM Lock</div></div>
+    <div class="strip-step"        onclick="nav(document.querySelector('[data-view=g1]'))"><div class="strip-step-code">G1</div><div class="strip-step-name">Design Start</div></div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat stat-purple"><div class="stat-label">Total Project Investment</div><div class="stat-val">$59.15M</div><div class="stat-sub">3-story school + 4-story pavilion</div></div>
+    <div class="stat stat-teal"><div class="stat-label">School Renovation</div><div class="stat-val">$7.55M</div><div class="stat-sub">27,452 SF · $275/SF</div></div>
+    <div class="stat stat-amber"><div class="stat-label">Wellness Pavilion</div><div class="stat-val">$43.73M</div><div class="stat-sub">102,900 SF · $425/SF</div></div>
+    <div class="stat"><div class="stat-label">Architecture Fees</div><div class="stat-val">$1.73M</div><div class="stat-sub">All phases · M4D lead</div></div>
+    <div class="stat"><div class="stat-label">Engineering Fees</div><div class="stat-val">$2.94M</div><div class="stat-sub">MEP, civil, structural</div></div>
+    <div class="stat stat-green"><div class="stat-label">Grant Target (Phase 1)</div><div class="stat-val">$4–6M</div><div class="stat-sub">Non-debt, non-equity</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Development Budget — Full Campus</div>
+      <table class="tbl">
+        <thead><tr><th>Category</th><th>Basis</th><th class="num">Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Wellness Pavilion — 4-story new</td><td class="mono">102,900 SF · $425/SF</td><td class="num green">$43,732,500</td></tr>
+          <tr><td>School Renovation — 2-story adaptive</td><td class="mono">27,452 SF · $275/SF</td><td class="num green">$7,549,300</td></tr>
+          <tr><td>Sitework / Open Space / Stormwater</td><td class="mono">Lump</td><td class="num">$4,400,000</td></tr>
+          <tr><td>Parking + Drives</td><td class="mono">40,000 SF · $30/SF</td><td class="num">$1,200,000</td></tr>
+          <tr class="total"><td colspan="2">Hard Cost Subtotal</td><td class="num">$56,881,800</td></tr>
+          <tr><td>Contingency</td><td class="mono">10%</td><td class="num muted">$5,688,180</td></tr>
+          <tr><td>Escalation Reserve</td><td class="mono">5%</td><td class="num muted">$2,844,090</td></tr>
+          <tr class="total"><td colspan="2">Total Hard Costs</td><td class="num">$65,414,070</td></tr>
+          <tr><td>Soft Costs (Design, Eng., Permits)</td><td class="mono">~8%</td><td class="num muted">$5,233,126</td></tr>
+          <tr><td>Permitting / Legal</td><td class="mono">Lump</td><td class="num muted">$500,000</td></tr>
+          <tr><td>Financing + Closing</td><td class="mono">2% hard</td><td class="num muted">$1,308,281</td></tr>
+          <tr><td>FF&amp;E</td><td class="mono">Lump</td><td class="num muted">$3,500,000</td></tr>
+          <tr><td>Owner PM</td><td class="mono">Lump</td><td class="num muted">$400,000</td></tr>
+          <tr class="total"><td colspan="2">TOTAL PROJECT INVESTMENT</td><td class="num">$76,355,477</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:var(--sp-2);font-size:10px;color:var(--dimmed);font-family:var(--font-mono);">Note: Phase 1 school-only TPI = ~$14.2M · Pavilion may be phased separately with investor</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Architecture Fee Schedule — M4D Lead</div>
+      <table class="tbl">
+        <thead><tr><th>Phase</th><th>Basis</th><th class="num">Fee</th></tr></thead>
+        <tbody>
+          <tr><td>Pre-Phase — Buyer Proposal</td><td class="mono">T&amp;M</td><td class="num muted">$3,000</td></tr>
+          <tr><td>Phase 1 — Master Plan + Zoning</td><td class="mono">1% of $1.5M equiv.</td><td class="num">$15,000</td></tr>
+          <tr><td>Phase 2 — School Renovation</td><td class="mono">5.2% of $7.55M</td><td class="num">$390,000</td></tr>
+          <tr><td>Phase 2A — Infrastructure + Landscape</td><td class="mono">3% of $4.4M</td><td class="num">$132,000</td></tr>
+          <tr><td>Phase 3 — Pavilion (4-story)</td><td class="mono">4% of $43.73M</td><td class="num">$1,190,000</td></tr>
+          <tr class="total"><td colspan="2">Total Architecture Fees</td><td class="num">$1,730,000</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:var(--sp-3)">
+        <div class="card-title">Engineering Fees</div>
+        <table class="tbl" style="margin-top:8px;">
+          <tbody>
+            <tr><td>Phase 1 — Civil + Geotech</td><td class="num">$75,000</td></tr>
+            <tr><td>Phase 2 — School MEP + FP + Structural</td><td class="num">$355,000</td></tr>
+            <tr><td>Phase 2A — Infrastructure + Landscape</td><td class="num">$132,000</td></tr>
+            <tr><td>Phase 3 — Pavilion (MEP + Structural)</td><td class="num">$2,380,000</td></tr>
+            <tr class="total"><td>Total Engineering Fees</td><td class="num">$2,942,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Procurement Toolkit (AE RFP/RFQ Package)</div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">AE RFP — School Renovation (Phase 2) <span>Issued</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">AE RFQ — Pavilion (Phase 3) <span>Issued</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Bid leveling template <span>M4Di standard</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Selection memo template <span>Grant-compliant</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">COI + conflict of interest checklist <span>Included</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">✓</div><div class="deliv-label">Procurement integrity statement <span>Grant submissions</span></div></div>
+      <div class="deliv-item"><div class="deliv-check pending">○</div><div class="deliv-label">GC/CM procurement templates <span>Pending — Gate 1</span></div></div>
+      <div class="deliv-item"><div class="deliv-check pending">○</div><div class="deliv-label">Davis-Bacon compliance checklist <span>If federal funding confirmed</span></div></div>
+    </div>
+    <div>
+      <div class="stack-builder">
+        <div class="stack-builder-title">Interactive Capital Stack Builder — Phase 1 School Renovation</div>
+        <div class="stack-source-row">
+          <div class="stack-toggle on" id="tog-usda" onclick="toggleSource('usda')">✓</div>
+          <div><div class="stack-source-name">USDA Community Facilities Grant</div><div class="stack-source-note">Rural designation + nonprofit · Direct grant, no repayment</div></div>
+          <div class="stack-range">$1M – $2M</div>
+          <input class="stack-amount-input" id="amt-usda" type="number" value="1500000" min="0" max="2000000" step="50000" oninput="calcStack()">
+          <select class="stack-status-sel" id="stat-usda" onchange="calcStack()">
+            <option value="pending">Pending</option>
+            <option value="in-progress">In progress</option>
+            <option value="confirmed">Confirmed</option>
+          </select>
+        </div>
+        <div class="stack-source-row">
+          <div class="stack-toggle on" id="tog-dsha" onclick="toggleSource('dsha')">✓</div>
+          <div><div class="stack-source-name">DSHA IDD Permanent Supportive Housing</div><div class="stack-source-note">Nonprofit required · Rolling application</div></div>
+          <div class="stack-range">$500K – $1.5M</div>
+          <input class="stack-amount-input" id="amt-dsha" type="number" value="1000000" min="0" max="1500000" step="50000" oninput="calcStack()">
+          <select class="stack-status-sel" id="stat-dsha" onchange="calcStack()">
+            <option value="pending">Pending</option>
+            <option value="in-progress">In progress</option>
+            <option value="confirmed">Confirmed</option>
+          </select>
+        </div>
+        <div class="stack-source-row">
+          <div class="stack-toggle on" id="tog-cdbg" onclick="toggleSource('cdbg')">✓</div>
+          <div><div class="stack-source-name">New Castle County CDBG</div><div class="stack-source-note">Nonprofit + low-mod income service area</div></div>
+          <div class="stack-range">$200K – $500K</div>
+          <input class="stack-amount-input" id="amt-cdbg" type="number" value="350000" min="0" max="500000" step="25000" oninput="calcStack()">
+          <select class="stack-status-sel" id="stat-cdbg" onchange="calcStack()">
+            <option value="pending">Pending</option>
+            <option value="in-progress">In progress</option>
+            <option value="confirmed">Confirmed</option>
+          </select>
+        </div>
+        <div class="stack-source-row">
+          <div class="stack-toggle on" id="tog-htc" onclick="toggleSource('htc')">✓</div>
+          <div><div class="stack-source-name">Delaware Historic Tax Credit Equity</div><div class="stack-source-note">School historic eligibility req. · Investor monetizes credit</div></div>
+          <div class="stack-range">$1M – $2.25M</div>
+          <input class="stack-amount-input" id="amt-htc" type="number" value="1500000" min="0" max="2250000" step="50000" oninput="calcStack()">
+          <select class="stack-status-sel" id="stat-htc" onchange="calcStack()">
+            <option value="pending">Pending</option>
+            <option value="in-progress">In progress</option>
+            <option value="confirmed">Confirmed</option>
+          </select>
+        </div>
+        <div class="stack-source-row">
+          <div class="stack-toggle" id="tog-bond" onclick="toggleSource('bond')">✓</div>
+          <div><div class="stack-source-name">Delaware Bond Bill</div><div class="stack-source-note">Legislative sponsor required · Annual cycle</div></div>
+          <div class="stack-range">$500K – $1M</div>
+          <input class="stack-amount-input" id="amt-bond" type="number" value="750000" min="0" max="1000000" step="50000" disabled oninput="calcStack()">
+          <select class="stack-status-sel" id="stat-bond" onchange="calcStack()" disabled>
+            <option value="pending">Pending</option>
+            <option value="in-progress">In progress</option>
+            <option value="confirmed">Confirmed</option>
+          </select>
+        </div>
+        <div class="stack-result">
+          <div class="stack-res-block">
+            <div class="stack-res-label">Total Identified</div>
+            <div class="stack-res-val green" id="stack-total">$4,350,000</div>
+          </div>
+          <div class="stack-res-block">
+            <div class="stack-res-label">vs. $4–6M Target</div>
+            <div class="stack-res-val" id="stack-gap">—</div>
+          </div>
+          <div class="stack-res-block">
+            <div class="stack-res-label">Phase 1 Coverage</div>
+            <div class="stack-res-val" id="stack-pct">—</div>
+          </div>
+        </div>
+        <div class="stack-bar-wrap" id="stack-bars"></div>
+      </div>
+      <div class="alert alert-amber"><strong>Critical Gate — Nonprofit Formation</strong>501(c)(3) required for USDA, DSHA, and CDBG programs. Formation: 3–6 months. IRS determination: 60–90 days. Clock must start now regardless of which sources are pursued.</div>
+    </div>
+  </div>
+
+  <div class="bridge">
+    <div class="bridge-label">Next — Gate 0 · ALDi™</div>
+    <div class="bridge-title">P3 detailed estimate authorizes Gate 0 ROM lock. Column D is set permanently. ALDi Budget Tracker initiated.</div>
+    <div class="bridge-items">
+      <div class="bridge-item">OI Tool output = Column D</div>
+      <div class="bridge-item">ALDi Tracker initiated</div>
+      <div class="bridge-item">Gate 0 authorization memo</div>
+      <div class="bridge-item">Board presentation package</div>
+      <div class="bridge-item">CDFI submission ready</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- G0 — ROM LOCKED / FUNDING HOLD                        -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="view active" id="view-g0">
+  <div class="view-header">
+    <div class="view-header-top">
+      <div>
+        <div class="view-gate-code">Gate 0 · ALDi™ — ROM Locked · Current State</div>
+        <div class="view-title">Cost Baseline: <strong>Column D · $59,154,299</strong></div>
+        <div class="view-desc">Gate 0 ROM is locked. The M4Di.Oi™ output is now Column D of the ALDi™ Budget Tracker — the permanent baseline against which all downstream design phases are measured. Project is currently in a funding hold while M4Di pursues the $4–6M non-debt, non-equity capital stack that will give the client confidence to proceed with an investor partner.</div>
+      </div>
+      <div class="status-pill pill-hold">Funding Hold</div>
+    </div>
+  </div>
+
+  <div class="gate-strip">
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p0]'))"><div class="strip-step-code">P0</div><div class="strip-step-name">Intake</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p1]'))"><div class="strip-step-code">P1</div><div class="strip-step-name">Site Feasibility</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p2]'))"><div class="strip-step-code">P2</div><div class="strip-step-name">Test Fit</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p3]'))"><div class="strip-step-code">P3</div><div class="strip-step-name">Concept Package</div></div>
+    <div class="strip-step active" onclick="nav(document.querySelector('[data-view=g0]'))"><div class="strip-step-code">G0</div><div class="strip-step-name">ROM Lock</div></div>
+    <div class="strip-step"        onclick="nav(document.querySelector('[data-view=g1]'))"><div class="strip-step-code">G1</div><div class="strip-step-name">Design Start</div></div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat stat-purple"><div class="stat-label">Column D — ROM (Locked)</div><div class="stat-val">$59,154,299</div><div class="stat-sub">Gate 0 · March 2026 · Never changes</div></div>
+    <div class="stat"><div class="stat-label">Column E — 75% DD</div><div class="stat-val">—</div><div class="stat-sub">Pending Gate 1 authorization</div></div>
+    <div class="stat"><div class="stat-label">Column F — GMP / SOV</div><div class="stat-val">—</div><div class="stat-sub">Pending contractor selection</div></div>
+    <div class="stat"><div class="stat-label">Column G — Actual Cost</div><div class="stat-val">—</div><div class="stat-sub">Updated monthly from pay apps</div></div>
+    <div class="stat stat-amber"><div class="stat-label">D vs. E Variance</div><div class="stat-val">N/A</div><div class="stat-sub">E not yet set</div></div>
+    <div class="stat stat-green"><div class="stat-label">Change Orders</div><div class="stat-val">$0</div><div class="stat-sub">0 entries in variance log</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">ALDi™ 4-Column Tracker — Gate 0 State</div>
+      <div class="alert alert-purple" style="margin-bottom:var(--sp-3)"><strong>Column D Locked — Gate 0 Baseline</strong>This ROM is the permanent baseline. All downstream variance is measured against $59,154,299. Variance &gt;15% at any gate triggers a documented review before design continues.</div>
+      <table class="tbl">
+        <thead><tr><th>Column</th><th>Gate</th><th>Source</th><th class="num">Value</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>D</strong></td><td>Gate 0</td><td>M4Di.Oi™ ROM</td><td class="num green">$59,154,299</td><td><span class="badge badge-green">Locked</span></td></tr>
+          <tr><td><strong>E</strong></td><td>Gate 2</td><td>AE 75% DD estimate</td><td class="num muted">—</td><td><span class="badge badge-gray">Pending</span></td></tr>
+          <tr><td><strong>F</strong></td><td>Gate 3</td><td>Contractor SOV / GMP</td><td class="num muted">—</td><td><span class="badge badge-gray">Pending</span></td></tr>
+          <tr><td><strong>G</strong></td><td>Gate 4</td><td>Pay apps + COs (monthly)</td><td class="num muted">—</td><td><span class="badge badge-gray">Pending</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Current State — Funding Hold Analysis</div>
+      <div class="risk-item">
+        <div class="risk-level risk-high">Gate</div>
+        <div class="risk-body">
+          <div class="risk-title">Nonprofit entity formation</div>
+          <div class="risk-desc">501(c)(3) required for USDA, DSHA, CDBG programs. Formation: 3–6 months. IRS determination: 60–90 days. This is the longest lead-time item in the funding stack.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-high">Gate</div>
+        <div class="risk-body">
+          <div class="risk-title">USDA rural designation confirmation</div>
+          <div class="risk-desc">Philadelphia Pike, Claymont must qualify as rural under USDA's definition. One call to DE USDA Rural Development office. If confirmed, USDA could fund school acquisition + renovation in a single instrument ($1–2M grant).</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-med">Active</div>
+        <div class="risk-body">
+          <div class="risk-title">M4Di P1 Funding Pathway Assessment</div>
+          <div class="risk-desc">M4Di is actively researching the $4–6M non-debt, non-equity capital stack. Five sources identified. Stack brackets the target range at $3.2M–$7.25M. Results expected within 30 days.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level risk-med">Active</div>
+        <div class="risk-body">
+          <div class="risk-title">Site control negotiation</div>
+          <div class="risk-desc">Church ownership. Client is negotiating acquisition or long-term lease. Full site control is prerequisite for Pavilion financing and investor conversation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:var(--sp-4)">
+    <div class="card-title">Phase 1 Cost Breakdown — School Renovation (Gate 0 Detail)</div>
+    <table class="tbl">
+      <thead><tr><th>CSI Category</th><th class="num">Baseline (60 beds)</th><th class="num">112-Bed Full</th><th class="num">Delta</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Demolition + Abatement</td><td class="num">$180,000</td><td class="num">$180,000</td><td class="num muted">$0</td><td class="muted">Same interior demo scope</td></tr>
+        <tr><td>Structural Repairs + Reinforcing</td><td class="num">$240,000</td><td class="num">$240,000</td><td class="num muted">$0</td><td class="muted">No added floors</td></tr>
+        <tr><td>Exterior Envelope Improvements</td><td class="num">$310,000</td><td class="num">$310,000</td><td class="num muted">$0</td><td class="muted">Same envelope upgrade</td></tr>
+        <tr><td>Mechanical (HVAC)</td><td class="num">$620,000</td><td class="num">$682,000</td><td class="num amber">+$62K</td><td class="muted">More occupants/zones</td></tr>
+        <tr><td>Electrical</td><td class="num">$480,000</td><td class="num">$528,000</td><td class="num amber">+$48K</td><td class="muted">More devices/loads</td></tr>
+        <tr><td>Plumbing</td><td class="num">$350,000</td><td class="num">$525,000</td><td class="num red">+$175K</td><td class="muted">Higher fixture counts</td></tr>
+        <tr><td>Fire Protection (NFPA 13)</td><td class="num">$260,000</td><td class="num">$260,000</td><td class="num muted">$0</td><td class="muted">Full building — no change</td></tr>
+        <tr><td>Interior Buildout</td><td class="num">$980,000</td><td class="num">$1,225,000</td><td class="num amber">+$245K</td><td class="muted">More bathrooms, finishes</td></tr>
+        <tr><td>Kitchen + Dining</td><td class="num">$350,000</td><td class="num">$350,000</td><td class="num muted">$0</td><td class="muted">Sized for 112 already</td></tr>
+        <tr><td>Safety + Security Systems</td><td class="num">$210,000</td><td class="num">$210,000</td><td class="num muted">$0</td><td class="muted">Already robust for IDD</td></tr>
+        <tr><td>Site Improvements (Phase 1)</td><td class="num">$200,000</td><td class="num">$200,000</td><td class="num muted">$0</td><td class="muted">Paths/courtyard/lighting</td></tr>
+        <tr><td>FF&amp;E</td><td class="num">$330,000</td><td class="num">$462,000</td><td class="num amber">+$132K</td><td class="muted">More beds + therapy gear</td></tr>
+        <tr class="total"><td colspan="2">Phase 1 Hard Cost Total</td><td class="num">$5,172,000</td><td class="num">+$662K vs. baseline</td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-red" style="margin-top:var(--sp-3)"><strong>Infrastructure Risk — Full Building Regardless of Phase</strong>MEP + fire protection = ~$1.91M is spent on the entire building whether 30 or 112 beds are initially occupied. This capital benefits the church-owned building. Site control resolution is a prerequisite to Phase 1A commitment.</div>
+  </div>
+
+  <div class="bridge">
+    <div class="bridge-label">Path Forward — Two Parallel Tracks</div>
+    <div class="bridge-title">Track A: Funding pathway confirmation → Gate 1 authorization. Track B: If funding not confirmed → MaxWellness remains M4Di's primary demo dataset.</div>
+    <div class="bridge-items">
+      <div class="bridge-item">Nonprofit formation (start now)</div>
+      <div class="bridge-item">USDA rural check (this week)</div>
+      <div class="bridge-item">DSHA + CDBG applications (rolling)</div>
+      <div class="bridge-item">Historic TC eligibility (Phase I ESA)</div>
+      <div class="bridge-item">Bond Bill sponsor (legislative calendar)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- G1 — DESIGN INITIATION (PROJECTED)                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="view" id="view-g1">
+  <div class="view-header">
+    <div class="view-header-top">
+      <div>
+        <div class="view-gate-code">Gate 1 · ALDi™ — Projected (Funding Confirmation Required)</div>
+        <div class="view-title">Design Initiation: <strong>What Gate 1 Unlocks</strong></div>
+        <div class="view-desc">This view is projected — not yet authorized. Gate 1 is triggered when the funding pathway is confirmed and the client authorizes design to proceed. It shows what the ALDi Budget Tracker looks like at the start of the schematic design phase and what milestones are required to reach Gate 2.</div>
+      </div>
+      <div class="status-pill pill-proj">Projected</div>
+    </div>
+  </div>
+
+  <div class="gate-strip">
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p0]'))"><div class="strip-step-code">P0</div><div class="strip-step-name">Intake</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p1]'))"><div class="strip-step-code">P1</div><div class="strip-step-name">Site Feasibility</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p2]'))"><div class="strip-step-code">P2</div><div class="strip-step-name">Test Fit</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=p3]'))"><div class="strip-step-code">P3</div><div class="strip-step-name">Concept Package</div></div>
+    <div class="strip-step done"   onclick="nav(document.querySelector('[data-view=g0]'))"><div class="strip-step-code">G0</div><div class="strip-step-name">ROM Lock</div></div>
+    <div class="strip-step active" onclick="nav(document.querySelector('[data-view=g1]'))"><div class="strip-step-code">G1</div><div class="strip-step-name">Design Start</div></div>
+  </div>
+
+  <div class="alert alert-amber" style="margin-bottom:var(--sp-4)"><strong>Projected State — Not Yet Authorized</strong>This view represents what Gate 1 looks like when triggered. It requires: (1) $4M+ in confirmed funding commitments or letters of intent, (2) signed AE agreement with selected design team, (3) written Gate 1 authorization from M-Well Medical Group board.</div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Gate 1 Authorization Requirements</div>
+      <div class="risk-item">
+        <div class="risk-level" style="background:rgba(83,74,183,.15);color:var(--accent-lt);font-size:9px;padding:3px 7px;">Required</div>
+        <div class="risk-body">
+          <div class="risk-title">Funding commitments / LOIs totaling $4M+</div>
+          <div class="risk-desc">At least one confirmed grant award or letter of intent from the identified funding stack. USDA or DSHA as first preference.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level" style="background:rgba(83,74,183,.15);color:var(--accent-lt);font-size:9px;padding:3px 7px;">Required</div>
+        <div class="risk-body">
+          <div class="risk-title">AE agreement executed with selected team</div>
+          <div class="risk-desc">M4D (Merge 4 Design) selected through M4Di AE RFP/RFQ process. Phase 2 school renovation contract executed.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level" style="background:rgba(83,74,183,.15);color:var(--accent-lt);font-size:9px;padding:3px 7px;">Required</div>
+        <div class="risk-body">
+          <div class="risk-title">Site control — lease or purchase agreement</div>
+          <div class="risk-desc">Letter of intent or executed agreement with church for Phase 1 building. Full 10-acre site control preferred but Phase 1 can proceed with building lease + option to purchase.</div>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-level" style="background:rgba(83,74,183,.15);color:var(--accent-lt);font-size:9px;padding:3px 7px;">Required</div>
+        <div class="risk-body">
+          <div class="risk-title">Phase I ESA complete — no fatal environmental findings</div>
+          <div class="risk-desc">Environmental site assessment required before lenders and grant programs will commit. Hazmat survey of school building (pre-1980) required for permitting.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">What Gate 1 Initiates</div>
+      <div class="deliv-item"><div class="deliv-check done">→</div><div class="deliv-label">Schematic design phase begins <span>AE + M4Di aligned</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">→</div><div class="deliv-label">ALDi Budget Tracker — monthly reporting starts <span>M4Di manages</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">→</div><div class="deliv-label">DDDS pre-application meeting <span>Licensing timeline begins</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">→</div><div class="deliv-label">Allowance Log activated <span>Owner decisions tracked</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">→</div><div class="deliv-label">CDFI loan packaging begins <span>Budget Tracker as due diligence</span></div></div>
+      <div class="deliv-item"><div class="deliv-check done">→</div><div class="deliv-label">Gate 2 target set <span>75% DD estimate date</span></div></div>
+      <div style="margin-top:var(--sp-4)">
+        <div class="card-title">Projected Gate 2 Target (75% DD)</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-top:8px;">
+          At 75% Design Development, the AE produces a quantity-based cost estimate. M4Di compares this to Column D. If variance exceeds 15%, a documented gate review is required before design continues — but design does not stop. The ALDi structure keeps the team aligned through disagreement, not frozen by it.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bridge">
+    <div class="bridge-label">The Full ALDi™ Arc — Gates 0 Through 4</div>
+    <div class="bridge-title">This is the M4Di delivery backbone from design initiation through construction closeout</div>
+    <div class="bridge-items">
+      <div class="bridge-item">G0 → Column D locked (done)</div>
+      <div class="bridge-item">G1 → Design starts</div>
+      <div class="bridge-item">G2 → 75% DD estimate (Column E)</div>
+      <div class="bridge-item">G3 → GMP executed (Column F)</div>
+      <div class="bridge-item">G4 → Closeout + ALDDB row (Column G)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- BENCHMARKS — ALDDB™                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="view" id="view-bench">
+  <div class="view-header">
+    <div class="view-header-top">
+      <div>
+        <div class="view-gate-code">ALDDB™ — Mid-Atlantic Community Facility Benchmarks</div>
+        <div class="view-title">How M-Well Compares: <strong>Cost Intelligence Database</strong></div>
+        <div class="view-desc">M4Di's ALDDB™ benchmark dataset combines M4Di project closeout data with published RSMeans, DBIA, and Delaware regional cost data for Mid-Atlantic healthcare adaptive reuse and new institutional construction. Every closed M4Di project adds a row to this database — making future estimates more defensible.</div>
+      </div>
+      <div class="status-pill pill-done">Seeding</div>
+    </div>
+  </div>
+
+  <div class="alert alert-purple" style="margin-bottom:var(--sp-4)"><strong>ALDDB™ is currently in the seeding phase.</strong> M-Well is the first large-scale IDD/community health typology in the database. Each benchmark bar shows the Mid-Atlantic range. The project marker (purple line) shows where M-Well sits within that range.</div>
+
+  <div class="bench-grid">
+    <div class="bench-card">
+      <div class="bench-card-title">Construction $/SF — Adaptive Reuse (Healthcare)</div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">School / Institutional Renovation — IDD R-4</div>
+        <div class="bench-metric-sub">Mid-Atlantic range · 2024–2026 closes · RSMeans + M4Di data</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((275-220)/(320-220)*100%)"></div>
+          </div>
+          <div class="bench-range-labels"><span>$220/SF (low)</span><span>$320/SF (high)</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: $275/SF</div>
+            <div class="bench-verdict badge-green" style="background:rgba(25,107,35,.15);color:#7d9140;">Within range</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">IDD Residential — Specialized Renovation</div>
+        <div class="bench-metric-sub">DHSS-compliant IDD facilities · DE/PA/MD · 2023–2026</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((275-260)/(320-260)*100%)"></div>
+          </div>
+          <div class="bench-range-labels"><span>$260/SF</span><span>$320/SF</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: $275/SF</div>
+            <div class="bench-verdict badge-green" style="background:rgba(25,107,35,.15);color:#7d9140;">Low end — conservative</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bench-card">
+      <div class="bench-card-title">Construction $/SF — New Institutional Construction</div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">Community Medical / Outpatient — 3–4 Story New</div>
+        <div class="bench-metric-sub">Mid-Atlantic healthcare · New construction · 2024–2026</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((425-380)/(500-380)*100%)"></div>
+          </div>
+          <div class="bench-range-labels"><span>$380/SF</span><span>$500/SF</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: $425/SF</div>
+            <div class="bench-verdict badge-green" style="background:rgba(25,107,35,.15);color:#7d9140;">Conservative</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">IDD Residential — New Construction (Group Residential)</div>
+        <div class="bench-metric-sub">Upper-floor IDD residential over ground-floor medical</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((425-400)/(480-400)*100%)"></div>
+          </div>
+          <div class="bench-range-labels"><span>$400/SF</span><span>$480/SF</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: $425/SF</div>
+            <div class="bench-verdict badge-green" style="background:rgba(25,107,35,.15);color:#7d9140;">Below market</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bench-card">
+      <div class="bench-card-title">Cost per IDD Bed — Full Build-Out</div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">Phase 1 — School Renovation (112 beds)</div>
+        <div class="bench-metric-sub">Hard costs only · $5,172,000 ÷ 112 beds</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((46179-35000)/(85000-35000)*100%)"></div>
+          </div>
+          <div class="bench-range-labels"><span>$35K/bed</span><span>$85K/bed</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: $46,179/bed</div>
+            <div class="bench-verdict badge-green" style="background:rgba(25,107,35,.15);color:#7d9140;">Competitive</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">DDDS Group Home / Residential Facility (DE)</div>
+        <div class="bench-metric-sub">Delaware Division of Developmental Disabilities · recent approvals</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((46179-50000)/(90000-50000)*100%)" style="background:#EF9F27"></div>
+          </div>
+          <div class="bench-range-labels"><span>$50K/bed</span><span>$90K/bed</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: $46,179/bed</div>
+            <div class="bench-verdict badge-amber" style="background:rgba(186,117,23,.15);color:#EF9F27;">Below DDDS norms — verify program</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bench-card">
+      <div class="bench-card-title">Professional Fees</div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">Architecture Fee — Adaptive Reuse</div>
+        <div class="bench-metric-sub">% of hard construction cost · AIA survey 2024</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((5.2-5.0)/(7.5-5.0)*100%)"></div>
+          </div>
+          <div class="bench-range-labels"><span>5.0%</span><span>7.5%</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: 5.2% of school</div>
+            <div class="bench-verdict badge-green" style="background:rgba(25,107,35,.15);color:#7d9140;">Market rate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">Architecture Fee — New Institutional Construction</div>
+        <div class="bench-metric-sub">% of hard construction cost · 4-story pavilion</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((4.0-3.5)/(5.5-3.5)*100%)"></div>
+          </div>
+          <div class="bench-range-labels"><span>3.5%</span><span>5.5%</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: 4.0% of pavilion</div>
+            <div class="bench-verdict badge-green" style="background:rgba(25,107,35,.15);color:#7d9140;">Below market</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bench-card">
+      <div class="bench-card-title">Contingency + Escalation</div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">Design contingency — IDD healthcare adaptive reuse</div>
+        <div class="bench-metric-sub">Recommended range for pre-design ROM</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((10-8)/(15-8)*100%)"></div>
+          </div>
+          <div class="bench-range-labels"><span>8%</span><span>15%</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: 10%</div>
+            <div class="bench-verdict badge-green" style="background:rgba(25,107,35,.15);color:#7d9140;">Appropriate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bench-metric">
+        <div class="bench-metric-name">Escalation reserve — 24–36 month delivery horizon</div>
+        <div class="bench-metric-sub">Mid-Atlantic construction cost inflation 2024–2026</div>
+        <div class="bench-bar-group">
+          <div class="bench-range-bar">
+            <div class="bench-range-fill" style="left:0;width:100%"></div>
+            <div class="bench-project-marker" style="left:calc((5-4)/(8-4)*100%)"></div>
+          </div>
+          <div class="bench-range-labels"><span>4%</span><span>8%</span></div>
+          <div style="display:flex;align-items:center;margin-top:4px;">
+            <div class="bench-project-val">M-Well: 5%</div>
+            <div class="bench-verdict badge-green" style="background:rgba(25,107,35,.15);color:#7d9140;">Conservative</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bench-card">
+      <div class="bench-card-title">ALDDB™ — Active Project Record</div>
+      <table class="tbl">
+        <thead><tr><th>Field</th><th>M-Well Entry</th></tr></thead>
+        <tbody>
+          <tr><td class="muted">Project code</td><td class="mono">AE25-022-3110_PHILA_PIKE</td></tr>
+          <tr><td class="muted">Type</td><td>IDD Residential + Community Medical</td></tr>
+          <tr><td class="muted">Delivery</td><td>Adaptive reuse + new construction</td></tr>
+          <tr><td class="muted">Region</td><td>Delaware — New Castle County</td></tr>
+          <tr><td class="muted">Gate 0 date</td><td class="mono">March 2026</td></tr>
+          <tr><td class="muted">Phase 1 $/SF</td><td class="mono green">$275/SF</td></tr>
+          <tr><td class="muted">Phase 2 $/SF</td><td class="mono green">$425/SF</td></tr>
+          <tr><td class="muted">G0 ROM</td><td class="mono green">$59,154,299</td></tr>
+          <tr><td class="muted">Gate 4 closeout</td><td class="mono muted">Pending</td></tr>
+          <tr><td class="muted">ALDDB row status</td><td><span class="badge badge-amber">Active — partial data</span></td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:var(--sp-3);font-size:11px;color:var(--muted);line-height:1.6;">When this project reaches Gate 4 closeout, the final Column G actuals feed one row into the ALDDB Master — enriching every future IDD/community health estimate M4Di produces.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- AI ADVISOR                                            -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="view" id="view-ai">
+  <div class="view-header">
+    <div class="view-header-top">
+      <div>
+        <div class="view-gate-code">CBai™ — AI Advisor</div>
+        <div class="view-title">Ask M4Di: <strong>Full Project Context Loaded</strong></div>
+        <div class="view-desc">CBai has the complete M-Well Community Health Campus project context — all seven stages, cost data, regulatory framework, funding stack, phasing strategy, and current status. Ask anything about this project.</div>
+      </div>
+      <div class="status-pill pill-proj">Live</div>
+    </div>
+  </div>
+
+  <div class="ai-layout">
+    <div class="ai-ctx">
+      <div class="ai-ctx-label">Context Loaded</div>
+      <div class="ctx-row"><strong>Project</strong>M-Well Community Health Campus</div>
+      <div class="ctx-row"><strong>Client</strong>M-Well Medical Group (physicians)</div>
+      <div class="ctx-row"><strong>Address</strong>3110 Philadelphia Pike, Claymont DE</div>
+      <div class="ctx-row"><strong>Current Gate</strong>G0 — Funding Hold</div>
+      <div class="ctx-row"><strong>School</strong>27,452 SF · 112 IDD beds · $275/SF</div>
+      <div class="ctx-row"><strong>Pavilion</strong>102,900 SF · 4-story · $425/SF</div>
+      <div class="ctx-row"><strong>ROM (Column D)</strong>$59,154,299</div>
+      <div class="ctx-row"><strong>Arch. Fees</strong>$1,730,000</div>
+      <div class="ctx-row"><strong>Funding Target</strong>$4–6M non-debt, non-equity</div>
+      <div class="ctx-row"><strong>Critical Gates</strong>Nonprofit + USDA rural</div>
+      <div class="ctx-row"><strong>P0–P3 Complete</strong>All FeasOps packages done</div>
+      <div class="ctx-row"><strong>ALDi Status</strong>Col. D locked · E/F/G pending</div>
+    </div>
+    <div class="ai-main">
+      <div class="ai-messages" id="ai-messages">
+        <div class="msg-ai">
+          <strong>M4Di CBai™ — AI Advisor</strong><br><br>
+          Full project context loaded for M-Well Community Health Campus. I have all seven stages — P0 intake through projected Gate 1 — plus the complete cost breakdown, regulatory framework, funding stack analysis, and phasing strategy.<br><br>
+          Ask me about costs, funding eligibility, regulatory requirements, phasing decisions, the ALDi gate structure, or what the client should do next.
+        </div>
+      </div>
+      <div class="ai-input-row">
+        <input class="ai-input" id="ai-input" type="text" placeholder="Ask about costs, funding, regulatory requirements, next steps...">
+        <button class="ai-btn" onclick="sendMsg()">Ask →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+</div><!-- end shell -->
+
+<script>
+const CONTEXT = `You are CBai™, the M4Di AI Advisor. You are embedded in the M4Di Terminal dashboard for the M-Well Community Health Campus project. You are a predevelopment intelligence assistant — direct, operational, specific. Reference actual project numbers and program names in every answer. Keep responses under 180 words unless the question genuinely requires more.
+
+PROJECT: M-Well Community Health Campus
+Client: M-Well Medical Group (physician group)
+Address: 3110 Philadelphia Pike, Claymont, DE, New Castle County
+Project code: AE25-022-3110_PHILA_PIKE
+
+PREDEVELOPMENT STAGES COMPLETED:
+- P0 Intake: Site identified (10.2 acres, church-owned school + land). Client profile: physicians, no development experience, limited debt capacity, investor-averse.
+- P1 FeasOps ($8K): Zoning confirmed (NCC Suburban S + TN Overlay, fully compliant). Code: IBC R-4, NFPA 101 full-building. 3 High risks: site control, no nonprofit, DDDS licensing 6-18 months. P1 ROM: $54.5M-$60.7M range.
+- P2 FeasOps ($14K): School test fit confirmed 112 beds (70 rooms). Pavilion massing: 4-story, 102,900 SF. $/SF locked: $275 school, $425 pavilion. Phasing: 1A (30 beds, full backbone) → 1B (112 beds) → Phase 2 (pavilion). P2 ROM: ~$65.4M full campus.
+- P3 FeasOps ($22K): Full estimate, fee schedule, procurement toolkit, capital stack concept. AE RFP/RFQ issued.
+
+GATE 0 — ROM LOCKED (Current State):
+Column D: $59,154,299 (Phase 1 school + Phase 2 pavilion combined basis)
+Phase 1 school only: ~$14.2M total project
+Phase 2 pavilion only: ~$65.4M total project
+Full campus: $76.4M
+
+COST BREAKDOWN — Full Campus ROM:
+- Wellness Pavilion: 102,900 SF × $425/SF = $43,732,500
+- School Renovation: 27,452 SF × $275/SF = $7,549,300
+- Sitework + Parking: $5,600,000
+- Contingency 10%: $5,688,180
+- Escalation 5%: $2,844,090
+- Total Hard: $65,414,070
+- Soft Costs: $5,233,126
+- Permitting/Legal: $500,000
+- Financing: $1,308,281
+- FF&E: $3,500,000
+- Owner PM: $400,000
+- TOTAL: $76,355,477
+
+Architecture fees: $1,730,000 (Pre-phase $3K, Phase 1 Zoning $15K, Phase 2 School 5.2%=$390K, Phase 2A Infrastructure 3%=$132K, Phase 3 Pavilion 4%=$1,190,000)
+Engineering fees: $2,942,000
+
+PHASE 1 SCHOOL — 112-BED SCENARIO HARD COSTS:
+Demo/Abatement $180K, Structural $240K, Envelope $310K, HVAC $682K, Electrical $528K, Plumbing $525K, Fire Protection $260K, Interior Buildout $1,225K, Kitchen $350K, Safety/Security $210K, Site $200K, FF&E $462K. Total hard: $5,172,000. Infrastructure (MEP+FP): ~$1.91M regardless of bed count.
+
+ALDI TRACKER:
+Column D: $59,154,299 (locked G0)
+Column E: Pending (Gate 1 authorization required)
+Column F: Pending (GMP not yet)
+Column G: Pending (construction not started)
+Variance flag threshold: 15% vs Column D
+
+CURRENT HOLD: Funding pathway analysis underway. Target: $4-6M non-debt, non-equity.
+Critical gate 1: Nonprofit 501(c)(3) formation — required for all major grant programs, 3-6 months, clock must start now.
+Critical gate 2: USDA rural designation confirmation for Claymont/Philadelphia Pike site — one phone call to DE USDA Rural Development.
+
+FUNDING STACK — Phase 1 Target:
+1. USDA Community Facilities Grant: $1M-$2M (rural designation + nonprofit)
+2. DSHA IDD Permanent Supportive Housing: $500K-$1.5M (nonprofit)
+3. New Castle County CDBG: $200K-$500K (nonprofit)
+4. Delaware Historic Tax Credit Equity: $1M-$2.25M (investor monetizes; school historic eligibility)
+5. Delaware Bond Bill: $500K-$1M (legislative sponsor needed)
+Total range: $3.2M-$7.25M — brackets $4-6M target.
+
+REGULATORY:
+- IBC R-4 (residential care): entire building, not just occupied portion
+- NFPA 101 Life Safety, Residential Board & Care: full NFPA 13 sprinklers required
+- DE DHSS/DDDS IDD licensing: 6-18 months after application — CRITICAL PATH
+- ADA/ICC A117.1: elevator shaft in Phase 1A required (no cab until 1B)
+- Phase I ESA required (pre-1980 building)
+- DE State Fire Marshal: review above 2 stories for Phase 2 R-4 use
+- HRSA/SAMHSA: requires existing health center designation or CCBHC certification — not near-term accessible
+
+ZONING (confirmed compliant):
+FAR: 0.11 vs 0.12 max. OSR: 0.74 vs 0.70 min. Height: 28 ft (Phase 1) / 52 ft (Phase 2, variance needed). Parking: ~170 spaces adequate for 10 acres.
+
+BENCHMARKS (ALDDB Mid-Atlantic):
+School renovation $/SF: $260-$310/SF (M-Well at $275 = within range)
+New medical construction $/SF: $380-$500/SF (M-Well at $425 = conservative)
+IDD residential cost/bed: $45K-$85K (M-Well at $53,900 = competitive)
+Contingency: 10% appropriate. Escalation: 5% appropriate.`;
+
+function nav(el) {
+  document.querySelectorAll('.gate-item').forEach(g => g.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('view-' + el.dataset.view).classList.add('active');
+  document.querySelector('.main').scrollTop = 0;
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.theme-toggle').textContent = isDark ? '☽ Dark' : '☀ Light';
+}
+
+async function sendMsg() {
+  const input = document.getElementById('ai-input');
+  const msgs = document.getElementById('ai-messages');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  const uMsg = document.createElement('div');
+  uMsg.className = 'msg-user';
+  uMsg.textContent = text;
+  msgs.appendChild(uMsg);
+
+  const thinking = document.createElement('div');
+  thinking.className = 'msg-thinking';
+  thinking.textContent = 'Analyzing project context...';
+  msgs.appendChild(thinking);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: CONTEXT,
+        messages: [{ role: 'user', content: text }]
+      })
+    });
+    const data = await res.json();
+    thinking.remove();
+    const aMsg = document.createElement('div');
+    aMsg.className = 'msg-ai';
+    const reply = data.content?.[0]?.text || 'Connection error — check API configuration.';
+    aMsg.innerHTML = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+    msgs.appendChild(aMsg);
+  } catch (e) {
+    thinking.remove();
+    const err = document.createElement('div');
+    err.className = 'msg-ai';
+    err.innerHTML = '<strong>Connection error.</strong><br>API access requires server configuration. All other tabs are fully functional offline.';
+    msgs.appendChild(err);
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+document.getElementById('ai-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendMsg();
+});
+
+// ── PARAMETRIC ESTIMATOR ──
+function calcEst() {
+  const schoolSF   = +document.getElementById('s1-school-sf').value;
+  const schoolRate = +document.getElementById('s1-school-rate').value;
+  const pavSF      = +document.getElementById('s1-pav-sf').value;
+  const pavRate    = +document.getElementById('s1-pav-rate').value;
+  const contPct    = +document.getElementById('s1-contingency').value / 100;
+
+  const schoolCost = schoolSF * schoolRate;
+  const pavCost    = pavSF * pavRate;
+  const sitework   = 5600000;
+  const subTotal   = schoolCost + pavCost + sitework;
+  const cont       = subTotal * contPct;
+  const total      = subTotal + cont;
+  const baseline   = 59154299;
+  const variance   = (total - baseline) / baseline * 100;
+
+  const fmt = n => '$' + Math.round(n).toLocaleString();
+  const fmtSF = n => n.toLocaleString();
+
+  document.getElementById('s1-school-sf-lbl').textContent  = fmtSF(schoolSF);
+  document.getElementById('s1-school-rate-lbl').textContent = '$' + schoolRate;
+  document.getElementById('s1-pav-sf-lbl').textContent     = fmtSF(pavSF);
+  document.getElementById('s1-pav-rate-lbl').textContent   = '$' + pavRate;
+  document.getElementById('s1-cont-lbl').textContent       = Math.round(contPct * 100) + '%';
+
+  document.getElementById('s1-school-cost').textContent = fmt(schoolCost);
+  document.getElementById('s1-pav-cost').textContent    = fmt(pavCost);
+
+  document.getElementById('s1-total').textContent  = fmt(total);
+  document.getElementById('s1-p1-val').textContent  = fmt(schoolCost);
+  document.getElementById('s1-p2-val').textContent  = fmt(pavCost);
+  document.getElementById('s1-cont-val').textContent = fmt(cont);
+
+  const vBadge = document.getElementById('s1-variance-badge');
+  const absV = Math.abs(variance);
+  if (absV <= 10) {
+    vBadge.className = 'est-variance var-within';
+    vBadge.textContent = (variance >= 0 ? '+' : '') + variance.toFixed(1) + '% vs baseline';
+  } else if (absV <= 20) {
+    vBadge.className = 'est-variance var-over';
+    vBadge.textContent = (variance >= 0 ? '+' : '') + variance.toFixed(1) + '% — review scope';
+  } else {
+    vBadge.className = 'est-variance var-warning';
+    vBadge.textContent = (variance >= 0 ? '+' : '') + variance.toFixed(1) + '% — significant variance';
+  }
+}
+calcEst();
+
+// ── CAPITAL STACK BUILDER ──
+const SOURCES = ['usda','dsha','cdbg','htc','bond'];
+const SOURCE_COLORS = {
+  usda: '#534AB7', dsha: '#1D9E75', cdbg: '#185FA5',
+  htc: '#BA7517', bond: '#7d9140'
+};
+const SOURCE_NAMES = {
+  usda: 'USDA CF Grant', dsha: 'DSHA IDD Housing',
+  cdbg: 'NCC CDBG', htc: 'DE Historic TC', bond: 'DE Bond Bill'
+};
+const ACTIVE = {usda:true,dsha:true,cdbg:true,htc:true,bond:false};
+
+function toggleSource(id) {
+  ACTIVE[id] = !ACTIVE[id];
+  const tog = document.getElementById('tog-' + id);
+  const inp = document.getElementById('amt-' + id);
+  const sel = document.getElementById('stat-' + id);
+  tog.classList.toggle('on', ACTIVE[id]);
+  inp.disabled = !ACTIVE[id];
+  sel.disabled = !ACTIVE[id];
+  calcStack();
+}
+
+function calcStack() {
+  const phase1Cost = 14200000;
+  let total = 0;
+  SOURCES.forEach(id => {
+    if (ACTIVE[id]) total += +document.getElementById('amt-' + id).value || 0;
+  });
+
+  const gap = total - 4000000;
+  const pct = Math.round(total / phase1Cost * 100);
+
+  const totalEl = document.getElementById('stack-total');
+  const gapEl   = document.getElementById('stack-gap');
+  const pctEl   = document.getElementById('stack-pct');
+
+  totalEl.textContent = '$' + Math.round(total).toLocaleString();
+  totalEl.className = 'stack-res-val ' + (total >= 4000000 ? 'green' : total >= 3000000 ? 'amber' : 'red');
+
+  if (total >= 6000000) {
+    gapEl.textContent = '+$' + Math.round(total - 6000000).toLocaleString() + ' over max';
+    gapEl.className = 'stack-res-val amber';
+  } else if (total >= 4000000) {
+    gapEl.textContent = 'Target met';
+    gapEl.className = 'stack-res-val green';
+  } else {
+    gapEl.textContent = '$' + Math.round(4000000 - total).toLocaleString() + ' short';
+    gapEl.className = 'stack-res-val ' + (total >= 3000000 ? 'amber' : 'red');
+  }
+
+  pctEl.textContent = pct + '% of Phase 1';
+  pctEl.className = 'stack-res-val ' + (pct >= 30 ? 'green' : pct >= 20 ? 'amber' : 'red');
+
+  // Bars
+  const barsEl = document.getElementById('stack-bars');
+  barsEl.innerHTML = '';
+  const maxAmt = Math.max(2000000, total);
+  SOURCES.forEach(id => {
+    if (!ACTIVE[id]) return;
+    const amt = +document.getElementById('amt-' + id).value || 0;
+    if (amt <= 0) return;
+    const pctBar = Math.round(amt / maxAmt * 100);
+    const statusVal = document.getElementById('stat-' + id).value;
+    const statusColor = statusVal === 'confirmed' ? '#7d9140' : statusVal === 'in-progress' ? '#EF9F27' : SOURCE_COLORS[id];
+    barsEl.innerHTML += `
+      <div class="stack-bar-row">
+        <div class="stack-bar-name">${SOURCE_NAMES[id]}</div>
+        <div class="stack-bar-track">
+          <div class="stack-bar-fill" style="width:${pctBar}%;background:${statusColor};opacity:${statusVal==='confirmed'?1:statusVal==='in-progress'?0.75:0.45}"></div>
+        </div>
+        <div class="stack-bar-amt">$${Math.round(amt/1000)}K</div>
+      </div>`;
+  });
+}
+calcStack();
+
+// ── INIT ──
+document.querySelector('[data-view="g0"]').classList.add('active');
+</script>
+</body>
+</html>
