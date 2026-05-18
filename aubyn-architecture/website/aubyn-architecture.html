@@ -187,27 +187,27 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 /* ========================================================
    CONTACT
    ======================================================== */
-.contact{padding-block:var(--section);background:var(--AA-primary);color:var(--AA-white)}
+.contact{padding-block:var(--section);background:var(--AA-neutral-dkr);color:var(--AA-white)}
 .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);align-items:center}
 .contact-left h2{font-family:var(--font-display);font-size:var(--text-h2);font-weight:300;line-height:var(--leading-snug);margin-bottom:var(--sp-4)}
-.contact-left p{color:rgba(255,255,255,.8);margin-bottom:var(--sp-5);line-height:var(--leading-body)}
+.contact-left p{color:rgba(255,255,255,.75);margin-bottom:var(--sp-5);line-height:var(--leading-body)}
 .c-details{display:flex;flex-direction:column;gap:var(--sp-3);margin-top:var(--sp-5)}
 .c-line{display:flex;align-items:center;gap:var(--sp-3);font-size:var(--text-small);color:rgba(255,255,255,.85)}
-.c-line strong{font-size:var(--text-label);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);min-width:72px}
-.contact-form{padding:var(--sp-6);background:rgba(255,255,255,.12);backdrop-filter:blur(10px)}
+.c-line strong{font-size:var(--text-label);letter-spacing:.14em;text-transform:uppercase;color:var(--AA-primary-lt);min-width:72px}
+.contact-form{padding:var(--sp-6);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
 .form-title{font-family:var(--font-display);font-size:1.5rem;font-weight:300;margin-bottom:var(--sp-5);color:var(--AA-white)}
 .form-row{margin-bottom:var(--sp-3)}
-.form-row label{display:block;font-size:var(--text-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-bottom:var(--sp-2)}
-.form-row input,.form-row textarea,.form-row select{width:100%;padding:11px 15px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);color:var(--AA-white);font-family:var(--font-body);font-size:var(--text-body);outline:none;transition:border-color .18s,background .18s}
-.form-row input::placeholder,.form-row textarea::placeholder{color:rgba(255,255,255,.38)}
-.form-row input:focus,.form-row textarea:focus{border-color:rgba(255,255,255,.65);background:rgba(255,255,255,.2)}
+.form-row label{display:block;font-size:var(--text-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:var(--sp-2)}
+.form-row input,.form-row textarea,.form-row select{width:100%;padding:11px 15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:var(--AA-white);font-family:var(--font-body);font-size:var(--text-body);outline:none;transition:border-color .18s,background .18s}
+.form-row input::placeholder,.form-row textarea::placeholder{color:rgba(255,255,255,.3)}
+.form-row input:focus,.form-row textarea:focus{border-color:var(--AA-primary-lt);background:rgba(255,255,255,.12)}
 .form-row textarea{resize:vertical;min-height:110px}
-.form-row select{color:rgba(255,255,255,.8);cursor:pointer}
+.form-row select{color:rgba(255,255,255,.75);cursor:pointer}
 .form-row select option{background:var(--AA-neutral-dkr);color:var(--AA-white)}
-.btn-submit{width:100%;padding:13px;background:var(--AA-neutral-dkr);color:var(--AA-white);border:none;font-family:var(--font-body);font-size:var(--text-small);font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .18s;margin-top:var(--sp-3)}
-.btn-submit:hover{background:#1a1c1f}
-.contact .label{color:rgba(255,255,255,.6)}
-.contact .divider{background:rgba(255,255,255,.35)}
+.btn-submit{width:100%;padding:13px;background:var(--AA-primary);color:var(--AA-white);border:none;font-family:var(--font-body);font-size:var(--text-small);font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .18s;margin-top:var(--sp-3)}
+.btn-submit:hover{background:var(--AA-primary-dk)}
+.contact .label{color:var(--AA-primary-lt)}
+.contact .divider{background:var(--AA-primary)}
 
 /* ========================================================
    FOOTER
@@ -253,7 +253,7 @@ footer p{font-size:var(--text-small);color:rgba(255,255,255,.35)}
 <nav>
   <div class="container">
     <a href="#" class="nav-logo" aria-label="Aubyn Architecture home" style="display:flex;align-items:center;line-height:0">
-      <div style="height:36px;display:flex;align-items:center">
+      <div style="height:56px;display:flex;align-items:center">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="181 0 340 84" height="100%" width="auto" style="display:block" role="img" aria-label="Aubyn Architecture">
   <defs>
     <linearGradient id="hf-stroke" x1="196.7707" y1="41.048051" x2="278.16522" y2="41.048051" gradientUnits="userSpaceOnUse">
@@ -362,7 +362,7 @@ footer p{font-size:var(--text-small);color:rgba(255,255,255,.35)}
           <div class="meta-item"><strong>Principal</strong><span>David C. Ainsworth AIA, NCARB</span></div>
           <div class="meta-item"><strong>Office</strong><span>Wilmington, Delaware</span></div>
           <div class="meta-item"><strong>Licensed In</strong><span>DE · PA · CT</span></div>
-          <div class="meta-item"><strong>Services</strong><span>Architecture · Landscape · Consulting</span></div>
+          <div class="meta-item"><strong>Services</strong><span>Architecture · Landscape · Predevelopment Consulting · AOR</span></div>
         </div>
       </div>
       <div class="about-visual">
@@ -459,6 +459,14 @@ footer p{font-size:var(--text-small);color:rgba(255,255,255,.35)}
     <div id="design" class="tab-panel active">
       <div class="proj-grid">
         <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">Claymont Hybrid Townhouses</div>
+          <div class="proj-meta">1316–1324 N. Claymont St., Wilmington DE · 4 Units · CLT/SIP Hybrid · First-of-State</div>
+          <span class="proj-tag">Forward Housing</span></div></div>
+        <div class="proj-card"><div class="proj-stripe"></div><div>
+          <div class="proj-name">M-Well Community Health Campus</div>
+          <div class="proj-meta">3110 Philadelphia Pike, Claymont DE · 129,452 SF · $59M · Phase 1 + Phase 2</div>
+          <span class="proj-tag">Community Facility</span></div></div>
+        <div class="proj-card"><div class="proj-stripe"></div><div>
           <div class="proj-name">Private Residence, Broadkill Beach</div>
           <div class="proj-meta">Milton, DE · 3,200 SF · Raised 2-Story New Construction</div>
           <span class="proj-tag">Residential</span></div></div>
@@ -535,6 +543,29 @@ footer p{font-size:var(--text-small);color:rgba(255,255,255,.35)}
         <div class="benefit"><div class="ben-num">06</div><div>
           <h3>Innovation On-Site</h3>
           <p>When field challenges arise, our architects develop creative solutions in real time — fixes that serve the project's design goals, not just the path of least resistance.</p></div></div>
+        <div class="benefit"><div class="ben-num">07</div><div>
+          <h3>Predevelopment Intelligence — M4Di™ OI Tool</h3>
+          <p>Every Aubyn engagement benefits from M4Di™ in-house predevelopment cost intelligence. Order-of-magnitude ROM estimates and capital stack analysis before a line is drawn — so design decisions are grounded in real cost data from the start.</p></div></div>
+        <div class="benefit"><div class="ben-num">08</div><div>
+          <h3>Advanced Construction Systems</h3>
+          <p>As Architecture of Record for Delaware's first CLT/SIP hybrid residential construction, Aubyn brings hands-on expertise in mass timber, structural insulated panels, and prefabricated assembly systems to design-build delivery.</p></div></div>
+        <div class="benefit" style="border:none;padding:var(--sp-5) var(--sp-5);background:var(--AA-neutral-mid);grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-6);align-items:start">
+          <div>
+            <div style="font-size:var(--text-label);font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--AA-primary);margin-bottom:var(--sp-3)">Forward Housing System — Coming Soon</div>
+            <h3 style="font-family:var(--font-display);font-size:var(--text-h3);font-weight:400;margin-bottom:var(--sp-3);line-height:var(--leading-snug)">Not the cheap version.<br><em>The forward-looking one.</em></h3>
+            <p style="font-size:var(--text-small);color:var(--AA-neutral-dark);line-height:1.65">Aubyn is a founding partner of the Forward Housing System delivery platform — a climate-aware, mission-driven approach to residential and emergency construction developed through Merge4Ward.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+            <div style="border-left:2px solid var(--AA-primary);padding-left:var(--sp-4)">
+              <div style="font-size:var(--text-small);font-weight:600;color:var(--AA-neutral-dkr);margin-bottom:4px">Forward Home Kits</div>
+              <p style="font-size:13px;color:var(--AA-neutral-dark);line-height:1.6">CLT/SIP hybrid residential kit systems. Climate-resilient, high-performance, designed for community land trust and co-op ownership models. In development.</p>
+            </div>
+            <div style="border-left:2px solid var(--AA-primary);padding-left:var(--sp-4)">
+              <div style="font-size:var(--text-small);font-weight:600;color:var(--AA-neutral-dkr);margin-bottom:4px">Forward Emergency Shelter Kits</div>
+              <p style="font-size:13px;color:var(--AA-neutral-dark);line-height:1.6">Rapid-deployment shelter systems for disaster response and reconstruction cycles. Designed for the post-El Niño reconstruction window. In development.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
