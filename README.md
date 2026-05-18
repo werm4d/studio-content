@@ -12,6 +12,7 @@ All brand assets, templates, project files, websites, and AI workflows live here
 | Aubyn Architecture | <a href="https://werm4d.github.io/studio-content/aubyn-architecture/website/aubyn-architecture.html" target="_blank">Visit site ↗</a> |
 | Merge 4 Design | <a href="https://werm4d.github.io/studio-content/merge4design/website/merge4design.html" target="_blank">Visit site ↗</a> |
 | Social Post Generator | <a href="https://werm4d.github.io/studio-content/shared/tools/social-post-generator.html" target="_blank">Open tool ↗</a> |
+| CBai Stack Dashboard | [Open dashboard ↗](https://werm4d.github.io/studio-content/cbai_dashboard_v3_May2026.html) |
 
 ## Quick links
 
