@@ -1,334 +1,523 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AE24-002 · Construction Schedule · Rysheemah Dixon Townhomes</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+
 <style>
-:root{
-  --green:#3B6D11;--green-lt:#EAF3DE;--green-mid:#639922;
-  --blue:#185FA5;--blue-lt:#E6F1FB;
-  --amber:#BA7517;--amber-lt:#FAEEDA;
-  --red:#A32D2D;--red-lt:#FCEBEB;
-  --purple:#534AB7;--purple-lt:#EEEDFE;
-  --pink:#993556;--pink-lt:#FBEAF0;
-  --gray:#5F5E5A;--gray-lt:#F1EFE8;
-  --surface:#FFFFFF;--bg:#F8F7F4;
-  --border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.18);
-  --text:#1A1A18;--text-2:#5F5E5A;--text-3:#888780;
+:root {
+  --navy: #1a2744;
+  --navy-light: #243358;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --site-green: #196B23;
+  --site-green-light: #4E9A3A;
+  --bg: var(--color-background-primary);
+  --bg2: var(--color-background-secondary);
+  --border: var(--color-border-tertiary);
+  --text: var(--color-text-primary);
+  --muted: var(--color-text-secondary);
 }
-@media(prefers-color-scheme:dark){
-  :root{
-    --surface:#1E1E1C;--bg:#141412;
-    --border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.15);
-    --text:#F1EFE8;--text-2:#B4B2A9;--text-3:#888780;
-    --green-lt:#173404;--blue-lt:#042C53;--amber-lt:#412402;
-    --red-lt:#501313;--purple-lt:#26215C;--pink-lt:#4B1528;--gray-lt:#2C2C2A;
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); font-size: 13px; color: var(--text); }
+.header-banner {
+  background: var(--navy);
+  color: #fff;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  flex-wrap: wrap;
+  gap: 8px;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
-.page{max-width:1280px;margin:0 auto;padding:24px 20px 60px}
-.top-bar{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.project-name{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:4px}
-.project-title{font-size:20px;font-weight:600;color:var(--text)}
-.project-sub{font-size:12px;color:var(--text-2);margin-top:3px}
-.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}
-.chip{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap}
-.chip-red{background:var(--red-lt);color:var(--red)}
-.chip-blue{background:var(--blue-lt);color:var(--blue)}
-.chip-green{background:var(--green-lt);color:var(--green)}
-.chip-amber{background:var(--amber-lt);color:var(--amber)}
-.updated{font-size:11px;color:var(--text-3);font-family:'DM Mono',monospace;align-self:flex-end}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:24px}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
-.stat-n{font-size:26px;font-weight:600;color:var(--text);font-family:'DM Mono',monospace}
-.stat-l{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-top:4px}
-.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
-.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-2)}
-.leg-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-.section-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);padding:10px 0 4px;border-bottom:1px solid var(--border);margin-bottom:2px}
-.gantt-outer{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.gantt{min-width:900px}
-.date-hdr{display:grid;grid-template-columns:220px 1fr;margin-bottom:6px}
-.date-inner{position:relative;height:32px}
-.date-tick{position:absolute;font-size:9px;color:var(--text-3);font-family:'DM Mono',monospace;white-space:nowrap;line-height:1}
-.date-tick-line{position:absolute;top:16px;width:1px;height:16px;background:var(--border)}
-.row{display:grid;grid-template-columns:220px 1fr;align-items:center;margin-bottom:2px}
-.row-label{font-size:12px;color:var(--text);padding-right:8px;display:flex;align-items:center;gap:6px;overflow:hidden}
-.row-label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.bar-area{position:relative;height:26px}
-.bar{position:absolute;height:20px;top:3px;border-radius:4px;display:flex;align-items:center;padding:0 7px;font-size:9px;font-family:'DM Mono',monospace;font-weight:500;white-space:nowrap;overflow:hidden;cursor:default;transition:filter .15s,transform .15s}
-.bar:hover{filter:brightness(1.06);transform:translateY(-1px)}
-.bar.click{cursor:pointer}
-.bar-earth{background:#C0DD97;color:#27500A}
-.bar-masonry{background:#B5D4F4;color:#0C447C}
-.bar-struct{background:#FAC775;color:#412402}
-.bar-mep{background:#F4C0D1;color:#4B1528}
-.bar-temp{background:#CECBF6;color:#26215C}
-.bar-insp{background:#E24B4A;color:#fff;z-index:5}
-.bar-mile{background:#3B6D11;color:#fff;border-radius:4px;font-size:10px}
-.today-line{position:absolute;top:0;bottom:0;width:2px;background:var(--blue);opacity:.5;z-index:20;pointer-events:none}
-.today-badge{position:absolute;top:4px;font-size:8px;font-family:'DM Mono',monospace;background:var(--blue);color:#fff;padding:1px 5px;border-radius:3px;transform:translateX(-50%);z-index:21;pointer-events:none;white-space:nowrap}
-.detail-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-top:16px;display:none}
-.detail-panel.open{display:block}
-.detail-panel h3{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.detail-panel h3 i{font-size:16px;color:var(--red)}
-.drow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px}
-.drow:last-child{border:none}
-.drow-k{color:var(--text-2)}
-.drow-v{color:var(--text);font-weight:500;max-width:60%;text-align:right}
-.close-btn{float:right;background:none;border:none;cursor:pointer;font-size:18px;color:var(--text-3);padding:0;margin-top:-2px}
-.footer-note{font-size:10px;color:var(--text-3);font-family:'DM Mono',monospace;margin-top:20px;padding-top:12px;border-top:1px solid var(--border);line-height:1.6}
+.banner-left { display: flex; flex-direction: column; gap: 2px; }
+.banner-title { font-size: 15px; font-weight: 500; color: #fff; }
+.banner-sub { font-size: 11px; color: rgba(255,255,255,0.65); }
+.banner-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.countdown-label { font-size: 10px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; }
+.countdown-val { font-size: 18px; font-weight: 500; color: var(--gold); }
+.controls {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.ctrl-group { display: flex; align-items: center; gap: 6px; }
+.ctrl-label { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.btn {
+  font-size: 11px;
+  padding: 4px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: var(--border-radius-md);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--bg2); }
+.btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.btn-gold { border-color: var(--gold); color: var(--navy); background: rgba(201,168,76,0.12); }
+.btn-gold:hover { background: rgba(201,168,76,0.25); }
+.shift-input { width: 52px; font-size: 12px; text-align: center; }
+.status-bar {
+  display: flex;
+  gap: 16px;
+  padding: 8px 16px;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--bg);
+  flex-wrap: wrap;
+}
+.stat-pill { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-done { background: var(--site-green); }
+.dot-prog { background: var(--gold); }
+.dot-ns { background: #bbb; }
+.dot-insp { background: var(--navy); }
+.dot-crit { background: #c0392b; }
+.gantt-wrap { overflow-x: auto; background: var(--bg); }
+.gantt-table { min-width: 820px; width: 100%; border-collapse: collapse; }
+.gantt-table th {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 4px 6px;
+  border-bottom: 0.5px solid var(--border);
+  white-space: nowrap;
+  background: var(--bg2);
+  text-align: left;
+}
+.th-date { text-align: center; font-size: 9px; padding: 3px 2px; min-width: 20px; }
+.gantt-table td { padding: 2px 6px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
+.section-row td {
+  background: var(--navy);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 8px;
+}
+.task-name-cell { min-width: 180px; max-width: 200px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.status-cell { min-width: 90px; }
+.status-btn { font-size: 10px; padding: 2px 7px; border-radius: 10px; border: 0.5px solid; cursor: pointer; white-space: nowrap; }
+.s-ns { background: rgba(180,180,180,0.15); border-color: #aaa; color: var(--muted); }
+.s-ip { background: rgba(201,168,76,0.18); border-color: var(--gold); color: #7a5c0a; }
+.s-done { background: rgba(25,107,35,0.15); border-color: var(--site-green); color: var(--site-green); }
+.bar-cell { padding: 2px 2px; }
+.bar-container { position: relative; height: 16px; }
+.bar-bg { position: absolute; top: 3px; height: 10px; border-radius: 3px; }
+.bar-ns { background: #ccc; }
+.bar-ip { background: var(--gold-light); }
+.bar-done { background: var(--site-green-light); }
+.bar-crit { background: #c0392b; }
+.bar-insp { background: var(--navy); width: 4px !important; border-radius: 2px; }
+.today-line { position: absolute; top: 0; bottom: 0; width: 2px; background: rgba(192,57,43,0.7); pointer-events: none; z-index: 5; }
+.insp-row td { background: rgba(26,39,68,0.05); }
+.insp-name { font-size: 11px; color: var(--navy); font-weight: 500; cursor: pointer; }
+.insp-name:hover { text-decoration: underline; }
+.milestone-row td { background: rgba(201,168,76,0.1); }
+.milestone-name { font-size: 12px; font-weight: 500; color: #7a5c0a; }
+.ts-cell { font-size: 9px; color: var(--muted); min-width: 70px; }
+.dimmed .bar-bg { opacity: 0.2; }
+.dimmed .task-name-cell { color: var(--muted); }
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg);
+  border-radius: var(--border-radius-lg);
+  border: 0.5px solid var(--border);
+  padding: 20px;
+  max-width: 400px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.modal-title { font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.modal-field { margin-bottom: 10px; }
+.modal-field label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 3px; }
+.modal-field .val { font-size: 13px; color: var(--text); }
+.checklist { list-style: none; margin-top: 4px; }
+.checklist li { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; margin-bottom: 5px; }
+.checklist li input[type=checkbox] { margin-top: 2px; flex-shrink: 0; }
+.modal-note { width: 100%; font-size: 12px; min-height: 60px; border: 0.5px solid var(--border); border-radius: var(--border-radius-md); padding: 6px 8px; resize: vertical; color: var(--text); background: var(--bg2); }
+.modal-close { font-size: 11px; padding: 5px 14px; float: right; margin-top: 10px; }
+.print-note { display: none; }
+@media print {
+  .controls, .btn, .modal-overlay { display: none !important; }
+  .print-note { display: block; font-size: 10px; color: #888; margin: 8px 0; }
+  .gantt-wrap { overflow: visible; }
+  .gantt-table { min-width: unset; }
+  .header-banner { border-radius: 0; }
+}
+@media (max-width: 640px) {
+  .gantt-wrap { display: none; }
+  .card-list { display: block; }
+}
+@media (min-width: 641px) {
+  .card-list { display: none; }
+}
+.card-list { padding: 8px; }
+.task-card {
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--border-radius-md);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border-left: 3px solid #ccc;
+}
+.tc-ns { border-left-color: #bbb; }
+.tc-ip { border-left-color: var(--gold); }
+.tc-done { border-left-color: var(--site-green); }
+.tc-insp { border-left-color: var(--navy); }
+.tc-crit { border-left-color: #c0392b; }
+.tc-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+.tc-dates { font-size: 11px; color: var(--muted); }
+.last-updated { font-size: 10px; color: var(--muted); text-align: right; padding: 6px 16px; border-top: 0.5px solid var(--border); background: var(--bg2); border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg); }
 </style>
-</head>
-<body>
-<div class="page">
 
-<div class="top-bar">
-  <div>
-    <div class="project-name">AE24-002 · Merge 4 Design LLC × L.E.E.P., Inc.</div>
-    <div class="project-title">Rysheemah Dixon Townhomes</div>
-    <div class="project-sub">1316–1324 N. Claymont Street, Wilmington, DE 19802 · 4-unit CLT/SIP Hybrid Townhouse</div>
-    <div class="chips">
-      <span class="chip chip-red"><i class="ti ti-package" style="font-size:11px;vertical-align:-1px;margin-right:3px" aria-hidden="true"></i>Panels on site: Jul 7, 2026</span>
-      <span class="chip chip-blue"><i class="ti ti-clipboard-check" style="font-size:11px;vertical-align:-1px;margin-right:3px" aria-hidden="true"></i>Next inspection: Jun 8, 2026</span>
-      <span class="chip chip-amber">Phase 1: Foundation → Panel Delivery</span>
+<h2 class="sr-only">AE24-002 Claymont construction schedule, Jun 5 – Jul 7 2026, 32 tasks and 5 AHJ inspections.</h2>
+
+<div id="root"></div>
+
+<div class="modal-overlay" id="inspModal">
+  <div class="modal">
+    <div class="modal-title"><i class="ti ti-clipboard-check" aria-hidden="true"></i><span id="mTitle"></span></div>
+    <div class="modal-field"><label>Date</label><div class="val" id="mDate"></div></div>
+    <div class="modal-field"><label>GC / AOR contact</label><div class="val">L.E.E.P., Inc. · Gwenevere Motley<br><span style="font-size:11px;color:var(--muted)">AOR: David C. Ainsworth AIA · Aubyn Architecture LLC</span></div></div>
+    <div class="modal-field"><label>AHJ</label><div class="val">City of Wilmington · Dept. of Licenses &amp; Inspections</div></div>
+    <div class="modal-field"><label>Notes</label><div class="val" id="mNotes" style="font-size:12px;line-height:1.5;"></div></div>
+    <div class="modal-field">
+      <label>Pre-inspection checklist</label>
+      <ul class="checklist" id="mChecklist"></ul>
     </div>
+    <div class="modal-field">
+      <label>Field notes</label>
+      <textarea class="modal-note" id="mFieldNote" placeholder="Add inspection notes..."></textarea>
+    </div>
+    <button class="btn modal-close" id="modalClose">Close</button>
   </div>
-  <div class="updated">Updated: Jun 5, 2026</div>
-</div>
-
-<div class="stats" id="stats"></div>
-
-<div class="legend">
-  <span style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)">Trade key:</span>
-  <span class="leg"><span class="leg-sq" style="background:#C0DD97"></span>Earthwork / Site</span>
-  <span class="leg"><span class="leg-sq" style="background:#B5D4F4"></span>Masonry / Foundation</span>
-  <span class="leg"><span class="leg-sq" style="background:#FAC775"></span>Structural / Framing</span>
-  <span class="leg"><span class="leg-sq" style="background:#F4C0D1"></span>MEP Rough</span>
-  <span class="leg"><span class="leg-sq" style="background:#CECBF6"></span>Temp / Access</span>
-  <span class="leg"><span class="leg-sq" style="background:#E24B4A"></span>Inspection</span>
-  <span class="leg"><span class="leg-sq" style="background:#3B6D11"></span>Milestone</span>
-</div>
-
-<div class="gantt-outer">
-  <div class="gantt" id="gantt"></div>
-</div>
-
-<div class="detail-panel" id="detail">
-  <button class="close-btn" onclick="document.getElementById('detail').classList.remove('open')" aria-label="Close">&times;</button>
-  <div id="detail-body"></div>
-</div>
-
-<div class="footer-note">
-  AE24-002 · Aubyn Architecture LLC / Merge 4 Design LLC · David C. Ainsworth AIA · DE License RA-0026498-A ·
-  Schedule is for team coordination only — not a contract document. Inspection dates are targets; confirm with City of Wilmington L&amp;I 48 hours prior. ·
-  CLT + SIP panels: Sterling Structural / ACME Panel. Panel arrival target: July 7, 2026. ·
-  Foundation permit approved: May 6, 2026.
-</div>
-
 </div>
 
 <script>
-const START_D = new Date('2026-06-05');
-const END_D   = new Date('2026-07-07');
-const TODAY_D = new Date('2026-06-05');
-const TOTAL   = Math.round((END_D - START_D) / 864e5) + 1;
+const TODAY_IDX = 0;
+const PROJECT_START = new Date('2026-06-05');
+const PANEL_DATE = new Date('2026-07-07');
 
-function offDays(s){ return Math.round((new Date(s) - START_D) / 864e5); }
-function spanDays(s, e){ return Math.round((new Date(e) - new Date(s)) / 864e5) + 1; }
-function toP(v){ return (v / TOTAL * 100).toFixed(3) + '%'; }
+function dayIdx(d) {
+  return Math.round((new Date(d) - PROJECT_START) / 86400000);
+}
+function fmtDate(d) {
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+function addDays(dateStr, n) {
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0,10);
+}
 
-const TASKS = [
-  {type:'section', label:'Site Preparation & Earthwork'},
-  {id:'t1', label:'Site mobilization / temp fence / erosion controls', trade:'earth', start:'2026-06-05', end:'2026-06-07', status:'in-progress'},
-  {id:'t2', label:'Layout & batter boards — all 4 units', trade:'earth', start:'2026-06-05', end:'2026-06-06', status:'in-progress'},
-  {id:'t3', label:'Footing trench excavation (all 4 units)', trade:'earth', start:'2026-06-06', end:'2026-06-07', status:'in-progress'},
-
-  {type:'section', label:'Foundations & Footings'},
-  {id:'i1', label:'INSP 1: Footing trench & rebar placement', trade:'insp', start:'2026-06-08', end:'2026-06-08', status:'scheduled',
-    note:'First AHJ inspection. Confirm with inspector 6/5. No pour until written approval received. Contact: City of Wilmington L&I.'},
-  {id:'t4', label:'Footing concrete pour (pending insp. written approval)', trade:'masonry', start:'2026-06-09', end:'2026-06-09', status:'pending'},
-  {id:'t5', label:'Footing cure — minimum 48 hr before CMU', trade:'masonry', start:'2026-06-09', end:'2026-06-10', status:'pending'},
-  {id:'t6', label:'Under-slab plumbing rough (drain / waste / vent)', trade:'mep', start:'2026-06-10', end:'2026-06-14', status:'pending'},
-  {id:'t7', label:'CMU stem wall Phase 1 — first 4 courses', trade:'masonry', start:'2026-06-10', end:'2026-06-13', status:'pending'},
-  {id:'i2', label:'INSP 2: CMU rebar / cells before grout', trade:'insp', start:'2026-06-13', end:'2026-06-13', status:'scheduled',
-    note:'AHJ must inspect CMU cell rebar placement before grouting. Schedule 48 hrs ahead. Do not grout without written approval.'},
-  {id:'i3', label:'INSP 3: Under-slab plumbing rough', trade:'insp', start:'2026-06-15', end:'2026-06-15', status:'scheduled',
-    note:'Plumbing rough inspection before backfill covers it. Coordinate with plumbing sub to ensure pressure test is complete.'},
-  {id:'t8', label:'CMU grout fill Phase 1', trade:'masonry', start:'2026-06-15', end:'2026-06-15', status:'pending'},
-  {id:'t9', label:'CMU stem wall Phase 2 — to full design height', trade:'masonry', start:'2026-06-16', end:'2026-06-20', status:'pending'},
-  {id:'i4', label:'INSP 4: CMU full height / anchor bolts / grouting', trade:'insp', start:'2026-06-20', end:'2026-06-20', status:'scheduled',
-    note:'AHJ verifies CMU to design height, anchor bolt placement, and grout fill. Must pass before backfill. See structural drawings for anchor bolt schedule.'},
-  {id:'t10', label:'CMU grout fill Phase 2 — full height', trade:'masonry', start:'2026-06-22', end:'2026-06-22', status:'pending'},
-  {id:'t11', label:'Foundation waterproofing / damp-proofing', trade:'masonry', start:'2026-06-23', end:'2026-06-24', status:'pending'},
-  {id:'t12', label:'Backfill & compaction', trade:'earth', start:'2026-06-25', end:'2026-06-26', status:'pending'},
-
-  {type:'section', label:'First Floor Platform — I-Joist'},
-  {id:'t13', label:'Sill plate installation (treated lumber / anchor bolts)', trade:'struct', start:'2026-06-22', end:'2026-06-23', status:'pending'},
-  {id:'t14', label:'I-joist beam pockets / ledger installation', trade:'struct', start:'2026-06-23', end:'2026-06-24', status:'pending'},
-  {id:'t15', label:'I-joist floor framing — all 4 units', trade:'struct', start:'2026-06-25', end:'2026-06-29', status:'pending'},
-  {id:'i5', label:'INSP 5: Floor framing / I-joist platform', trade:'insp', start:'2026-06-29', end:'2026-06-29', status:'scheduled',
-    note:'AHJ inspects I-joist framing, hangers, blocking, bearing conditions, and sill plate anchor bolts before sheathing. Schedule with inspector 48 hrs ahead.'},
-  {id:'t16', label:'Subfloor sheathing — AdvanTech T&G, glued & nailed', trade:'struct', start:'2026-06-30', end:'2026-07-01', status:'pending'},
-
-  {type:'section', label:'Temporary Stairs — All Floors (Panel Installer Access)'},
-  {id:'t17', label:'Temp stair stringers — Floors 1→2, all 4 units', trade:'temp', start:'2026-06-30', end:'2026-07-01', status:'pending'},
-  {id:'t18', label:'Temp stair stringers — Floors 2→3', trade:'temp', start:'2026-07-02', end:'2026-07-03', status:'pending'},
-  {id:'t19', label:'Temp stair stringers — Floors 3→4', trade:'temp', start:'2026-07-03', end:'2026-07-04', status:'pending'},
-  {id:'t20', label:'Temp guardrail / safety rail — all stair runs', trade:'temp', start:'2026-07-05', end:'2026-07-06', status:'pending'},
-
-  {type:'section', label:'First Level MEP Rough'},
-  {id:'t21', label:'First level MEP rough (above first floor deck)', trade:'mep', start:'2026-07-02', end:'2026-07-03', status:'pending'},
-
-  {type:'section', label:'Panel Delivery Readiness'},
-  {id:'t22', label:'Site access route confirmed / crane pad area', trade:'earth', start:'2026-07-03', end:'2026-07-04', status:'pending'},
-  {id:'t23', label:'Panel laydown / receiving area prepared', trade:'earth', start:'2026-07-05', end:'2026-07-06', status:'pending'},
-  {id:'m1', label:'CLT + SIP PANELS ON SITE', trade:'mile', start:'2026-07-07', end:'2026-07-07', status:'milestone'},
+const INSPECTIONS = [
+  { id:'I1', label:'INSP 1: Footing trench & rebar', date:'2026-06-08', notes:'First AHJ inspection. Confirm with inspector 6/5. No pour until written approval.', checks:['Trench depth at design elevation','Rebar per structural drawings','Rebar clearance from soil face','Inspection notice filed 48 hrs prior'] },
+  { id:'I2', label:'INSP 2: CMU rebar before grout', date:'2026-06-13', notes:'CMU cell rebar before grouting. Schedule 48 hrs ahead. No grout without written approval.', checks:['CMU coursing at design height','Rebar placement per structural','No grout in cells without approval','Photos logged'] },
+  { id:'I3', label:'INSP 3: Under-slab plumbing', date:'2026-06-15', notes:'Plumbing rough before backfill covers it. Pressure test must be complete.', checks:['Pressure test results on file','Pipe bedding per plumbing spec','Cleanouts accessible','L.E.E.P. plumber on site'] },
+  { id:'I4', label:'INSP 4: CMU full ht / anchor bolts', date:'2026-06-20', notes:'CMU to design height, anchor bolts, grout fill. Must pass before backfill.', checks:['CMU at design height all units','Anchor bolt pattern per structural','Grout fill confirmed','No backfill pending approval'] },
+  { id:'I5', label:'INSP 5: Floor framing / I-joist', date:'2026-06-29', notes:'I-joist framing, hangers, blocking, bearing, sill plate anchor bolts before sheathing.', checks:['I-joist sizes per structural','Hanger specs verified','Blocking at bearing pts','Sill plate anchors per plan','No sheathing before approval'] },
 ];
 
-const TRADE_DOT = {
-  earth:'#639922', masonry:'#378ADD', struct:'#BA7517',
-  mep:'#D4537E', temp:'#7F77DD', insp:'#E24B4A', mile:'#3B6D11'
-};
-const BAR_CLASS = {
-  earth:'bar-earth', masonry:'bar-masonry', struct:'bar-struct',
-  mep:'bar-mep', temp:'bar-temp', insp:'bar-insp', mile:'bar-mile'
+const RAW_TASKS = [
+  {section:'Site prep & earthwork'},
+  {id:'T01',name:'Site mobilization',start:'2026-06-05',end:'2026-06-07',crit:false},
+  {id:'T02',name:'Layout & batter boards',start:'2026-06-05',end:'2026-06-06',crit:false},
+  {id:'T03',name:'Footing trench excavation',start:'2026-06-06',end:'2026-06-07',crit:true},
+  {section:'Foundations & footings'},
+  {id:'I1',insp:true},
+  {id:'T04',name:'Footing pour',start:'2026-06-09',end:'2026-06-09',crit:true},
+  {id:'T05',name:'Footing cure 48 hr',start:'2026-06-09',end:'2026-06-10',crit:true},
+  {id:'T06',name:'Under-slab plumbing rough',start:'2026-06-10',end:'2026-06-14',crit:false},
+  {id:'T07',name:'CMU stem wall phase 1',start:'2026-06-10',end:'2026-06-13',crit:true},
+  {id:'I2',insp:true},
+  {id:'I3',insp:true},
+  {id:'T08',name:'CMU grout phase 1',start:'2026-06-15',end:'2026-06-15',crit:true},
+  {id:'T09',name:'CMU stem wall phase 2',start:'2026-06-16',end:'2026-06-20',crit:true},
+  {id:'I4',insp:true},
+  {id:'T10',name:'CMU grout phase 2',start:'2026-06-22',end:'2026-06-22',crit:true},
+  {id:'T11',name:'Foundation waterproofing',start:'2026-06-23',end:'2026-06-24',crit:false},
+  {id:'T12',name:'Backfill & compaction',start:'2026-06-25',end:'2026-06-26',crit:false},
+  {section:'First floor platform — I-joist'},
+  {id:'T13',name:'Sill plate installation',start:'2026-06-22',end:'2026-06-23',crit:true},
+  {id:'T14',name:'I-joist beam pockets / ledger',start:'2026-06-23',end:'2026-06-24',crit:true},
+  {id:'T15',name:'I-joist floor framing all 4 units',start:'2026-06-25',end:'2026-06-29',crit:true},
+  {id:'I5',insp:true},
+  {id:'T16',name:'Subfloor sheathing AdvanTech T&G',start:'2026-06-30',end:'2026-07-01',crit:true},
+  {section:'Temporary stairs — all floors'},
+  {id:'T17',name:'Floors 1→2 stringers',start:'2026-06-30',end:'2026-07-01',crit:true},
+  {id:'T18',name:'Floors 2→3 stringers',start:'2026-07-02',end:'2026-07-03',crit:true},
+  {id:'T19',name:'Floors 3→4 stringers',start:'2026-07-03',end:'2026-07-04',crit:true},
+  {id:'T20',name:'Guardrail / safety rail all runs',start:'2026-07-05',end:'2026-07-06',crit:true},
+  {section:'First level MEP rough'},
+  {id:'T21',name:'MEP rough above first floor deck',start:'2026-07-02',end:'2026-07-03',crit:false},
+  {section:'Panel delivery readiness'},
+  {id:'T22',name:'Crane pad / access route',start:'2026-07-03',end:'2026-07-04',crit:true},
+  {id:'T23',name:'Panel laydown / receiving area',start:'2026-07-05',end:'2026-07-06',crit:true},
+  {id:'MILE',milestone:true,name:'CLT + SIP PANELS ON SITE',date:'2026-07-07'},
+];
+
+const TOTAL_DAYS = dayIdx('2026-07-07') + 1;
+
+const stored = JSON.parse(localStorage.getItem('ae24002_sched') || '{}');
+const state = {
+  statuses: stored.statuses || {},
+  timestamps: stored.timestamps || {},
+  notes: stored.notes || {},
+  checks: stored.checks || {},
+  shift: stored.shift || 0,
+  critOnly: stored.critOnly || false,
+  lastUpdated: stored.lastUpdated || null,
 };
 
-const gantt = document.getElementById('gantt');
-
-// Date header
-const hdrGrid = document.createElement('div');
-hdrGrid.className = 'date-hdr';
-hdrGrid.innerHTML = '<div></div>';
-const dateInner = document.createElement('div');
-dateInner.className = 'date-inner';
-for(let i=0; i<TOTAL; i+=7){
-  const dt = new Date(START_D); dt.setDate(dt.getDate()+i);
-  const tick = document.createElement('div');
-  tick.className = 'date-tick';
-  tick.style.left = toP(i);
-  tick.textContent = dt.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-  const line = document.createElement('div');
-  line.className = 'date-tick-line';
-  line.style.left = toP(i);
-  dateInner.appendChild(tick);
-  dateInner.appendChild(line);
+function save() {
+  state.lastUpdated = new Date().toISOString();
+  localStorage.setItem('ae24002_sched', JSON.stringify(state));
 }
-// Today line in header
-const tOff = offDays(TODAY_D);
-const tLine = document.createElement('div');
-tLine.className = 'today-line';
-tLine.style.left = toP(tOff);
-const tBadge = document.createElement('div');
-tBadge.className = 'today-badge';
-tBadge.style.left = toP(tOff);
-tBadge.textContent = 'TODAY';
-dateInner.appendChild(tLine);
-dateInner.appendChild(tBadge);
-hdrGrid.appendChild(dateInner);
-gantt.appendChild(hdrGrid);
 
-// Tasks
-TASKS.forEach(t => {
-  if(t.type === 'section'){
-    const sl = document.createElement('div');
-    sl.className = 'section-label';
-    sl.style.gridColumn = '1/-1';
-    sl.textContent = t.label;
-    const wrapper = document.createElement('div');
-    wrapper.style.cssText = 'grid-column:1/-1';
-    const grid = document.createElement('div');
-    grid.style.cssText = 'display:grid;grid-template-columns:220px 1fr';
-    const slCell = document.createElement('div');
-    slCell.className = 'section-label';
-    slCell.style.gridColumn = '1/-1';
-    slCell.textContent = t.label;
-    grid.style.gridColumn = '1/-1';
-    gantt.appendChild(slCell);
-    return;
+function getStatus(id) { return state.statuses[id] || 'ns'; }
+function nextStatus(id) {
+  const cur = getStatus(id);
+  const next = cur === 'ns' ? 'ip' : cur === 'ip' ? 'done' : 'ns';
+  state.statuses[id] = next;
+  state.timestamps[id] = new Date().toISOString();
+  save();
+  render();
+}
+
+function shiftDate(dateStr) {
+  return addDays(dateStr, state.shift);
+}
+
+function countdownDays() {
+  const panel = new Date(shiftDate('2026-07-07') + 'T00:00:00');
+  const today = new Date('2026-06-06T00:00:00');
+  return Math.ceil((panel - today) / 86400000);
+}
+
+function completedCount() {
+  return RAW_TASKS.filter(t => t.id && !t.insp && !t.milestone && getStatus(t.id) === 'done').length;
+}
+function totalTasks() {
+  return RAW_TASKS.filter(t => t.id && !t.insp && !t.milestone).length;
+}
+
+function buildDateHeaders() {
+  const headers = [];
+  for (let i = 0; i < TOTAL_DAYS; i++) {
+    const d = new Date(PROJECT_START);
+    d.setDate(d.getDate() + i + state.shift);
+    const mo = d.toLocaleDateString('en-US',{month:'short'});
+    const dy = d.getDate();
+    const dow = ['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()];
+    const isWk = d.getDay() === 0 || d.getDay() === 6;
+    headers.push({label: `${dy}`, sub: dow, month: mo, weekend: isWk, isHoliday: (dy===4 && d.getMonth()===6)});
   }
+  return headers;
+}
 
-  const row = document.createElement('div');
-  row.className = 'row';
+function render() {
+  const headers = buildDateHeaders();
+  const todayShiftedIdx = -state.shift;
 
-  const lbl = document.createElement('div');
-  lbl.className = 'row-label';
-  const dot = document.createElement('div');
-  dot.className = 'dot';
-  dot.style.background = TRADE_DOT[t.trade] || '#888';
-  dot.setAttribute('aria-hidden','true');
-  const txt = document.createElement('span');
-  txt.textContent = t.label;
-  lbl.appendChild(dot);
-  lbl.appendChild(txt);
+  let html = `<div id="root-inner">`;
 
-  const area = document.createElement('div');
-  area.className = 'bar-area';
+  const pct = Math.round((completedCount() / totalTasks()) * 100);
+  const cd = countdownDays();
 
-  // Today line in bar area
-  const al = document.createElement('div');
-  al.className = 'today-line';
-  al.style.left = toP(tOff);
-  area.appendChild(al);
+  html += `<div class="header-banner">
+    <div class="banner-left">
+      <div class="banner-title">AE24-002 · Rysheemah Dixon Townhomes</div>
+      <div class="banner-sub">1316–1324 N. Claymont St., Wilmington DE · CLT/SIP Hybrid · L.E.E.P., Inc.</div>
+    </div>
+    <div class="banner-right">
+      <div class="countdown-label">Panels on site</div>
+      <div class="countdown-val">${cd} days</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.5);">${pct}% complete</div>
+    </div>
+  </div>`;
 
-  const bar = document.createElement('div');
-  bar.className = 'bar ' + (BAR_CLASS[t.trade] || '');
-  const s = offDays(t.start);
-  const w = spanDays(t.start, t.end);
-  bar.style.left = toP(s);
-  bar.style.width = t.trade === 'mile' ? 'auto' : toP(w);
-  if(t.trade === 'mile') bar.style.minWidth = '100px';
+  html += `<div class="controls">
+    <div class="ctrl-group">
+      <span class="ctrl-label">Date shift</span>
+      <button class="btn" onclick="adjShift(-1)">−</button>
+      <input class="btn shift-input" id="shiftVal" value="${state.shift > 0 ? '+' : ''}${state.shift}" readonly>
+      <button class="btn" onclick="adjShift(1)">+</button>
+      <button class="btn" onclick="resetShift()">Reset</button>
+    </div>
+    <div class="ctrl-group">
+      <button class="btn ${state.critOnly ? 'active' : ''}" onclick="toggleCrit()"><i class="ti ti-route" aria-hidden="true"></i> Critical path</button>
+    </div>
+    <div class="ctrl-group" style="margin-left:auto">
+      <button class="btn btn-gold" onclick="window.print()"><i class="ti ti-printer" aria-hidden="true"></i> Print</button>
+    </div>
+  </div>`;
 
-  const shortText = t.trade === 'insp' ? '▶ INSPECT' : t.trade === 'mile' ? '★ PANELS' : '';
-  bar.textContent = shortText;
-  bar.setAttribute('title', t.label);
+  html += `<div class="status-bar">
+    <div class="stat-pill"><span class="dot dot-done"></span>${completedCount()} complete</div>
+    <div class="stat-pill"><span class="dot dot-prog"></span>${RAW_TASKS.filter(t=>t.id&&!t.insp&&!t.milestone&&getStatus(t.id)==='ip').length} in progress</div>
+    <div class="stat-pill"><span class="dot dot-ns"></span>${RAW_TASKS.filter(t=>t.id&&!t.insp&&!t.milestone&&getStatus(t.id)==='ns').length} not started</div>
+    <div class="stat-pill"><span class="dot dot-insp"></span>5 AHJ inspections</div>
+    <div class="stat-pill"><span class="dot dot-crit"></span>Critical path</div>
+    ${state.shift !== 0 ? `<div class="stat-pill" style="color:var(--gold);font-weight:500;">Schedule shifted ${state.shift > 0 ? '+' : ''}${state.shift} days</div>` : ''}
+  </div>`;
 
-  if(t.note){
-    bar.classList.add('click');
-    bar.setAttribute('role','button');
-    bar.setAttribute('aria-label', t.label + ' — click for inspection notes');
-    bar.addEventListener('click', () => {
-      const panel = document.getElementById('detail');
-      const body = document.getElementById('detail-body');
-      body.innerHTML = `<h3><i class="ti ti-clipboard-check" aria-hidden="true"></i> ${t.label}</h3>
-        <div class="drow"><span class="drow-k">Date</span><span class="drow-v">${t.start}</span></div>
-        <div class="drow"><span class="drow-k">Trade</span><span class="drow-v">${t.trade.toUpperCase()}</span></div>
-        <div class="drow"><span class="drow-k">Status</span><span class="drow-v">${t.status}</span></div>
-        <div class="drow"><span class="drow-k">Notes</span><span class="drow-v">${t.note}</span></div>`;
-      panel.classList.add('open');
-      panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  html += `<div class="gantt-wrap"><table class="gantt-table">`;
+  html += `<thead><tr>
+    <th class="task-name-cell">Task</th>
+    <th class="status-cell">Status</th>
+    <th class="ts-cell">Updated</th>`;
+  headers.forEach((h,i) => {
+    const bg = h.isHoliday ? 'background:rgba(201,168,76,0.18);' : h.weekend ? 'background:rgba(0,0,0,0.04);' : '';
+    html += `<th class="th-date" style="${bg}" title="${h.month} ${h.label}">${h.label}<br><span style="color:var(--muted)">${h.sub}</span></th>`;
+  });
+  html += `<th style="min-width:20px;"></th></tr></thead><tbody>`;
+
+  const totalCols = TOTAL_DAYS;
+
+  RAW_TASKS.forEach(row => {
+    if (row.section) {
+      html += `<tr class="section-row"><td colspan="${totalCols + 4}">${row.section}</td></tr>`;
+      return;
+    }
+    if (row.milestone) {
+      const mIdx = dayIdx(shiftDate(row.date));
+      html += `<tr class="milestone-row">
+        <td class="task-name-cell milestone-name" colspan="3"><i class="ti ti-flag-filled" style="color:var(--gold);font-size:13px;" aria-hidden="true"></i> ${row.name}</td>`;
+      headers.forEach((h,i) => {
+        if (i === mIdx) {
+          html += `<td class="bar-cell"><div class="bar-container"><div class="bar-bg" style="background:var(--gold);left:0;width:100%;height:10px;top:3px;border-radius:3px;"></div></div></td>`;
+        } else {
+          html += `<td class="bar-cell"></td>`;
+        }
+      });
+      html += `<td></td></tr>`;
+      return;
+    }
+    if (row.insp) {
+      const insp = INSPECTIONS.find(i => i.id === row.id);
+      if (!insp) return;
+      const dIdx = dayIdx(shiftDate(insp.date));
+      html += `<tr class="insp-row">
+        <td class="task-name-cell" colspan="2"><span class="insp-name" onclick="openInsp('${insp.id}')"><i class="ti ti-alert-circle" style="color:var(--navy);font-size:12px;" aria-hidden="true"></i> ${insp.label}</span></td>
+        <td class="ts-cell"></td>`;
+      headers.forEach((h,i) => {
+        if (i === dIdx && dIdx >= 0 && dIdx < totalCols) {
+          html += `<td class="bar-cell"><div class="bar-container"><div class="bar-bg bar-insp" style="left:2px;"></div></div></td>`;
+        } else {
+          html += `<td></td>`;
+        }
+      });
+      html += `<td></td></tr>`;
+      return;
+    }
+
+    const st = getStatus(row.id);
+    const isCrit = row.crit;
+    const dimmed = state.critOnly && !isCrit;
+    const sIdx = dayIdx(shiftDate(row.start));
+    const eIdx = dayIdx(shiftDate(row.end));
+    const barClass = isCrit && st === 'ns' ? 'bar-crit' : st === 'done' ? 'bar-done' : st === 'ip' ? 'bar-ip' : isCrit ? 'bar-crit' : 'bar-ns';
+    const ts = state.timestamps[row.id];
+    const tsStr = ts ? new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+    const sBtnClass = st === 'done' ? 's-done' : st === 'ip' ? 's-ip' : 's-ns';
+    const sBtnLabel = st === 'done' ? 'Complete' : st === 'ip' ? 'In progress' : 'Not started';
+
+    html += `<tr class="${dimmed ? 'dimmed' : ''}">
+      <td class="task-name-cell" title="${row.name}">${row.name}</td>
+      <td class="status-cell"><button class="status-btn ${sBtnClass}" onclick="nextStatus('${row.id}')">${sBtnLabel}</button></td>
+      <td class="ts-cell">${tsStr}</td>`;
+
+    headers.forEach((h,hIdx) => {
+      if (hIdx >= sIdx && hIdx <= eIdx && sIdx < totalCols && eIdx >= 0) {
+        const left = hIdx === sIdx ? '1px' : '0';
+        const right = hIdx === eIdx ? '1px' : '0';
+        const w = `calc(100% - ${hIdx === sIdx ? '1' : '0'}px - ${hIdx === eIdx ? '1' : '0'}px)`;
+        const bgCol = h.isHoliday ? 'rgba(201,168,76,0.12)' : h.weekend ? 'rgba(0,0,0,0.03)' : '';
+        html += `<td class="bar-cell" style="background:${bgCol}"><div class="bar-container"><div class="bar-bg ${barClass}" style="left:${left};width:${w};${hIdx === sIdx ? 'border-radius:3px 0 0 3px;' : ''}${hIdx === eIdx ? 'border-radius:0 3px 3px 0;' : ''}"></div>`;
+        if (hIdx === todayShiftedIdx) html += `<div class="today-line"></div>`;
+        html += `</div></td>`;
+      } else {
+        const bgCol = h.isHoliday ? 'background:rgba(201,168,76,0.12);' : h.weekend ? 'background:rgba(0,0,0,0.03);' : '';
+        html += `<td ${bgCol ? `style="${bgCol}"` : ''}>${hIdx === todayShiftedIdx ? `<div class="bar-container"><div class="today-line"></div></div>` : ''}</td>`;
+      }
     });
-  }
+    html += `<td></td></tr>`;
+  });
 
-  area.appendChild(bar);
-  row.appendChild(lbl);
-  row.appendChild(area);
-  gantt.appendChild(row);
-});
+  html += `</tbody></table></div>`;
 
-// Stats
-const daysLeft = Math.round((END_D - TODAY_D) / 864e5);
-const inspCount = TASKS.filter(t => t.trade === 'insp').length;
-const taskCount = TASKS.filter(t => !t.type && t.trade !== 'insp' && t.trade !== 'mile').length;
-[
-  {n: daysLeft, l: 'Days to panel delivery'},
-  {n: inspCount, l: 'AHJ inspections'},
-  {n: taskCount, l: 'Work tasks'},
-  {n: 'Jun 8', l: 'First inspection'},
-  {n: 'Jul 7', l: 'Panel target date'},
-].forEach(s => {
-  const el = document.createElement('div');
-  el.className = 'stat';
-  el.innerHTML = `<div class="stat-n">${s.n}</div><div class="stat-l">${s.l}</div>`;
-  document.getElementById('stats').appendChild(el);
-});
+  html += `<div class="card-list">`;
+  RAW_TASKS.forEach(row => {
+    if (row.section) {
+      html += `<div style="font-size:11px;font-weight:500;color:#fff;background:var(--navy);padding:6px 10px;border-radius:var(--border-radius-md);margin:8px 0 4px;">${row.section}</div>`;
+      return;
+    }
+    if (row.milestone) {
+      html += `<div class="task-card tc-insp"><div class="tc-name" style="color:#7a5c0a;"><i class="ti ti-flag-filled" aria-hidden="true"></i> ${row.name}</div><div class="tc-dates">${fmtDate(shiftDate(row.date))}</div></div>`;
+      return;
+    }
+    if (row.insp) {
+      const insp = INSPECTIONS.find(i=>i.id===row.id);
+      if (!insp) return;
+      html += `<div class="task-card tc-insp" onclick="openInsp('${insp.id}')" style="cursor:pointer;"><div class="tc-name" style="color:var(--navy);">${insp.label}</div><div class="tc-dates">${fmtDate(shiftDate(insp.date))}</div></div>`;
+      return;
+    }
+    const st = getStatus(row.id);
+    const tcCl = row.crit ? (st==='done'?'tc-done':st==='ip'?'tc-ip':'tc-crit') : (st==='done'?'tc-done':st==='ip'?'tc-ip':'tc-ns');
+    html += `<div class="task-card ${tcCl}"><div class="tc-name">${row.name}</div><div class="tc-dates">${fmtDate(shiftDate(row.start))} – ${fmtDate(shiftDate(row.end))}</div></div>`;
+  });
+  html += `</div>`;
+
+  const lu = state.lastUpdated ? `Last updated: ${new Date(state.lastUpdated).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}` : 'No changes saved yet';
+  html += `<div class="last-updated"><i class="ti ti-clock" aria-hidden="true"></i> ${lu}</div>`;
+  html += `</div>`;
+
+  document.getElementById('root').innerHTML = html;
+}
+
+function adjShift(n) { state.shift += n; save(); render(); }
+function resetShift() { state.shift = 0; save(); render(); }
+function toggleCrit() { state.critOnly = !state.critOnly; save(); render(); }
+
+function openInsp(id) {
+  const insp = INSPECTIONS.find(i=>i.id===id);
+  if (!insp) return;
+  document.getElementById('mTitle').textContent = insp.label;
+  document.getElementById('mDate').textContent = fmtDate(shiftDate(insp.date));
+  document.getElementById('mNotes').textContent = insp.notes;
+  const checks = state.checks[id] || {};
+  document.getElementById('mChecklist').innerHTML = insp.checks.map((c,i) =>
+    `<li><input type="checkbox" ${checks[i]?'checked':''} onchange="toggleCheck('${id}',${i},this.checked)"> <span>${c}</span></li>`
+  ).join('');
+  document.getElementById('mFieldNote').value = state.notes[id] || '';
+  document.getElementById('mFieldNote').oninput = e => { state.notes[id] = e.target.value; save(); };
+  document.getElementById('inspModal').classList.add('open');
+}
+function toggleCheck(id, idx, val) {
+  if (!state.checks[id]) state.checks[id] = {};
+  state.checks[id][idx] = val;
+  save();
+}
+document.getElementById('modalClose').onclick = () => document.getElementById('inspModal').classList.remove('open');
+document.getElementById('inspModal').onclick = e => { if (e.target === document.getElementById('inspModal')) document.getElementById('inspModal').classList.remove('open'); };
+
+window.adjShift = adjShift;
+window.resetShift = resetShift;
+window.toggleCrit = toggleCrit;
+window.nextStatus = nextStatus;
+window.openInsp = openInsp;
+window.toggleCheck = toggleCheck;
+
+render();
 </script>
-</body>
-</html>
