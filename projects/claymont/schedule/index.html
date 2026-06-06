@@ -1,232 +1,256 @@
 
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #1a2744;
-  --navy-light: #243358;
-  --gold: #c9a84c;
-  --gold-light: #e8c96a;
-  --site-green: #196B23;
-  --site-green-light: #4E9A3A;
-  --bg: var(--color-background-primary);
-  --bg2: var(--color-background-secondary);
-  --border: var(--color-border-tertiary);
-  --text: var(--color-text-primary);
-  --muted: var(--color-text-secondary);
+  --city-dk:#0a2342; --city-md:#1a3d6b; --city-lt:#e8eef6;
+  --grn:#3a5a1c; --grn-lt:#7ca840; --grn-pale:#edf4e1;
+  --gold:#c89c2a; --gold-lt:#fdf3d4;
+  --warm:#f7f6f2; --line:#dddbd3;
+  --blk:#0f0f10; --mid:#2c2c30; --muted:#6b6b72; --wht:#ffffff;
+  --red:#b91c1c; --red-lt:#fef2f2;
+  --fd:'Syne',sans-serif; --fb:'DM Sans',sans-serif; --fm:'DM Mono',monospace;
+  --procurement:#7ca840;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-sans); font-size: 13px; color: var(--text); }
-.header-banner {
-  background: var(--navy);
-  color: #fff;
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.banner-left { display: flex; flex-direction: column; gap: 2px; }
-.banner-title { font-size: 15px; font-weight: 500; color: #fff; }
-.banner-sub { font-size: 11px; color: rgba(255,255,255,0.65); }
-.banner-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.countdown-label { font-size: 10px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; }
-.countdown-val { font-size: 18px; font-weight: 500; color: var(--gold); }
-.controls {
-  background: var(--bg2);
-  border: 0.5px solid var(--border);
-  padding: 10px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-}
-.ctrl-group { display: flex; align-items: center; gap: 6px; }
-.ctrl-label { font-size: 11px; color: var(--muted); white-space: nowrap; }
-.btn {
-  font-size: 11px;
-  padding: 4px 10px;
-  border: 0.5px solid var(--border);
-  border-radius: var(--border-radius-md);
-  background: var(--bg);
-  color: var(--text);
-  cursor: pointer;
-  white-space: nowrap;
-}
-.btn:hover { background: var(--bg2); }
-.btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-.btn-gold { border-color: var(--gold); color: var(--navy); background: rgba(201,168,76,0.12); }
-.btn-gold:hover { background: rgba(201,168,76,0.25); }
-.shift-input { width: 52px; font-size: 12px; text-align: center; }
-.status-bar {
-  display: flex;
-  gap: 16px;
-  padding: 8px 16px;
-  border-bottom: 0.5px solid var(--border);
-  background: var(--bg);
-  flex-wrap: wrap;
-}
-.stat-pill { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
-.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.dot-done { background: var(--site-green); }
-.dot-prog { background: var(--gold); }
-.dot-ns { background: #bbb; }
-.dot-insp { background: var(--navy); }
-.dot-crit { background: #c0392b; }
-.gantt-wrap { overflow-x: auto; background: var(--bg); }
-.gantt-table { min-width: 820px; width: 100%; border-collapse: collapse; }
-.gantt-table th {
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--muted);
-  padding: 4px 6px;
-  border-bottom: 0.5px solid var(--border);
-  white-space: nowrap;
-  background: var(--bg2);
-  text-align: left;
-}
-.th-date { text-align: center; font-size: 9px; padding: 3px 2px; min-width: 20px; }
-.gantt-table td { padding: 2px 6px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
-.section-row td {
-  background: var(--navy);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 500;
-  padding: 5px 8px;
-}
-.task-name-cell { min-width: 180px; max-width: 200px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.status-cell { min-width: 90px; }
-.status-btn { font-size: 10px; padding: 2px 7px; border-radius: 10px; border: 0.5px solid; cursor: pointer; white-space: nowrap; }
-.s-ns { background: rgba(180,180,180,0.15); border-color: #aaa; color: var(--muted); }
-.s-ip { background: rgba(201,168,76,0.18); border-color: var(--gold); color: #7a5c0a; }
-.s-done { background: rgba(25,107,35,0.15); border-color: var(--site-green); color: var(--site-green); }
-.bar-cell { padding: 2px 2px; }
-.bar-container { position: relative; height: 16px; }
-.bar-bg { position: absolute; top: 3px; height: 10px; border-radius: 3px; }
-.bar-ns { background: #ccc; }
-.bar-ip { background: var(--gold-light); }
-.bar-done { background: var(--site-green-light); }
-.bar-crit { background: #c0392b; }
-.bar-insp { background: var(--navy); width: 4px !important; border-radius: 2px; }
-.today-line { position: absolute; top: 0; bottom: 0; width: 2px; background: rgba(192,57,43,0.7); pointer-events: none; z-index: 5; }
-.insp-row td { background: rgba(26,39,68,0.05); }
-.insp-name { font-size: 11px; color: var(--navy); font-weight: 500; cursor: pointer; }
-.insp-name:hover { text-decoration: underline; }
-.milestone-row td { background: rgba(201,168,76,0.1); }
-.milestone-name { font-size: 12px; font-weight: 500; color: #7a5c0a; }
-.ts-cell { font-size: 9px; color: var(--muted); min-width: 70px; }
-.dimmed .bar-bg { opacity: 0.2; }
-.dimmed .task-name-cell { color: var(--muted); }
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--bg);
-  border-radius: var(--border-radius-lg);
-  border: 0.5px solid var(--border);
-  padding: 20px;
-  max-width: 400px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-.modal-title { font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.modal-field { margin-bottom: 10px; }
-.modal-field label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 3px; }
-.modal-field .val { font-size: 13px; color: var(--text); }
-.checklist { list-style: none; margin-top: 4px; }
-.checklist li { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; margin-bottom: 5px; }
-.checklist li input[type=checkbox] { margin-top: 2px; flex-shrink: 0; }
-.modal-note { width: 100%; font-size: 12px; min-height: 60px; border: 0.5px solid var(--border); border-radius: var(--border-radius-md); padding: 6px 8px; resize: vertical; color: var(--text); background: var(--bg2); }
-.modal-close { font-size: 11px; padding: 5px 14px; float: right; margin-top: 10px; }
-.print-note { display: none; }
-@media print {
-  .controls, .btn, .modal-overlay { display: none !important; }
-  .print-note { display: block; font-size: 10px; color: #888; margin: 8px 0; }
-  .gantt-wrap { overflow: visible; }
-  .gantt-table { min-width: unset; }
-  .header-banner { border-radius: 0; }
-}
-@media (max-width: 640px) {
-  .gantt-wrap { display: none; }
-  .card-list { display: block; }
-}
-@media (min-width: 641px) {
-  .card-list { display: none; }
-}
-.card-list { padding: 8px; }
-.task-card {
-  background: var(--bg);
-  border: 0.5px solid var(--border);
-  border-radius: var(--border-radius-md);
-  padding: 10px 12px;
-  margin-bottom: 8px;
-  border-left: 3px solid #ccc;
-}
-.tc-ns { border-left-color: #bbb; }
-.tc-ip { border-left-color: var(--gold); }
-.tc-done { border-left-color: var(--site-green); }
-.tc-insp { border-left-color: var(--navy); }
-.tc-crit { border-left-color: #c0392b; }
-.tc-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
-.tc-dates { font-size: 11px; color: var(--muted); }
-.last-updated { font-size: 10px; color: var(--muted); text-align: right; padding: 6px 16px; border-top: 0.5px solid var(--border); background: var(--bg2); border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg); }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--fb);color:var(--mid);background:var(--wht);font-size:13px;line-height:1.6;}
+
+/* BANNER */
+.banner{background:var(--city-dk);padding:14px 18px;position:relative;overflow:hidden;}
+.banner::before{content:'';position:absolute;top:0;right:0;width:38%;height:100%;background:var(--city-md);clip-path:polygon(35% 0%,100% 0%,100% 100%,0% 100%);opacity:0.5;}
+.banner::after{content:'';position:absolute;bottom:0;right:32px;width:80px;height:3px;background:var(--gold);}
+.b-inner{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.b-mark{width:32px;height:32px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(200,156,42,0.4);}
+.b-mark span{font-family:var(--fd);font-size:9px;font-weight:800;color:var(--gold);letter-spacing:0.05em;}
+.b-left{display:flex;gap:10px;align-items:flex-start;}
+.b-title{font-family:var(--fd);font-size:15px;font-weight:800;color:var(--wht);line-height:1.1;margin-bottom:3px;}
+.b-title em{color:var(--gold);font-style:normal;}
+.b-sub{font-family:var(--fm);font-size:10px;color:#9aaabb;letter-spacing:0.08em;text-transform:uppercase;}
+.b-right{text-align:right;flex-shrink:0;}
+.b-cd-label{font-family:var(--fm);font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:2px;}
+.b-cd-val{font-family:var(--fd);font-size:22px;font-weight:800;color:var(--wht);line-height:1;}
+.b-pct{font-family:var(--fm);font-size:10px;color:#9aaabb;margin-top:2px;}
+
+/* CONTROLS */
+.controls{background:var(--warm);border-bottom:1px solid var(--line);padding:8px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.ctrl-group{display:flex;align-items:center;gap:5px;}
+.ctrl-label{font-family:var(--fm);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap;}
+.btn{font-family:var(--fb);font-size:11px;padding:4px 10px;border:1px solid var(--line);background:var(--wht);color:var(--mid);cursor:pointer;white-space:nowrap;}
+.btn:hover{background:var(--city-lt);}
+.btn.active{background:var(--city-dk);color:var(--wht);border-color:var(--city-dk);}
+.btn-gold{border-color:var(--gold);color:var(--blk);background:var(--gold-lt);}
+.btn-gold:hover{background:#f5e8a8;}
+.btn-grn{border-color:var(--grn-lt);color:var(--grn);background:var(--grn-pale);}
+.btn-grn.active{background:var(--grn);color:var(--wht);border-color:var(--grn);}
+.shift-display{font-family:var(--fm);font-size:11px;min-width:32px;text-align:center;padding:3px 6px;border:1px solid var(--line);background:var(--wht);color:var(--city-dk);}
+
+/* STATUS STRIP */
+.stat-strip{display:flex;gap:0;background:var(--line);border-bottom:1px solid var(--line);}
+.ss-cell{background:var(--warm);padding:7px 14px;display:flex;align-items:center;gap:6px;border-right:1px solid var(--line);}
+.ss-val{font-family:var(--fd);font-size:14px;font-weight:800;color:var(--city-dk);line-height:1;}
+.ss-val.gold{color:var(--gold);}
+.ss-val.grn{color:var(--grn);}
+.ss-val.red{color:var(--red);}
+.ss-label{font-family:var(--fm);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;line-height:1.3;}
+.shift-note{font-family:var(--fm);font-size:10px;color:var(--gold);padding:7px 14px;display:flex;align-items:center;}
+
+/* GANTT */
+.gantt-wrap{overflow-x:auto;background:var(--wht);}
+.gantt-table{min-width:860px;width:100%;border-collapse:collapse;}
+.gantt-table th{font-family:var(--fm);font-size:9px;font-weight:500;color:var(--muted);padding:4px 4px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);white-space:nowrap;background:var(--warm);text-align:left;}
+.th-name{min-width:176px;padding-left:8px !important;}
+.th-status{min-width:82px;}
+.th-date{text-align:center !important;font-size:9px;padding:3px 2px !important;min-width:19px;}
+.th-ts{min-width:68px;}
+
+.gantt-table td{padding:2px 4px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:middle;}
+.td-name{min-width:176px;max-width:200px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:8px !important;}
+.td-status{min-width:82px;}
+.td-ts{min-width:68px;font-family:var(--fm);font-size:9px;color:var(--muted);}
+.td-bar{padding:2px 2px !important;}
+
+/* SECTION ROW */
+.sec-row td{background:var(--city-dk);font-family:var(--fd);font-size:10px;font-weight:700;color:var(--wht);padding:5px 8px !important;letter-spacing:0.06em;text-transform:uppercase;}
+.sec-row.procurement td{background:var(--grn);}
+
+/* STATUS BADGES */
+.sbadge{font-family:var(--fm);font-size:10px;padding:2px 7px;border:1px solid;cursor:pointer;white-space:nowrap;display:inline-block;}
+.sb-ns{border-color:#c0bdb5;color:var(--muted);background:var(--warm);}
+.sb-ip{border-color:var(--gold);color:#7a5c0a;background:var(--gold-lt);}
+.sb-done{border-color:var(--grn-lt);color:var(--grn);background:var(--grn-pale);}
+
+/* BARS */
+.bar-wrap{position:relative;height:16px;}
+.bar{position:absolute;top:3px;height:10px;}
+.bar-ns{background:#c0bdb5;}
+.bar-ip{background:var(--gold);}
+.bar-done{background:var(--grn-lt);}
+.bar-crit{background:var(--city-dk);}
+.bar-crit-ip{background:var(--city-md);}
+.bar-insp{background:var(--city-dk);width:3px !important;}
+.bar-mile{background:var(--gold);}
+.bar-proc{background:var(--grn-lt);opacity:0.7;}
+.bar-proc-od{background:var(--grn);width:3px !important;}
+.today-ln{position:absolute;top:0;bottom:0;width:2px;background:var(--red);opacity:0.7;pointer-events:none;z-index:5;}
+.dimmed .bar{opacity:0.18;}
+.dimmed .td-name{color:#c0bdb5;}
+
+/* INSP / MILESTONE */
+.insp-row td{background:#f4f6fa;}
+.insp-name{font-family:var(--fm);font-size:10px;color:var(--city-dk);cursor:pointer;font-weight:500;}
+.insp-name:hover{text-decoration:underline;}
+.mile-row td{background:var(--gold-lt);}
+.mile-name{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--blk);}
+
+/* PROCUREMENT ROWS */
+.proc-row td{background:#f4f8ee;}
+.proc-name{font-family:var(--fm);font-size:10px;color:var(--grn);font-weight:500;}
+.proc-status-cell{font-family:var(--fm);font-size:9px;color:var(--muted);}
+.proc-od-marker{font-family:var(--fm);font-size:9px;color:var(--grn);font-weight:500;}
+
+/* SPEC CALLOUT */
+.spec-callout{background:var(--city-lt);border-left:3px solid var(--city-dk);padding:10px 14px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;}
+.sc-label{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--city-md);margin-bottom:3px;}
+.sc-val{font-family:var(--fd);font-size:12px;font-weight:700;color:var(--city-dk);}
+.sc-note{font-size:11px;color:var(--mid);line-height:1.5;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,35,66,0.55);z-index:100;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--wht);border:1px solid var(--line);border-top:3px solid var(--gold);padding:18px 20px;max-width:400px;width:90%;max-height:82vh;overflow-y:auto;}
+.modal-eyebrow{font-family:var(--fm);font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:4px;}
+.modal-title{font-family:var(--fd);font-size:14px;font-weight:800;color:var(--city-dk);margin-bottom:12px;}
+.m-field{margin-bottom:10px;}
+.m-field label{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);display:block;margin-bottom:3px;}
+.m-field .mval{font-size:12px;color:var(--mid);}
+.checklist{list-style:none;margin-top:4px;}
+.checklist li{display:flex;gap:6px;align-items:flex-start;font-size:11px;margin-bottom:5px;line-height:1.4;}
+.checklist li input{margin-top:2px;flex-shrink:0;accent-color:var(--city-dk);}
+.modal-note{width:100%;font-size:11px;font-family:var(--fb);min-height:52px;border:1px solid var(--line);padding:6px 8px;resize:vertical;color:var(--mid);background:var(--warm);}
+.modal-close{font-family:var(--fm);font-size:10px;padding:5px 14px;float:right;margin-top:10px;cursor:pointer;border:1px solid var(--line);background:var(--warm);color:var(--mid);text-transform:uppercase;letter-spacing:0.08em;}
+.modal-close:hover{background:var(--city-lt);}
+
+/* FOOTER */
+.doc-footer{background:var(--warm);border-top:1px solid var(--line);padding:7px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;}
+.df-left{font-family:var(--fm);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;}
+.df-right{font-family:var(--fm);font-size:9px;color:var(--muted);}
+
+/* MOBILE CARDS */
+.card-list{padding:8px;}
+.tcrd{background:var(--wht);border:1px solid var(--line);border-left:3px solid var(--line);padding:8px 10px;margin-bottom:6px;}
+.tcrd.crit{border-left-color:var(--city-dk);}
+.tcrd.prog{border-left-color:var(--gold);}
+.tcrd.done{border-left-color:var(--grn-lt);}
+.tcrd.insp{border-left-color:var(--city-md);}
+.tcrd.proc{border-left-color:var(--grn);}
+.tcrd-name{font-size:12px;font-weight:600;color:var(--blk);margin-bottom:2px;}
+.tcrd-dates{font-family:var(--fm);font-size:10px;color:var(--muted);}
+.tcrd-tag{font-family:var(--fm);font-size:9px;color:var(--grn);text-transform:uppercase;letter-spacing:0.08em;}
+
+@media(max-width:640px){.gantt-wrap{display:none;}.card-list{display:block;}.controls{display:none;}}
+@media(min-width:641px){.card-list{display:none;};}
+@media print{.controls,.modal-overlay{display:none !important;}.gantt-wrap{overflow:visible;}.banner::before,.banner::after{display:none;}}
 </style>
 
-<h2 class="sr-only">AE24-002 Claymont construction schedule, Jun 5 – Jul 7 2026, 32 tasks and 5 AHJ inspections.</h2>
+<h2 class="sr-only">AE24-002 Claymont construction schedule with procurement tracking, Jun 5 – Jul 7 2026.</h2>
 
 <div id="root"></div>
 
 <div class="modal-overlay" id="inspModal">
   <div class="modal">
-    <div class="modal-title"><i class="ti ti-clipboard-check" aria-hidden="true"></i><span id="mTitle"></span></div>
-    <div class="modal-field"><label>Date</label><div class="val" id="mDate"></div></div>
-    <div class="modal-field"><label>GC / AOR contact</label><div class="val">L.E.E.P., Inc. · Gwenevere Motley<br><span style="font-size:11px;color:var(--muted)">AOR: David C. Ainsworth AIA · Aubyn Architecture LLC</span></div></div>
-    <div class="modal-field"><label>AHJ</label><div class="val">City of Wilmington · Dept. of Licenses &amp; Inspections</div></div>
-    <div class="modal-field"><label>Notes</label><div class="val" id="mNotes" style="font-size:12px;line-height:1.5;"></div></div>
-    <div class="modal-field">
-      <label>Pre-inspection checklist</label>
-      <ul class="checklist" id="mChecklist"></ul>
+    <div class="modal-eyebrow">AHJ Inspection · City of Wilmington L&I</div>
+    <div class="modal-title" id="mTitle"></div>
+    <div class="m-field"><label>Date</label><div class="mval" id="mDate"></div></div>
+    <div class="m-field"><label>GC / Owner</label><div class="mval">L.E.E.P., Inc. · Gwenevere Motley</div></div>
+    <div class="m-field"><label>AOR</label><div class="mval">David C. Ainsworth AIA · Aubyn Architecture LLC · DE RA-0026498-A</div></div>
+    <div class="m-field"><label>AHJ</label><div class="mval">City of Wilmington · Dept. of Licenses &amp; Inspections</div></div>
+    <div class="m-field"><label>Inspection notes</label><div class="mval" id="mNotes" style="font-size:11px;line-height:1.5;"></div></div>
+    <div class="m-field"><label>Pre-inspection checklist</label><ul class="checklist" id="mChecklist"></ul></div>
+    <div class="m-field"><label>Field notes</label><textarea class="modal-note" id="mFieldNote" placeholder="Enter field notes..."></textarea></div>
+    <button class="modal-close" id="modalClose">Close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="specModal">
+  <div class="modal">
+    <div class="modal-eyebrow">Concrete Specification · AE24-002 Footing</div>
+    <div class="modal-title">Footing Mix Design — Quick-Set Spec</div>
+    <div class="m-field"><label>Recommended spec</label>
+      <div class="mval" style="font-family:var(--fm);font-size:11px;line-height:1.7;color:var(--city-dk);border-left:3px solid var(--gold);padding-left:10px;margin-top:4px;">
+        Ready-mix · 3,000 psi @ 28 days<br>
+        ASTM C150 Type III cement (high early)<br>
+        Max w/c ratio: 0.50<br>
+        Air-entrained per ACI 318<br>
+        4" slump
+      </div>
     </div>
-    <div class="modal-field">
-      <label>Field notes</label>
-      <textarea class="modal-note" id="mFieldNote" placeholder="Add inspection notes..."></textarea>
+    <div class="m-field"><label>Performance</label>
+      <div class="mval" style="font-size:11px;line-height:1.55;">
+        ~75% of 28-day strength in 3 days vs. 7 days for Type I/II.<br>
+        Typical premium: $5–12/CY over standard mix.<br>
+        Forms can strip next morning on a June pour.
+      </div>
     </div>
-    <button class="btn modal-close" id="modalClose">Close</button>
+    <div class="m-field"><label>Options compared</label>
+      <div style="font-size:11px;line-height:1.6;color:var(--mid);">
+        <div style="margin-bottom:6px;"><span style="font-family:var(--fm);color:var(--grn);font-weight:500;">OPT A (recommended)</span> — Type III Portland in ready-mix order. Clean spec, EOR sign-off required.</div>
+        <div style="margin-bottom:6px;"><span style="font-family:var(--fm);color:var(--gold);">OPT B</span> — CaCl₂ admixture 1–2% in Type I/II. Cheap and fast, but corrosion risk with embedded rebar — confirm with EOR before specifying.</div>
+        <div><span style="font-family:var(--fm);color:var(--muted);">OPT C</span> — CTS Rapid Set (CSA cement, 15-min set). Too aggressive for continuous footing pours at this scale. Repairs only.</div>
+      </div>
+    </div>
+    <div class="m-field"><label>Action required</label>
+      <div class="mval" style="font-size:11px;background:var(--gold-lt);border-left:3px solid var(--gold);padding:7px 10px;line-height:1.5;">
+        Confirm Type III spec with Larry Carson (EOR) before ordering. Add to drawing note on footing plan sheet.
+      </div>
+    </div>
+    <button class="modal-close" id="specClose">Close</button>
   </div>
 </div>
 
 <script>
-const TODAY_IDX = 0;
-const PROJECT_START = new Date('2026-06-05');
-const PANEL_DATE = new Date('2026-07-07');
+const PROJECT_START = new Date('2026-06-05T00:00:00');
+const TODAY_DATE = new Date('2026-06-06T00:00:00');
+const TOTAL_DAYS = 33;
 
-function dayIdx(d) {
-  return Math.round((new Date(d) - PROJECT_START) / 86400000);
-}
-function fmtDate(d) {
-  const dt = new Date(d + 'T00:00:00');
-  return dt.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+function dayIdx(dateStr) {
+  return Math.round((new Date(dateStr+'T00:00:00') - PROJECT_START) / 86400000);
 }
 function addDays(dateStr, n) {
-  const d = new Date(dateStr + 'T00:00:00');
-  d.setDate(d.getDate() + n);
+  const d = new Date(dateStr+'T00:00:00'); d.setDate(d.getDate()+n);
   return d.toISOString().slice(0,10);
+}
+function fmtD(dateStr) {
+  return new Date(dateStr+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+function fmtTS(iso) {
+  return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
 }
 
 const INSPECTIONS = [
-  { id:'I1', label:'INSP 1: Footing trench & rebar', date:'2026-06-08', notes:'First AHJ inspection. Confirm with inspector 6/5. No pour until written approval.', checks:['Trench depth at design elevation','Rebar per structural drawings','Rebar clearance from soil face','Inspection notice filed 48 hrs prior'] },
-  { id:'I2', label:'INSP 2: CMU rebar before grout', date:'2026-06-13', notes:'CMU cell rebar before grouting. Schedule 48 hrs ahead. No grout without written approval.', checks:['CMU coursing at design height','Rebar placement per structural','No grout in cells without approval','Photos logged'] },
-  { id:'I3', label:'INSP 3: Under-slab plumbing', date:'2026-06-15', notes:'Plumbing rough before backfill covers it. Pressure test must be complete.', checks:['Pressure test results on file','Pipe bedding per plumbing spec','Cleanouts accessible','L.E.E.P. plumber on site'] },
-  { id:'I4', label:'INSP 4: CMU full ht / anchor bolts', date:'2026-06-20', notes:'CMU to design height, anchor bolts, grout fill. Must pass before backfill.', checks:['CMU at design height all units','Anchor bolt pattern per structural','Grout fill confirmed','No backfill pending approval'] },
-  { id:'I5', label:'INSP 5: Floor framing / I-joist', date:'2026-06-29', notes:'I-joist framing, hangers, blocking, bearing, sill plate anchor bolts before sheathing.', checks:['I-joist sizes per structural','Hanger specs verified','Blocking at bearing pts','Sill plate anchors per plan','No sheathing before approval'] },
+  {id:'I1',label:'INSP 1: Footing trench & rebar',date:'2026-06-08',
+   notes:'First AHJ inspection. Confirm with inspector 6/5. No pour until written approval.',
+   checks:['Trench depth at design elevation','Rebar per structural drawings','Rebar clearance from soil face','Notice filed 48 hrs prior','Type III mix ordered — confirm with plant']},
+  {id:'I2',label:'INSP 2: CMU rebar before grout',date:'2026-06-13',
+   notes:'CMU cell rebar before grouting. Schedule 48 hrs ahead. No grout without written approval.',
+   checks:['CMU coursing at design height','Rebar placement per structural','No grout in cells without approval','Photos logged']},
+  {id:'I3',label:'INSP 3: Under-slab plumbing',date:'2026-06-15',
+   notes:'Plumbing rough before backfill covers it. Pressure test must be complete.',
+   checks:['Pressure test results on file','Pipe bedding per plumbing spec','Cleanouts accessible','L.E.E.P. plumber on site']},
+  {id:'I4',label:'INSP 4: CMU full ht / anchor bolts',date:'2026-06-20',
+   notes:'CMU to design height, anchor bolts, grout fill. Must pass before backfill.',
+   checks:['CMU at design height all units','Anchor bolt pattern per structural','Grout fill confirmed','No backfill pending approval']},
+  {id:'I5',label:'INSP 5: Floor framing / I-joist',date:'2026-06-29',
+   notes:'I-joist framing, hangers, blocking, bearing, sill plate anchor bolts before sheathing.',
+   checks:['I-joist sizes per structural','Hanger specs verified','Blocking at bearing points','Sill plate anchors per plan','No sheathing before approval']},
+];
+
+// Procurement items: orderBy = last date to place order, delivery = target delivery date
+const PROC_ITEMS = [
+  {id:'P01',name:'CMU block (8" & 10" standard)',orderBy:'2026-06-05',delivery:'2026-06-09',leadDays:'2–5 bd',note:'URGENT — order already needed. Call supplier today.',urgent:true},
+  {id:'P02',name:'Ready-mix concrete — Type III',orderBy:'2026-06-07',delivery:'2026-06-09',leadDays:'1–2 bd',note:'Confirm Type III spec with plant at time of order. See concrete spec card.'},
+  {id:'P03',name:'TJI / I-joist (std depths 9½"–16")',orderBy:'2026-06-13',delivery:'2026-06-23',leadDays:'5–10 bd',note:'Standard sizes stocked by Weyerhaeuser distributors. Confirm series with EOR.'},
+  {id:'P04',name:'AdvanTech subfloor sheathing',orderBy:'2026-06-20',delivery:'2026-06-28',leadDays:'3–7 bd',note:'Usually in stock at regional LBM. LP or Huber rep can confirm.'},
+  {id:'P05',name:'Metal guardrail / safety railing',orderBy:'2026-06-10',delivery:'2026-06-28',leadDays:'10–20 bd',note:'Longest lead — fabricated-to-length systems. Stock picket systems are faster. Order immediately.'},
+  {id:'P06',name:'Crane pad gravel / compactable',orderBy:'2026-06-25',delivery:'2026-06-30',leadDays:'2–3 bd',note:'Coordinate with backfill sub. Can often piggyback on backfill delivery.'},
 ];
 
 const RAW_TASKS = [
@@ -235,13 +259,11 @@ const RAW_TASKS = [
   {id:'T02',name:'Layout & batter boards',start:'2026-06-05',end:'2026-06-06',crit:false},
   {id:'T03',name:'Footing trench excavation',start:'2026-06-06',end:'2026-06-07',crit:true},
   {section:'Foundations & footings'},
-  {id:'I1',insp:true},
-  {id:'T04',name:'Footing pour',start:'2026-06-09',end:'2026-06-09',crit:true},
+  {id:'I1',insp:true},{id:'T04',name:'Footing pour',start:'2026-06-09',end:'2026-06-09',crit:true},
   {id:'T05',name:'Footing cure 48 hr',start:'2026-06-09',end:'2026-06-10',crit:true},
   {id:'T06',name:'Under-slab plumbing rough',start:'2026-06-10',end:'2026-06-14',crit:false},
   {id:'T07',name:'CMU stem wall phase 1',start:'2026-06-10',end:'2026-06-13',crit:true},
-  {id:'I2',insp:true},
-  {id:'I3',insp:true},
+  {id:'I2',insp:true},{id:'I3',insp:true},
   {id:'T08',name:'CMU grout phase 1',start:'2026-06-15',end:'2026-06-15',crit:true},
   {id:'T09',name:'CMU stem wall phase 2',start:'2026-06-16',end:'2026-06-20',crit:true},
   {id:'I4',insp:true},
@@ -267,257 +289,298 @@ const RAW_TASKS = [
   {id:'MILE',milestone:true,name:'CLT + SIP PANELS ON SITE',date:'2026-07-07'},
 ];
 
-const TOTAL_DAYS = dayIdx('2026-07-07') + 1;
-
-const stored = JSON.parse(localStorage.getItem('ae24002_sched') || '{}');
+const stored = JSON.parse(localStorage.getItem('ae24002_v2') || '{}');
 const state = {
   statuses: stored.statuses || {},
   timestamps: stored.timestamps || {},
   notes: stored.notes || {},
   checks: stored.checks || {},
+  procStatus: stored.procStatus || {},
   shift: stored.shift || 0,
   critOnly: stored.critOnly || false,
+  showProc: stored.showProc !== undefined ? stored.showProc : true,
   lastUpdated: stored.lastUpdated || null,
 };
 
 function save() {
   state.lastUpdated = new Date().toISOString();
-  localStorage.setItem('ae24002_sched', JSON.stringify(state));
+  localStorage.setItem('ae24002_v2', JSON.stringify(state));
 }
 
-function getStatus(id) { return state.statuses[id] || 'ns'; }
-function nextStatus(id) {
-  const cur = getStatus(id);
-  const next = cur === 'ns' ? 'ip' : cur === 'ip' ? 'done' : 'ns';
-  state.statuses[id] = next;
+function getStatus(id){ return state.statuses[id]||'ns'; }
+function nextStatus(id){
+  const s = getStatus(id);
+  state.statuses[id] = s==='ns'?'ip':s==='ip'?'done':'ns';
   state.timestamps[id] = new Date().toISOString();
-  save();
-  render();
+  save(); render();
+}
+function cycleProcStatus(id){
+  const s = state.procStatus[id]||'pending';
+  state.procStatus[id] = s==='pending'?'ordered':s==='ordered'?'delivered':'pending';
+  save(); render();
+}
+function shiftDate(d){ return addDays(d, state.shift); }
+function countdownDays(){
+  return Math.ceil((new Date(shiftDate('2026-07-07')+'T00:00:00') - TODAY_DATE)/86400000);
+}
+function completedCount(){
+  return RAW_TASKS.filter(t=>t.id&&!t.insp&&!t.milestone&&getStatus(t.id)==='done').length;
+}
+function totalTasks(){
+  return RAW_TASKS.filter(t=>t.id&&!t.insp&&!t.milestone).length;
 }
 
-function shiftDate(dateStr) {
-  return addDays(dateStr, state.shift);
-}
-
-function countdownDays() {
-  const panel = new Date(shiftDate('2026-07-07') + 'T00:00:00');
-  const today = new Date('2026-06-06T00:00:00');
-  return Math.ceil((panel - today) / 86400000);
-}
-
-function completedCount() {
-  return RAW_TASKS.filter(t => t.id && !t.insp && !t.milestone && getStatus(t.id) === 'done').length;
-}
-function totalTasks() {
-  return RAW_TASKS.filter(t => t.id && !t.insp && !t.milestone).length;
-}
-
-function buildDateHeaders() {
-  const headers = [];
-  for (let i = 0; i < TOTAL_DAYS; i++) {
-    const d = new Date(PROJECT_START);
-    d.setDate(d.getDate() + i + state.shift);
-    const mo = d.toLocaleDateString('en-US',{month:'short'});
-    const dy = d.getDate();
-    const dow = ['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()];
-    const isWk = d.getDay() === 0 || d.getDay() === 6;
-    headers.push({label: `${dy}`, sub: dow, month: mo, weekend: isWk, isHoliday: (dy===4 && d.getMonth()===6)});
+function buildHeaders(){
+  const h=[];
+  for(let i=0;i<TOTAL_DAYS;i++){
+    const d=new Date(PROJECT_START); d.setDate(d.getDate()+i+state.shift);
+    const dw=d.getDay();
+    h.push({
+      d:d.getDate(),
+      dow:['Su','Mo','Tu','We','Th','Fr','Sa'][dw],
+      mo:d.toLocaleDateString('en-US',{month:'short'}),
+      wk:dw===0||dw===6,
+      hol:(d.getDate()===4&&d.getMonth()===6)
+    });
   }
-  return headers;
+  return h;
 }
 
-function render() {
-  const headers = buildDateHeaders();
-  const todayShiftedIdx = -state.shift;
-
-  let html = `<div id="root-inner">`;
-
-  const pct = Math.round((completedCount() / totalTasks()) * 100);
+function render(){
+  const headers = buildHeaders();
+  const todayIdx = -state.shift;
+  const pct = Math.round((completedCount()/totalTasks())*100);
   const cd = countdownDays();
+  const ipCount = RAW_TASKS.filter(t=>t.id&&!t.insp&&!t.milestone&&getStatus(t.id)==='ip').length;
+  const nsCount = RAW_TASKS.filter(t=>t.id&&!t.insp&&!t.milestone&&getStatus(t.id)==='ns').length;
+  const urgentProc = PROC_ITEMS.filter(p=>{
+    const od = dayIdx(shiftDate(p.orderBy));
+    return (state.procStatus[p.id]||'pending')==='pending' && od <= todayIdx+1;
+  }).length;
 
-  html += `<div class="header-banner">
-    <div class="banner-left">
-      <div class="banner-title">AE24-002 · Rysheemah Dixon Townhomes</div>
-      <div class="banner-sub">1316–1324 N. Claymont St., Wilmington DE · CLT/SIP Hybrid · L.E.E.P., Inc.</div>
-    </div>
-    <div class="banner-right">
-      <div class="countdown-label">Panels on site</div>
-      <div class="countdown-val">${cd} days</div>
-      <div style="font-size:10px;color:rgba(255,255,255,0.5);">${pct}% complete</div>
-    </div>
-  </div>`;
+  let h = '<div id="ri">';
 
-  html += `<div class="controls">
+  // BANNER
+  h+=`<div class="banner"><div class="b-inner">
+    <div class="b-left">
+      <div class="b-mark"><span>M4Di</span></div>
+      <div>
+        <div class="b-title">AE24-002 · <em>Rysheemah Dixon Townhomes</em></div>
+        <div class="b-sub">1316–1324 N. Claymont St. · Wilmington DE · CLT/SIP Hybrid · L.E.E.P., Inc.</div>
+      </div>
+    </div>
+    <div class="b-right">
+      <div class="b-cd-label">Panels on site</div>
+      <div class="b-cd-val">${cd} days</div>
+      <div class="b-pct">${pct}% construction complete</div>
+    </div>
+  </div></div>`;
+
+  // CONTROLS
+  h+=`<div class="controls">
     <div class="ctrl-group">
       <span class="ctrl-label">Date shift</span>
       <button class="btn" onclick="adjShift(-1)">−</button>
-      <input class="btn shift-input" id="shiftVal" value="${state.shift > 0 ? '+' : ''}${state.shift}" readonly>
+      <div class="shift-display">${state.shift>0?'+':''}${state.shift}d</div>
       <button class="btn" onclick="adjShift(1)">+</button>
       <button class="btn" onclick="resetShift()">Reset</button>
     </div>
     <div class="ctrl-group">
-      <button class="btn ${state.critOnly ? 'active' : ''}" onclick="toggleCrit()"><i class="ti ti-route" aria-hidden="true"></i> Critical path</button>
+      <button class="btn ${state.critOnly?'active':''}" onclick="toggleCrit()"><i class="ti ti-route" aria-hidden="true"></i> Critical path</button>
     </div>
-    <div class="ctrl-group" style="margin-left:auto">
+    <div class="ctrl-group">
+      <button class="btn btn-grn ${state.showProc?'active':''}" onclick="toggleProc()"><i class="ti ti-truck" aria-hidden="true"></i> Procurement</button>
+    </div>
+    <div class="ctrl-group" style="margin-left:auto;">
+      <button class="btn btn-gold" onclick="document.getElementById('specModal').classList.add('open')"><i class="ti ti-flask" aria-hidden="true"></i> Concrete spec</button>
       <button class="btn btn-gold" onclick="window.print()"><i class="ti ti-printer" aria-hidden="true"></i> Print</button>
     </div>
   </div>`;
 
-  html += `<div class="status-bar">
-    <div class="stat-pill"><span class="dot dot-done"></span>${completedCount()} complete</div>
-    <div class="stat-pill"><span class="dot dot-prog"></span>${RAW_TASKS.filter(t=>t.id&&!t.insp&&!t.milestone&&getStatus(t.id)==='ip').length} in progress</div>
-    <div class="stat-pill"><span class="dot dot-ns"></span>${RAW_TASKS.filter(t=>t.id&&!t.insp&&!t.milestone&&getStatus(t.id)==='ns').length} not started</div>
-    <div class="stat-pill"><span class="dot dot-insp"></span>5 AHJ inspections</div>
-    <div class="stat-pill"><span class="dot dot-crit"></span>Critical path</div>
-    ${state.shift !== 0 ? `<div class="stat-pill" style="color:var(--gold);font-weight:500;">Schedule shifted ${state.shift > 0 ? '+' : ''}${state.shift} days</div>` : ''}
+  // STAT STRIP
+  h+=`<div class="stat-strip">
+    <div class="ss-cell"><div class="ss-val grn">${completedCount()}</div><div class="ss-label">Complete</div></div>
+    <div class="ss-cell"><div class="ss-val gold">${ipCount}</div><div class="ss-label">In progress</div></div>
+    <div class="ss-cell"><div class="ss-val">${nsCount}</div><div class="ss-label">Not started</div></div>
+    <div class="ss-cell"><div class="ss-val" style="color:var(--city-dk)">5</div><div class="ss-label">AHJ inspections</div></div>
+    ${urgentProc>0?`<div class="ss-cell"><div class="ss-val red">${urgentProc}</div><div class="ss-label">Procurement urgent</div></div>`:''}
+    ${state.shift!==0?`<div class="shift-note">Schedule ${state.shift>0?'+':''}${state.shift} days</div>`:''}
   </div>`;
 
-  html += `<div class="gantt-wrap"><table class="gantt-table">`;
-  html += `<thead><tr>
-    <th class="task-name-cell">Task</th>
-    <th class="status-cell">Status</th>
-    <th class="ts-cell">Updated</th>`;
-  headers.forEach((h,i) => {
-    const bg = h.isHoliday ? 'background:rgba(201,168,76,0.18);' : h.weekend ? 'background:rgba(0,0,0,0.04);' : '';
-    html += `<th class="th-date" style="${bg}" title="${h.month} ${h.label}">${h.label}<br><span style="color:var(--muted)">${h.sub}</span></th>`;
+  // GANTT
+  h+=`<div class="gantt-wrap"><table class="gantt-table"><thead><tr>
+    <th class="th-name">Task</th><th class="th-status">Status</th><th class="th-ts">Updated</th>`;
+  headers.forEach((hd,i)=>{
+    const bg=hd.hol?'background:#f5efc8;':hd.wk?'background:#f0efeb;':'';
+    h+=`<th class="th-date" style="${bg}" title="${hd.mo} ${hd.d}">${hd.d}<br><span style="font-size:8px;color:var(--muted)">${hd.dow}</span></th>`;
   });
-  html += `<th style="min-width:20px;"></th></tr></thead><tbody>`;
+  h+=`<th></th></tr></thead><tbody>`;
 
-  const totalCols = TOTAL_DAYS;
-
-  RAW_TASKS.forEach(row => {
-    if (row.section) {
-      html += `<tr class="section-row"><td colspan="${totalCols + 4}">${row.section}</td></tr>`;
-      return;
-    }
-    if (row.milestone) {
-      const mIdx = dayIdx(shiftDate(row.date));
-      html += `<tr class="milestone-row">
-        <td class="task-name-cell milestone-name" colspan="3"><i class="ti ti-flag-filled" style="color:var(--gold);font-size:13px;" aria-hidden="true"></i> ${row.name}</td>`;
-      headers.forEach((h,i) => {
-        if (i === mIdx) {
-          html += `<td class="bar-cell"><div class="bar-container"><div class="bar-bg" style="background:var(--gold);left:0;width:100%;height:10px;top:3px;border-radius:3px;"></div></div></td>`;
+  // PROCUREMENT SECTION
+  if(state.showProc){
+    h+=`<tr class="sec-row procurement"><td colspan="${TOTAL_DAYS+4}">Procurement — Order windows &amp; delivery targets</td></tr>`;
+    PROC_ITEMS.forEach(p=>{
+      const ps = state.procStatus[p.id]||'pending';
+      const odIdx = dayIdx(shiftDate(p.orderBy));
+      const dlIdx = dayIdx(shiftDate(p.delivery));
+      const isUrgent = p.urgent && ps==='pending';
+      const psBadgeStyle = ps==='delivered'?'color:var(--grn);border-color:var(--grn-lt);background:var(--grn-pale);':ps==='ordered'?'color:#7a5c0a;border-color:var(--gold);background:var(--gold-lt);':'color:var(--muted);border-color:#c0bdb5;background:var(--warm);';
+      const psLabel = ps==='delivered'?'Delivered':ps==='ordered'?'Ordered':'Pending';
+      h+=`<tr class="proc-row">
+        <td class="td-name"><span class="proc-name"${isUrgent?' style="color:var(--red);font-weight:700;"':''}>${isUrgent?'⚑ ':''}${p.name}</span></td>
+        <td class="td-status"><button class="sbadge" style="${psBadgeStyle}" onclick="cycleProcStatus('${p.id}')">${psLabel}</button></td>
+        <td class="td-ts"><span class="proc-od-marker">OD: ${fmtD(shiftDate(p.orderBy))}</span></td>`;
+      headers.forEach((hd,i)=>{
+        const bg=hd.hol?'background:#f5efc8;':hd.wk?'background:#f0efeb;':'';
+        let barHtml='';
+        if(i>=odIdx && i<=dlIdx && odIdx<TOTAL_DAYS && dlIdx>=0){
+          const cl = ps==='delivered'?'bar-done':ps==='ordered'?'bar-ip':'bar-proc';
+          const lr=i===odIdx?'border-radius:2px 0 0 2px;':'';
+          const rr=i===dlIdx?'border-radius:0 2px 2px 0;':'';
+          barHtml=`<div class="bar-wrap"><div class="bar ${cl}" style="left:${i===odIdx?'1px':'0'};width:calc(100% - ${i===odIdx?1:0}px - ${i===dlIdx?1:0}px);${lr}${rr}opacity:0.65;"></div>${i===todayIdx?'<div class="today-ln"></div>':''}${i===odIdx?`<div style="position:absolute;top:0;bottom:0;left:1px;width:3px;background:var(--grn);opacity:0.9;"></div>`:''}${i===dlIdx?`<div style="position:absolute;top:2px;right:1px;width:3px;height:12px;background:var(--grn-lt);opacity:0.9;"></div>`:''}</div>`;
         } else {
-          html += `<td class="bar-cell"></td>`;
+          barHtml=i===todayIdx?`<div class="bar-wrap"><div class="today-ln"></div></div>`:'';
         }
+        h+=`<td class="td-bar" style="${bg}">${barHtml}</td>`;
       });
-      html += `<td></td></tr>`;
-      return;
-    }
-    if (row.insp) {
-      const insp = INSPECTIONS.find(i => i.id === row.id);
-      if (!insp) return;
-      const dIdx = dayIdx(shiftDate(insp.date));
-      html += `<tr class="insp-row">
-        <td class="task-name-cell" colspan="2"><span class="insp-name" onclick="openInsp('${insp.id}')"><i class="ti ti-alert-circle" style="color:var(--navy);font-size:12px;" aria-hidden="true"></i> ${insp.label}</span></td>
-        <td class="ts-cell"></td>`;
-      headers.forEach((h,i) => {
-        if (i === dIdx && dIdx >= 0 && dIdx < totalCols) {
-          html += `<td class="bar-cell"><div class="bar-container"><div class="bar-bg bar-insp" style="left:2px;"></div></div></td>`;
-        } else {
-          html += `<td></td>`;
-        }
-      });
-      html += `<td></td></tr>`;
-      return;
-    }
-
-    const st = getStatus(row.id);
-    const isCrit = row.crit;
-    const dimmed = state.critOnly && !isCrit;
-    const sIdx = dayIdx(shiftDate(row.start));
-    const eIdx = dayIdx(shiftDate(row.end));
-    const barClass = isCrit && st === 'ns' ? 'bar-crit' : st === 'done' ? 'bar-done' : st === 'ip' ? 'bar-ip' : isCrit ? 'bar-crit' : 'bar-ns';
-    const ts = state.timestamps[row.id];
-    const tsStr = ts ? new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
-    const sBtnClass = st === 'done' ? 's-done' : st === 'ip' ? 's-ip' : 's-ns';
-    const sBtnLabel = st === 'done' ? 'Complete' : st === 'ip' ? 'In progress' : 'Not started';
-
-    html += `<tr class="${dimmed ? 'dimmed' : ''}">
-      <td class="task-name-cell" title="${row.name}">${row.name}</td>
-      <td class="status-cell"><button class="status-btn ${sBtnClass}" onclick="nextStatus('${row.id}')">${sBtnLabel}</button></td>
-      <td class="ts-cell">${tsStr}</td>`;
-
-    headers.forEach((h,hIdx) => {
-      if (hIdx >= sIdx && hIdx <= eIdx && sIdx < totalCols && eIdx >= 0) {
-        const left = hIdx === sIdx ? '1px' : '0';
-        const right = hIdx === eIdx ? '1px' : '0';
-        const w = `calc(100% - ${hIdx === sIdx ? '1' : '0'}px - ${hIdx === eIdx ? '1' : '0'}px)`;
-        const bgCol = h.isHoliday ? 'rgba(201,168,76,0.12)' : h.weekend ? 'rgba(0,0,0,0.03)' : '';
-        html += `<td class="bar-cell" style="background:${bgCol}"><div class="bar-container"><div class="bar-bg ${barClass}" style="left:${left};width:${w};${hIdx === sIdx ? 'border-radius:3px 0 0 3px;' : ''}${hIdx === eIdx ? 'border-radius:0 3px 3px 0;' : ''}"></div>`;
-        if (hIdx === todayShiftedIdx) html += `<div class="today-line"></div>`;
-        html += `</div></td>`;
-      } else {
-        const bgCol = h.isHoliday ? 'background:rgba(201,168,76,0.12);' : h.weekend ? 'background:rgba(0,0,0,0.03);' : '';
-        html += `<td ${bgCol ? `style="${bgCol}"` : ''}>${hIdx === todayShiftedIdx ? `<div class="bar-container"><div class="today-line"></div></div>` : ''}</td>`;
-      }
+      h+=`<td></td></tr>`;
     });
-    html += `<td></td></tr>`;
+  }
+
+  // CONSTRUCTION TASKS
+  RAW_TASKS.forEach(row=>{
+    if(row.section){
+      h+=`<tr class="sec-row"><td colspan="${TOTAL_DAYS+4}">${row.section}</td></tr>`;
+      return;
+    }
+    if(row.milestone){
+      const mIdx=dayIdx(shiftDate(row.date));
+      h+=`<tr class="mile-row"><td class="td-name mile-name" colspan="3"><i class="ti ti-flag" style="color:var(--gold);font-size:12px;" aria-hidden="true"></i> ${row.name}</td>`;
+      headers.forEach((hd,i)=>{
+        const bg=hd.hol?'background:#f5efc8;':hd.wk?'background:#f0efeb;':'';
+        h+=`<td class="td-bar" style="${bg}">${i===mIdx?`<div class="bar-wrap"><div class="bar bar-mile" style="left:0;width:100%;border-radius:2px;"></div></div>`:(i===todayIdx?`<div class="bar-wrap"><div class="today-ln"></div></div>`:'')}</td>`;
+      });
+      h+=`<td></td></tr>`;
+      return;
+    }
+    if(row.insp){
+      const insp=INSPECTIONS.find(x=>x.id===row.id);
+      if(!insp) return;
+      const dIdx=dayIdx(shiftDate(insp.date));
+      h+=`<tr class="insp-row">
+        <td class="td-name" colspan="2"><span class="insp-name" onclick="openInsp('${insp.id}')"><i class="ti ti-alert-circle" style="font-size:11px;" aria-hidden="true"></i> ${insp.label}</span></td>
+        <td class="td-ts"></td>`;
+      headers.forEach((hd,i)=>{
+        const bg=hd.hol?'background:#f5efc8;':hd.wk?'background:#f0efeb;':'';
+        h+=`<td class="td-bar" style="${bg}">${(i===dIdx&&dIdx>=0&&dIdx<TOTAL_DAYS)?`<div class="bar-wrap"><div class="bar bar-insp" style="left:2px;"></div></div>`:(i===todayIdx?`<div class="bar-wrap"><div class="today-ln"></div></div>`:'')}</td>`;
+      });
+      h+=`<td></td></tr>`;
+      return;
+    }
+    const st=getStatus(row.id);
+    const sIdx=dayIdx(shiftDate(row.start));
+    const eIdx=dayIdx(shiftDate(row.end));
+    const isCrit=row.crit;
+    const dimmed=state.critOnly&&!isCrit;
+    const barCl=st==='done'?'bar-done':st==='ip'?(isCrit?'bar-crit-ip':'bar-ip'):(isCrit?'bar-crit':'bar-ns');
+    const sbCl=st==='done'?'sb-done':st==='ip'?'sb-ip':'sb-ns';
+    const sbLabel=st==='done'?'Complete':st==='ip'?'In progress':'Not started';
+    const ts=state.timestamps[row.id];
+
+    h+=`<tr class="${dimmed?'dimmed':''}">
+      <td class="td-name" title="${row.name}">${row.name}</td>
+      <td class="td-status"><button class="sbadge ${sbCl}" onclick="nextStatus('${row.id}')">${sbLabel}</button></td>
+      <td class="td-ts">${ts?fmtTS(ts):''}</td>`;
+    headers.forEach((hd,i)=>{
+      const bg=hd.hol?'background:#f5efc8;':hd.wk?'background:#f0efeb;':'';
+      let barHtml='';
+      if(i>=sIdx&&i<=eIdx&&sIdx<TOTAL_DAYS&&eIdx>=0){
+        const lr=i===sIdx?'border-radius:2px 0 0 2px;':'';
+        const rr=i===eIdx?'border-radius:0 2px 2px 0;':'';
+        barHtml=`<div class="bar-wrap"><div class="bar ${barCl}" style="left:${i===sIdx?'1px':'0'};width:calc(100% - ${i===sIdx?1:0}px - ${i===eIdx?1:0}px);${lr}${rr}"></div>${i===todayIdx?'<div class="today-ln"></div>':''}</div>`;
+      } else {
+        barHtml=i===todayIdx?`<div class="bar-wrap"><div class="today-ln"></div></div>`:'';
+      }
+      h+=`<td class="td-bar" style="${bg}">${barHtml}</td>`;
+    });
+    h+=`<td></td></tr>`;
   });
 
-  html += `</tbody></table></div>`;
+  h+=`</tbody></table></div>`;
 
-  html += `<div class="card-list">`;
-  RAW_TASKS.forEach(row => {
-    if (row.section) {
-      html += `<div style="font-size:11px;font-weight:500;color:#fff;background:var(--navy);padding:6px 10px;border-radius:var(--border-radius-md);margin:8px 0 4px;">${row.section}</div>`;
+  // MOBILE CARDS
+  h+=`<div class="card-list">`;
+  if(state.showProc){
+    h+=`<div style="font-family:var(--fd);font-size:10px;font-weight:700;color:var(--wht);background:var(--grn);padding:5px 8px;margin:8px 0 4px;letter-spacing:0.06em;text-transform:uppercase;">Procurement</div>`;
+    PROC_ITEMS.forEach(p=>{
+      const ps=state.procStatus[p.id]||'pending';
+      h+=`<div class="tcrd proc"><div class="tcrd-tag">${ps.toUpperCase()} · OD ${fmtD(shiftDate(p.orderBy))}</div><div class="tcrd-name">${p.name}</div><div class="tcrd-dates">Delivery target: ${fmtD(shiftDate(p.delivery))} · Lead: ${p.leadDays}</div></div>`;
+    });
+  }
+  RAW_TASKS.forEach(row=>{
+    if(row.section){
+      h+=`<div style="font-family:var(--fd);font-size:10px;font-weight:700;color:var(--wht);background:var(--city-dk);padding:5px 8px;margin:8px 0 4px;letter-spacing:0.06em;text-transform:uppercase;">${row.section}</div>`;
       return;
     }
-    if (row.milestone) {
-      html += `<div class="task-card tc-insp"><div class="tc-name" style="color:#7a5c0a;"><i class="ti ti-flag-filled" aria-hidden="true"></i> ${row.name}</div><div class="tc-dates">${fmtDate(shiftDate(row.date))}</div></div>`;
+    if(row.milestone){
+      h+=`<div class="tcrd" style="border-left-color:var(--gold);"><div class="tcrd-name" style="color:#7a5c0a;"><i class="ti ti-flag" aria-hidden="true"></i> ${row.name}</div><div class="tcrd-dates">${fmtD(shiftDate(row.date))}</div></div>`;
       return;
     }
-    if (row.insp) {
-      const insp = INSPECTIONS.find(i=>i.id===row.id);
-      if (!insp) return;
-      html += `<div class="task-card tc-insp" onclick="openInsp('${insp.id}')" style="cursor:pointer;"><div class="tc-name" style="color:var(--navy);">${insp.label}</div><div class="tc-dates">${fmtDate(shiftDate(insp.date))}</div></div>`;
+    if(row.insp){
+      const insp=INSPECTIONS.find(x=>x.id===row.id);
+      if(!insp) return;
+      h+=`<div class="tcrd insp" onclick="openInsp('${insp.id}')" style="cursor:pointer;"><div class="tcrd-name" style="color:var(--city-dk);">${insp.label}</div><div class="tcrd-dates">${fmtD(shiftDate(insp.date))}</div></div>`;
       return;
     }
-    const st = getStatus(row.id);
-    const tcCl = row.crit ? (st==='done'?'tc-done':st==='ip'?'tc-ip':'tc-crit') : (st==='done'?'tc-done':st==='ip'?'tc-ip':'tc-ns');
-    html += `<div class="task-card ${tcCl}"><div class="tc-name">${row.name}</div><div class="tc-dates">${fmtDate(shiftDate(row.start))} – ${fmtDate(shiftDate(row.end))}</div></div>`;
+    const st=getStatus(row.id);
+    const cl=st==='done'?'done':st==='ip'?'prog':(row.crit?'crit':'');
+    h+=`<div class="tcrd ${cl}"><div class="tcrd-name">${row.name}</div><div class="tcrd-dates">${fmtD(shiftDate(row.start))} – ${fmtD(shiftDate(row.end))}</div></div>`;
   });
-  html += `</div>`;
+  h+=`</div>`;
 
-  const lu = state.lastUpdated ? `Last updated: ${new Date(state.lastUpdated).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}` : 'No changes saved yet';
-  html += `<div class="last-updated"><i class="ti ti-clock" aria-hidden="true"></i> ${lu}</div>`;
-  html += `</div>`;
+  // FOOTER
+  const lu=state.lastUpdated?fmtTS(state.lastUpdated):'No changes saved yet';
+  h+=`<div class="doc-footer">
+    <div class="df-left">AE24-002 · Merge 4 Design LLC × Aubyn Architecture LLC · M4Di Schedule Dashboard</div>
+    <div class="df-right"><i class="ti ti-clock" style="font-size:11px;" aria-hidden="true"></i> ${lu}</div>
+  </div>`;
+  h+='</div>';
 
-  document.getElementById('root').innerHTML = html;
+  document.getElementById('root').innerHTML=h;
 }
 
-function adjShift(n) { state.shift += n; save(); render(); }
-function resetShift() { state.shift = 0; save(); render(); }
-function toggleCrit() { state.critOnly = !state.critOnly; save(); render(); }
+function adjShift(n){state.shift+=n;save();render();}
+function resetShift(){state.shift=0;save();render();}
+function toggleCrit(){state.critOnly=!state.critOnly;save();render();}
+function toggleProc(){state.showProc=!state.showProc;save();render();}
 
-function openInsp(id) {
-  const insp = INSPECTIONS.find(i=>i.id===id);
-  if (!insp) return;
-  document.getElementById('mTitle').textContent = insp.label;
-  document.getElementById('mDate').textContent = fmtDate(shiftDate(insp.date));
-  document.getElementById('mNotes').textContent = insp.notes;
-  const checks = state.checks[id] || {};
-  document.getElementById('mChecklist').innerHTML = insp.checks.map((c,i) =>
-    `<li><input type="checkbox" ${checks[i]?'checked':''} onchange="toggleCheck('${id}',${i},this.checked)"> <span>${c}</span></li>`
+function openInsp(id){
+  const insp=INSPECTIONS.find(x=>x.id===id);
+  if(!insp) return;
+  document.getElementById('mTitle').textContent=insp.label;
+  document.getElementById('mDate').textContent=fmtD(shiftDate(insp.date));
+  document.getElementById('mNotes').textContent=insp.notes;
+  const ch=state.checks[id]||{};
+  document.getElementById('mChecklist').innerHTML=insp.checks.map((c,i)=>
+    `<li><input type="checkbox" ${ch[i]?'checked':''} onchange="chkToggle('${id}',${i},this.checked)"><span>${c}</span></li>`
   ).join('');
-  document.getElementById('mFieldNote').value = state.notes[id] || '';
-  document.getElementById('mFieldNote').oninput = e => { state.notes[id] = e.target.value; save(); };
+  document.getElementById('mFieldNote').value=state.notes[id]||'';
+  document.getElementById('mFieldNote').oninput=e=>{state.notes[id]=e.target.value;save();};
   document.getElementById('inspModal').classList.add('open');
 }
-function toggleCheck(id, idx, val) {
-  if (!state.checks[id]) state.checks[id] = {};
-  state.checks[id][idx] = val;
-  save();
+function chkToggle(id,i,v){
+  if(!state.checks[id])state.checks[id]={};
+  state.checks[id][i]=v;save();
 }
-document.getElementById('modalClose').onclick = () => document.getElementById('inspModal').classList.remove('open');
-document.getElementById('inspModal').onclick = e => { if (e.target === document.getElementById('inspModal')) document.getElementById('inspModal').classList.remove('open'); };
+document.getElementById('modalClose').onclick=()=>document.getElementById('inspModal').classList.remove('open');
+document.getElementById('specClose').onclick=()=>document.getElementById('specModal').classList.remove('open');
+document.getElementById('inspModal').onclick=e=>{if(e.target===document.getElementById('inspModal'))document.getElementById('inspModal').classList.remove('open');};
+document.getElementById('specModal').onclick=e=>{if(e.target===document.getElementById('specModal'))document.getElementById('specModal').classList.remove('open');};
 
-window.adjShift = adjShift;
-window.resetShift = resetShift;
-window.toggleCrit = toggleCrit;
-window.nextStatus = nextStatus;
-window.openInsp = openInsp;
-window.toggleCheck = toggleCheck;
+window.adjShift=adjShift; window.resetShift=resetShift;
+window.toggleCrit=toggleCrit; window.toggleProc=toggleProc;
+window.nextStatus=nextStatus; window.cycleProcStatus=cycleProcStatus;
+window.openInsp=openInsp; window.chkToggle=chkToggle;
 
 render();
 </script>
