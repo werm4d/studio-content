@@ -67,7 +67,7 @@
 - **Available:** Residential + Commercial, already under construction. M4D only — NOT Aubyn Architecture.
 - **Differentiator:** Trevor (ICC CBO) + Leo (former Acting Director Wilmington L&I) — combined 70+ years. They trained the inspectors.
 - **Pricing:** Residential single $550–$750 · Program $2,500–$4,000 · Commercial single $900–$1,500 · Hourly NTE $200–$250/hr
-- **Status:** ✓ One-pager complete · ✓ Added to M4D website · Needs fee proposal scope menu addition
+- **Status:** One-pager complete · Added to M4D website · Needs fee proposal scope menu addition
 
 ---
 
@@ -85,46 +85,51 @@
 ## Live Sites
 | Site | URL | Status |
 |---|---|---|
-| Aubyn Architecture | aubynarch.com | ✓ Live · HTTPS ✓ |
-| Merge 4 Design | merge4design.com | ✓ Live · HTTPS pending |
-| M4Di | werm4d.github.io/studio-content/m4di/website/M4Di_Website_v3.html | ✓ Live |
-| Studio Dashboard | werm4d.github.io/studio-content/ | ✓ Live |
-| Social Post Generator | werm4d.github.io/studio-content/shared/tools/social-post-generator.html | ✓ Live |
+| Aubyn Architecture | aubynarch.com | Live · HTTPS confirmed |
+| Merge 4 Design | merge4design.com | Live · HTTPS confirmed (fixed: deleted Hostinger AAAA + ftp A records from Cloudflare) |
+| M4Di | werm4d.github.io/studio-content/m4di/website/M4Di_Website_v3.html | Live |
+| Studio Dashboard | werm4d.github.io/studio-content/ | Live |
+| Social Post Generator | werm4d.github.io/studio-content/shared/tools/social-post-generator.html | Live |
 
-**Domain setup:** Both domains on Cloudflare. 4× A records (185.199.108–111.153) + CNAME www→werm4d.github.io. All DNS only (grey cloud). merge4design.com in own repo; aubynarch.com in own repo; studio-content = internal dashboard only.
+**Domain setup:** Both domains on Cloudflare. 4x A records (185.199.108-111.153) + CNAME www→werm4d.github.io. All DNS only (grey cloud). merge4design.com in own repo; aubynarch.com in own repo; studio-content = internal dashboard only.
+
+**HTTPS fix note:** merge4design.com HTTPS was blocked by a leftover Hostinger AAAA record (IPv6) and ftp A record. Deleting both from Cloudflare DNS allowed Let's Encrypt certificate to issue. Both firm sites now fully secure.
 
 ---
 
 ## Business Cards
 **Location:** studio-content/shared/tools/cards/
 **Source PNGs:** studio-content/shared/tools/cards/source/
+**Card dimensions:** 3.5" x 2" (2625x1495px at 750dpi) · QR code top-right at 3/4" x 3/4"
 
-| File | URL |
-|---|---|
-| card-david-aa.html | werm4d.github.io/studio-content/shared/tools/cards/card-david-aa.html |
-| card-trevor-m4d.html | werm4d.github.io/studio-content/shared/tools/cards/card-trevor-m4d.html |
-| card-leo-m4d.html | werm4d.github.io/studio-content/shared/tools/cards/card-leo-m4d.html |
-| card-david-m4d.html | werm4d.github.io/studio-content/shared/tools/cards/card-david-m4d.html |
-| card-travis-m4d.html | werm4d.github.io/studio-content/shared/tools/cards/card-travis-m4d.html |
+| File | Person | URL |
+|---|---|---|
+| card-david-aa.html | David — Aubyn Architecture | werm4d.github.io/studio-content/shared/tools/cards/card-david-aa.html |
+| card-trevor-m4d.html | Trevor — M4D | werm4d.github.io/studio-content/shared/tools/cards/card-trevor-m4d.html |
+| card-leo-m4d.html | Leo — M4D | werm4d.github.io/studio-content/shared/tools/cards/card-leo-m4d.html |
+| card-david-m4d.html | David — M4D | werm4d.github.io/studio-content/shared/tools/cards/card-david-m4d.html |
+| card-travis-m4d.html | Travis — M4D | werm4d.github.io/studio-content/shared/tools/cards/card-travis-m4d.html |
 
-**Features:** Front + back display · QR top-right ¾"×¾" · Save to Contacts (.vcf) · SMS · Copy · Email · Share · LinkedIn · Add to Home Screen
-**QR fix applied:** middot · replaced with hyphen - in vCard data (QRCode.js cannot handle non-ASCII)
-**Home screen icon:** SVG embedded. If iOS still shows letter D, upload 180×180px apple-touch-icon.png to repo root.
-**Physical printing:** Digital cards eliminate need for printed cards.
+**Features:** Front + back display · QR top-right · Save to Contacts (.vcf) · SMS · Copy · Email · Share · LinkedIn · Add to Home Screen
+**QR fix:** middot replaced with hyphen in vCard data (QRCode.js cannot handle non-ASCII)
+**Home screen icon:** SVG embedded. If iOS shows letter D, upload 180x180px apple-touch-icon.png to repo root.
+**Physical printing:** Digital cards eliminate need for printed cards — confirmed.
 
 ---
 
 ## Templates
 | File | Firm | Status |
 |---|---|---|
-| M4D_Fee_Proposal_Template.docx | M4D | ✓ All 4 fee structures, AIA B101 clause |
-| AA_Fee_Proposal_Template.docx | Aubyn | ✓ AA branded |
-| M4D_Invoice_Template.xlsx | M4D | ✓ 5 sheets, 306 formulas |
-| AA_Invoice_Template.xlsx | Aubyn | ✓ AA branded |
-| M4D_MOU_Template.docx | M4D | ✓ 12 sections, 3 financial options |
-| AA_MOU_Template.docx | Aubyn | ✓ AA branded |
-| M4D_PreInspection_OnePager.docx | M4D | ✓ ICC CBO differentiator, fee schedule |
-| AA_PreInspection_OnePager.docx | Aubyn | ✓ Exists but AA does NOT offer this service |
+| M4D_Fee_Proposal_Template.docx | M4D | Complete — all 4 fee structures, AIA B101 clause |
+| AA_Fee_Proposal_Template.docx | Aubyn | Complete — AA branded |
+| M4D_Invoice_Template.xlsx | M4D | Complete — 5 sheets, 306 formulas |
+| AA_Invoice_Template.xlsx | Aubyn | Complete — AA branded |
+| M4D_MOU_Template.docx | M4D | Complete — 12 sections, 3 financial options |
+| AA_MOU_Template.docx | Aubyn | Complete — AA branded |
+| M4D_PreInspection_OnePager.docx | M4D | Complete — ICC CBO differentiator, fee schedule |
+| AA_PreInspection_OnePager.docx | Aubyn | Exists but AA does NOT offer this service |
+
+**Upload to:** _templates/merge4design/ and _templates/aubyn-architecture/ subfolders
 
 ---
 
@@ -133,18 +138,19 @@
 - [x] Invoice template — both firms
 - [x] MOU template — both firms
 - [x] Pre-inspection one-pager — M4D
-- [x] Business cards — all 5 team members
-- [ ] Drawing title sheet — both firms ← NEXT
+- [x] Business cards — all 5 team members, digital format
+- [ ] Drawing title sheet — both firms
 - [ ] Drawing cover sheet layout
 - [ ] Code analysis drawing block template
 - [ ] Newsletter template — both firms
 - [ ] Correspondence templates — both firms
 - [ ] Capabilities HTML — update in progress (separate chat)
 - [ ] Update M4D-QUAL-2024.docx with 2026 info
+- [ ] Brand guidelines site — saved for new project/chat (reference: brand.here.com, brand.dropbox.com)
 
 ## Layer 3 — Production Workflows
-- [ ] AI pipeline: feasibility memo (prompt ready)
-- [ ] AI pipeline: spec writing (prompt ready)
+- [ ] AI pipeline: feasibility memo (prompt ready in repo)
+- [ ] AI pipeline: spec writing (prompt ready in repo)
 - [ ] Social media GitHub Actions automation
 - [ ] M4Di.OI integration
 - [ ] Apple Wallet .pkpass for business cards (optional)
@@ -152,13 +158,13 @@
 ---
 
 ## Pending Reminders
-- Send card URLs to Trevor, Leo, Travis once tested
-- merge4design.com HTTPS — check Cloudflare SSL/TLS set to Full
-- Move AA logo SVGs from repo root → aubyn-architecture/brand/logos/
+- Send card URLs to Trevor, Leo, Travis — each person gets their own URL
+- Move AA logo SVGs from repo root to aubyn-architecture/brand/logos/
 - Upload all template .docx/.xlsx to correct _templates/ subfolders
 - Upload source PNGs to shared/tools/cards/source/
-- Update dashboard index.html — add Business Cards section
-- Capabilities HTML update — in progress separate chat
+- Update dashboard index.html — add Business Cards section with links
+- Capabilities HTML update — in progress in separate chat
+- Brand guidelines site — new project, new chat, new session
 
 ---
 
@@ -171,15 +177,16 @@
 | 2026-03 | Fee proposal templates | M4D + AA fee proposal .docx | Upload to _templates/ |
 | 2026-03 | Invoice templates | M4D + AA invoice .xlsx | Upload to _templates/ |
 | 2026-03 | Pre-inspection research + team quals | STATUS.md | Upload |
-| 2026-03 | MOU + pre-inspection one-pagers | 4× .docx files | Upload to _templates/ |
+| 2026-03 | MOU + pre-inspection one-pagers | 4x .docx files | Upload to _templates/ |
 | 2026-03 | Domain setup, M4D website CPO update | merge4design.html | Upload to merge4design repo |
-| 2026-03 | Business cards — all 5, QR fix, home screen icons | 5× card .html files | Upload to cards/, send URLs |
+| 2026-03 | Business cards all 5, QR fix, home screen icons | 5x card .html files | Upload to cards/, send URLs |
+| 2026-03 | HTTPS fix (Hostinger AAAA record), brand guidelines planning | STATUS.md | Upload STATUS.md, start brand guidelines session |
 
 ---
 
 ## How to Resume
 1. Go to github.com/werm4d/studio-content
-2. Open STATUS.md → copy all
-3. Paste into new Claude chat
+2. Open STATUS.md, copy all contents
+3. Paste into new Claude chat or project
 4. Describe what to work on
 5. End of session: update log + reminders, commit STATUS.md
