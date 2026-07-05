@@ -162,9 +162,13 @@
 - Move AA logo SVGs from repo root to aubyn-architecture/brand/logos/
 - Upload all template .docx/.xlsx to correct _templates/ subfolders
 - Upload source PNGs to shared/tools/cards/source/
-- Update dashboard index.html — add Business Cards section with links
-- Capabilities HTML update — in progress in separate chat
+- Update dashboard index.html — add Business Cards section + Fee Tool v2 link
 - Brand guidelines site — new project, new chat, new session
+- M4Di_Website_v4.html — deploy path TBD (supersedes v3; staged in local website folder)
+- Capabilities RFQ HTML retired from repo 07-04 — retained in BRAND-TEMPLATE as pursuit template; renderings now live on M4D website Work section
+- CB CDC sweep: check SOQ PDFs + capabilities + any print collateral for fiscal-sponsorship or "Institute, Inc." language before circulation
+- Claymont poster v6 ($203K / Fall 2026) — CLAYMONT HYBRID chat
+- GOVERNANCE — naming: OI + ALDDB are internal-only marks; client/public surfaces use M4Di / ALDi / FeasOps + plain language. Entity: internal docs may reference CB CDC fiscal sponsorship as working plan; ALL public/client/funder surfaces say "M4Di — in formation" until executed.
 
 ---
 
@@ -181,6 +185,7 @@
 | 2026-03 | Domain setup, M4D website CPO update | merge4design.html | Upload to merge4design repo |
 | 2026-03 | Business cards all 5, QR fix, home screen icons | 5x card .html files | Upload to cards/, send URLs |
 | 2026-03 | HTTPS fix (Hostinger AAAA record), brand guidelines planning | STATUS.md | Upload STATUS.md, start brand guidelines session |
+| 2026-07-04 | M4D website Work section (Claymont feat. + Soulfully Conscious + LaMott) deployed; OI/ALDDB nomenclature scrub both sites; M4Di formation language (CB CDC removed from public); FeasOps repriced $4/8/12K; Fee Tool v2 built (Option A/B calc, AA merged, drafting comparison) | index.html (merge4design repo), M4Di_Website_v4.html, M4D_AA_FeeTool_2026_v2.html | Upload Fee Tool v2 to shared/tools/, delete old fee schedule + capabilities RFQ HTML, deploy M4Di v4 |
 
 ---
 
