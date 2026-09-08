@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fee Tool">
+<title>M4D × Aubyn — Fee Tool 2026 v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#5a6b2c; --green-dk:#3f4c1e; --olive:#9dab3a;
+  --paper:#f2f1ee; --card:#ffffff; --ink:#161613; --muted:#5c5b55;
+  --rule:#d8d7d4; --amber:#a3611c; --amber-bg:#f7ecdc;
+  --mono:'DM Mono',ui-monospace,monospace; --sans:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);font-size:16px;line-height:1.5;color:var(--ink);background:var(--paper);padding-bottom:40px}
+.wrap{max-width:560px;margin:0 auto;padding:0 14px}
+
+/* header */
+header{background:var(--green-dk);color:#fff;padding:calc(env(safe-area-inset-top) + 14px) 14px 12px}
+.mast{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.mast-logo{width:40px;height:40px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden}
+.mast-logo img,.mast-logo svg{width:32px;height:32px;display:block}
+.mast-x{font-family:var(--mono);opacity:.55;font-size:14px}
+.mast-titles{margin-left:2px;min-width:0}
+.mast-t1{font-weight:700;font-size:16px;letter-spacing:.01em;line-height:1.2}
+.mast-t2{font-size:12px;opacity:.75}
+#install-btn{margin-left:auto;flex:none;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;font:600 12px var(--sans);padding:7px 10px;border-radius:8px}
+
+/* tabs */
+.tabs{position:sticky;top:0;z-index:50;background:var(--green-dk);padding:0 14px calc(10px)}
+.tabs-inner{max-width:560px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.tab{appearance:none;border:0;border-radius:10px;padding:11px 4px;font:600 15px var(--sans);color:#e9ecdd;background:rgba(255,255,255,.10)}
+.tab.on{background:#fff;color:var(--green-dk)}
+
+/* panels */
+.panel{display:none;padding-top:16px}
+.panel.on{display:block}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:16px;margin-bottom:14px}
+.lbl{display:block;font:500 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+input[type=number],select{width:100%;font:500 18px var(--sans);color:var(--ink);background:#fff;border:1.5px solid var(--rule);border-radius:10px;padding:12px}
+input:focus,select:focus{outline:2px solid var(--green);outline-offset:1px}
+.row{margin-bottom:14px}
+.row:last-child{margin-bottom:0}
+
+/* segmented controls */
+.seg{display:grid;gap:6px;grid-template-columns:1fr 1fr}
+.seg button{appearance:none;border:1.5px solid var(--rule);background:#fff;border-radius:10px;padding:12px 6px;font:600 15px var(--sans);color:var(--muted);min-height:46px}
+.seg button.on{border-color:var(--green);background:var(--green);color:#fff}
+.seg.aa button.on{border-color:var(--olive);background:var(--olive);color:#fff}
+.seg-note{font-size:13px;color:var(--muted);margin-top:6px}
+
+/* results */
+.res-fee{font:500 32px/1.1 var(--mono);letter-spacing:-.01em}
+.res-sub{font:500 14px var(--mono);color:var(--muted);margin-top:4px}
+.res-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
+.chip{font:600 12px var(--sans);padding:4px 9px;border-radius:99px;background:var(--green-dk);color:#fff;white-space:nowrap}
+.chip.aa{background:var(--olive)}
+.chip.b{background:#6b6a63}
+.res-inc{font-size:14px;color:var(--muted);border-top:1px dashed var(--rule);margin-top:12px;padding-top:10px}
+.res-inc strong{color:var(--ink)}
+.warn{background:var(--amber-bg);border:1.5px solid var(--amber);border-radius:12px;padding:12px 14px;font-size:14.5px;color:#5c3a12;margin-bottom:14px}
+.warn strong{color:var(--amber)}
+.m4d-only-note{font-size:13px;color:var(--muted);margin-top:10px;padding-top:8px;border-top:1px dashed var(--rule)}
+
+/* comparison bar — signature element */
+.cmp{margin-top:2px}
+.cmp-track{position:relative;height:8px;background:#e7e6e0;border-radius:99px;margin:34px 6px 8px}
+.cmp-seg{position:absolute;top:0;height:8px;border-radius:99px}
+.cmp-tick{position:absolute;top:-28px;transform:translateX(-50%);font:500 11px var(--mono);color:var(--muted);text-align:center;white-space:nowrap}
+.cmp-tick::after{content:'';display:block;width:2px;height:14px;background:currentColor;margin:2px auto 0;border-radius:2px}
+.cmp-rows{display:grid;gap:8px;margin-top:14px}
+.cmp-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:15px}
+.cmp-row .v{font:500 16px var(--mono)}
+.cmp-dot{display:inline-block;width:10px;height:10px;border-radius:99px;margin-right:8px;vertical-align:baseline}
+.cmp-cav{font-size:13.5px;color:var(--muted);margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule)}
+.cmp-cav strong{color:var(--amber)}
+
+/* phases */
+.ph{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.ph.two{grid-template-columns:1fr 1fr}
+.pc{background:#faf9f6;border:1px solid var(--rule);border-radius:10px;padding:10px 4px;text-align:center}
+.pc-l{font:500 12px var(--mono);color:var(--muted)}
+.pc-v{font:500 14.5px var(--mono);margin-top:3px}
+.pc-p{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+/* rates tab */
+.sec{font:700 14px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--green-dk);margin:20px 2px 10px}
+.rate{display:flex;gap:10px;justify-content:space-between;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--rule)}
+.rate:last-child{border-bottom:0}
+.rate-n{font-weight:600;font-size:15.5px}
+.rate-d{font-size:13.5px;color:var(--muted);margin-top:2px}
+.rate-v{font:500 15px var(--mono);white-space:nowrap;text-align:right}
+.rate-v small{display:block;font:400 12px var(--sans);color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:8px 6px;border-bottom:1.5px solid var(--rule)}
+td{padding:9px 6px;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.v{font:500 13.5px var(--mono);white-space:nowrap}
+
+/* faq */
+.q{border-bottom:1px solid var(--rule)}
+.q:last-child{border-bottom:0}
+.q button{appearance:none;border:0;background:none;width:100%;text-align:left;font:600 15.5px var(--sans);color:var(--ink);padding:14px 26px 14px 0;position:relative}
+.q button::after{content:'+';position:absolute;right:2px;top:12px;font:400 22px var(--mono);color:var(--green)}
+.q.open button::after{content:'–'}
+.q .a{display:none;font-size:14.5px;color:var(--muted);padding:0 0 14px}
+.q.open .a{display:block}
+footer{font-size:12.5px;color:var(--muted);text-align:center;padding:18px 20px 8px}
+@media (prefers-reduced-motion: no-preference){.panel.on{animation:fade .18s ease}}
+@keyframes fade{from{opacity:.4}to{opacity:1}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="mast">
+    <div class="mast-logo"><img id="m4d-logo" alt="M4D" src="data:image/png;base64,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"></div>
+    <span class="mast-x">×</span>
+    <div class="mast-logo" id="aa-logo-slot"><svg viewBox="0 0 500 500"  version="1.1" id="svg3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"> <defs id="defs3"> <linearGradient id="swatch1" > <stop style="stop-color:#000000;stop-opacity:1;" offset="0" id="stop1" /> </linearGradient> <linearGradient xlink:href="#swatch1" id="linearGradient1" x1="13.592652" y1="252.5" x2="468.125" y2="252.5" gradientUnits="userSpaceOnUse" /> </defs> <title id="title1">Aubyn Architecture — Icon Mark</title> <rect  fill="#ffffff" id="rect1" x="0" y="0" /> <!-- Mark anatomy (from image): - Bold C-arc sweeping from top-right, around left, to bottom-right - Two rectangular tabs on right side: upper-right corner piece, lower-right corner piece - Creates the negative space opening in the middle-right --> <!-- Outer boundary of C shape + right tabs --> <!-- Upper right notch tab --> <!-- Lower right notch tab --> <metadata id="metadata1"> <rdf:RDF> <cc:Work rdf:about=""> <dc:title>Aubyn Architecture — Icon Mark</dc:title> </cc:Work> </rdf:RDF> </metadata> <g id="g1" transform="matrix(0,-0.69610799,0.69610799,0,285.80765,471.53776)"> <g id="g3"> <path style="fill:#9dab3a;fill-opacity:1;stroke:url(#linearGradient1);stroke-width:0.75;stroke-dasharray:none" d="m 204.375,468.14652 c -7.21875,-1.23473 -17.76451,-3.4439 -23.43504,-4.90923 C 99.57222,442.21072 35.33644,376.48189 18.35666,296.875 12.46104,269.23436 12.06487,245.25759 17.01559,215.71164 30.76848,133.63435 96.80045,63.649401 180.96371,41.948817 209.29977,34.64267 214.1267,34.375 317.54298,34.375 H 411.875 v 27.42303 27.42303 l -95.9375,0.50138 c -91.59459,0.47869 -96.47506,0.6194 -107.8125,3.10829 -35.3443,7.75908 -61.78582,21.4469 -85.82493,44.42843 -26.60919,25.43855 -42.69834,55.5064 -48.60587,90.83598 -3.18803,19.06581 -2.03338,43.17624 3.01177,62.88923 6.81773,26.63905 20.50758,50.99627 40.08108,71.31299 14.51919,15.0705 29.03967,25.73724 46.96295,34.49898 17.00953,8.31505 26.05256,11.47245 43.82586,15.30191 11.95185,2.57517 16.04737,2.69602 107.73664,3.17924 l 95.3125,0.50231 V 279.4524 143.125 h 28.75 28.75 v 163.75 163.75 l -125.3125,-0.11675 c -114.53267,-0.1067 -126.44156,-0.30986 -138.4375,-2.36173 z" id="path4" transform="matrix(0,1.4365587,-1.4365587,0,677.39168,-410.57947)" /> <g id="g2" transform="matrix(1.1173752,0,0,1.1173752,-68.945356,-18.244382)"> <path d="m 157.8425,118.61684 c -2.80236,-0.77492 -5.71833,-0.37076 -8.23764,1.13725 v -1.52103 h -5.64604 v 0.11591 h -0.0989 v 47.90531 h 5.75439 v -35.95801 c 0,-1.01954 0.25027,-2.03171 0.72507,-2.92605 1.50018,-2.7983 4.82896,-3.76031 7.42313,-2.14483 l 0.16174,0.1001 v -6.68645 l -0.0809,-0.0222 z" fill="#59595c" id="path9-5" style="display:inline;stroke-width:0.102811" /> <path d="m 198.37718,153.94419 -0.0746,0.0853 c -0.27598,0.31521 -0.51149,0.57289 -0.74256,0.81114 -6.73308,6.94253 -17.6882,6.94253 -24.42129,0 -3.26188,-3.36324 -5.0582,-7.83436 -5.0582,-12.59091 0,-4.75665 1.79632,-9.22766 5.0582,-12.591 3.26179,-3.36324 7.59791,-5.21544 12.21107,-5.21544 4.61315,0 8.94928,1.8522 12.21105,5.21544 l 0.0792,0.0817 4.17888,-4.30887 0.18251,-0.19747 h -0.22486 c -4.39637,-4.51563 -10.2313,-7.00187 -16.43672,-7.00187 -6.20532,0 -12.06902,2.4983 -16.46903,7.03528 -9.08147,9.36387 -9.08147,24.59974 0,33.96361 4.54121,4.68246 10.50471,7.02323 16.46996,7.02323 5.9635,0 11.92886,-2.34077 16.46821,-7.02227 0.35062,-0.3514 0.67703,-0.72681 1.00239,-1.09945 l 0.0755,-0.0871 -4.51057,-4.10221 z" fill="#59595c" id="path10-5" style="display:inline;stroke-width:0.105119" /> <path d="m 233.10906,119.49086 c -6.36375,0 -12.43109,2.8017 -16.69156,7.69642 V 96.222023 h -5.81445 v 69.919387 h 0.11728 v 0.11287 h 5.70586 v -23.38171 c 0,-9.5585 7.48751,-17.33432 16.69158,-17.33432 9.20397,0 16.69156,7.77582 16.69156,17.33432 v 23.38171 h 5.81446 v -23.38171 c 0,-12.89263 -10.10016,-23.38171 -22.51473,-23.38171 z" fill="#59595c" id="path11-1" style="display:inline;stroke-width:0.101984" /> <path d="m 272.26782,166.25428 v -48.02212 h -6.15254 v 48.02212 z" fill="#59595c" id="path12-7" style="display:inline;stroke-width:0.106309" /> <path d="M 296.07407,119.49086 V 96.222023 h -6.17038 v 23.268837 h -8.92034 v 6.03835 h 8.92034 v 40.72507 h 6.17038 v -40.72507 h 8.92034 v -6.03835 z" fill="#59595c" id="path13-1" style="display:inline;stroke-width:0.105066" /> <path d="m 346.44999,154.02185 c -3.42836,3.83397 -8.36324,6.03274 -13.53868,6.03274 -9.91293,0 -17.98475,-7.92379 -18.04871,-17.68677 h 29.24634 v -6.21078 h -28.15427 c 1.85508,-5.02419 5.83509,-8.91751 10.94289,-10.69457 9.3801,-3.27126 19.71496,1.59539 23.03522,10.84944 l 0.0273,0.0769 h 6.55979 l -0.0385,-0.14452 c -3.35608,-12.81372 -16.65787,-20.5503 -29.65235,-17.25118 -12.9907,3.31022 -20.83711,16.43166 -17.48948,29.24815 2.83244,10.81411 12.74732,18.01306 23.58309,18.01306 2.00461,0 4.04115,-0.24657 6.06915,-0.76199 4.73653,-1.20783 8.94595,-3.7552 12.17315,-7.36759 l 0.078,-0.0872 -4.71585,-4.10188 -0.078,0.0872 z" fill="#59595c" id="path14-1" style="display:inline;stroke-width:0.107472" /> <path d="m 469.99765,118.34806 v -0.1159 h -5.85137 v 41.81196 h -8.50736 c -9.43869,0 -17.11723,-7.98512 -17.11723,-17.8009 v -24.01106 h -5.9618 v 24.01106 c 0,13.23965 10.35772,24.01105 23.08796,24.01105 h 14.47009 v -47.90621 z" fill="#59595c" id="path17-5" style="display:inline;stroke-width:0.104656" /> <path d="M 419.28555,119.49086 V 96.222023 h -6.17039 v 23.268837 h -8.92033 v 6.03835 h 8.92033 v 40.72508 h 6.17039 v -40.72508 h 8.92034 v -6.03835 z" fill="#59595c" id="path20" style="display:inline;stroke-width:0.105066" /> <path d="m 396.58968,153.94419 -0.0746,0.0853 c -0.27599,0.31521 -0.5115,0.57289 -0.74256,0.81114 -6.73308,6.94253 -17.68821,6.94253 -24.42129,0 -3.26188,-3.36324 -5.0582,-7.83436 -5.0582,-12.59091 0,-4.75665 1.79632,-9.22766 5.0582,-12.591 3.26178,-3.36324 7.59791,-5.21544 12.21106,-5.21544 4.61316,0 8.94928,1.8522 12.21106,5.21544 l 0.0792,0.0817 4.17889,-4.30887 0.1825,-0.19747 h -0.22485 c -4.39638,-4.51563 -10.2313,-7.00187 -16.43672,-7.00187 -6.20533,0 -12.06903,2.4983 -16.46904,7.03528 -9.08147,9.36387 -9.08147,24.59974 0,33.96361 4.54121,4.68246 10.50471,7.02323 16.46997,7.02323 5.9635,0 11.92885,-2.34077 16.4682,-7.02227 0.35063,-0.3514 0.67704,-0.72681 1.0024,-1.09945 l 0.0755,-0.0871 -4.51057,-4.10221 z" fill="#59595c" id="path21" style="display:inline;stroke-width:0.105119" /> <path d="m 493.06746,118.61684 c -2.80236,-0.77492 -5.71833,-0.37076 -8.23764,1.13725 v -1.52103 h -5.64603 v 0.11591 h -0.099 v 47.90531 h 5.75439 v -35.95801 c 0,-1.01954 0.25028,-2.03171 0.72507,-2.92605 1.50018,-2.7983 4.82896,-3.76031 7.42313,-2.14483 l 0.16174,0.1001 v -6.68645 l -0.0809,-0.0222 z" fill="#59595c" id="path22" style="display:inline;stroke-width:0.102811" /> <path d="m 534.05155,154.02185 c -3.42836,3.83397 -8.36325,6.03274 -13.53868,6.03274 -9.91293,0 -17.98475,-7.92379 -18.04871,-17.68677 h 29.24634 v -6.21078 h -28.15427 c 1.85508,-5.02419 5.83509,-8.91751 10.94289,-10.69457 9.3801,-3.27126 19.71496,1.59539 23.03522,10.84944 l 0.0273,0.0769 h 6.55979 l -0.0385,-0.14452 c -3.35608,-12.81372 -16.65788,-20.5503 -29.65235,-17.25118 -12.9907,3.31022 -20.83712,16.43166 -17.48949,29.24815 2.83245,10.81411 12.74733,18.01306 23.5831,18.01306 2.00461,0 4.04115,-0.24657 6.06915,-0.76199 4.73652,-1.20783 8.94595,-3.7552 12.17315,-7.36759 l 0.078,-0.0872 -4.71585,-4.10188 -0.078,0.0872 z" fill="#59595c" id="path23" style="display:inline;stroke-width:0.107472" /> </g> </g> </g> </svg></div>
+    <div class="mast-titles">
+      <div class="mast-t1">Fee Tool 2026 · v2</div>
+      <div class="mast-t2">M4D · Aubyn Architecture — internal</div>
+    </div>
+    <button id="install-btn" onclick="showInstall()">+ Install</button>
+  </div>
+</header>
+
+<nav class="tabs"><div class="tabs-inner">
+  <button class="tab on" data-t="calc" onclick="sw('calc')">Calculator</button>
+  <button class="tab" data-t="rates" onclick="sw('rates')">Rates</button>
+  <button class="tab" data-t="faq" onclick="sw('faq')">FAQ</button>
+</div></nav>
+
+<div class="wrap">
+
+<!-- ═══ CALCULATOR ═══ -->
+<section class="panel on" id="p-calc">
+
+  <div class="card">
+    <div class="row">
+      <label class="lbl" for="bud">Construction budget ($)</label>
+      <input type="number" id="bud" inputmode="numeric" placeholder="750000" oninput="calc()">
+    </div>
+    <div class="row">
+      <label class="lbl" for="ptype">Project type</label>
+      <select id="ptype" onchange="calc()">
+        <option value="nc-b">New construction — residential / mixed-use</option>
+        <option value="nc-a">New construction — complex / institutional</option>
+        <option value="reno-b">Renovation — standard</option>
+        <option value="reno-a">Renovation — complex / occupied</option>
+        <option value="small">Small project / design-only</option>
+      </select>
+    </div>
+    <div class="row">
+      <span class="lbl">Firm</span>
+      <div class="seg" id="seg-firm">
+        <button id="firm-m4d" class="on" onclick="setFirm('m4d')">M4D</button>
+        <button id="firm-aa" onclick="setFirm('aa')">Aubyn</button>
+      </div>
+    </div>
+    <div class="row">
+      <span class="lbl">Service option</span>
+      <div class="seg" id="seg-opt">
+        <button id="opt-A" class="on" onclick="setOpt('A')">A — Full A&amp;E</button>
+        <button id="opt-B" onclick="setOpt('B')">B — Lean Permit</button>
+      </div>
+      <div class="seg-note" id="opt-note">Structural + MEP included via preferred consultant model. Civil, survey, geotech owner-direct.</div>
+    </div>
+    <div class="row" id="ca-row">
+      <span class="lbl">Construction administration</span>
+      <div class="seg">
+        <button id="ca-1" class="on" onclick="setCA(1)">Full — AIA B101</button>
+        <button id="ca-0" onclick="setCA(0.82)">Design only</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn" id="b-warn" style="display:none">
+    <strong>Above Option B ceiling.</strong> Lean permit sets are offered below <span id="b-limit-txt"></span> ROM only.
+    Use Option A for this budget. <span id="b-ref"></span>
+  </div>
+
+  <div class="card" id="res-card">
+    <div class="res-head">
+      <span class="lbl" style="margin:0">Architecture fee</span>
+      <span class="chip" id="res-chip">M4D · Option A</span>
+    </div>
+    <div class="res-fee" id="r-fee">$—</div>
+    <div class="res-sub" id="r-pct">enter a budget</div>
+    <div class="res-inc" id="r-inc"></div>
+    <div class="m4d-only-note" id="aa-note" style="display:none">CPO pre-inspection and M4Di FeasOps remain M4D services regardless of firm.</div>
+  </div>
+
+  <div class="card">
+    <span class="lbl">Ours vs. drafting service</span>
+    <div class="cmp">
+      <div class="cmp-track" id="cmp-track"></div>
+      <div class="cmp-rows" id="cmp-rows"></div>
+      <div class="cmp-cav"><strong>What the gap doesn't buy:</strong> a drafting set carries no license, no stamp, and no code responsibility — the owner assumes permit, code, and engineering risk, buys engineering separately anyway, and many lenders, grant programs, and AHJs won't accept unlicensed documents for commercial work.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="lbl" id="ph-title">Phase breakdown — midpoint</span>
+    <div class="ph" id="ph-cells"></div>
+    <div class="seg-note" id="ph-note"></div>
+  </div>
+
+</section>
+
+<!-- ═══ RATES ═══ -->
+<section class="panel" id="p-rates">
+
+  <div class="card">
+    <div class="sec" style="margin-top:2px">Service options</div>
+    <div class="rate">
+      <div><div class="rate-n">Option A — Full A&amp;E</div>
+      <div class="rate-d">Full AIA B101-2017 scope. Structural + MEP included via preferred consultant model (standard projects); complex/technical structural or MEP scoped separately at cost + 10%, confirmed in writing at proposal. Civil, survey, geotech always owner-direct.</div></div>
+      <div class="rate-v">7.5–13%<small>by firm &amp; type</small></div>
+    </div>
+    <div class="rate">
+      <div><div class="rate-n">Option B — Lean Permit Set</div>
+      <div class="rate-d">Two steps. Step 1: code/zoning review, fixed $750–$1,500, credited toward Step 2 within 90 days (escalates to hourly if variance or pre-application meeting required). Step 2: permit drawings at lean rates. Offered below $650K new construction or $500K renovation ROM only.</div></div>
+      <div class="rate-v">4.5–7.5%<small>arch only</small></div>
+    </div>
+
+    <div class="sec">Architecture fee rates</div>
+    <div class="rate"><div><div class="rate-n"><span class="chip" style="font-size:11px">M4D</span> New construction</div><div class="rate-d">Residential / mixed-use / community · Option A</div></div><div class="rate-v">7.5–8.5%<small>complex/inst. 8.5–9%</small></div></div>
+    <div class="rate"><div><div class="rate-n"><span class="chip" style="font-size:11px">M4D</span> Renovation / adaptive reuse</div><div class="rate-d">Occupied, historic, phased · Option A</div></div><div class="rate-v">10–11.5%<small>complex 11.5–13%</small></div></div>
+    <div class="rate"><div><div class="rate-n"><span class="chip aa" style="font-size:11px">AA</span> Residential new construction</div><div class="rate-d">Custom home / infill · Option A · arch only</div></div><div class="rate-v">8–12%<small>complex 9–13%</small></div></div>
+    <div class="rate"><div><div class="rate-n"><span class="chip aa" style="font-size:11px">AA</span> Renovation / addition</div><div class="rate-d">Residential renovation · Option A · arch only</div></div><div class="rate-v">12–18%<small>complex 14–20%</small></div></div>
+    <div class="rate"><div><div class="rate-n"><span class="chip aa" style="font-size:11px">AA</span> Small / kitchen / bath</div><div class="rate-d">Design-only, well-defined scope — fixed fee preferred</div></div><div class="rate-v">15–20%</div></div>
+    <div class="rate"><div><div class="rate-n"><span class="chip b" style="font-size:11px">Internal</span> AOR stamp — DE permit sets</div><div class="rate-d">Aubyn as AOR sub to M4D. AIA C401 before permit. Never client-facing.</div></div><div class="rate-v">1.5–2.5%</div></div>
+
+    <div class="sec">M4D-only services</div>
+    <div class="rate"><div><div class="rate-n">M4Di FeasOps — predevelopment</div><div class="rate-d">P1 site + program screening $4,000 · P2 financial + regulatory $8,000 · P3 funder + partner readiness $12,000. Fixed per tier, separate from A&amp;E fee.</div></div><div class="rate-v">$4K–$12K<small>full P1–P3: $24,000</small></div></div>
+    <div class="rate"><div><div class="rate-n">CPO — pre-inspection observation</div><div class="rate-d">Trevor Knight (ICC CBO) or Leo Lynch (fmr. L&amp;I Director). Single visit + report: $650–$1,500 residential / $1,000–$2,500 commercial.</div></div><div class="rate-v">$650–$4K<small>full program $2.5K–$4K</small></div></div>
+
+    <div class="sec">Shared additional services</div>
+    <div class="rate"><div><div class="rate-n">Code &amp; life safety analysis</div><div class="rate-d">Occupancy, egress, FP, ADA, energy · ≤30,000 SF fixed; hourly NTE above</div></div><div class="rate-v">$1,800–$8,500</div></div>
+    <div class="rate"><div><div class="rate-n">Existing conditions — field measure + 2D CAD</div><div class="rate-d">Sliding scale by SF · arch only, no MEP · $1,200 minimum</div></div><div class="rate-v">$0.85–$1.50/SF</div></div>
+    <div class="rate"><div><div class="rate-n">Principal hourly</div><div class="rate-d">Additional services, consultation, predevelopment · do not discount below $200/hr</div></div><div class="rate-v">$200–$275/hr<small>AA: $200–$250/hr</small></div></div>
+    <div class="rate"><div><div class="rate-n">Renderings beyond standard</div><div class="rate-d">Photorealistic views</div></div><div class="rate-v">$500–$1,500/view</div></div>
+  </div>
+
+  <div class="card">
+    <div class="sec" style="margin-top:2px">Engineering &amp; reimbursables</div>
+    <table>
+      <tr><th>Item</th><th>Typical</th><th>How billed</th></tr>
+      <tr><td>Structural engineering</td><td class="v">1.0–2.5%</td><td>Included in Option A (standard) · complex: cost + 10%</td></tr>
+      <tr><td>MEP engineering</td><td class="v">1.5–3.0%</td><td>Included in Option A (standard) · complex: cost + 10%</td></tr>
+      <tr><td>Civil / survey</td><td class="v">0.5–1.5%</td><td>Owner-direct — all options</td></tr>
+      <tr><td>Geotechnical / soils</td><td class="v">$2K–$6K</td><td>Owner-direct</td></tr>
+      <tr><td>Permit fees</td><td class="v">Varies</td><td>At cost — client pays direct</td></tr>
+      <tr><td>Mileage</td><td class="v">$0.70/mi</td><td>At cost (IRS 2026)</td></tr>
+    </table>
+  </div>
+
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="panel" id="p-faq">
+  <div class="card">
+    <div class="q"><button onclick="tq(this)">Why hire a licensed architect over a drafting service?</button>
+      <div class="a">A drafting service produces drawings; a licensed architect takes legal responsibility for them. The license carries code compliance, life safety, engineering coordination, and a stamp AHJs, lenders, and grant programs recognize. The apparent 1.5–3% drafting fee excludes engineering, code analysis, and permit responsibility — the owner buys those separately and carries the risk in between.</div></div>
+    <div class="q"><button onclick="tq(this)">Why does Option B have a budget ceiling?</button>
+      <div class="a">Lean permit sets work when scope is simple enough that reduced documentation doesn't create construction risk. Above $650K new construction or $500K renovation, coordination complexity requires the full Option A scope — the ceiling protects the client as much as the firm.</div></div>
+    <div class="q"><button onclick="tq(this)">How does the Option B Step 1 credit work?</button>
+      <div class="a">Step 1 is a fixed $750–$1,500 code and zoning review. If you proceed to Step 2 permit drawings within 90 days, the Step 1 fee credits in full. If the review reveals a variance or pre-application meeting is needed, Step 1 converts to hourly before proceeding.</div></div>
+    <div class="q"><button onclick="tq(this)">Is engineering included in the fee?</button>
+      <div class="a">In Option A, structural and MEP are included via M4D's preferred consultant model for standard projects — one contract, no separate engineering invoices without written authorization. Complex or technical projects carve structural/MEP out at cost + 10%, confirmed in writing at proposal. Civil, survey, and geotechnical are always owner-direct in every option.</div></div>
+    <div class="q"><button onclick="tq(this)">What is M4Di FeasOps?</button>
+      <div class="a">Fixed-fee predevelopment packages that answer go/no-go before design fees are committed: P1 site + program screening ($4,000), P2 financial + regulatory analysis ($8,000), P3 funder + partner readiness ($12,000). Full sequence $24,000. Separate from the A&amp;E fee; an M4D service regardless of which firm holds the design contract.</div></div>
+    <div class="q"><button onclick="tq(this)">What is CPO and why does it pay for itself?</button>
+      <div class="a">Pre-inspection observation by a former code official before the AHJ inspection — Trevor Knight (ICC CBO) or Leo Lynch (former L&amp;I Director). Catching one failed inspection avoids re-inspection fees, schedule loss, and trade re-mobilization; it typically pays for itself on the first visit. M4D-only service.</div></div>
+  </div>
+</section>
+
+<footer>Internal planning tool — ranges are for quick estimates only. Re-run figures before issuing any formal fee proposal. © 2026 Merge 4 Design LLC · Aubyn Architecture LLC</footer>
+</div>
+
+<script>
+/* ═══ RATE TABLES — Option A (full A&E: str+MEP in arch %) ═══ */
+var RA={
+  m4d:{'nc-b':[.075,.085],'nc-a':[.085,.09],'reno-b':[.10,.115],'reno-a':[.115,.13],'small':[.10,.14]},
+  aa: {'nc-b':[.08,.12],'nc-a':[.09,.13],'reno-b':[.12,.18],'reno-a':[.14,.20],'small':[.15,.20]}
+};
+/* Option B (lean permit — arch only) keyed nc / reno / small */
+var RB={
+  m4d:{nc:[.045,.0575],reno:[.0525,.065],small:[.045,.065]},
+  aa: {nc:[.05,.065],reno:[.06,.075],small:[.05,.07]}
+};
+var CIVIL={'nc-b':[.005,.015],'nc-a':[.008,.018],'reno-b':[.006,.015],'reno-a':[.008,.018],'small':[.004,.012]};
+var ENG_FULL={'nc-b':[.03,.06],'nc-a':[.05,.09],'reno-b':[.035,.07],'reno-a':[.05,.085],'small':[.025,.055]};
+var DRAFT=[.015,.03];
+var B_LIMIT={nc:650000,reno:500000,small:650000};
+var PHASES=[['SD',.15],['DD',.20],['CD',.40],['Bid',.07],['CA',.18]];
+var STEP1=[750,1500];
+
+var firm='m4d', opt='A', caMult=1;
+
+function bClass(pt){return pt.indexOf('reno')===0?'reno':(pt==='small'?'small':'nc');}
+function fmt(n){return '$'+Math.round(n).toLocaleString();}
+function fmtK(n){return n>=1000?'$'+(Math.round(n/100)/10).toLocaleString()+'K':fmt(n);}
+function pctTxt(lo,hi,b){return b>0?((lo/b)*100).toFixed(1)+'–'+((hi/b)*100).toFixed(1)+'% of construction cost':'';}
+
+function setFirm(f){firm=f;
+  document.getElementById('firm-m4d').classList.toggle('on',f==='m4d');
+  document.getElementById('firm-aa').classList.toggle('on',f==='aa');
+  document.getElementById('seg-firm').classList.toggle('aa',f==='aa');
+  document.getElementById('aa-note').style.display=f==='aa'?'block':'none';
+  calc();}
+function setOpt(o){opt=o;
+  document.getElementById('opt-A').classList.toggle('on',o==='A');
+  document.getElementById('opt-B').classList.toggle('on',o==='B');
+  document.getElementById('ca-row').style.display=o==='A'?'block':'none';
+  document.getElementById('opt-note').textContent = o==='A'
+    ? 'Structural + MEP included via preferred consultant model. Civil, survey, geotech owner-direct.'
+    : 'Permit drawings only. Step 1 code/zoning review $750–$1,500 fixed, credited to Step 2 within 90 days. All engineering owner-direct.';
+  calc();}
+function setCA(m){caMult=m;
+  document.getElementById('ca-1').classList.toggle('on',m===1);
+  document.getElementById('ca-0').classList.toggle('on',m!==1);
+  calc();}
+
+function feeRange(f,o,pt,b){
+  if(o==='A'){var r=RA[f][pt];return [b*r[0]*caMult,b*r[1]*caMult];}
+  var r2=RB[f][bClass(pt)];return [b*r2[0],b*r2[1]];
+}
+
+function calc(){
+  var b=parseFloat(document.getElementById('bud').value)||0;
+  var pt=document.getElementById('ptype').value||'nc-b';
+  var chip=document.getElementById('res-chip');
+  chip.textContent=(firm==='m4d'?'M4D':'Aubyn')+' · Option '+opt;
+  chip.className='chip'+(firm==='aa'?' aa':'')+(opt==='B'?' b':'');
+
+  /* Option B gate */
+  var over = opt==='B' && b>B_LIMIT[bClass(pt)];
+  var warn=document.getElementById('b-warn');
+  warn.style.display=over?'block':'none';
+  if(over){
+    document.getElementById('b-limit-txt').textContent = bClass(pt)==='reno'?'$500K renovation':'$650K new construction';
+    var ra=feeRangeA_ref(b,pt);
+    document.getElementById('b-ref').textContent='Option A reference: '+fmt(ra[0])+'–'+fmt(ra[1])+'.';
+  }
+  function feeRangeA_ref(b,pt){var r=RA[firm][pt];return [b*r[0],b*r[1]];}
+
+  var fee = over?[0,0]:feeRange(firm,opt,pt,b);
+  var lo=fee[0],hi=fee[1];
+  document.getElementById('r-fee').textContent = b>0&&!over ? fmt(lo)+' – '+fmt(hi) : (over?'—':'$—');
+  document.getElementById('r-pct').textContent = b>0&&!over ? pctTxt(lo,hi,b) : (over?'switch to Option A above':'enter a budget');
+
+  /* engineering context line */
+  var inc=document.getElementById('r-inc');
+  if(b>0&&!over){
+    var cv=[b*CIVIL[pt][0],b*CIVIL[pt][1]], ef=[b*ENG_FULL[pt][0],b*ENG_FULL[pt][1]];
+    inc.innerHTML = opt==='A'
+      ? '<strong>Includes structural + MEP</strong> (preferred consultant model). Owner-direct civil reference: '+fmtK(cv[0])+'–'+fmtK(cv[1])+'. Complex str/MEP: cost + 10%, confirmed at proposal.'
+      : '<strong>Architecture only.</strong> Step 1: $750–$1,500 fixed (credits to Step 2 in 90 days). Owner-direct engineering reference (full stack): '+fmtK(ef[0])+'–'+fmtK(ef[1])+'.';
+    inc.style.display='block';
+  } else inc.style.display='none';
+
+  drawCompare(b,pt,over);
+  drawPhases(b,pt,over,lo,hi);
+}
+
+/* ═══ signature: ours vs drafting comparison ═══ */
+function drawCompare(b,pt,over){
+  var track=document.getElementById('cmp-track');
+  var rows=document.getElementById('cmp-rows');
+  track.innerHTML='';rows.innerHTML='';
+  if(b<=0){rows.innerHTML='<div class="cmp-row"><span style="color:var(--muted)">Enter a budget to compare.</span></div>';return;}
+  var d=[b*DRAFT[0],b*DRAFT[1]];
+  var A=[b*RA[firm][pt][0],b*RA[firm][pt][1]];
+  var eligB=b<=B_LIMIT[bClass(pt)];
+  var B2=eligB?[b*RB[firm][bClass(pt)][0],b*RB[firm][bClass(pt)][1]]:null;
+  var items=[
+    {n:'Drafting service',v:d,c:'#b0483a',note:'unlicensed — drawings only'},
+    eligB?{n:'Option B — lean permit',v:B2,c:'#6b6a63',note:'licensed + stamped, permit set'}:null,
+    {n:'Option A — full A&E',v:A,c:'var(--green)',note:'stamped + engineering + CA'}
+  ].filter(Boolean);
+  var max=A[1]*1.08;
+  items.forEach(function(it){
+    var mid=(it.v[0]+it.v[1])/2;
+    var seg=document.createElement('div');seg.className='cmp-seg';
+    seg.style.left=(it.v[0]/max*100)+'%';seg.style.width=((it.v[1]-it.v[0])/max*100)+'%';
+    seg.style.background=it.c;track.appendChild(seg);
+    var tk=document.createElement('div');tk.className='cmp-tick';
+    tk.style.left=(mid/max*100)+'%';tk.style.color=it.c;
+    tk.textContent=fmtK(mid);track.appendChild(tk);
+    var row=document.createElement('div');row.className='cmp-row';
+    row.innerHTML='<span><span class="cmp-dot" style="background:'+it.c+'"></span>'+it.n+' <span style="color:var(--muted);font-size:13px">· '+it.note+'</span></span><span class="v">'+fmt(it.v[0])+'–'+fmt(it.v[1])+'</span>';
+    rows.appendChild(row);
+  });
+}
+
+/* ═══ phase breakdown ═══ */
+function drawPhases(b,pt,over,lo,hi){
+  var cells=document.getElementById('ph-cells');
+  var note=document.getElementById('ph-note');
+  var title=document.getElementById('ph-title');
+  cells.innerHTML='';note.textContent='';
+  if(b<=0||over){cells.innerHTML='<div class="pc" style="grid-column:1/-1"><div class="pc-l">—</div></div>';return;}
+  if(opt==='A'){
+    title.textContent='Phase breakdown — midpoint';
+    cells.className='ph';
+    var baseMid=((lo+hi)/2)/caMult; /* full-service basis */
+    PHASES.forEach(function(p){
+      if(caMult!==1&&p[0]==='CA')return;
+      var el=document.createElement('div');el.className='pc';
+      el.innerHTML='<div class="pc-l">'+p[0]+'</div><div class="pc-v">'+fmtK(baseMid*p[1])+'</div><div class="pc-p">'+(p[1]*100).toFixed(0)+'%</div>';
+      cells.appendChild(el);
+    });
+    note.textContent = caMult===1?'SD 15 · DD 20 · CD 40 · Bid 7 · CA 18 — of full-service fee.':'Design-only: CA phase excluded (−18%).';
+  } else {
+    title.textContent='Two-step structure';
+    cells.className='ph two';
+    var mid=(lo+hi)/2;
+    var s1=document.createElement('div');s1.className='pc';
+    s1.innerHTML='<div class="pc-l">Step 1 — Code review</div><div class="pc-v">$750–$1.5K</div><div class="pc-p">fixed · credited</div>';
+    var s2=document.createElement('div');s2.className='pc';
+    s2.innerHTML='<div class="pc-l">Step 2 — Permit set</div><div class="pc-v">'+fmtK(mid)+'</div><div class="pc-p">midpoint</div>';
+    cells.appendChild(s1);cells.appendChild(s2);
+    note.textContent='Step 1 credits toward Step 2 within 90 days.';
+  }
+}
+
+/* ═══ tabs / faq / install ═══ */
+function sw(t){
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.t===t);});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('on',p.id==='p-'+t);});
+  window.scrollTo(0,0);
+  if(t==='calc')calc();
+}
+function tq(btn){btn.parentElement.classList.toggle('open');}
+function isIOS(){return /iphone|ipad|ipod/i.test(navigator.userAgent);}
+function isStandalone(){return window.matchMedia('(display-mode: standalone)').matches||navigator.standalone;}
+function showInstall(){
+  alert(isIOS()
+    ? 'Add to Home Screen:\n\n1. Tap the Share button\n2. Scroll and tap "Add to Home Screen"\n3. Tap Add — the tool opens full-screen like an app.'
+    : 'Install:\n\nOpen the browser menu and choose "Install app" or "Add to Home screen."');
+}
+if(isStandalone())document.getElementById('install-btn').style.display='none';
+calc();
+</script>
+</body>
+</html>

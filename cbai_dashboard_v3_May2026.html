@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBai Stack — M4D Build Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:        #196B23;
+  --green-mid:    #2E8B3A;
+  --green-light:  #E8F4E9;
+  --green-pale:   #F4FAF4;
+  --red:          #B91C1C;
+  --red-light:    #FEF2F2;
+  --amber:        #92400E;
+  --amber-light:  #FFFBEB;
+  --blue:         #1E40AF;
+  --blue-light:   #EFF6FF;
+  --purple:       #534AB7;
+  --ink:          #1A1A1A;
+  --ink-mid:      #4A4A4A;
+  --ink-muted:    #777777;
+  --rule:         #D4D4D4;
+  --rule-light:   #EBEBEB;
+  --bg:           #FAFAF8;
+  --surface:      #FFFFFF;
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Libre Baskerville', Georgia, serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 13px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--surface);
+  border-bottom: 2px solid var(--green);
+  padding: 20px 40px 18px;
+}
+
+.masthead-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 16px;
+}
+
+.masthead-eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+
+.masthead-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+}
+
+.masthead-sub {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+
+.masthead-meta {
+  text-align: right;
+}
+
+.masthead-date {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-muted);
+  display: block;
+}
+
+.masthead-version {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  font-weight: 600;
+  display: block;
+  margin-top: 3px;
+}
+
+/* ── NAV ── */
+.nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 40px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.tab {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding: 14px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  user-select: none;
+}
+
+.tab:hover { color: var(--ink); }
+.tab.active { color: var(--green); border-bottom-color: var(--green); }
+
+/* ── LAYOUT ── */
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 36px 40px 60px;
+}
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.page-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.2px;
+}
+
+.page-sub {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+/* ── SECTION HEADER ── */
+.section-head {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 32px 0 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule-light);
+}
+
+/* ── TAXONOMY LABELS ── */
+.label {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  display: inline-block;
+  line-height: 1.4;
+}
+
+.label-active  { background: var(--green-light); color: var(--green); }
+.label-queue   { background: var(--blue-light);  color: var(--blue);  }
+.label-hold    { background: var(--red-light);   color: var(--red);   }
+.label-review  { background: var(--amber-light); color: var(--amber); }
+.label-done    { background: var(--green-light); color: var(--green); }
+.label-private { background: #F0F0F0;            color: #555;         }
+.label-public  { background: var(--blue-light);  color: var(--blue);  }
+
+/* ── TAXONOMY CARD ROWS ── */
+/* Mimics the sourcing guide's two-column card structure */
+.tax-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+
+.tax-card-header {
+  grid-column: 1 / -1;
+  background: var(--ink);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tax-card-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
+.tax-left {
+  padding: 14px 16px;
+  border-right: 1px solid var(--rule-light);
+}
+
+.tax-right {
+  padding: 14px 16px;
+}
+
+.tax-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tax-label-word {
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--green);
+  min-width: 50px;
+}
+
+.tax-label-word.avoid { color: var(--red); }
+.tax-label-word.watch { color: var(--amber); }
+.tax-label-word.why   { color: var(--blue); }
+.tax-label-word.risk  { color: var(--red); }
+.tax-label-word.mitigation { color: var(--green); }
+
+.tax-text {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+}
+
+.tax-text strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ── TWO-COL GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+
+/* ── STAT BOX ── */
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--green);
+  padding: 18px 20px;
+  text-align: center;
+}
+
+.stat-n {
+  font-family: var(--mono);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--green);
+  display: block;
+  line-height: 1;
+}
+
+.stat-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-top: 6px;
+  display: block;
+}
+
+.stat-sub {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+
+/* ── NOTICE BARS ── */
+.notice {
+  border-left: 3px solid var(--amber);
+  background: var(--amber-light);
+  padding: 11px 16px;
+  margin: 16px 0;
+  font-size: 12px;
+  color: var(--amber);
+}
+
+.notice strong { font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.notice span   { color: var(--ink-mid); font-style: italic; }
+
+.notice-danger  { border-color: var(--red);   background: var(--red-light);   color: var(--red); }
+.notice-success { border-color: var(--green);  background: var(--green-light); color: var(--green); }
+.notice-info    { border-color: var(--blue);   background: var(--blue-light);  color: var(--blue); }
+
+/* ── LAYER BLOCKS ── */
+.layer {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--green);
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 70px 1fr 130px;
+  align-items: stretch;
+}
+
+.layer.queued { border-left-color: var(--blue); opacity: 0.8; }
+.layer.held   { border-left-color: var(--red);  opacity: 0.75; }
+
+.layer-num-block {
+  border-right: 1px solid var(--rule-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 8px;
+  background: var(--green-pale);
+}
+
+.layer.queued .layer-num-block { background: var(--blue-light); }
+.layer.held   .layer-num-block { background: var(--red-light); }
+
+.layer-n {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.layer.queued .layer-n { color: var(--blue); }
+.layer.held   .layer-n { color: var(--red); }
+
+.layer-tag {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-top: 3px;
+}
+
+.layer-body { padding: 14px 18px; }
+
+.layer-title {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.layer-tools {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  margin-bottom: 7px;
+}
+
+.layer.queued .layer-tools { color: var(--blue); }
+
+.layer-desc {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+
+.layer-meta {
+  padding: 14px 16px;
+  border-left: 1px solid var(--rule-light);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.layer-owner {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ── FAILURE TABLE ── */
+.fail-table {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.fail-hdr {
+  display: grid;
+  grid-template-columns: 40px 1fr 90px 90px 1fr;
+  background: var(--ink);
+  padding: 10px 14px;
+}
+
+.fail-hdr span {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+.fail-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 90px 90px 1fr;
+  border-top: 1px solid var(--rule-light);
+  align-items: start;
+}
+
+.fail-row:nth-child(even) { background: var(--green-pale); }
+
+.fail-row > div {
+  padding: 11px 14px;
+  font-size: 12px;
+}
+
+.fail-num {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--red);
+  text-align: center;
+  font-size: 13px;
+}
+
+.prob-h { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--red); }
+.prob-m { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--amber); }
+
+/* ── SOP ACCORDION ── */
+.sop-item {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  margin-bottom: 6px;
+}
+
+.sop-hdr {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  cursor: pointer;
+  padding: 13px 18px 13px 0;
+  transition: background 0.1s;
+  user-select: none;
+}
+
+.sop-hdr:hover { background: var(--green-pale); }
+
+.sop-step-n {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--green);
+  text-align: center;
+}
+
+.sop-step-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.2px;
+}
+
+.sop-step-who {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+.sop-badge { margin-right: 16px; }
+
+.sop-body {
+  display: none;
+  padding: 4px 18px 16px 56px;
+  border-top: 1px solid var(--rule-light);
+}
+
+.sop-body.open { display: block; }
+
+.sop-list {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.sop-list li {
+  font-size: 12px;
+  color: var(--ink-mid);
+  padding: 4px 0 4px 18px;
+  position: relative;
+  line-height: 1.55;
+}
+
+.sop-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.sop-list li code {
+  font-family: var(--mono);
+  font-size: 10px;
+  background: var(--green-light);
+  color: var(--green);
+  padding: 1px 5px;
+}
+
+/* ── ACTION TABLE ── */
+.action-table {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  width: 100%;
+}
+
+.action-hdr {
+  display: grid;
+  grid-template-columns: 36px 1fr 130px 110px;
+  background: var(--ink);
+  padding: 10px 14px;
+}
+
+.action-hdr span {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: 36px 1fr 130px 110px;
+  border-top: 1px solid var(--rule-light);
+  align-items: center;
+}
+
+.action-row:nth-child(even) { background: var(--green-pale); }
+
+.action-row > div { padding: 10px 14px; font-size: 12px; }
+
+.action-n {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--green);
+  text-align: center;
+}
+
+.action-owner {
+  font-family: var(--mono);
+  font-size: 10px;
+}
+
+.owner-david  { color: var(--green); }
+.owner-travis { color: var(--blue); }
+.owner-leo    { color: var(--amber); }
+.owner-danger { color: var(--red); font-weight: 600; }
+
+/* ── REPO CARDS ── */
+.repo-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--ink);
+  padding: 16px;
+}
+
+.repo-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.repo-desc {
+  font-size: 12px;
+  color: var(--ink-mid);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.repo-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ── DIVIDER ── */
+hr { border: none; border-top: 1px solid var(--rule); margin: 28px 0; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 2px solid var(--green);
+  background: var(--surface);
+  padding: 16px 40px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-l {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.footer-r {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--green);
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <div class="masthead-eyebrow">Merge 4 Design LLC · M4Di™ · Internal</div>
+      <div class="masthead-title">CBai Stack — Build Dashboard</div>
+      <div class="masthead-sub">Premortem report · Recommended stack · Standard operating procedure</div>
+    </div>
+    <div class="masthead-meta">
+      <span class="masthead-date">May 2026</span>
+      <span class="masthead-version">v3 · werm4d/cbai-stack · Updated May 2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="tab active" onclick="show('overview',this)">Overview</div>
+    <div class="tab" onclick="show('stack',this)">Stack Layers</div>
+    <div class="tab" onclick="show('premortem',this)">Premortem</div>
+    <div class="tab" onclick="show('sop',this)">SOP</div>
+    <div class="tab" onclick="show('repos',this)">Repo Map</div>
+    <div class="tab" onclick="show('actions',this)">Action Items</div>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ══════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════ -->
+<div id="overview" class="panel active">
+  <div class="page-header">
+    <span class="page-title">Build Status — May 2026</span>
+    <span class="page-sub">M4D · M4Di · Merge4Ward · Aubyn Architecture</span>
+  </div>
+
+  <div class="grid-4" style="margin-bottom:28px">
+    <div class="stat-box">
+      <span class="stat-n">6</span>
+      <span class="stat-lbl">Stack Layers</span>
+      <div class="stat-sub">3 active · 3 queued</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-n">14</span>
+      <span class="stat-lbl">Repo Files</span>
+      <div class="stat-sub">cbai-stack · 2 commits</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-n">2</span>
+      <span class="stat-lbl">Grants Submitted</span>
+      <div class="stat-sub">Enterprise + Longwood · 5/15/2026</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-n">4</span>
+      <span class="stat-lbl">Team Members</span>
+      <div class="stat-sub">David · Travis · Trevor · Leo</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <div class="section-head">Active Stack</div>
+
+      <!-- Each item styled like a sourcing guide entry -->
+      <div style="background:var(--surface);border:1px solid var(--rule);margin-bottom:8px">
+        <div style="background:var(--ink);padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">L1 — GitHub cbai-stack</span>
+          <span class="label label-done">LIVE</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--green)">STATUS</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Private repo live at werm4d/cbai-stack. 14 files committed. Travis invited.</span>
+          </div>
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--blue)">NEXT</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Travis accepts invitation and clones repo.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--rule);margin-bottom:8px">
+        <div style="background:var(--ink);padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">L2 — M550 Compute</span>
+          <span class="label label-active">ACTIVE</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--green)">STATUS</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Ollama + Open WebUI + Flask + Tailscale. Both nodes on werm4d tailnet.</span>
+          </div>
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--blue)">NEXT</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Update Claude-Bogle system prompt in Open WebUI from /m550-config.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--rule);margin-bottom:8px">
+        <div style="background:var(--ink);padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">L3 — Predevelopment Intelligence</span>
+          <span class="label label-active">ACTIVE</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--green)">STATUS</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Claude cloud + OI Tool validated on 3 projects. ALDDB capture protocol written.</span>
+          </div>
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--amber)">QUEUE</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Regrid API integration — next Claude Code session.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--rule);margin-bottom:8px">
+        <div style="background:var(--ink);padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">L5 — Production & Delivery</span>
+          <span class="label label-active">ACTIVE</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--green)">STATUS</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Travis on Revit 2026 + Enscape Premium. Rendering split defined.</span>
+          </div>
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--amber)">QUEUE</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Revit 2027 + MCP — post-Claymont permit resubmission.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--rule)">
+        <div style="background:var(--ink);padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">L6 — Quality & Review</span>
+          <span class="label label-active">ACTIVE</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--green)">STATUS</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Trevor code/life safety gate protocol written. Leo QC matrix ownership defined.</span>
+          </div>
+          <div style="display:grid;grid-template-columns:60px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--blue)">NEXT</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Trevor confirms review criteria. First Claymont ALDDB entry.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-head">Queue & Holds</div>
+
+      <div style="background:var(--surface);border:1px solid var(--rule);margin-bottom:8px">
+        <div style="background:#374151;padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">L4 — Bonsai + Bonsai-MCP</span>
+          <span class="label label-queue">QUEUE</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:70px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--blue)">WAITING FOR</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Lobdell Ave site model proof of concept produced and IFC exported cleanly.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--rule);margin-bottom:8px">
+        <div style="background:#374151;padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">Regrid API Integration</span>
+          <span class="label label-queue">QUEUE</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:70px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--blue)">WAITING FOR</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Claude Code build session. Script to /scripts, tested on Lobdell, runbook written.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--rule);margin-bottom:8px">
+        <div style="background:#7F1D1D;padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">Revit 2027 + MCP</span>
+          <span class="label label-hold">HOLD</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:70px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--red)">HOLD UNTIL</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Claymont permit resubmission cycle complete. Both machines upgrade together.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--rule);margin-bottom:8px">
+        <div style="background:#7F1D1D;padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">OI Tool Web App</span>
+          <span class="label label-hold">HOLD</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:70px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--red)">HOLD UNTIL</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Enterprise grant awarded. Claude Code build plan scoped and deliverable stated honestly.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--rule)">
+        <div style="background:#7F1D1D;padding:8px 14px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:#fff">M4Di Academy Level 1</span>
+          <span class="label label-hold">HOLD</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="display:grid;grid-template-columns:70px 1fr;gap:8px">
+            <span style="font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--red)">HOLD UNTIL</span>
+            <span style="font-size:12px;color:var(--ink-mid)">Grant funding secured. Do not build curriculum on unfunded time.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice notice-danger" style="margin-top:16px">
+        <strong>Legal — This Month:</strong> <span>M4Di Inc. formation · ALDDB ownership · Aubyn/M4D related-party · Merge4Ward operating agreement · AIA C401 on Claymont + WHA Lobdell. Attorney required. Not optional.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     STACK LAYERS
+════════════════════════════════════════ -->
+<div id="stack" class="panel">
+  <div class="page-header">
+    <span class="page-title">Six-Layer Stack Architecture</span>
+    <span class="page-sub">Each layer has a defined purpose, owner, and production threshold before activation</span>
+  </div>
+
+  <div class="notice notice-success" style="margin-bottom:24px">
+    <strong>Governing Principle:</strong> <span>A tool earns its place in the active stack by being used on a real deliverable for a real client. Everything else is in the queue.</span>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num-block"><span class="layer-n">L1</span><span class="layer-tag">INFRA</span></div>
+    <div class="layer-body">
+      <div class="layer-title">Source of Truth & Version Control</div>
+      <div class="layer-tools">GitHub · werm4d/cbai-stack · private repo</div>
+      <div class="layer-desc">Every script, standard, prompt, runbook, and configuration file lives here. M550 pulls from this repo. Travis clones from this repo. Claude Code commits to this repo. If M550 fails, this repo contains everything needed to rebuild it from scratch.</div>
+    </div>
+    <div class="layer-meta"><span class="label label-done">LIVE</span><span class="layer-owner">Owner: David</span></div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num-block"><span class="layer-n">L2</span><span class="layer-tag">COMPUTE</span></div>
+    <div class="layer-body">
+      <div class="layer-title">Compute & Local Inference</div>
+      <div class="layer-tools">M550 · Ollama llama3.1:8b · Open WebUI · Flask · Tailscale</div>
+      <div class="layer-desc">Compute and inference layer. Runs Claude-Bogle for data-sensitive operations, M4Di Terminal, and TRIDENT. Pulls from GitHub to stay current. Not a storage layer — GitHub is the source of truth. M550 is rebuildable from the repo.</div>
+    </div>
+    <div class="layer-meta"><span class="label label-active">ACTIVE</span><span class="layer-owner">Owner: David</span></div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num-block"><span class="layer-n">L3</span><span class="layer-tag">PREDEV</span></div>
+    <div class="layer-body">
+      <div class="layer-title">Predevelopment Intelligence</div>
+      <div class="layer-tools">Claude cloud · M4Di OI Tool · Regrid API (queue) · ALDDB</div>
+      <div class="layer-desc">David's primary production environment. Claude handles document production, grant narrative, zoning analysis, and ROM structuring. OI Tool provides CSI-structured cost estimates. ALDDB accumulates closed project cost data — the M4Di moat that compounds with every project.</div>
+    </div>
+    <div class="layer-meta"><span class="label label-active">ACTIVE</span><span class="layer-owner">Owner: David</span></div>
+  </div>
+
+  <div class="layer queued">
+    <div class="layer-num-block"><span class="layer-n">L4</span><span class="layer-tag">CONCEPT</span></div>
+    <div class="layer-body">
+      <div class="layer-title">Concept Modeling & Site Analysis</div>
+      <div class="layer-tools">Bonsai · Blender 5.0 · Bonsai-MCP · Claude Code</div>
+      <div class="layer-desc">David's design environment for predevelopment site models and concept massing. Produces IFC files that hand off to Travis's production layer. Activates when the Lobdell Ave proof of concept is produced and IFC exports cleanly into Revit 2026.</div>
+    </div>
+    <div class="layer-meta"><span class="label label-queue">QUEUE</span><span class="layer-owner">Owner: David</span></div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num-block"><span class="layer-n">L5</span><span class="layer-tag">PROD</span></div>
+    <div class="layer-body">
+      <div class="layer-title">Production & Delivery</div>
+      <div class="layer-tools">Revit 2026→2027 · Enscape Premium + Veras · Twinmotion · Claude Pro</div>
+      <div class="layer-desc">Travis's primary environment for CD sets, permit documents, renderings, and marketing packages. <strong>Rendering split:</strong> Enscape/Veras for design-phase rapid iteration · Twinmotion for final deliverable renders. One tool per project phase — decided at kickoff, not mid-project.</div>
+    </div>
+    <div class="layer-meta"><span class="label label-active">ACTIVE</span><span class="layer-owner">Owner: Travis</span></div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-num-block"><span class="layer-n">L6</span><span class="layer-tag">QC</span></div>
+    <div class="layer-body">
+      <div class="layer-title">Quality, Review & Field Intelligence</div>
+      <div class="layer-tools">Trevor — code/life safety peer review gate · Leo — A-907 QC matrix + field validation</div>
+      <div class="layer-desc">Human judgment layer. No CBai-generated code analysis goes to a client or AHJ without Trevor's sign-off. Leo owns the A-907 QC Inspection Matrix and validates zoning outputs against field reality. CBai produces the first draft. Their judgment is the deliverable.</div>
+    </div>
+    <div class="layer-meta"><span class="label label-active">ACTIVE</span><span class="layer-owner">Trevor / Leo</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PREMORTEM
+════════════════════════════════════════ -->
+<div id="premortem" class="panel">
+  <div class="page-header">
+    <span class="page-title">Premortem Report — May 2026</span>
+    <span class="page-sub">8 failure modes identified · All mitigated in recommended stack design</span>
+  </div>
+
+  <div class="notice" style="margin-bottom:24px">
+    <strong>Gate Protocol:</strong> <span>Run the G2 premortem before finalizing any major build, strategy, or deliverable. Prompt in /prompts/premortem_gate_G2_v1_May2026.md. Trigger: architecture committed, build ~70% complete.</span>
+  </div>
+
+  <!-- Styled like sourcing guide two-column taxonomy cards -->
+  <div class="tax-card">
+    <div class="tax-card-header">
+      <span class="tax-card-name">F1 — Stack Overload</span>
+      <span class="label label-hold">HIGH / HIGH</span>
+    </div>
+    <div class="tax-left">
+      <div class="tax-label-row"><span class="tax-label-word risk">RISK</span></div>
+      <div class="tax-text">Too many layers accumulated faster than any one person can master them. None reach production-ready status. Tools exist in planning documents but never produce a client deliverable.</div>
+    </div>
+    <div class="tax-right">
+      <div class="tax-label-row"><span class="tax-label-word mitigation">MITIGATION</span></div>
+      <div class="tax-text">Hard cap on active stack layers. <strong>No tool enters the active stack without a runbook and a validated client deliverable.</strong> Everything else is explicitly queued with a named activation threshold.</div>
+    </div>
+  </div>
+
+  <div class="tax-card">
+    <div class="tax-card-header">
+      <span class="tax-card-name">F2 — David as Single Point of Failure</span>
+      <span class="label label-hold">HIGH / HIGH</span>
+    </div>
+    <div class="tax-left">
+      <div class="tax-label-row"><span class="tax-label-word risk">RISK</span></div>
+      <div class="tax-text">David is the only person who knows the full stack. Two weeks of unavailability effectively pauses all CBai operations. No runbooks, no documentation, no recovery path.</div>
+    </div>
+    <div class="tax-right">
+      <div class="tax-label-row"><span class="tax-label-word mitigation">MITIGATION</span></div>
+      <div class="tax-text">GitHub cbai-stack repo is the source of truth — <strong>M550 is rebuildable from the repo</strong>. Runbooks in /runbooks cover every production workflow. Travis validated each runbook independently.</div>
+    </div>
+  </div>
+
+  <div class="tax-card">
+    <div class="tax-card-header">
+      <span class="tax-card-name">F3 — ALDDB Never Populated</span>
+      <span class="label label-hold">HIGH / HIGH</span>
+    </div>
+    <div class="tax-left">
+      <div class="tax-label-row"><span class="tax-label-word risk">RISK</span></div>
+      <div class="tax-text">The moat that cannot be replicated never gets filled because data capture is manual, inconsistent, and low-priority under deadline pressure. Every uncaptured project is a permanent loss.</div>
+    </div>
+    <div class="tax-right">
+      <div class="tax-label-row"><span class="tax-label-word mitigation">MITIGATION</span></div>
+      <div class="tax-text">Structured capture form in /alddb. <strong>Four defined triggers</strong>: G0 ROM · G1 Feasibility · Permit Issued · G4 Closeout. Leo is primary entry owner — removed from David's plate.</div>
+    </div>
+  </div>
+
+  <div class="tax-card">
+    <div class="tax-card-header">
+      <span class="tax-card-name">F4 — Repo Degrades Without Governance</span>
+      <span class="label label-review">MED-HIGH / MEDIUM</span>
+    </div>
+    <div class="tax-left">
+      <div class="tax-label-row"><span class="tax-label-word risk">RISK</span></div>
+      <div class="tax-text">Multiple versions of the same script. Outdated standards nobody updates. A prompt library nobody uses because nobody knows which ones work. Standards drift from practice within 60 days.</div>
+    </div>
+    <div class="tax-right">
+      <div class="tax-label-row"><span class="tax-label-word mitigation">MITIGATION</span></div>
+      <div class="tax-text">David owns the repo. One commit per logical change with a description. <strong>Quarterly review cadence</strong> (David + Travis, 30 min). Version dates in filenames. Outdated files archived, never deleted.</div>
+    </div>
+  </div>
+
+  <div class="tax-card">
+    <div class="tax-card-header">
+      <span class="tax-card-name">F5 — Enscape / Twinmotion Workflow Never Resolves</span>
+      <span class="label label-review">MEDIUM / MEDIUM</span>
+    </div>
+    <div class="tax-left">
+      <div class="tax-label-row"><span class="tax-label-word risk">RISK</span></div>
+      <div class="tax-text">Two overlapping rendering tools on the same project. Travis uses whichever he opened first. Material libraries diverge. Output looks inconsistent. Enscape subscription renews before anyone evaluates ROI.</div>
+    </div>
+    <div class="tax-right">
+      <div class="tax-label-row"><span class="tax-label-word mitigation">MITIGATION</span></div>
+      <div class="tax-text"><strong>Explicit split defined</strong>: Enscape + Veras for design-phase rapid iteration. Twinmotion for final deliverable renders. One tool per project phase. Decided at kickoff. Documented in /standards.</div>
+    </div>
+  </div>
+
+  <div class="tax-card">
+    <div class="tax-card-header">
+      <span class="tax-card-name">F6 — Grant Funding With No Build Plan</span>
+      <span class="label label-review">MEDIUM / HIGH</span>
+    </div>
+    <div class="tax-left">
+      <div class="tax-label-row"><span class="tax-label-word risk">RISK</span></div>
+      <div class="tax-text">$25,000 arrives. Nobody is a developer. Claude Code can assist but is not a developer who shows up daily. The grant period ends with a partial prototype. The Enterprise relationship is damaged.</div>
+    </div>
+    <div class="tax-right">
+      <div class="tax-label-row"><span class="tax-label-word mitigation">MITIGATION</span></div>
+      <div class="tax-text">Grant deliverable scoped honestly: <strong>a functional web prototype, not a polished SaaS platform</strong>. Claude Code build plan pre-written with explicit scope. Deliverable stated in grant narrative before submission.</div>
+    </div>
+  </div>
+
+  <div class="tax-card">
+    <div class="tax-card-header">
+      <span class="tax-card-name">F7 — A-900 Series Never Ships</span>
+      <span class="label label-hold">HIGH / MEDIUM</span>
+    </div>
+    <div class="tax-left">
+      <div class="tax-label-row"><span class="tax-label-word risk">RISK</span></div>
+      <div class="tax-text">All four principals must contribute. There is no explicit owner. Nobody drives it to completion. It waits for a less busy time. The less busy time never comes. The brand-building opportunity is missed.</div>
+    </div>
+    <div class="tax-right">
+      <div class="tax-label-row"><span class="tax-label-word mitigation">MITIGATION</span></div>
+      <div class="tax-text"><strong>Named owners per sheet</strong>. David owns A-901/902. Trevor reviews A-905. Leo writes A-907. Travis formats all sheets. <strong>Deadline: before Claymont permit resubmission.</strong></div>
+    </div>
+  </div>
+
+  <div class="tax-card">
+    <div class="tax-card-header">
+      <span class="tax-card-name">F8 — Legal Structure Lags Operations</span>
+      <span class="label label-review">MED-HIGH / HIGH</span>
+    </div>
+    <div class="tax-left">
+      <div class="tax-label-row"><span class="tax-label-word risk">RISK</span></div>
+      <div class="tax-text">M4Di Inc. not formed. ALDDB ownership undocumented. Aubyn/M4D related-party transactions not formalized. Merge4Ward operating agreement incomplete. AIA C401 agreements not confirmed on active projects.</div>
+    </div>
+    <div class="tax-right">
+      <div class="tax-label-row"><span class="tax-label-word mitigation">MITIGATION</span></div>
+      <div class="tax-text"><strong>Attorney this month — not next quarter.</strong> Five specific items: M4Di Inc. formation · ALDDB ownership protocol · Aubyn/M4D related-party docs · Merge4Ward operating agreement · C401 execution on Claymont + WHA Lobdell.</div>
+    </div>
+  </div>
+
+  <div class="notice notice-success" style="margin-top:24px">
+    <strong>Result:</strong> <span>All 8 failure modes are structurally mitigated in the recommended stack. The stack was built from the failures, not before them.</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SOP
+════════════════════════════════════════ -->
+<div id="sop" class="panel">
+  <div class="page-header">
+    <span class="page-title">Standard Operating Procedure</span>
+    <span class="page-sub">Preferred workflow for maintaining efficiency across the M4D / Aubyn ecosystem</span>
+  </div>
+
+  <div class="notice" style="margin-bottom:24px">
+    <strong>Purpose:</strong> <span>The stack only works if the habits form. The habits only form if the SOP is clear. This document defines the daily, per-project, and periodic habits that keep the CBai stack functioning as designed.</span>
+  </div>
+
+  <div class="section-head">Daily Workflow</div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">1</div>
+      <div><div class="sop-step-title">Start of Session — Git Pull</div><div class="sop-step-who">Travis + David · Every session · 30 seconds</div></div>
+      <span class="label label-active sop-badge">Required</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Travis: <code>cd C:\Users\TravisDavis\Documents\cbai-stack && git pull</code></li>
+        <li>David on M550: <code>cd ~/cbai-stack && git pull origin main</code></li>
+        <li>Ensures both machines have the latest standards, prompts, and scripts before any work begins</li>
+        <li>If pull fails: check internet connection, check GitHub token expiry (rotate every 90 days)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">2</div>
+      <div><div class="sop-step-title">Claude Session Start — Load Context</div><div class="sop-step-who">David primary · Every Claude session · 2 minutes</div></div>
+      <span class="label label-active sop-badge">Required</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>For new sessions: paste the project STATUS.md or session handoff document to restore context</li>
+        <li>Reference /standards/M4D_Production_Standard before producing any deliverable</li>
+        <li>Check /prompts for the relevant template before drafting from scratch</li>
+        <li>Confirm project PSA number, lead firm, and AOR before starting any document</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">3</div>
+      <div><div class="sop-step-title">Commit New Work to Repo</div><div class="sop-step-who">David + Travis · End of every productive session</div></div>
+      <span class="label label-active sop-badge">Required</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Any new script, prompt, standard, or runbook produced in a session gets committed before closing</li>
+        <li><code>git add . && git commit -m "one-line description" && git push origin main</code></li>
+        <li>Commit message format: verb + what changed — e.g. "Add Regrid parcel lookup script v1"</li>
+        <li>One logical change per commit. Do not batch unrelated changes together.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-head">Per-Project Workflow</div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">4</div>
+      <div><div class="sop-step-title">Project Kickoff — Define Tools and Standards</div><div class="sop-step-who">David · Every new project · Before first deliverable</div></div>
+      <span class="label label-active sop-badge">Required</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Confirm jurisdiction first: City of Wilmington (Chapter 48) or NCC UDC — never assume</li>
+        <li>Assign PSA number: M2_YYYY_### format. Confirm lead firm and AOR.</li>
+        <li>AIA C401 executed before permit submission on all DE projects — non-negotiable</li>
+        <li>Define rendering tool: Enscape/Veras (design phase) or Twinmotion (final delivery) — one tool, decided now</li>
+        <li>Confirm whether A-900 assembly series is required: CLT, SIP, modular, prefab, or hybrid systems</li>
+        <li>Create ALDDB G0 entry in /alddb/entries/ as soon as ROM is complete</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">5</div>
+      <div><div class="sop-step-title">Predevelopment — OI Tool ROM</div><div class="sop-step-who">David · G0 gate · Before any design work begins</div></div>
+      <span class="label label-active sop-badge">Required</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Run OI Tool ROM using CSI-structured unit price library and BLS OEWS regional labor data</li>
+        <li>State confidence level explicitly: ±30% at G0, ±15% at G1</li>
+        <li>Document ROM in plain language — not just numbers, but what the numbers mean for the client</li>
+        <li>Enter G0 data into ALDDB immediately — Leo entry owner, David provides OI Tool data</li>
+        <li>Run zoning analysis using /prompts/zoning_analysis prompt — confirm jurisdiction first</li>
+        <li>Flag Zone AE flood conditions: BFE + 1.5 ft freeboard = minimum FFE. Survey elevation required before G1.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">6</div>
+      <div><div class="sop-step-title">Code Analysis — Trevor Review Gate</div><div class="sop-step-who">David drafts · Trevor approves · Before permit submission</div></div>
+      <span class="label label-review sop-badge">Gate</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Run code analysis using /prompts/code_analysis prompt</li>
+        <li>Mark all CBai outputs: <strong>PENDING TREVOR REVIEW</strong> in document header</li>
+        <li>Send to trevor4d@merge4design.com with project name, PSA number, specific questions, areas of uncertainty</li>
+        <li>Trevor returns: APPROVED / APPROVED WITH MODIFICATIONS / HOLD</li>
+        <li>No code analysis goes to AHJ or client without Trevor's written approval — no exceptions</li>
+        <li>Document Trevor's approval status in the ALDDB project entry</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">7</div>
+      <div><div class="sop-step-title">Production Handoff to Travis</div><div class="sop-step-who">David → Travis · At design development stage</div></div>
+      <span class="label label-active sop-badge">Standard</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Produce handoff file per M4D Production Standard in /standards</li>
+        <li>Include: PSA number, project type, AOR confirmation, rendering tool decision, A-900 requirement</li>
+        <li>Travis git pulls before starting — confirms he has the current production standard</li>
+        <li>Travis confirms receipt and reviews handoff against standard before beginning production</li>
+        <li>Flag any deviations from standard before production begins — not after the set is built</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">8</div>
+      <div><div class="sop-step-title">G2 Premortem Gate</div><div class="sop-step-who">David · Before finalizing any major build or strategy · 30 minutes</div></div>
+      <span class="label label-review sop-badge">Gate</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Trigger: architecture committed, build ~70% complete</li>
+        <li>Use prompt from /prompts/premortem_gate_G2_v1_May2026.md</li>
+        <li>Document failure modes and mitigations in /docs/premortem_[project]_[MMYYYY].md</li>
+        <li>Update the build based on structural change recommendations before proceeding</li>
+        <li>Go / No-Go / Proceed with Modifications — decision documented before continuing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">9</div>
+      <div><div class="sop-step-title">ALDDB Entry at Every Gate</div><div class="sop-step-who">Leo primary · G0 / G1 / Permit / G4 · Non-negotiable</div></div>
+      <span class="label label-review sop-badge">Gate</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Triggers: G0 ROM complete · G1 Feasibility complete · Permit issued · G4 Closeout</li>
+        <li>Leo enters data using template in /alddb/ALDDB_capture_protocol</li>
+        <li>David provides OI Tool data · Travis provides Revit SF data · Trevor provides construction type</li>
+        <li>Save entries: ALDDB_[PSA]_[gate]_[MMYYYY].md in /alddb/entries/</li>
+        <li><strong>Every project that closes without a G4 entry is a permanent loss to the ALDDB moat.</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-head">Periodic Maintenance</div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">10</div>
+      <div><div class="sop-step-title">Quarterly Repo Review</div><div class="sop-step-who">David + Travis · Every 3 months · 30 minutes</div></div>
+      <span class="label label-queue sop-badge">Periodic</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Review /standards — current? Update version dates. Superseded files go to /standards/archive/</li>
+        <li>Review /prompts — which have been validated on real projects? Mark them with a "Validated on" tag.</li>
+        <li>Review /scripts — any superseded? Archive with date suffix. Never delete.</li>
+        <li>Review /runbooks — any procedures that changed? Update before they drift.</li>
+        <li>Commit: <code>git commit -m "Quarterly review MMYYYY — [summary]"</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">11</div>
+      <div><div class="sop-step-title">GitHub Token Rotation</div><div class="sop-step-who">David + Travis · Every 90 days · 10 minutes</div></div>
+      <span class="label label-queue sop-badge">Periodic</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>Set calendar reminder at token creation for 80-day warning — do not wait for expiry</li>
+        <li>Generate new token: github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)</li>
+        <li>Update M550 remote: <code>git remote set-url origin https://[NEW-TOKEN]@github.com/werm4d/cbai-stack.git</code></li>
+        <li>Revoke old token immediately after new one is confirmed working</li>
+        <li>Never commit tokens to files in the repo — environment variables or credential manager only</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sop-item">
+    <div class="sop-hdr" onclick="tog(this)">
+      <div class="sop-step-n">12</div>
+      <div><div class="sop-step-title">Stack Layer Promotion Review</div><div class="sop-step-who">David · When a queued item reaches its threshold</div></div>
+      <span class="label label-queue sop-badge">Periodic</span>
+    </div>
+    <div class="sop-body">
+      <ul class="sop-list">
+        <li>A queued item moves to active only when its production threshold is met on a real client deliverable</li>
+        <li>L4 Bonsai-MCP activates when: Lobdell Ave site model produced, IFC exports cleanly into Revit 2026</li>
+        <li>Revit 2027 activates when: Claymont permit cycle complete, both machines upgraded simultaneously</li>
+        <li>Regrid activates when: script built, tested on Lobdell parcel, runbook written</li>
+        <li>Run G2 premortem gate before any layer promotion — no exceptions</li>
+        <li>Update this dashboard and /docs/architecture_decisions when a layer promotes</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     REPOS
+════════════════════════════════════════ -->
+<div id="repos" class="panel">
+  <div class="page-header">
+    <span class="page-title">Repository Map</span>
+    <span class="page-sub">werm4d GitHub account · 8 repositories · May 2026</span>
+  </div>
+
+  <div class="notice notice-success" style="margin-bottom:24px">
+    <strong>Principle:</strong> <span>cbai-stack is the only repo that holds production workflow infrastructure. All other repos have separate, non-overlapping functions. Overlap with studio-content/ai-pipeline is resolved — redirected to cbai-stack.</span>
+  </div>
+
+  <div class="grid-2">
+    <div class="repo-card" style="border-top-color:var(--green)">
+      <div class="repo-name">werm4d / cbai-stack</div>
+      <div class="repo-desc">Source of truth for all CBai workflow components. Standards, prompts, scripts, runbooks, ALDDB protocol, M550 config, architecture decisions. Team access: David (r/w), Travis (r/w /scripts /standards), Trevor + Leo (read).</div>
+      <div class="repo-tags"><span class="label label-private">Private</span><span class="label label-done">Source of Truth</span></div>
+    </div>
+    <div class="repo-card" style="border-top-color:var(--blue)">
+      <div class="repo-name">werm4d / studio-content</div>
+      <div class="repo-desc">Public web presence for both firms. GitHub Pages hosting for Aubyn Architecture and M4D websites. Social post generator. AI pipeline folder sanitized — redirects to cbai-stack. Consider upgrade to GitHub Pro for private Pages.</div>
+      <div class="repo-tags"><span class="label label-public">Public</span><span class="label label-queue">Websites + Social</span></div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-name">werm4d / aubynarch</div>
+      <div class="repo-desc">Aubyn Architecture LLC website source. aubynarch.com. House of Aubyn brand identity and public web presence.</div>
+      <div class="repo-tags"><span class="label label-public">Public</span><span class="label label-queue">Website</span></div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-name">werm4d / merge4design</div>
+      <div class="repo-desc">Merge 4 Design LLC website source. merge4design.com. M4D brand and public web presence.</div>
+      <div class="repo-tags"><span class="label label-public">Public</span><span class="label label-queue">Website</span></div>
+    </div>
+    <div class="repo-card" style="border-top-color:var(--purple)">
+      <div class="repo-name">werm4d / m4di</div>
+      <div class="repo-desc">M4Di website and platform source. m4di.org. Future home of OI Tool web app code once grant-funded build begins. Keep separate from cbai-stack — platform code vs. workflow infrastructure.</div>
+      <div class="repo-tags"><span class="label label-public">Public</span><span class="label label-review">Watch — OI Tool Build</span></div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-name">werm4d / merge4ward</div>
+      <div class="repo-desc">Merge4Ward LLC web presence and project documentation. Separate entity, separate repo, separate lane.</div>
+      <div class="repo-tags"><span class="label label-public">Public</span><span class="label label-queue">Website</span></div>
+    </div>
+    <div class="repo-card" style="border-top-color:var(--amber)">
+      <div class="repo-name">werm4d / pattern-signal</div>
+      <div class="repo-desc">House of Aubyn personal venture. The Pattern Signal — daily behavioral wellness mobile app. I Ching-inspired patterning, 90% automated, subscription model. Prototype live on Vercel. David sole owner. Not an M4D team project.</div>
+      <div class="repo-tags"><span class="label label-private">Private</span><span class="label label-review">House of Aubyn</span></div>
+    </div>
+    <div class="repo-card" style="border-top-color:var(--amber)">
+      <div class="repo-name">werm4d / form4fun-ip</div>
+      <div class="repo-desc">House of Aubyn personal venture. fun2form.com ecommerce strategy IP. David sole owner. Deferred — separate lane from all current M4D/M4Di active work.</div>
+      <div class="repo-tags"><span class="label label-private">Private</span><span class="label label-review">House of Aubyn</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ACTIONS
+════════════════════════════════════════ -->
+<div id="actions" class="panel">
+  <div class="page-header">
+    <span class="page-title">Action Items</span>
+    <span class="page-sub">Prioritized · One owner per item · May 2026</span>
+  </div>
+
+  <div class="notice notice-success" style="margin-bottom:12px">
+    <strong>Submitted 5/15:</strong> <span>Enterprise / Wells Fargo Housing Affordability Breakthrough Challenge and Longwood Foundation applications both submitted. Next milestone: Round 2 semifinalists announced late July 2026.</span>
+  </div>
+
+  <div class="notice notice-danger" style="margin-bottom:20px">
+    <strong>Active Now:</strong> <span>Items 1–3 are the current team priority. Items 4 and 5 block Travis onboarding. Item 6 is legal — not optional.</span>
+  </div>
+
+  <div class="action-table">
+    <div class="action-hdr">
+      <span>#</span><span>Action</span><span>Owner</span><span>When</span>
+    </div>
+    <div class="action-row">
+      <div class="action-n">1</div>
+      <div style="font-weight:600">Update M4Di OI Tool workbook with confirmed Claymont (AE24-002) data — CLT/SIP unit prices, CMU foundation, Zone AE fill premium, soft costs</div>
+      <div class="action-owner owner-david">David</div>
+      <div><span class="label label-hold">Now</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">2</div>
+      <div style="font-weight:600">Create ALDDB entries for Claymont — G0 ROM gate and Permit gate (foundation permit approved 05/06/2026)</div>
+      <div class="action-owner owner-leo">Leo + David</div>
+      <div><span class="label label-hold">Now</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">3</div>
+      <div style="font-weight:600">Build OI Tool G0 ROM workbooks for both Merge4Ward manufacturing sites — Site A (4–6 ac) and Site B (1–2 ac). Flag NMTC eligibility as pending Leo confirmation.</div>
+      <div class="action-owner owner-david">David</div>
+      <div><span class="label label-hold">Now</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">4</div>
+      <div>Travis: complete machine cleanup, fresh installs, accept GitHub invitation → clone cbai-stack → confirm git pull working</div>
+      <div class="action-owner owner-travis">Travis</div>
+      <div><span class="label label-review">In Progress</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">5</div>
+      <div>Confirm Claymont material palette — unblocks Travis rendering handoff Step 3</div>
+      <div class="action-owner owner-david">David</div>
+      <div><span class="label label-hold">This Week</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">6</div>
+      <div style="font-weight:600;color:var(--red)">Attorney: M4Di Inc. formation · ALDDB ownership · Aubyn/M4D related-party · Merge4Ward operating agreement · AIA C401 on Claymont + WHA Lobdell</div>
+      <div class="action-owner owner-danger">David + attorney</div>
+      <div><span class="label label-hold">This Month</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">7</div>
+      <div>Leo: NMTC census tract eligibility check + ultimate site footprint (8–12 ac) for both Merge4Ward sites — use CDFI Fund mapping tool at cdfifund.gov</div>
+      <div class="action-owner owner-leo">Leo</div>
+      <div><span class="label label-review">This Month</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">8</div>
+      <div>Connector distribution outreach — Rothoblaas US + Simpson Strong-Tie</div>
+      <div class="action-owner owner-leo">Leo</div>
+      <div><span class="label label-review">This Month</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">9</div>
+      <div>Begin A-900 assembly series — A-901 system overview + A-902 panel schedule for Claymont</div>
+      <div class="action-owner owner-david">David + Travis</div>
+      <div><span class="label label-review">This Month</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">10</div>
+      <div>Build Regrid API integration — Claude Code session, Python script to /scripts</div>
+      <div class="action-owner owner-david">David + Claude Code</div>
+      <div><span class="label label-queue">Next Session</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">11</div>
+      <div>Schedule Bonsai-MCP install session with Travis after machine setup confirmed</div>
+      <div class="action-owner owner-david">David</div>
+      <div><span class="label label-queue">After Travis Setup</span></div>
+    </div>
+    <div class="action-row">
+      <div class="action-n">12</div>
+      <div>Set 80-day calendar reminders for GitHub token rotation — David + Travis</div>
+      <div class="action-owner owner-travis">David + Travis</div>
+      <div><span class="label label-queue">80 Days</span></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-l">Merge 4 Design LLC · M4Di™ · CBai Stack Dashboard · May 2026 · Internal use only · Not for distribution</div>
+  <div class="footer-r">github.com/werm4d/cbai-stack</div>
+</footer>
+
+<script>
+function show(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+function tog(hdr) {
+  hdr.nextElementSibling.classList.toggle('open');
+}
+</script>
+</body>
+</html>
