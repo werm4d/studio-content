@@ -1,2 +1,42 @@
 # CBai system prompt — proprietary IP, never commit
 docs/server/CBai_System_Prompt_DRAFT.md
+
+# ===== Secrets / credentials (NEVER commit) =====
+.env
+.env.*
+*.env
+*secret*
+*secrets*
+*token*
+*apikey*
+*api key*
+*credentials*
+*.pem
+*.key
+*.pfx
+docs/finnhub api key.txt
+docs/github-90day-token-5.18.txt
+
+# ===== Office / temp lock & backup files =====
+~$*
+*.tmp
+*.bak
+*.~*
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Python (cbai-stack tools) =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+venv/
+.venv/
+
+# ===== Blender temp =====
+*.blend1
+*.blend2

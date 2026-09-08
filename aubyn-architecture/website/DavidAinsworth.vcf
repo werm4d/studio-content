@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:David C. Ainsworth AIA
+N:Ainsworth;David;C.;;AIA
+TITLE:Principal Architect
+ORG:Aubyn Architecture LLC
+TEL;TYPE=WORK,VOICE:+12035062413
+EMAIL;TYPE=WORK:david@aubynarch.com
+URL:https://aubynarch.com
+ADR;TYPE=WORK:;;215 N. Market St. Suite 317;Wilmington;DE;19801;USA
+NOTE:Licensed Architect — DE · PA · CT | AIA | NCARB | MBE #21541044 | DBE #3824
+END:VCARD

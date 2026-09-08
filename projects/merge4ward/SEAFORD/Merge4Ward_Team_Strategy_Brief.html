@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Forward Home System — Merge4Ward Strategy Brief | Team Edition | June 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --grn-dk:    #0F4B18;
+  --grn-md:    #196B23;
+  --grn-lt:    #D8EDD0;
+  --grn-pale:  #EDF4E1;
+  --city-dk:   #0a2342;
+  --city-md:   #1a3d6b;
+  --city-lt:   #e8eef6;
+  --gold:      #c89c2a;
+  --gold-lt:   #fdf3d4;
+  --purple:    #534AB7;
+  --purple-lt: #EAE8F8;
+  --warm:      #f7f6f2;
+  --line:      #dddbd3;
+  --blk:       #0f0f10;
+  --mid:       #2c2c30;
+  --muted:     #6b6b72;
+  --wht:       #ffffff;
+  /* solid text on dark — no opacity */
+  --on-dk:     #ffffff;
+  --on-dk-sec: #d4dce8;
+  --on-dk-mut: #a8b8cc;
+  --on-grn:    #ffffff;
+  --on-grn-lt: #c8f09a;
+  --on-grn-sec:#b8d89a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:12.5pt;}
+body{font-family:'DM Sans',sans-serif;color:var(--mid);background:var(--wht);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;line-height:1.6;}
+@media print{
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:11pt;}
+  @page{size:letter;margin:0.45in 0.55in;}
+  .pb{page-break-before:always;}.nb{page-break-inside:avoid;}
+}
+@media screen{body{max-width:8.5in;margin:0 auto;padding:0.45in 0.55in;}}
+
+/* HEADER */
+.hdr{display:flex;justify-content:space-between;align-items:flex-end;
+  padding-bottom:0.12in;margin-bottom:0.18in;border-bottom:3px solid var(--grn-dk);}
+.hdr-left{display:flex;align-items:center;gap:10px;}
+.hdr-mark{width:36px;height:36px;background:var(--grn-dk);display:flex;
+  align-items:center;justify-content:center;}
+.hdr-mark span{font-family:'Syne',sans-serif;font-size:0.56rem;font-weight:800;color:var(--grn-lt);}
+.hdr-name{font-family:'Syne',sans-serif;font-size:1.0rem;font-weight:700;color:var(--blk);}
+.hdr-sub{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+.hdr-meta{text-align:right;font-size:0.7rem;color:var(--muted);line-height:1.5;}
+
+/* COVER */
+.cover{background:var(--grn-dk);padding:0.36in 0.42in 0.3in;
+  margin-bottom:0.22in;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;top:0;right:0;width:2.6in;height:100%;
+  background:var(--grn-md);clip-path:polygon(38% 0%,100% 0%,100% 100%,2% 100%);}
+.cover::after{content:'';position:absolute;bottom:0;left:0.42in;
+  width:1.2in;height:0.04in;background:var(--gold);}
+.c-tag{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.05in;position:relative;}
+.c-conf{font-size:0.85rem;color:var(--on-grn-sec);margin-bottom:0.15in;position:relative;}
+.c-title{font-family:'Syne',sans-serif;font-size:2.0rem;font-weight:800;
+  color:var(--on-dk);line-height:1.0;margin-bottom:0.1in;
+  position:relative;max-width:5.8in;}
+.c-title em{color:var(--gold);font-style:normal;}
+.c-sub{font-size:0.97rem;font-weight:300;color:var(--on-grn-sec);
+  line-height:1.55;max-width:5.4in;position:relative;margin-bottom:0.18in;}
+.c-to{border-top:1px solid rgba(255,255,255,0.15);padding-top:0.12in;
+  display:flex;gap:0.24in;flex-wrap:wrap;position:relative;}
+.c-to-label{font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--on-grn-lt);}
+.c-to-names{font-size:0.85rem;color:var(--on-grn-sec);}
+
+/* ATOMS */
+.eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--grn-md);margin-bottom:3px;}
+.h2{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--blk);
+  margin-bottom:0.09in;line-height:1.15;border-left:3px solid var(--gold);padding-left:9px;}
+.h3{font-family:'Syne',sans-serif;font-size:0.97rem;font-weight:700;
+  color:var(--grn-dk);margin-bottom:5px;margin-top:0.1in;}
+p.b{font-size:0.97rem;line-height:1.65;margin-bottom:0.07in;}
+p.b:last-child{margin-bottom:0;}
+.rule{border:none;border-top:1px solid var(--line);margin:0.16in 0;}
+
+/* LAYOUT */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0.18in;margin-bottom:0.18in;}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.14in;margin-bottom:0.16in;}
+.col7030{display:grid;grid-template-columns:2fr 1fr;gap:0.18in;margin-bottom:0.18in;}
+
+/* STAT BAR */
+.stat-bar{display:grid;grid-template-columns:repeat(5,1fr);
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:0.2in;}
+.stat{background:var(--warm);padding:0.09in 0.11in;}
+.stat-v{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;
+  color:var(--grn-dk);line-height:1;margin-bottom:2px;}
+.stat-v.gld{color:var(--gold);}
+.stat-v.cty{color:var(--city-dk);}
+.stat-s{font-size:0.58rem;color:var(--muted);line-height:1.35;}
+
+/* ENTITY CARDS */
+.entity-grid{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:0.18in;}
+.ent{background:var(--wht);padding:0.13in 0.14in;}
+.ent.grn{background:var(--grn-pale);}
+.ent-tag{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--grn-md);margin-bottom:4px;}
+.ent-name{font-family:'Syne',sans-serif;font-size:0.94rem;font-weight:700;
+  color:var(--blk);margin-bottom:4px;line-height:1.2;}
+.ent p{font-size:0.84rem;color:var(--mid);line-height:1.5;}
+
+/* DARK BANDS */
+.dk{background:var(--grn-dk);padding:0.2in 0.26in;margin-bottom:0.18in;}
+.dk-lbl{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.07in;}
+.dk-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;
+  color:var(--on-dk);line-height:1.2;margin-bottom:0.09in;}
+.dk-title em{color:var(--gold);font-style:normal;}
+.dk p{font-size:0.94rem;color:var(--on-dk-sec);line-height:1.65;margin-bottom:0.07in;}
+.dk p:last-child{margin-bottom:0;}
+.dk strong{color:var(--gold);}
+.dk ul{padding-left:1.2em;}
+.dk ul li{font-size:0.9rem;color:var(--on-dk-sec);line-height:1.6;margin-bottom:4px;}
+.dk ul li strong{color:var(--gold);}
+
+/* CITY DARK */
+.cdk{background:var(--city-dk);padding:0.2in 0.26in;margin-bottom:0.18in;}
+.cdk-lbl{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.07in;}
+.cdk-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;
+  color:var(--on-dk);line-height:1.2;margin-bottom:0.09in;}
+.cdk-title em{color:var(--gold);font-style:normal;}
+.cdk p{font-size:0.94rem;color:var(--on-dk-sec);line-height:1.65;margin-bottom:0.07in;}
+.cdk p:last-child{margin-bottom:0;}
+.cdk strong{color:var(--gold);}
+.cdk ul{padding-left:1.2em;}
+.cdk ul li{font-size:0.9rem;color:var(--on-dk-sec);line-height:1.6;margin-bottom:4px;}
+.cdk ul li strong{color:var(--gold);}
+
+/* CALLOUTS */
+.cal{background:var(--gold-lt);border-left:3px solid var(--gold);
+  padding:0.09in 0.13in;margin:0.1in 0;font-size:0.94rem;line-height:1.6;color:var(--mid);}
+.cal strong{color:var(--grn-dk);font-family:'Syne',sans-serif;
+  font-size:0.72rem;text-transform:uppercase;letter-spacing:.06em;}
+.ccal{background:var(--city-lt);border-left:3px solid var(--city-dk);
+  padding:0.09in 0.13in;margin:0.1in 0;font-size:0.94rem;line-height:1.6;color:var(--mid);}
+.ccal strong{color:var(--city-dk);font-family:'Syne',sans-serif;
+  font-size:0.72rem;text-transform:uppercase;letter-spacing:.06em;}
+.gcal{background:var(--grn-pale);border-left:3px solid var(--grn-md);
+  padding:0.09in 0.13in;margin:0.1in 0;font-size:0.94rem;line-height:1.6;color:var(--mid);}
+.gcal strong{color:var(--grn-dk);font-family:'Syne',sans-serif;
+  font-size:0.72rem;text-transform:uppercase;letter-spacing:.06em;}
+
+/* PIPELINE TABLE */
+table.pipe{width:100%;border-collapse:collapse;font-size:0.82rem;margin:0.08in 0;}
+table.pipe th{font-family:'Syne',sans-serif;font-size:0.56rem;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;background:var(--grn-dk);
+  color:var(--on-dk);padding:6px 8px;text-align:left;}
+table.pipe td{padding:5px 8px;border-bottom:1px solid var(--line);
+  vertical-align:top;line-height:1.4;}
+table.pipe tr:nth-child(even) td{background:var(--warm);}
+table.pipe td.hi{font-family:'DM Mono',monospace;font-size:0.78rem;
+  color:var(--grn-md);white-space:nowrap;font-weight:500;}
+table.pipe td.dim{color:var(--muted);font-size:0.78rem;}
+
+/* CAPITAL TABLE */
+table.cap{width:100%;border-collapse:collapse;font-size:0.82rem;margin:0.08in 0;}
+table.cap th{font-family:'Syne',sans-serif;font-size:0.56rem;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;background:var(--grn-dk);
+  color:var(--on-dk);padding:6px 8px;text-align:left;}
+table.cap td{padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4;}
+table.cap tr:nth-child(even) td{background:var(--warm);}
+table.cap tr.priority td{background:var(--gold-lt);}
+table.cap td.amt{font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--grn-md);
+  white-space:nowrap;font-weight:600;}
+table.cap td.tier{font-family:'DM Mono',monospace;font-size:0.7rem;
+  color:var(--muted);white-space:nowrap;}
+
+/* PHASE STRIP */
+.phases{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:0.16in;}
+.phase{background:var(--wht);padding:0.11in 0.12in;}
+.phase.now{background:var(--city-lt);}
+.phase.soon{background:var(--grn-pale);}
+.ph-lbl{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--grn-md);margin-bottom:3px;}
+.ph-title{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;
+  color:var(--blk);margin-bottom:3px;line-height:1.2;}
+.ph-range{font-family:'DM Mono',monospace;font-size:0.6rem;
+  color:var(--gold);margin-bottom:5px;}
+.ph-body{font-size:0.72rem;color:var(--mid);line-height:1.45;}
+
+/* TEAM ROLE GRID */
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:0.18in;}
+.tm{background:var(--wht);padding:0.13in 0.14in;}
+.tm-role{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--grn-md);margin-bottom:4px;}
+.tm-name{font-family:'Syne',sans-serif;font-size:0.97rem;font-weight:700;
+  color:var(--blk);margin-bottom:3px;}
+.tm-title{font-size:0.82rem;color:var(--muted);font-style:italic;margin-bottom:7px;}
+.tm p{font-size:0.84rem;color:var(--mid);line-height:1.55;}
+.tm-str{display:inline-block;background:var(--grn-pale);color:var(--grn-dk);
+  font-size:0.74rem;font-weight:600;padding:2px 7px;
+  border-left:2px solid var(--grn-md);margin-top:5px;}
+
+/* FOOTER */
+.foot{margin-top:0.2in;padding-top:0.08in;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;font-size:0.6rem;color:#bbb;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-mark"><span>M4D</span></div>
+    <div>
+      <div class="hdr-name">Merge 4 Design LLC &nbsp;·&nbsp; Merge4Ward LLC &nbsp;·&nbsp; M4Di™ &nbsp;·&nbsp; Aubyn Architecture LLC &nbsp;·&nbsp; L.E.E.P., Inc.</div>
+      <div class="hdr-sub">The Forward Home System &nbsp;·&nbsp; Internal Strategy Brief &nbsp;·&nbsp; June 2026</div>
+    </div>
+  </div>
+  <div class="hdr-meta">Team Briefing — Confidential<br>June 1, 2026</div>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="c-tag">Internal Strategy Brief — Not for External Distribution</div>
+  <div class="c-conf">Merge4Ward LLC &nbsp;·&nbsp; M4Di™ &nbsp;·&nbsp; Merge 4 Design LLC &nbsp;·&nbsp; Aubyn Architecture LLC &nbsp;·&nbsp; L.E.E.P., Inc.</div>
+  <div class="c-title">The <em>Forward Home System</em><br>From One Building to a Delaware<br>Manufacturing Movement</div>
+  <div class="c-sub">Where we are, what we have built, why Seaford changes everything, and what each of us does next. This document is the strategy — written for the five people in this room.</div>
+  <div class="c-to">
+    <div><div class="c-to-label">For</div><div class="c-to-names">Trevor Knight &nbsp;·&nbsp; Leo Lynch &nbsp;·&nbsp; Travis Davis &nbsp;·&nbsp; Gwen Motley (L.E.E.P.) &nbsp;·&nbsp; David Ainsworth</div></div>
+    <div><div class="c-to-label">Date</div><div class="c-to-names">June 1, 2026</div></div>
+  </div>
+</div>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="stat"><div class="stat-v">~$310s/unit</div><div class="stat-s">Claymont Hybrid — 4 units, 3-story CLT/SIP. Estimated ~$1.25M total build cost. ROM validated within target. First CLT/SIP completed in mid-Atlantic. Panels June 22. Complete August 2026.</div></div>
+  <div class="stat"><div class="stat-v">2</div><div class="stat-s">Wells Fargo/Enterprise HABC applications submitted May 15. M4Di OI Tool + Merge4Ward. Results: late July 2026.</div></div>
+  <div class="stat"><div class="stat-v gld">750 ac</div><div class="stat-s">DuPont Seaford plant site. World's first nylon factory. INVISTA exploring sale. National Historic Chemical Landmark.</div></div>
+  <div class="stat"><div class="stat-v">$76M+</div><div class="stat-s">Total project investment supported by M4Di estimates across active pipeline. M-Well, Claymont, CBCDC, RMGC.</div></div>
+  <div class="stat"><div class="stat-v cty">80+</div><div class="stat-s">Year-3 manufacturing jobs targeted. Dual-line campus: CLT/SIP + AAC + 3DCP Phase 2. L.E.E.P. as supply and deployment pipeline.</div></div>
+</div>
+
+<div class="rule"></div>
+
+<!-- SECTION 1: WHERE WE STAND -->
+<div class="eyebrow">Section 1 — Where We Stand</div>
+<div class="h2">What we have built. What is proven. What changed on May 27.</div>
+
+<p class="b">Six months ago Merge4Ward was a strategy document and a building under construction. Today it is a validated building system, two live grant applications, a relationship with the Mayor of Wilmington's economic development office, and a manufacturing campus concept anchored to the most historically resonant industrial site in Delaware. This section is the honest account of where we stand before we decide what to do next.</p>
+
+<div class="two nb">
+  <div class="dk">
+    <div class="dk-lbl">Proof of Concept — Validated</div>
+    <div class="dk-title">Claymont Hybrid Townhouses</div>
+    <p>1316–1324 N. Claymont St., Wilmington. 4-unit, 3-story CLT/SIP hybrid. Client: L.E.E.P., Inc. / Gwen Motley. Architecture: M4D + Aubyn. Travis: lead designer and BIM. Trevor + Leo: ZBA variance secured — first CLT/SIP approval in New Castle County.</p>
+    <p><strong>Build cost:</strong> ~$1.25M total (4 units). <strong>Sell price:</strong> $200K–$230K/unit. <strong>ROM:</strong> validated within target range. First CLT/SIP hybrid completed in the mid-Atlantic. Panels June 22. Complete August 2026.</p>
+  </div>
+  <div class="cdk">
+    <div class="cdk-lbl">Grant Applications — Submitted May 15</div>
+    <div class="cdk-title">Two Entries in the Wells Fargo/<em>Enterprise HABC</em></div>
+    <p><strong>Entry 1 — M4Di OI Tool:</strong> Service Delivery & Programs. Lead: Central Baptist CDC / Dr. Rev. Keeling. Delaware priority market = 15 bonus points.</p>
+    <p><strong>Entry 2 — Merge4Ward CLT/SIP:</strong> Design & Construction. Lead: L.E.E.P., Inc. / Gwen. Claymont as proof of concept. Delaware priority market = 15 bonus points.</p>
+    <p>Round 2 semifinalists announced late July 2026. $2M award per winner. Five winners nationally. Both applications are competitive. We wait — and we keep building.</p>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- SECTION 2: THE ECOSYSTEM -->
+<div class="pb"></div>
+<div class="eyebrow">Section 2 — The Ecosystem</div>
+<div class="h2">Five entities. One integrated system. Every piece reinforces every other.</div>
+<p class="b">The question we get asked — and the question every funder, city official, and potential partner will ask — is: what exactly are you? The answer is that we are five distinct legal entities that form a single integrated development ecosystem. Understanding how they fit together is the prerequisite to understanding why Merge4Ward and Seaford matter.</p>
+
+<div class="entity-grid nb" style="grid-template-columns:1fr 1fr 1fr;">
+  <div class="ent grn">
+    <div class="ent-tag">Architecture · Design · Delivery · AOR</div>
+    <div class="ent-name">Merge 4 Design LLC + Aubyn Architecture LLC</div>
+    <p>M4D: four principals — David, Trevor, Leo, Travis. Lead design, predevelopment, and delivery firm. Operating entity for M4Di under CB CDC fiscal sponsorship. Aubyn Architecture LLC (David Ainsworth, AIA — licensed DE/PA/CT) serves as AOR on all Delaware permit sets. Title blocks: M4D as lead firm, Aubyn in a separate labeled AOR block. AIA C401 subconsultant agreement required per project. Active: Claymont, M-Well, RMGC BCA, Forward Home Program.</p>
+  </div>
+  <div class="ent grn">
+    <div class="ent-tag">Predevelopment Intelligence · 501(c)(3)</div>
+    <div class="ent-name">M4Di™ — Merge 4 Development Institute</div>
+    <p>Co-founded by all four M4D principals. Operating under CB CDC fiscal sponsorship; 501(c)(3) formation in progress. Tools: OI Tool, ALDi Tracker, ALDDB, FeasOps. City of Wilmington OED adopted M4Di as cost-verification standard for A&E Feasibility Grant program. Wells Fargo HABC application submitted May 15, 2026. Primary predevelopment intelligence layer for every project in the ecosystem.</p>
+  </div>
+  <div class="ent grn">
+    <div class="ent-tag">Manufacturing · Forward Building System</div>
+    <div class="ent-name">Merge4Ward LLC</div>
+    <p>Five partners: David, Trevor, Leo, Travis + Gwenevere Motley (L.E.E.P., Inc.). Mid-Atlantic sustainable construction manufacturing initiative. Products: 4Ward-SIB panels (ThermoSIP), 4Ward-Fire panels, CLT structural components, AAC fire-separation panels, modular wet wall assemblies, 3DCP prefab concrete components. Phase 1: Wilmington I-95 corridor. Phase 2: Seaford DuPont site. Wells Fargo application submitted May 15.</p>
+  </div>
+  <div class="ent">
+    <div class="ent-tag">Community Developer · 501(c)(3)</div>
+    <div class="ent-name">L.E.E.P., Inc.</div>
+    <p>Lead Exceptionally, Empower People. Executive Director: Gwenevere Motley. Wilmington-based 501(c)(3). Developer of Claymont Hybrid. Lead applicant on Wells Fargo Entry 2 (Merge4Ward). Dual role in Merge4Ward: workforce training pipeline supplier and certified specialist employer. Statewide Delaware expansion is the next organizational step — anchored to the Seaford Phase 2 campus.</p>
+  </div>
+  <div class="ent">
+    <div class="ent-tag">IDD · Healthcare · Wellness Communities</div>
+    <div class="ent-name">M-Well Medical Group / Dr. Max</div>
+    <p>Client and strategic partner. 130,352 SF two-phase community health campus at 3110 Philadelphia Pike, Claymont — Phase 1 IDD residential adaptive reuse (27,452 SF), Phase 2 new construction Wellness Pavilion (102,900 SF). M4D architecture fees $1.73M. Dr. Max's vision of neighborhood-integrated IDD housing communities is the primary long-term demand driver for the Merge4Ward CLT/SIP building system in Delaware and the Mid-Atlantic.</p>
+  </div>
+  <div class="ent">
+    <div class="ent-tag">Anchor Partnership · Faith-Based CDC</div>
+    <div class="ent-name">CB CDC / Central Baptist</div>
+    <p>Central Baptist CDC. Dr. Rev. Keeling, Executive Director. Lead applicant on Wells Fargo Entry 1 (M4Di OI Tool). Fiscal sponsor for M4Di during nonprofit formation. Two active project sites in M4Di predevelopment engagement. OED confirmed M4Di as cost-verification standard — anchored through this partnership. The faith-based development pipeline CBCDC represents is a core M4Di market segment.</p>
+  </div>
+</div>
+
+<div class="gcal nb">
+  <strong>The Integration Logic:</strong> Aubyn stamps the drawings. M4D designs the buildings. M4Di validates the costs. Merge4Ward manufactures the panels. L.E.E.P. develops the community and employs the workers who install what Merge4Ward builds. Every project that goes through this system makes every entity in it more valuable — and every entity in the system has a role that no other entity can replace. That is not an accident. It is a moat.
+</div>
+
+<div class="rule"></div>
+
+<!-- SECTION 3: THE PIPELINE -->
+<div class="eyebrow">Section 3 — The Pipeline</div>
+<div class="h2">Active projects. Near-term demand. Why the manufacturing campus has customers before it opens.</div>
+
+<table class="pipe nb">
+  <thead>
+    <tr>
+      <th style="width:22%">Project</th>
+      <th style="width:12%">Size / Type</th>
+      <th style="width:13%">M4Di ROM</th>
+      <th style="width:13%">Merge4Ward Fit</th>
+      <th style="width:40%">Status & Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Claymont Hybrid Townhouses</strong><br>1316–1324 N. Claymont St., Wilmington</td>
+      <td>4 units / 3-story / CLT/SIP</td>
+      <td class="hi">~$1.25M total<br>~$310s/unit</td>
+      <td class="hi">Built ✓</td>
+      <td>Complete mid-July. Sells $200K–$230K/unit. First closed-loop ROM validation in ALDDB. Foundation for every claim we make about the building system.</td>
+    </tr>
+    <tr>
+      <td><strong>M-Well Community Health Campus</strong><br>3110 Philadelphia Pike, Claymont, DE</td>
+      <td>130,352 SF / 2-phase / IDD + Wellness</td>
+      <td class="hi">$76.4M G0</td>
+      <td class="hi">Primary target</td>
+      <td>Phase 1: 27,452 SF adaptive reuse IDD residential. Phase 2: 102,900 SF new construction. M4D architecture fees $1.73M. Client: M-Well Medical Group. Dr. Max's neighborhood-integrated IDD housing vision is the strategic framework behind the M-Well campus and the broader IDD pipeline. CLT/SIP for Phase 2 structure is the natural specification once the Merge4Ward campus is operational.</td>
+    </tr>
+    <tr>
+      <td><strong>Forward Home Program</strong><br>City of Wilmington Vacant Lot Initiative</td>
+      <td>10-unit Type D cluster / 1,350 SF each / 4Ward-SIB</td>
+      <td class="hi">$1.4M total<br>$140K/unit</td>
+      <td class="hi">Demand anchor</td>
+      <td>M4D × L.E.E.P. initiative. City lots at $1/lot (City program). Four-tier building package: T1 Forward Code+ ($220K–$250K) through T4 Forward Harvest ($267K–$317K off-grid). Type D 10-unit T1 proforma: $1,401,223 total cost / $2,350,000 gross revenue / $948,777 net margin (40.4%). 31-week build schedule using 4Ward-SIB panel system. L.E.E.P. trained workforce installs. §45L credit ($5K/unit T2–T4). G0 ROM ±25%. May 2026.</td>
+    </tr>
+    <tr>
+      <td><strong>CBCDC — Two Sites</strong><br>Wilmington, DE</td>
+      <td>TBD / Community facility + residential</td>
+      <td>In progress</td>
+      <td>M4Di P1/P2</td>
+      <td>Dr. Rev. Keeling / Central Baptist CDC. Active M4Di predevelopment engagement. Wells Fargo Entry 1 anchor. Two sites currently in FeasOps P1 phase. Sea Change Capital funded. OED letter of support received.</td>
+    </tr>
+
+    <tr>
+      <td><strong>Fieldsboro Dev (1038 Fieldsboro Rd)</strong><br>Townsend, DE</td>
+      <td>80 lots / ±40.87 ac / subdivision</td>
+      <td>OI Tool active</td>
+      <td>Forward Home Kits</td>
+      <td>M4D design lead. Aubyn AOR. M4Di OI cost intelligence. Deferred design fees as equity ($950K total). 80 lots = potential 16–20 Merge4Ward building system units at 20–25% penetration. PSA ref: M2_2026_FBR-01.</td>
+    </tr>
+    <tr>
+      <td><strong>205 W. Pulaski Hwy</strong><br>Elkton, MD (Cecil County)</td>
+      <td>~40 units / motel redevelopment</td>
+      <td>Regrid + G0 pending</td>
+      <td>Adjacent market</td>
+      <td>ASLAM LLC. Rezoning from Town to R-O (6–12 month risk). 45 min from Wilmington campus. CLT/SIP viable at this scale and distance. Merge4Ward delivery radius covers Cecil County.</td>
+    </tr>
+    <tr>
+      <td><strong>IDD Neighborhood Integration</strong><br>Delaware statewide (Dr. Max pipeline)</td>
+      <td>Multiple sites / IDD residential</td>
+      <td>M4Di P1 standard</td>
+      <td>Primary demand anchor</td>
+      <td>CMS/DDDS mandate driving dispersed IDD community housing across Delaware. Speed to occupancy, quality control, fire separation, long-term operating cost — all addressed by CLT/SIP hybrid. M-Well Phase 2 is the proof of concept for IDD residential at CLT/SIP scale. Every IDD community integration project Delaware's DDDS pipeline requires over the next decade is a potential Merge4Ward customer.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="rule"></div>
+
+<!-- SECTION 3B: BUILDING SYSTEM -->
+<div class="eyebrow">Section 3B — The Forward Building System</div>
+<div class="h2">Six product lines. One campus. The complete sustainable construction system.</div>
+<p class="b">Merge4Ward is not a panel manufacturer. It is a building system company. The distinction matters for IP, for grant eligibility, for the testing lab strategy, and for the ZUBLIN partnership conversation. The six components below are the full product architecture — Phase 1 launches the first three; Phase 2 at Seaford completes the system.</p>
+
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:0.18in;" class="nb">
+  <div class="tech">
+    <div class="tech-tag">LINE 01 · Phase 1</div>
+    <div class="tech-title">4Ward-SIB™ — ThermoSIP Panels</div>
+    <p>Merge4Ward's proprietary branded panel: Barricade Thermo-Brace SIB face (4-in-1: structural sheathing + air barrier + WRB + R-3/R-5 continuous insulation via BASF Neopor GPS foam) factory-assembled into the 4Ward-SIB system. GREENGUARD Gold certified. Reversible foam orientation for factory conditioning / field install flexibility. TER-evaluated under IRC R703.2 / IBC 1404.2. Eliminates OSB + house wrap + separate CI layer in a single panel. Deployed in Forward Home Program and Claymont hybrid.</p>
+  </div>
+  <div class="tech">
+    <div class="tech-tag">LINE 02 · Phase 1</div>
+    <div class="tech-title">4Ward-Fire™ — Fire-Rated Panels + AAC</div>
+    <p>Fire-rated separation system for party walls, demising walls, and egress corridors. 4Ward-Fire Panel: Huber EXACOR (ESR-4635) non-combustible MGO face — replacing OSB-based assemblies. AAC (autoclaved aerated concrete) for ground-floor 4-hour rated separation. Merge4Ward-specific ESR for the 4Ward-Fire Panel assembly is a near-term IP target — converting from "approved for use" to "independently listed building product." MagMatrix BMSC 517 SIS (fire-rated + structural + CI in one) on watch-and-activate status pending ICC-ES code acceptance.</p>
+  </div>
+  <div class="tech">
+    <div class="tech-tag">LINE 03 · Phase 1 + 2</div>
+    <div class="tech-title">CLT Components + Connection Hardware</div>
+    <p>Stress-graded CLT floor decks and roof panels; Merge4Ward as regional distributor and value-added fabricator — custom CNC cutting, connection prep, panel staging. Proprietary connection hardware line: structural timber connectors, hold-downs, panel-to-CMU anchors engineered for the 4Ward-SIB/CLT hybrid system. ZUBLIN Timber partnership under active exploration for Phase 2 — curved CLT, specialty mass timber components, and shared fabrication IP relevant to Riverfront East, civic pavilion, and high-profile IDD campus applications.</p>
+  </div>
+  <div class="tech">
+    <div class="tech-tag">FUNCTION · Phase 1</div>
+    <div class="tech-title">Modular Wet Wall + MEP Assembly</div>
+    <p>Factory-assembled plumbing walls — PEX supply tree, DWV stack, pressure-tested — delivered to site Day 1 of framing. Pulls MEP off the critical path by 3–4 weeks. CBai MEP Workflow SOP v1 (June 2026) governs soft cost disaggregation and fee compression modeling. At 10-unit Forward Home cluster scale: single factory run, identical assemblies across all units, zero field coordination variance. Scales directly to IDD residential and M-Well Phase 2.</p>
+  </div>
+  <div class="tech">
+    <div class="tech-tag">LINE 04 · Phase 2 · Seaford</div>
+    <div class="tech-title">3D Printed Concrete Building Components</div>
+    <p>Workshop-based prefabricated concrete: foundation wall sections, bond beams, complex geometric elements — CNC-guided robotic extrusion at the campus, crane-set on-site. Off-site prefabrication model (Citizen Robotics precedent). $800K–$2M incremental Phase 2 addition to the Seaford campus. University of Delaware research partnership anchor — the first campus in Delaware producing real project components for the research record. Unlocks DOE Advanced Manufacturing and NSF construction technology grants unavailable to CLT/SIP manufacturing alone.</p>
+  </div>
+  <div class="tech" style="background:var(--gold-lt);border-left:2px solid var(--gold);">
+    <div class="tech-tag" style="color:var(--city-dk);">PLATFORM · Phase 2 · Seaford</div>
+    <div class="tech-title">UL / ESR Certified Testing + Evaluation Lab</div>
+    <p>A Merge4Ward-operated UL listing and ICC-ES ESR/TER evaluation lab embedded in the Seaford campus — leveraging existing QC laboratory infrastructure from the nylon manufacturing facility. Primary target: Merge4Ward-specific ESR for the 4Ward-Fire Panel assembly. Secondary: TER validation for 4Ward-SIB in Delaware code environment. The testing lab is the IP moat: it converts Merge4Ward products from "code-compliant assemblies" to "independently listed building products" — a certification no affiliate or competitor can replicate without physical lab infrastructure. This is what ZUBLIN brings to the table at Phase 2 scale.</p>
+  </div>
+</div>
+
+<!-- SECTION 4: SEAFORD -->
+<div class="pb"></div>
+<div class="eyebrow">Section 4 — The Seaford Opportunity</div>
+<div class="h2">The world's first nylon plant. Delaware's next manufacturing chapter.</div>
+
+<p class="b">In 1939, DuPont chose a 609-acre site near Seaford, Delaware — close to the Nanticoke River, on the Norfolk Southern rail line, near major markets and raw material supplies — to build the world's first nylon manufacturing plant. The town became known as "The Nylon Capital of the World." The plant employed 4,600 people at its peak. It is a National Historic Chemical Landmark. Today INVISTA, the Koch Industries subsidiary that acquired it in 2004, is exploring a sale. The facility currently employs approximately 120 people. The Seaford Mayor is actively seeking a new owner or tenant who will bring employment back.</p>
+
+<div class="two nb">
+  <div class="dk">
+    <div class="dk-lbl">The Site — What It Is</div>
+    <div class="dk-title">750 acres. Rail. River. <em>Ready.</em></div>
+    <p><strong>Location:</strong> 25876 DuPont Road, Seaford, DE 19973. 750 acres bordered by Nanticoke River (east) and Norfolk Southern Railroad (north).</p>
+    <p><strong>Infrastructure:</strong> Heavy industrial buildings. Overhead crane systems. Existing steam + power infrastructure (on-site power plant). Rail access for bulk material delivery. River access relevant to AAC steam production. EPA corrective action: complete with institutional controls — brownfield redevelopment viable.</p>
+    <p><strong>Status:</strong> INVISTA exploring sale (October 2024). Barclays as exclusive financial advisor. No confirmed buyer. <strong>The window is open right now.</strong></p>
+  </div>
+  <div class="cdk">
+    <div class="cdk-lbl">The Narrative — Why It Matters</div>
+    <div class="cdk-title">DuPont 1939 → <em>Merge4Ward 2028</em></div>
+    <p>DuPont chose Seaford for the same reasons Merge4Ward would: water for manufacturing processes, rail for materials and distribution, proximity to Wilmington headquarters, a community hungry for employment.</p>
+    <p>DuPont introduced a synthetic material that didn't exist — nylon — and built a world-class manufacturing operation around it. Merge4Ward introduces a sustainable construction system that doesn't exist regionally and builds a manufacturing operation around it.</p>
+    <p><strong>Same Delaware. Same logic. 87 years apart.</strong> That narrative is not marketing copy. It is a true story that travels to national press, Congress, and the Governor's office with no embellishment required.</p>
+  </div>
+</div>
+
+<div class="cal nb">
+  <strong>Why Seaford + Wilmington Together:</strong> Wilmington Phase 1 is the right first location — close to the primary market, anchored to Mayor Carney's relationship and the Wells Fargo narrative, accessible to L.E.E.P./DelTech workforce pipeline, activatable faster without brownfield diligence. Seaford Phase 2 is the right scale location — existing heavy industrial infrastructure collapses the capital requirement by $10–20M, brownfield grant stack adds a funding layer unavailable in Wilmington, INVISTA sale creates a specific acquisition window. The two campuses are not alternatives. They are sequence.
+</div>
+
+<div class="phases nb">
+  <div class="phase now">
+    <div class="ph-lbl">Phase 1 · 2026–2027 · NOW</div>
+    <div class="ph-title">Wilmington I-95 Corridor</div>
+    <div class="ph-range">$19M–$49M · NMTC + Grants</div>
+    <div class="ph-body">60,000–80,000 SF dual-line facility. CLT/SIP Line 1 + AAC Line 2 + modular wet wall assembly. First workforce cohort: 20 trainees from L.E.E.P. pipeline. Panels delivered to 3 pipeline projects. Wells Fargo grant outcome: July 2026.</div>
+  </div>
+  <div class="phase">
+    <div class="ph-lbl">Phase 2 · 2028–2029 · SEAFORD</div>
+    <div class="ph-title">DuPont Nylon Plant Site</div>
+    <div class="ph-range">NMTC + EPA Brownfield + EDA</div>
+    <div class="ph-body">Full-scale dual-line campus at 750-acre National Historic Chemical Landmark site. 3DCP fabrication bay added. U of Delaware research partnership. L.E.E.P. statewide expansion anchors workforce pipeline in Sussex County. DelTech Georgetown campus as training partner.</div>
+  </div>
+  <div class="phase">
+    <div class="ph-lbl">Phase 3 · 2030 · FULL SYSTEM</div>
+    <div class="ph-title">Complete Building Systems Campus</div>
+    <div class="ph-range">Operating revenue + licensing</div>
+    <div class="ph-body">Every structural component of a Mid-Atlantic affordable housing building under one roof: CLT floors, SIP envelope, AAC party walls, modular MEP, prefab concrete foundations. 80+ graduates annually. Builder's Manual published. Affiliate licensing to Baltimore, Philadelphia, D.C.</div>
+  </div>
+  <div class="phase soon">
+    <div class="ph-lbl">Horizon · 2031+ · NATIONAL</div>
+    <div class="ph-title">The Forward Home Standard</div>
+    <div class="ph-range">Licensing + data revenue</div>
+    <div class="ph-body">Merge4Ward Building System becomes the Mid-Atlantic standard for sustainable affordable housing construction. ALDDB the definitive cost benchmark. M4Di the predevelopment intelligence layer for every project built with the system. L.E.E.P. a statewide Delaware institution.</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- SECTION 5: L.E.E.P. -->
+<div class="eyebrow">Section 5 — L.E.E.P.: Both Pipeline and Beneficiary</div>
+<div class="h2">The workforce answer that every prior attempt got wrong.</div>
+
+<p class="b">Every CLT/SIP manufacturing attempt that preceded Merge4Ward — including Katerra's $2 billion effort — failed in part because manufactured panels arrived in a market with no trained installers. Training was assumed to follow demand. Demand never arrived because installers were not ready. Merge4Ward's answer is structural, not aspirational: L.E.E.P., Inc. is simultaneously the primary supplier of trainees into the workforce program and the primary employer of certified graduates on its own development pipeline. That closed loop is the innovation.</p>
+
+<div class="two nb">
+  <div>
+    <div class="h3">L.E.E.P. as Supplier — The Training Pipeline</div>
+    <p class="b" style="font-size:0.88rem;">L.E.E.P.'s community relationships and workforce development networks in Wilmington's LMI neighborhoods provide the primary trainee pipeline for each Merge4Ward cohort. L.E.E.P. recruits candidates, provides wraparound support (accessing DDDS, DHSS, and workforce block grant funding to keep trainees in the program through completion), and gives trainees line-of-sight to real employment on real projects — not hypothetical future jobs. L.E.E.P.'s 501(c)(3) structure unlocks wraparound support funding that a for-profit training operator cannot access.</p>
+    <div class="h3" style="margin-top:0.12in;">L.E.E.P. as Beneficiary — The Deployment Ground</div>
+    <p class="b" style="font-size:0.88rem;">Every L.E.E.P. development project built with Merge4Ward-produced panels employs Merge4Ward-trained workers — keeping both manufacturing revenue and construction wages in Wilmington's LMI communities. L.E.E.P. gains a sustained competitive advantage as a developer: lower panel costs from local supply, faster schedules from trained crews, and M4Di-documented cost intelligence from the predevelopment stage. In Phase 2, L.E.E.P. has in-house access to 3DCP-certified operators no competing Mid-Atlantic developer can match.</p>
+  </div>
+  <div class="dk" style="align-self:start;">
+    <div class="dk-lbl">L.E.E.P. Statewide Expansion</div>
+    <div class="dk-title">From Wilmington to <em>Delaware-Wide</em></div>
+    <p>The Seaford Phase 2 campus is the organizational event that justifies L.E.E.P. expanding its 501(c)(3) mission from Wilmington/New Castle County to statewide Delaware. Sussex County has some of Delaware's deepest housing affordability challenges. DelTech Georgetown is 20 miles from Seaford.</p>
+    <p>The expansion requires an amendment to L.E.E.P.'s Articles of Incorporation — not a new organization, not a new IRS determination letter. Same mission, broader geography. This makes L.E.E.P. eligible for DEDO Strategic Fund grants, DHSS statewide workforce block grants, DNREC Brownfields funding, and DSHA housing finance programs allocated at the state level.</p>
+    <p><strong>Governor Meyer's registered apprenticeship program designation</strong> — under EO #1 and EO #10 — is the specific mechanism that makes every Merge4Ward trainee eligible for WIOA funding and Pell Grants for credential coursework. That turns the training program from grant-dependent to self-sustaining.</p>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- SECTION 6: CAPITAL -->
+<div class="pb"></div>
+<div class="eyebrow">Section 6 — Capital Structure</div>
+<div class="h2">Why grants first, NMTC second, banks last, and venture capital never.</div>
+
+<p class="b">The wrong capital structure is what killed Katerra — not bad technology, not bad management, but a venture capital obligation that required a 10x return incompatible with serving affordable housing nonprofits. Merge4Ward's advantage over every prior attempt is that it is not a venture-backed for-profit. Do not trade that advantage for speed. Here is the right sequence.</p>
+
+<table class="cap nb">
+  <thead>
+    <tr><th style="width:8%">Tier</th><th style="width:28%">Source</th><th style="width:14%">Range</th><th style="width:50%">Role & When</th></tr>
+  </thead>
+  <tbody>
+    <tr class="priority">
+      <td class="tier">TIER 1</td>
+      <td><strong>Wells Fargo/Enterprise HABC</strong><br><span style="font-size:0.72rem;color:var(--muted)">Submitted May 15 — results July 2026</span></td>
+      <td class="amt">$2,000,000</td>
+      <td>Catalyst grant. Funds market study, facility site selection, Year-1 workforce cohort. Results late July 2026. Non-dilutive. Mission-aligned. The first domino.</td>
+    </tr>
+    <tr class="priority">
+      <td class="tier">TIER 1</td>
+      <td><strong>EDA Build to Scale / Advanced Mfg.</strong></td>
+      <td class="amt">$500K–$2M</td>
+      <td>Advanced manufacturing in economically distressed region. NCC census tracts qualify. Apply Q3 2026 with Mayor/Governor letters.</td>
+    </tr>
+    <tr class="priority">
+      <td class="tier">TIER 1</td>
+      <td><strong>EPA Brownfields (Seaford Phase 2)</strong></td>
+      <td class="amt">$500K–$2M</td>
+      <td>Job-creating brownfield redevelopment at a completed-cleanup site. Adds a funding layer unavailable for the Wilmington greenfield site.</td>
+    </tr>
+    <tr>
+      <td class="tier">TIER 1</td>
+      <td><strong>HUD Economic Development Initiative</strong></td>
+      <td class="amt">$250K–$1M</td>
+      <td>LMI community job creation. City of Wilmington co-applicant role strengthens eligibility.</td>
+    </tr>
+    <tr>
+      <td class="tier">TIER 1</td>
+      <td><strong>USDA Rural Development (Seaford)</strong></td>
+      <td class="amt">$250K–$1M</td>
+      <td>Seaford is rural Delaware — USDA programs available that Wilmington doesn't qualify for. Additive to Wilmington stack.</td>
+    </tr>
+    <tr>
+      <td class="tier">TIER 2</td>
+      <td><strong>New Markets Tax Credits (NMTC)</strong><br><span style="font-size:0.72rem;color:var(--muted)">Via Reinvestment Fund or LISC</span></td>
+      <td class="amt">$15M–$40M</td>
+      <td>Primary facility capitalization. Qualifying OZ census tract + documented job creation = strong eligibility. Tax credit equity doesn't require debt service in early years. This is the engine of the capital stack.</td>
+    </tr>
+    <tr>
+      <td class="tier">TIER 2</td>
+      <td><strong>DEDO Strategic Fund</strong></td>
+      <td class="amt">$250K–$1M</td>
+      <td>Manufacturing jobs at $45K+/year are the primary trigger. Governor Meyer's EO #10 workforce development commitment is the political unlock. Rolling — apply Q3 2026.</td>
+    </tr>
+    <tr>
+      <td class="tier">TIER 3</td>
+      <td><strong>NCALL Research / Reinvestment Fund</strong><br><span style="font-size:0.72rem;color:var(--muted)">CDFI debt</span></td>
+      <td class="amt">$2M–$8M</td>
+      <td>Below-market patient capital once NMTC equity is assembled. CDFIs understand manufacturing startups don't cash flow immediately. Gap-filling working capital.</td>
+    </tr>
+    <tr>
+      <td class="tier">TIER 4</td>
+      <td><strong>WSFS Bank (Wilmington)</strong><br><span style="font-size:0.72rem;color:var(--muted)">Senior secured debt</span></td>
+      <td class="amt">Market rate</td>
+      <td>Delaware's largest independent community bank. CRA obligation makes affordable housing + economic development lending a regulatory priority. Engage now as a relationship — not as a lender yet. Senior debt comes in after Tiers 1–3 de-risk the project.</td>
+    </tr>
+    <tr>
+      <td class="tier">NEVER</td>
+      <td><strong>Venture Capital</strong></td>
+      <td class="amt">—</td>
+      <td>Requires 10x return incompatible with this mission. Katerra raised $2 billion in venture capital and went bankrupt. The capital structure was the cause. Do not trade Merge4Ward's nonprofit capital advantage for speed.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="rule"></div>
+
+<!-- SECTION 7: GOVERNOR MEYER -->
+<div class="eyebrow">Section 7 — Governor Meyer & the Political Opportunity</div>
+<div class="h2">His first executive order was about apprenticeships. Merge4Ward is the program that makes it real.</div>
+
+<p class="b">Governor Matt Meyer took office January 21, 2025. His first act as Governor — signed within minutes of his inauguration — was Executive Order #1, establishing a working group on youth apprenticeships and career pathways. His tenth executive order established the Office of Workforce Development within the Department of Labor. He has made affordable housing investment a documented first-year priority. He is navigating real tension with Democratic legislators after vetoing SB 63 (construction contractor classification / wage theft) — a veto that labor unions characterized as siding with contractor lobbies over workers.</p>
+
+<div class="ccal nb">
+  <strong>The Political Gap Merge4Ward Fills:</strong> Governor Meyer does not need to reverse his SB 63 position to answer the labor critique. He needs a tangible, visible, documented program that creates manufacturing jobs with registered apprenticeship structures, living wages, and community benefit — in a community that has been watching manufacturing employment disappear for two decades. Merge4Ward is that program. It does not require him to change a legal position. It requires him to endorse an economic development initiative that directly implements his own executive orders.
+</div>
+
+<div class="two nb">
+  <div>
+    <div class="h3">What Meyer's office gets</div>
+    <p class="b" style="font-size:0.88rem;">A statewide manufacturing narrative that simultaneously serves Wilmington (Mayor Carney's agenda) and Seaford (Sussex County economic development) — the geographic pairing that makes this a gubernatorial story, not just a city story. The Seaford site at a National Historic Chemical Landmark is a press event. Delaware as the first Mid-Atlantic state with regional CLT/SIP and AAC manufacturing is a national story. The IDD neighborhood integration pipeline gives him a healthcare and housing story alongside the manufacturing story. The apprenticeship program directly implements EO #1 and EO #10 in a way he can point to.</p>
+    <div class="h3" style="margin-top:0.1in;">The specific ask of his office</div>
+    <p class="b" style="font-size:0.88rem;">Formal recognition of Merge4Ward's registered apprenticeship program under the Delaware Apprenticeship and Training Program (DATP) managed by the Department of Labor. This designation costs nothing, takes approximately 90 days, and makes every Merge4Ward trainee eligible for WIOA funding and Pell Grants. It is the mechanism that makes L.E.E.P.'s wraparound support financially sustainable without perpetual grant dependency. A letter of support for the Seaford site engagement with DEDO is the secondary ask.</p>
+  </div>
+  <div class="dk" style="align-self:start;">
+      <div class="dk-lbl">Civic Pitch Document</div>
+      <div class="dk-title">The companion document:<br><em>designed to travel</em></div>
+      <p>The Merge4Ward Civic Pitch is designed for delivery to Mayor Carney's office (Cerron, Economic Development) and the Governor's office through the team's existing civic relationships.</p>
+      <p>Short enough to read in 10 minutes. Specific enough to generate the meeting. Honest enough to hold up under scrutiny. Six asks — three to the Mayor, three to the Governor. No city or state appropriation required.</p>
+      <p><strong>The DATP registered apprenticeship designation</strong> through the Governor's Department of Labor is the single highest-leverage ask — unlocking WIOA funding and Pell Grants for every Merge4Ward trainee within 90 days of engagement.</p>
+    </div>>

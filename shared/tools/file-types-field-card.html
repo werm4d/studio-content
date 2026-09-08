@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Campaign — Claude File Types Field Card</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root{
+    --bg:#0e0c0a; --panel:#16130f; --panel2:#1b1712; --ink:#e8e2d4; --mute:#8a8478;
+    --gold:#c8a04a; --gold-dim:#7a5f22; --line:#221f1a;
+    --green:#7bc08a; --red:#cc5d52; --blue:#5a93b0; --violet:#b06fd0; --teal:#4fb0a0; --orange:#d08a4a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Inter',sans-serif; line-height:1.6; padding:0 0 60px;
+    background-image:radial-gradient(circle at 15% 0%, rgba(79,176,160,.06), transparent 45%),
+                     radial-gradient(circle at 88% 28%, rgba(200,160,74,.05), transparent 42%);
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 26px;}
+
+  header{padding:46px 0 24px; border-bottom:1px solid var(--line); margin-bottom:8px;}
+  .mark{font-size:30px; color:var(--gold); line-height:1;}
+  .kicker{font-size:11px; letter-spacing:3px; color:var(--gold); font-weight:600; margin-top:14px;}
+  h1{font-family:'Spectral',serif; font-size:40px; font-weight:500; letter-spacing:-.5px; margin-top:4px;}
+  .sub{color:var(--mute); font-size:15px; max-width:660px; margin-top:10px;}
+  .tag{display:inline-block; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase;
+       color:var(--mute); border:1px solid var(--line); border-radius:20px; padding:4px 12px; margin-top:16px;}
+
+  .sec{margin-top:46px;}
+  .sec-num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--gold); letter-spacing:2px;}
+  .sec-title{font-family:'Spectral',serif; font-size:26px; font-weight:500; margin:2px 0 6px;}
+  .sec-intro{color:var(--mute); font-size:14.5px; max-width:690px; margin-bottom:24px;}
+
+  /* file card */
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:16px;
+        padding:20px 22px; margin-bottom:16px; position:relative; overflow:hidden;}
+  .card::before{content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--accent,var(--gold));}
+  .card.code{--accent:var(--blue);} .card.web{--accent:var(--violet);}
+  .card.doc{--accent:var(--teal);} .card.data{--accent:var(--orange);} .card.script{--accent:var(--gold);}
+
+  .ct-head{display:flex; align-items:center; gap:14px; margin-bottom:10px;}
+  .ext{font-family:'JetBrains Mono',monospace; font-weight:600; font-size:15px; color:var(--accent,var(--gold));
+       background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:6px 12px; white-space:nowrap;}
+  .ct-name{font-family:'Spectral',serif; font-size:19px; font-weight:600; line-height:1.2;}
+  .ct-name small{display:block; font-family:'Inter',sans-serif; font-size:11.5px; color:var(--mute); font-weight:400; font-style:italic; margin-top:2px;}
+
+  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; margin-top:12px; border-top:1px solid var(--line);}
+  @media(max-width:680px){.grid3{grid-template-columns:1fr;}}
+  .cell{padding:12px 16px 4px 0; border-right:1px solid var(--line);}
+  .cell:last-child{border-right:none;}
+  @media(max-width:680px){.cell{border-right:none; border-bottom:1px solid var(--line); padding-right:0;}.cell:last-child{border-bottom:none;}}
+  .cell .lab{font-size:9.5px; letter-spacing:1px; text-transform:uppercase; color:var(--mute); font-weight:600; margin-bottom:5px;}
+  .cell .txt{font-size:12.5px; color:#d8d2c4; line-height:1.5;}
+  .cell.lim .lab{color:var(--red);}
+
+  .renderbadge{display:inline-flex; align-items:center; gap:6px; font-size:10px; font-family:'JetBrains Mono',monospace;
+               padding:2px 8px; border-radius:12px; margin-left:auto; white-space:nowrap;}
+  .renderbadge.r{background:rgba(123,192,138,.12); color:var(--green); border:1px solid rgba(123,192,138,.3);}
+  .renderbadge.d{background:rgba(208,138,74,.12); color:var(--orange); border:1px solid rgba(208,138,74,.3);}
+
+  .note{background:var(--panel2); border:1px solid var(--line); border-left:3px solid var(--gold);
+        border-radius:10px; padding:16px 18px; font-size:13px; color:#d8d2c4; margin-top:16px;}
+  .note b{color:var(--gold);}
+
+  /* concept boxes */
+  .concept-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:680px){.concept-grid{grid-template-columns:1fr;}}
+  .concept{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px 20px;}
+  .concept h4{font-size:15px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .concept h4 .ic{color:var(--gold); font-family:'Spectral',serif; font-size:20px;}
+  .concept p{font-size:12.5px; color:#d8d2c4; line-height:1.55;}
+
+  /* decision matrix */
+  .matrix{width:100%; border-collapse:collapse; margin-top:8px; font-size:12.5px;}
+  .matrix th{background:var(--gold); color:#0e0c0a; padding:9px 12px; text-align:left; font-size:11px; letter-spacing:.5px;}
+  .matrix td{padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .matrix tr:nth-child(even) td{background:var(--panel2);}
+  .matrix .want{font-weight:600; color:var(--ink);}
+  .matrix .mono{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold);}
+
+  footer{margin-top:46px; padding-top:20px; border-top:1px solid var(--line);
+         text-align:center; color:var(--mute); font-size:11.5px;}
+
+  @media print{
+    body{background:#fff; color:#1a1a1a;}
+    .card,.concept,.note,.matrix,.sec{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="mark">◆</div>
+    <div class="kicker">THE CAMPAIGN · BUILDER'S REFERENCE</div>
+    <h1>Claude File Types Field Card</h1>
+    <p class="sub">A plain-language guide to the file formats Claude produces — what each one is, why you'd reach for it, and where it falls short. Aimed at a working-but-not-expert coder. Knowing which format fits the job is half of getting a clean result the first time.</p>
+    <span class="tag">Pick the right container for the job</span>
+  </header>
+
+  <!-- ORIENTATION -->
+  <div class="sec">
+    <div class="sec-num">00 — TWO BIG QUESTIONS</div>
+    <div class="sec-title">Before the formats: how Claude hands you a file</div>
+    <p class="sec-intro">Every file Claude makes lands in one of two ways, and knowing which saves confusion. Some render <em>live in the chat</em> — you see the result immediately. Others are <em>downloadable files</em> you save and open elsewhere. The format determines which.</p>
+    <div class="concept-grid">
+      <div class="concept">
+        <h4><span class="ic">▦</span> Renders in chat (Artifact)</h4>
+        <p>Code that the chat window can run or display on the spot — a webpage, an interactive tool, a chart, a formatted document preview. You see it working without leaving the conversation. Great for "show me" and for iterating fast.</p>
+      </div>
+      <div class="concept">
+        <h4><span class="ic">↓</span> Downloadable file</h4>
+        <p>A real file written to disk that you download and open in its own program — Word, Excel, a PDF reader, your code editor. This is how you get something you can keep, send, or deploy. Most of your APEX/Campaign deliverables are these.</p>
+      </div>
+    </div>
+    <div class="note"><b>The mental model:</b> an <em>artifact</em> is a live preview; a <em>downloadable file</em> is the thing you own. Some formats can be both (an HTML page renders <em>and</em> downloads). Throughout this card, a <span style="color:var(--green)">green RENDERS</span> badge means it previews live; a <span style="color:var(--orange)">orange DOWNLOAD</span> badge means you save it to open elsewhere.</p></div>
+  </div>
+
+  <!-- SECTION 1: WEB / RENDERABLE -->
+  <div class="sec">
+    <div class="sec-num">01 — THE LIVE ONES</div>
+    <div class="sec-title">Web &amp; interactive formats</div>
+    <p class="sec-intro">These render right in the chat, which is why every dashboard and reference card in your toolkit is one of them. They're also self-contained — a single file you can host anywhere, no install required.</p>
+
+    <!-- HTML -->
+    <div class="card web">
+      <div class="ct-head">
+        <span class="ext">.html</span>
+        <span class="ct-name">HTML page<small>HyperText Markup Language — a web page</small></span>
+        <span class="renderbadge r">● RENDERS + DOWNLOADS</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">The language of web pages. One file can hold the structure, styling (CSS), and behavior (JavaScript) all together — a complete, standalone app.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">Self-contained and runs in any browser with zero setup. Perfect for dashboards and tools you host yourself. Your APEX Terminal and these field cards are single HTML files.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Can't save data on its own between sessions unless wired to storage. Not ideal for heavy number-crunching or large datasets.</div></div>
+      </div>
+    </div>
+
+    <!-- REACT / JSX -->
+    <div class="card web">
+      <div class="ct-head">
+        <span class="ext">.jsx</span>
+        <span class="ct-name">React component<small>JavaScript + markup — interactive UI</small></span>
+        <span class="renderbadge r">● RENDERS</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">A way to build interactive interfaces in pieces ("components") that update themselves as data changes. The Campaign engine is a React file.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">Best for tools with state — things that remember inputs, track lists, recalculate live. Cleaner than raw HTML once a tool gets complex.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Needs a React environment to run outside the chat (more setup than plain HTML). Steeper learning curve. Overkill for a static page.</div></div>
+      </div>
+    </div>
+
+    <!-- SVG -->
+    <div class="card web">
+      <div class="ct-head">
+        <span class="ext">.svg</span>
+        <span class="ct-name">Vector graphic<small>Scalable Vector Graphics — math-drawn images</small></span>
+        <span class="renderbadge r">● RENDERS</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">An image defined by shapes and coordinates rather than pixels — so it stays razor-sharp at any size. The payoff diagrams on your options cards are SVG.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">Crisp at any zoom, tiny file size, and editable as text. Ideal for diagrams, charts, logos, and icons.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Wrong tool for photographs or richly detailed images. Complex SVGs can get verbose and slow.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: CODE / SCRIPTS -->
+  <div class="sec">
+    <div class="sec-num">02 — THE WORKHORSES</div>
+    <div class="sec-title">Code &amp; scripts</div>
+    <p class="sec-intro">These are instructions for a computer to execute. They don't "render" — they <em>run</em>, doing work: fetching data, crunching numbers, automating a task, or generating other files. Your TRIDENT bot and PDF generators live here.</p>
+
+    <!-- PYTHON -->
+    <div class="card code">
+      <div class="ct-head">
+        <span class="ext">.py</span>
+        <span class="ct-name">Python script<small>General-purpose programming language</small></span>
+        <span class="renderbadge d">● DOWNLOAD / RUN</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">A readable, widely-used programming language. Runs on your machine to do almost anything — call APIs, process data, automate trades, build PDFs (your ReportLab scripts).</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">The Swiss-army knife. Huge library ecosystem, gentle syntax, ideal for automation and data work. Your TRIDENT Automator and Forex Compounder are Python.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Needs Python installed to run. Not for in-browser interfaces. Slower than compiled languages for extreme performance (rarely matters here).</div></div>
+      </div>
+    </div>
+
+    <!-- BAT -->
+    <div class="card script">
+      <div class="ct-head">
+        <span class="ext">.bat</span>
+        <span class="ct-name">Batch file<small>Windows command script</small></span>
+        <span class="renderbadge d">● DOWNLOAD / RUN</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">A short list of Windows commands that run in sequence when you double-click it. Your START_APEX.bat launcher is one — one click instead of typing commands.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">Removes friction. Turns a multi-step terminal routine (start the server, open the browser) into a single double-click. Great for repeated tasks.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Windows-only. Limited logic — fine for launching things, not for real programs. Python is better once there's any complexity.</div></div>
+      </div>
+    </div>
+
+    <!-- TOS / ThinkScript note as a card -->
+    <div class="card code">
+      <div class="ct-head">
+        <span class="ext">.ts script</span>
+        <span class="ct-name">ThinkScript<small>ThinkorSwim's built-in language</small></span>
+        <span class="renderbadge d">● PASTE INTO TOS</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">A specialized language that runs <em>inside</em> ThinkorSwim to draw indicators, color bars, and scan for setups. Your TRIDENT and Double Helix studies are ThinkScript.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">The only way to express custom signals natively in TOS. Lives in the platform — no external server, runs on every chart and scan automatically.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Locked to the ThinkorSwim platform — can't run anywhere else. Can't place trades on its own (alerts/visuals only).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: DOCUMENTS -->
+  <div class="sec">
+    <div class="sec-num">03 — THE DELIVERABLES</div>
+    <div class="sec-title">Document formats</div>
+    <p class="sec-intro">Formats built for reading, printing, and sharing with people — not computers. The right choice depends on whether you need easy editing, fixed layout, or lightweight plain text.</p>
+
+    <!-- DOCX -->
+    <div class="card doc">
+      <div class="ct-head">
+        <span class="ext">.docx</span>
+        <span class="ct-name">Word document<small>Microsoft Word format</small></span>
+        <span class="renderbadge d">● DOWNLOAD</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">The standard editable document — headings, tables, styles, page numbers. Your operator's manual and quick-reference card are docx.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">When someone needs to <em>edit</em> it, or expects a "real" professional document. Universally accepted for formal deliverables and proposals.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Layout can shift slightly between Word, Google Docs, and Mac. Heavier to produce than plain text. Overkill for quick notes.</div></div>
+      </div>
+    </div>
+
+    <!-- PDF -->
+    <div class="card doc">
+      <div class="ct-head">
+        <span class="ext">.pdf</span>
+        <span class="ct-name">PDF<small>Portable Document Format — fixed layout</small></span>
+        <span class="renderbadge d">● DOWNLOAD</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">A document that looks <em>identical</em> everywhere — every font, margin, and image locked in place. Your ReportLab nutrition guides are print-ready PDFs.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">When layout must not move — print-ready material, official documents, anything where "it looks right on my screen" must hold for everyone.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Hard to edit after the fact (it's meant to be final). Reflowing text or fixing a typo often means regenerating from the source.</div></div>
+      </div>
+    </div>
+
+    <!-- MARKDOWN -->
+    <div class="card doc">
+      <div class="ct-head">
+        <span class="ext">.md</span>
+        <span class="ct-name">Markdown<small>Plain text with simple formatting</small></span>
+        <span class="renderbadge r">● RENDERS + DOWNLOADS</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">Plain text that uses simple marks (# for headings, * for bullets) to add light formatting. Readable raw or rendered pretty. Your DoubleHelix package is .md.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">Fast, future-proof, and version-control friendly. Ideal for notes, READMEs, and documentation that lives near code. Opens in anything.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Limited formatting — no precise layout, page control, or complex tables. Not for polished client-facing deliverables.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: DATA -->
+  <div class="sec">
+    <div class="sec-num">04 — THE DATA HOLDERS</div>
+    <div class="sec-title">Data &amp; spreadsheet formats</div>
+    <p class="sec-intro">Formats whose job is to <em>hold structured information</em> — rows, columns, records — so people or programs can work with it. The split here is human-facing (Excel) versus machine-facing (CSV, JSON).</p>
+
+    <!-- XLSX -->
+    <div class="card data">
+      <div class="ct-head">
+        <span class="ext">.xlsx</span>
+        <span class="ct-name">Excel spreadsheet<small>Microsoft Excel format</small></span>
+        <span class="renderbadge d">● DOWNLOAD</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">A full spreadsheet — multiple sheets, live formulas, charts, formatting. Your Project Jessup pro forma (9 sheets, 800+ formulas) is xlsx.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">When you need calculations, models, or financial analysis a person will open and tweak. Formulas recalculate live — ideal for pro formas and trackers.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Heavier than raw data formats. Not ideal as a data feed between programs (use CSV/JSON for that). Can get fragile with very complex formula webs.</div></div>
+      </div>
+    </div>
+
+    <!-- CSV -->
+    <div class="card data">
+      <div class="ct-head">
+        <span class="ext">.csv</span>
+        <span class="ct-name">CSV<small>Comma-Separated Values — a plain table</small></span>
+        <span class="renderbadge d">● DOWNLOAD</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">The simplest possible table: plain text, one row per line, columns split by commas. Every spreadsheet and data tool on earth reads it.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">The universal handoff format. Exporting trade logs, importing into a tool, moving data between programs — CSV is the lowest common denominator that always works.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">No formulas, formatting, or multiple sheets — just raw values. No way to store nested or hierarchical data.</div></div>
+      </div>
+    </div>
+
+    <!-- JSON -->
+    <div class="card data">
+      <div class="ct-head">
+        <span class="ext">.json</span>
+        <span class="ct-name">JSON<small>JavaScript Object Notation — structured data</small></span>
+        <span class="renderbadge d">● DOWNLOAD / CONFIG</span>
+      </div>
+      <div class="grid3">
+        <div class="cell"><div class="lab">What it is</div><div class="txt">A text format for structured data using labeled fields and nesting — like a labeled filing system. Your TRIDENT bot reads/writes trident_state.json.</div></div>
+        <div class="cell"><div class="lab">Why use it</div><div class="txt">The standard way programs exchange data and store settings. Handles nested structure CSV can't. Most APIs speak JSON.</div></div>
+        <div class="cell lim"><div class="lab">Limitations</div><div class="txt">Meant for machines, not humans — clumsy to read or edit by hand at scale. One misplaced comma or bracket breaks the whole file.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DECISION MATRIX -->
+  <div class="sec">
+    <div class="sec-num">05 — THE QUICK PICK</div>
+    <div class="sec-title">"I want to…" → use this</div>
+    <p class="sec-intro">When you're not sure what to ask Claude to build, start from the goal. Name what you want to do with the result, and the format usually picks itself.</p>
+    <table class="matrix">
+      <thead><tr><th>I want to…</th><th>Use</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="want">Build a tool I can host and use on my phone</td><td class="mono">.html</td><td>Self-contained, runs in any browser, no install</td></tr>
+        <tr><td class="want">Build an interactive tool that tracks state</td><td class="mono">.jsx</td><td>React handles live inputs, lists, recalculation</td></tr>
+        <tr><td class="want">Automate a task on my computer</td><td class="mono">.py</td><td>Python runs locally, talks to APIs, automates</td></tr>
+        <tr><td class="want">Send a formal, editable document</td><td class="mono">.docx</td><td>Professional, editable, universally expected</td></tr>
+        <tr><td class="want">Hand someone something print-ready</td><td class="mono">.pdf</td><td>Looks identical everywhere, layout locked</td></tr>
+        <tr><td class="want">Write notes or a README near my code</td><td class="mono">.md</td><td>Lightweight, readable, future-proof</td></tr>
+        <tr><td class="want">Build a financial model with formulas</td><td class="mono">.xlsx</td><td>Live formulas, multiple sheets, charts</td></tr>
+        <tr><td class="want">Move data between two programs</td><td class="mono">.csv</td><td>Universal table format everything reads</td></tr>
+        <tr><td class="want">Store settings or program state</td><td class="mono">.json</td><td>Structured, nestable, what programs expect</td></tr>
+        <tr><td class="want">Draw a sharp diagram or chart</td><td class="mono">.svg</td><td>Crisp at any size, tiny, editable as text</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>One rule that prevents most rework:</b> tell Claude the <em>destination</em>, not just the content. "A report I'll email to a client" → docx. "A report I'll print and pin up" → PDF. "Numbers I'll keep adjusting" → xlsx. "A tool I'll run on my iPad" → HTML. Same content, four different right answers — and the destination is what decides.</div>
+  </div>
+
+  <footer>
+    The Campaign · Builder's Reference · Claude File Types Field Card &nbsp;·&nbsp; Educational reference<br>
+    Format behavior reflects how Claude's tools work in this environment. Renderable formats preview live; others download to open in their own program.
+  </footer>
+
+</div>
+</body>
+</html>

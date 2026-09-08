@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Delaware's Next Manufacturing Chapter — Merge4Ward Civic Pitch | June 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --city-dk:  #0a2342;
+  --city-md:  #1a3d6b;
+  --city-lt:  #e8eef6;
+  --grn-dk:   #0F4B18;
+  --grn-md:   #196B23;
+  --grn-lt:   #D8EDD0;
+  --grn-pale: #EDF4E1;
+  --gold:     #c89c2a;
+  --gold-lt:  #fdf3d4;
+  --warm:     #f7f6f2;
+  --line:     #dddbd3;
+  --blk:      #0f0f10;
+  --mid:      #2c2c30;
+  --muted:    #6b6b72;
+  --wht:      #ffffff;
+  --on-dk:    #ffffff;
+  --on-dk-sec:#d4dce8;
+  --on-dk-mut:#a8b8cc;
+  --on-grn:   #ffffff;
+  --on-grn-lt:#c8f09a;
+  --on-grn-sec:#b8d89a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:12.5pt;}
+body{font-family:'DM Sans',sans-serif;color:var(--mid);background:var(--wht);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;line-height:1.6;}
+@media print{
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:11pt;}
+  @page{size:letter;margin:0.45in 0.55in;}
+  .pb{page-break-before:always;}.nb{page-break-inside:avoid;}
+}
+@media screen{body{max-width:8.5in;margin:0 auto;padding:0.45in 0.55in;}}
+
+/* HEADER */
+.hdr{display:flex;justify-content:space-between;align-items:flex-end;
+  padding-bottom:0.12in;margin-bottom:0.18in;border-bottom:3px solid var(--city-dk);}
+.hdr-left{display:flex;align-items:center;gap:10px;}
+.hdr-mark{width:36px;height:36px;background:var(--city-dk);display:flex;
+  align-items:center;justify-content:center;}
+.hdr-mark span{font-family:'Syne',sans-serif;font-size:0.56rem;font-weight:800;color:var(--gold);}
+.hdr-name{font-family:'Syne',sans-serif;font-size:1.0rem;font-weight:700;color:var(--blk);}
+.hdr-sub{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+.hdr-meta{text-align:right;font-size:0.7rem;color:var(--muted);line-height:1.5;}
+
+/* COVER — DUAL TONE: CITY NAVY TOP / DARK GREEN BOTTOM */
+.cover{background:var(--city-dk);padding:0.38in 0.42in 0.32in;
+  margin-bottom:0.22in;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;top:0;right:0;width:2.8in;height:100%;
+  background:var(--city-md);clip-path:polygon(38% 0%,100% 0%,100% 100%,4% 100%);}
+.cover::after{content:'';position:absolute;bottom:0;right:0.42in;
+  width:1.4in;height:0.04in;background:var(--gold);}
+.c-tag{font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.06in;position:relative;}
+.c-to{font-size:0.85rem;color:var(--on-dk-sec);margin-bottom:0.16in;position:relative;}
+.c-title{font-family:'Syne',sans-serif;font-size:2.0rem;font-weight:800;
+  color:var(--on-dk);line-height:1.0;margin-bottom:0.1in;
+  position:relative;max-width:5.8in;}
+.c-title em{color:var(--gold);font-style:normal;}
+.c-sub{font-size:0.97rem;font-weight:300;color:var(--on-dk-sec);
+  line-height:1.55;max-width:5.4in;position:relative;margin-bottom:0.2in;}
+.c-partners{display:flex;gap:0.16in;flex-wrap:wrap;
+  border-top:1px solid rgba(255,255,255,0.15);padding-top:0.12in;position:relative;}
+.cp{font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--on-dk-mut);}
+
+/* HISTORY BAND */
+.history{background:var(--grn-dk);padding:0.22in 0.26in;margin-bottom:0.2in;
+  display:grid;grid-template-columns:1fr 1fr;gap:0.3in;align-items:center;}
+.hist-left{}
+.hist-lbl{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--on-grn-lt);margin-bottom:6px;}
+.hist-title{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;
+  color:var(--on-grn);line-height:1.2;}
+.hist-title em{color:var(--on-grn-lt);font-style:normal;}
+.hist-right{}
+.hist-right p{font-size:0.94rem;color:var(--on-grn-sec);line-height:1.65;margin-bottom:0.07in;}
+.hist-right p:last-child{margin-bottom:0;}
+.hist-right strong{color:var(--on-grn-lt);}
+
+/* STAT BAR */
+.stat-bar{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:0.2in;}
+.stat{background:var(--warm);padding:0.1in 0.12in;}
+.stat-v{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;
+  color:var(--city-dk);line-height:1;margin-bottom:2px;}
+.stat-v.gld{color:var(--gold);}
+.stat-v.grn{color:var(--grn-dk);}
+.stat-s{font-size:0.6rem;color:var(--muted);line-height:1.35;}
+
+/* ATOMS */
+.eyebrow{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--city-md);margin-bottom:3px;}
+.h2{font-family:'Syne',sans-serif;font-size:1.18rem;font-weight:800;color:var(--blk);
+  margin-bottom:0.09in;line-height:1.15;border-left:3px solid var(--gold);padding-left:9px;}
+p.b{font-size:0.97rem;line-height:1.65;margin-bottom:0.07in;}
+p.b:last-child{margin-bottom:0;}
+.rule{border:none;border-top:1px solid var(--line);margin:0.16in 0;}
+
+/* LAYOUT */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0.18in;margin-bottom:0.18in;}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.14in;margin-bottom:0.16in;}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:0.12in;margin-bottom:0.16in;}
+
+/* WIN GRID */
+.win-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--line);border:1px solid var(--line);margin-bottom:0.18in;}
+.win{background:var(--wht);padding:0.13in 0.14in;}
+.win.city{background:var(--city-lt);}
+.win.state{background:var(--grn-pale);}
+.win-head{font-family:'Syne',sans-serif;font-size:0.94rem;font-weight:700;
+  color:var(--city-dk);margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--line);}
+.win-head.grn{color:var(--grn-dk);}
+.win-item{font-size:0.84rem;color:var(--mid);line-height:1.55;margin-bottom:4px;
+  padding-left:11px;position:relative;}
+.win-item::before{content:'▸';position:absolute;left:0;color:var(--gold);
+  font-size:0.65rem;top:3px;}
+
+/* TECH CARDS */
+.tech-four{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:0.18in;}
+.tech{background:var(--wht);padding:0.12in 0.13in;}
+.tech-tag{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.tech-title{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;
+  color:var(--blk);margin-bottom:4px;line-height:1.2;}
+.tech p{font-size:0.78rem;color:var(--mid);line-height:1.5;}
+
+/* CAPITAL TABLE */
+table.cap{width:100%;border-collapse:collapse;font-size:0.82rem;margin:0.08in 0;}
+table.cap th{font-family:'Syne',sans-serif;font-size:0.56rem;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;background:var(--city-dk);
+  color:var(--on-dk);padding:6px 8px;text-align:left;}
+table.cap td{padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4;}
+table.cap tr:nth-child(even) td{background:var(--warm);}
+table.cap tr.now td{background:var(--gold-lt);}
+table.cap td.amt{font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--grn-md);
+  white-space:nowrap;font-weight:600;}
+table.cap td.lev{font-size:0.82rem;}
+
+/* ASK BOX */
+.ask{background:var(--city-dk);padding:0.2in 0.26in;margin-top:0.18in;}
+.ask-lbl{font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.07in;}
+.ask-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;
+  color:var(--on-dk);line-height:1.2;margin-bottom:0.1in;}
+.ask ul{padding-left:1.2em;}
+.ask ul li{font-size:0.94rem;color:var(--on-dk-sec);line-height:1.65;margin-bottom:5px;}
+.ask ul li strong{color:var(--gold);}
+
+/* CALLOUTS */
+.cal{background:var(--gold-lt);border-left:3px solid var(--gold);
+  padding:0.09in 0.13in;margin:0.1in 0;font-size:0.94rem;line-height:1.6;color:var(--mid);}
+.cal strong{color:var(--city-dk);font-family:'Syne',sans-serif;
+  font-size:0.72rem;text-transform:uppercase;letter-spacing:.06em;}
+.gcal{background:var(--grn-pale);border-left:3px solid var(--grn-md);
+  padding:0.09in 0.13in;margin:0.1in 0;font-size:0.94rem;line-height:1.6;color:var(--mid);}
+.gcal strong{color:var(--grn-dk);font-family:'Syne',sans-serif;
+  font-size:0.72rem;text-transform:uppercase;letter-spacing:.06em;}
+
+/* PHASE STRIP */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:0.16in;}
+.phase{background:var(--wht);padding:0.12in 0.13in;}
+.phase.now{background:var(--city-lt);}
+.phase.next{background:var(--grn-pale);}
+.ph-lbl{font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--city-md);margin-bottom:3px;}
+.ph-lbl.grn{color:var(--grn-md);}
+.ph-title{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;
+  color:var(--blk);margin-bottom:3px;line-height:1.2;}
+.ph-range{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--gold);margin-bottom:5px;}
+.ph-body{font-size:0.74rem;color:var(--mid);line-height:1.45;}
+
+/* PARTNER ROW */
+.partners{display:flex;gap:0.1in;margin:0.12in 0;}
+.partner{flex:1;border:1px solid var(--line);padding:0.08in 0.1in;text-align:center;}
+.partner-name{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;
+  color:var(--blk);display:block;margin-bottom:2px;}
+.partner-role{font-size:0.6rem;color:var(--muted);line-height:1.4;}
+
+/* FOOTER */
+.foot{margin-top:0.2in;padding-top:0.08in;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;font-size:0.6rem;color:#bbb;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-mark"><span>M4D</span></div>
+    <div>
+      <div class="hdr-name">Merge 4 Design LLC &nbsp;·&nbsp; Merge4Ward LLC &nbsp;·&nbsp; M4Di™ &nbsp;·&nbsp; Aubyn Architecture LLC &nbsp;·&nbsp; L.E.E.P., Inc.</div>
+      <div class="hdr-sub">Delaware's Next Manufacturing Chapter &nbsp;·&nbsp; Civic Briefing &nbsp;·&nbsp; June 2026</div>
+    </div>
+  </div>
+  <div class="hdr-meta">Civic Briefing — June 2026<br>Mayor John Carney · Governor Matt Meyer</div>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="c-tag">Presented to the City of Wilmington and the State of Delaware</div>
+  <div class="c-to">Mayor John Carney, City of Wilmington &nbsp;·&nbsp; Governor Matt Meyer, State of Delaware</div>
+  <div class="c-title">Delaware's <em>Next</em><br>Manufacturing Chapter</div>
+  <div class="c-sub">From the world's first nylon plant to the Mid-Atlantic's first sustainable construction manufacturing campus — on the same Delaware ground. A proposal for the City of Wilmington and the State of Delaware to lead what the rest of the coast is waiting for someone to do first.</div>
+  <div class="c-partners">
+    <span class="cp">Merge4Ward LLC</span>
+    <span class="cp">&nbsp;·&nbsp; Merge 4 Design LLC</span>
+    <span class="cp">&nbsp;·&nbsp; M4Di™ — Merge 4 Development Institute</span>
+    <span class="cp">&nbsp;·&nbsp; Aubyn Architecture LLC</span>
+    <span class="cp">&nbsp;·&nbsp; L.E.E.P., Inc.</span>
+  </div>
+</div>
+
+<!-- HISTORY BAND -->
+<div class="history nb">
+  <div class="hist-left">
+    <div class="hist-lbl">The Delaware Precedent</div>
+    <div class="hist-title">1939 → <em>2028</em><br>Same instinct.<br>Different century.</div>
+  </div>
+  <div class="hist-right">
+    <p>In 1939, DuPont chose a 609-acre site near Seaford, Delaware to build the world's first nylon manufacturing plant. They chose it for water access, rail infrastructure, proximity to markets, and a community hungry for employment. The town became known as <strong>"The Nylon Capital of the World."</strong> At peak operation, 4,600 Delawareans built their careers there. That plant is now a National Historic Chemical Landmark — and today, INVISTA is exploring its sale.</p>
+    <p>Merge4Ward proposes to make that site Delaware's next manufacturing landmark — the Mid-Atlantic's first sustainable construction manufacturing campus, producing the CLT structural panels, AAC fire-separation panels, SIP envelope systems, and 3D printed concrete components that the region's affordable housing pipeline needs and currently imports from Illinois and Florida. <strong>Same Seaford site. Same Delaware logic. 87 years later.</strong></p>
+  </div>
+</div>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="stat">
+    <div class="stat-v">750 ac</div>
+    <div class="stat-s">DuPont/Invista Seaford site. National Historic Chemical Landmark. Rail + river. EPA cleanup complete. For sale now.</div>
+  </div>
+  <div class="stat">
+    <div class="stat-v gld">80+</div>
+    <div class="stat-s">Year-3 manufacturing jobs. Dual-line + 3DCP Phase 2. $45K–$65K+ wages. Registered apprenticeship program. No 4-year degree required.</div>
+  </div>
+  <div class="stat">
+    <div class="stat-v grn">$0</div>
+    <div class="stat-s">State or city appropriation required. Full capital stack through NMTC equity, federal grants, CDFI debt, and brownfield programs.</div>
+  </div>
+  <div class="stat">
+    <div class="stat-v">~$310s</div>
+    <div class="stat-s">Per-unit build cost — Claymont Hybrid. 4-unit, 3-story CLT/SIP. ~$1.25M total. Sell price $200K–$230K/unit. Panels June 22. Complete August 2026.</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- WIN-WIN -->
+<div class="eyebrow">Section 1 — The Win</div>
+<div class="h2">What Wilmington gets. What Delaware gets. What it costs to say yes.</div>
+<p class="b">Wilmington has a shortage of quality affordable housing and a manufacturing employment base that has declined for two decades. Delaware's Sussex County is watching a 120-person workforce at the INVISTA Seaford plant dwindle from a peak of 4,600 with no plan for what comes next. This proposal addresses all three challenges — without a city or state appropriation — through a layered capital stack assembled from federal grants, New Markets Tax Credits, CDFI debt, and brownfield redevelopment programs that the current site qualifies for on every criterion.</p>
+
+<div class="win-grid nb">
+  <div class="win city">
+    <div class="win-head">Wilmington Wins</div>
+    <div class="win-item">CLT/SIP and AAC panels manufactured within 2–4 hour delivery radius — eliminating $8–15/SF freight premiums that currently price innovative construction out of the affordable housing market</div>
+    <div class="win-item">Registered apprenticeship program for Wilmington's LMI workforce — CNC machinists, structural assembly technicians, AAC panel fabricators, 3D concrete printing operators — all at $45K–$65K+ with no 4-year degree required</div>
+    <div class="win-item">Every affordable housing project in the WHA and nonprofit pipeline gains access to a better building system at lower cost — the same building system validated at the Claymont Hybrid project completing August 2026</div>
+    <div class="win-item">L.E.E.P., Inc. — Gwen Motley's Wilmington-based 501(c)(3) — serves as both the workforce training pipeline and the primary employer of certified graduates, keeping wages and manufacturing revenue in Wilmington's communities</div>
+    <div class="win-item">Mayor Carney's name on the first Mid-Atlantic sustainable construction manufacturing campus — a nationally recognized first that generates press, investor attention, and peer-city interest that no competing narrative produces</div>
+  </div>
+  <div class="win state">
+    <div class="win-head grn">Delaware + Sussex County Wins</div>
+    <div class="win-item">The Seaford DuPont/Invista site reactivated as a National Historic Chemical Landmark manufacturing campus — the site where Delaware invented nylon becomes the site where Delaware invents sustainable construction manufacturing</div>
+    <div class="win-item">Governor Meyer's Executive Order #1 (youth apprenticeships) and Executive Order #10 (Office of Workforce Development) implemented in visible, tangible form in a Sussex County community that has been watching manufacturing employment disappear for twenty years</div>
+    <div class="win-item">First state in the Mid-Atlantic with regional supply chains for CLT/SIP structural panels AND AAC fire-separation panels — competitive advantage for every developer in the DSHA pipeline</div>
+    <div class="win-item">NMTC-eligible manufacturing investment attracting $15–40M in private capital to a qualifying Sussex County census tract — no state appropriation required</div>
+    <div class="win-item">DNREC Brownfields Program and EPA Brownfields Economic Development Initiative funding directly applicable to the Seaford site — a grant layer unavailable to greenfield alternatives</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- THE BUILDING SYSTEM -->
+<div class="eyebrow">Section 2 — The Building System</div>
+<div class="h2">Four technologies. One campus. Every major structural component of a Mid-Atlantic affordable housing building under one roof.</div>
+<p class="b">The Merge4Ward campus is not a single manufacturing line. It is a phased integration of four sustainable construction technologies — the only facility proposed anywhere in the Mid-Atlantic that produces the complete building system. Phase 1 launches the campus. Phase 2 completes it at Seaford.</p>
+
+<div class="tech-four nb">
+  <div class="tech">
+    <div class="tech-tag">LINE 01 · Phase 1 · Now</div>
+    <div class="tech-title">CLT + SIP Panels</div>
+    <p>Cross-laminated timber floor decks and structurally insulated panel envelopes. Manufactured in Delaware — eliminating the 2,000-mile Illinois supply chain. $8–15/SF freight savings per project. 2–4 week lead time vs. 16–24 weeks. Validated at Claymont Hybrid.</p>
+  </div>
+  <div class="tech">
+    <div class="tech-tag">LINE 02 · Phase 1 · Now</div>
+    <div class="tech-title">AAC Fire-Separation Panels</div>
+    <p>Autoclaved aerated concrete party walls — 4-hour fire rating in a single 4" wythe. Currently manufactured only in Florida with no Mid-Atlantic plant. A Delaware facility is the first in the region. Serves every townhouse and mid-rise developer within 500 miles.</p>
+  </div>
+  <div class="tech">
+    <div class="tech-tag">FUNCTION · Phase 1 · Now</div>
+    <div class="tech-title">Modular Wet Wall Assembly</div>
+    <p>Factory-assembled plumbing walls — PEX supply, DWV stack, pressure-tested — delivered to site on Day 1 of framing. Pulls MEP off the critical path by 3–4 weeks per project. Produced at the campus alongside structural panels.</p>
+  </div>
+  <div class="tech">
+    <div class="tech-tag">LINE 03 · Phase 2 · Seaford</div>
+    <div class="tech-title">3D Printed Concrete</div>
+    <p>Workshop-based prefabricated concrete components — foundation sections, bond beams, complex geometric elements. Incremental $800K–$2M addition to an existing campus. University of Delaware research partnership anchor. Completes the full building system.</p>
+  </div>
+</div>
+
+<div class="gcal nb">
+  <strong>The Proof of Concept Is Already Built:</strong> The Claymont Hybrid Townhouses — 1316–1324 N. Claymont Street, Wilmington — completed this summer as the first CLT/SIP hybrid development in the mid-Atlantic region. Build cost: ~$1.25M total (4 units), mid-$300s/unit. ROM validated within target range. ZBA variance secured in New Castle County — the first regulatory precedent for this building type in Delaware. Sell price $200K–$230K/unit. This is not a rendering. It is a completed building.
+</div>
+
+<div class="rule"></div>
+
+<!-- L.E.E.P. + WORKFORCE -->
+<div class="pb"></div>
+<div class="eyebrow">Section 3 — Workforce + L.E.E.P.</div>
+<div class="h2">The workforce answer that makes this different from every prior attempt.</div>
+<p class="b">Every CLT/SIP manufacturing initiative that preceded Merge4Ward — including Katerra's $2 billion effort — failed in part because trained installers did not exist when the panels arrived. Merge4Ward's answer is structural: L.E.E.P., Inc. (Lead Exceptionally, Empower People), a Wilmington-based 501(c)(3) led by Executive Director Gwenevere Motley, is simultaneously the primary supplier of trainees into the workforce program and the primary employer of certified graduates on its own development pipeline. The training program has a guaranteed employment exit. The manufacturing campus has a guaranteed installer base. That closed loop is the innovation.</p>
+
+<div class="two nb">
+  <div>
+    <div class="eyebrow" style="color:var(--grn-md);">L.E.E.P. as Workforce Supplier</div>
+    <div class="h2" style="font-size:0.97rem;border-color:var(--grn-md);">Recruiting from Wilmington's LMI Communities — from Day 1</div>
+    <p class="b" style="font-size:0.88rem;">L.E.E.P.'s community relationships in Wilmington's underserved neighborhoods provide the primary trainee pipeline for each Merge4Ward cohort. L.E.E.P. recruits, provides wraparound support (accessing DDDS, DHSS, and workforce block grant funding to keep trainees through completion), and connects trainees to employment on real L.E.E.P. projects — not hypothetical future jobs. Every trainee knows who hires them before they complete the program.</p>
+    <div class="eyebrow" style="color:var(--grn-md);margin-top:0.12in;">L.E.E.P. as Employer</div>
+    <div class="h2" style="font-size:0.97rem;border-color:var(--grn-md);">Certified Graduates Work on L.E.E.P. Projects</div>
+    <p class="b" style="font-size:0.88rem;">Every L.E.E.P. development built with Merge4Ward-produced panels employs Merge4Ward-trained workers — keeping both manufacturing revenue and construction wages in Wilmington's LMI communities. L.E.E.P. gains lower panel costs, faster schedules, and M4Di-documented cost intelligence. In Phase 2, L.E.E.P. has in-house 3DCP-certified operators no other Mid-Atlantic developer can match.</p>
+  </div>
+  <div>
+    <div class="eyebrow" style="color:var(--city-md);">Governor Meyer's Executive Orders</div>
+    <div class="h2" style="font-size:0.97rem;">EO #1 + EO #10: Made Real and Visible</div>
+    <p class="b" style="font-size:0.88rem;">Governor Meyer signed Executive Order #1 — creating a working group on youth apprenticeships — within minutes of his inauguration. Executive Order #10 established the Office of Workforce Development. Merge4Ward's registered apprenticeship program, formally recognized through the Delaware Apprenticeship and Training Program (DATP), is the tangible implementation of both executive orders in advanced manufacturing and construction — the exact sectors named in EO #1.</p>
+    <p class="b" style="font-size:0.88rem;">DATP registration unlocks WIOA funding eligibility for every Merge4Ward trainee and makes credential coursework Pell Grant-eligible — turning the training program from grant-dependent to self-sustaining. This costs the Governor's office nothing. It takes approximately 90 days through the Department of Labor.</p>
+    <div class="gcal" style="margin-top:0.1in;">
+      <strong>L.E.E.P. Statewide Expansion:</strong> The Seaford Phase 2 campus is the organizational event that justifies L.E.E.P. expanding its 501(c)(3) mission to statewide Delaware — serving Sussex County communities with the same workforce development model proven in Wilmington. DelTech Georgetown (20 miles from Seaford) anchors the Sussex County training program.
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- FUNDING -->
+<div class="eyebrow">Section 4 — Funding Strategy</div>
+<div class="h2">No state or city appropriation. The capital stack assembles through what the site already qualifies for.</div>
+
+<table class="cap nb">
+  <thead>
+    <tr><th style="width:26%">Source</th><th style="width:13%">Range</th><th style="width:61%">City / State Leverage Point</th></tr>
+  </thead>
+  <tbody>
+    <tr class="now">
+      <td><strong>New Markets Tax Credits</strong><br><span style="font-size:0.74rem;color:var(--muted)">Via Reinvestment Fund or LISC Delaware</span></td>
+      <td class="amt">$15M–$40M</td>
+      <td class="lev">Primary facility capitalization. Qualifying OZ census tract in Wilmington I-95 corridor (Phase 1) and Sussex County (Phase 2) + documented job creation = strong eligibility. Tax credit equity — no debt service in early years. Governor + Mayor endorsement accelerates CDE application.</td>
+    </tr>
+    <tr class="now">
+      <td><strong>EPA Brownfields Economic Development</strong><br><span style="font-size:0.74rem;color:var(--muted)">Seaford Phase 2 — site-specific</span></td>
+      <td class="amt">$500K–$2M</td>
+      <td class="lev">Job-creating brownfield redevelopment at the Seaford site — EPA cleanup already complete with institutional controls. This grant layer is unavailable to greenfield alternatives. DNREC Brownfields Program co-applicant role for the state strengthens eligibility.</td>
+    </tr>
+    <tr>
+      <td><strong>EDA Build to Scale / Advanced Mfg.</strong></td>
+      <td class="amt">$500K–$2M</td>
+      <td class="lev">Advanced manufacturing in economically distressed region. New Castle County and Sussex County census tracts both qualify. Governor + Mayor letters of support directly strengthen the application.</td>
+    </tr>
+    <tr>
+      <td><strong>DEDO Strategic Fund</strong></td>
+      <td class="amt">$250K–$1M</td>
+      <td class="lev">Manufacturing jobs at $45K+/year are the primary trigger. Governor's endorsement and direct DEDO introduction are the political unlock. Rolling application cycle — apply Q3 2026.</td>
+    </tr>
+    <tr>
+      <td><strong>HUD Economic Development Initiative</strong></td>
+      <td class="amt">$250K–$1M</td>
+      <td class="lev">LMI community job creation + manufacturing investment. City of Wilmington co-applicant or support partner role directly amplifies the community benefit documentation required for eligibility.</td>
+    </tr>
+    <tr>
+      <td><strong>USDA Rural Development (Seaford)</strong></td>
+      <td class="amt">$250K–$1M</td>
+      <td class="lev">Seaford is rural Delaware — USDA programs available that Wilmington does not qualify for. Additive to the Wilmington Phase 1 stack.</td>
+    </tr>
+    <tr>
+      <td><strong>Delaware Catalyst Fund (WHA projects)</strong></td>
+      <td class="amt">$35K/unit</td>
+      <td class="lev">Directly closes the per-unit subsidy gap on city-agency affordable housing projects using the Merge4Ward building system. Coordination with DSHA through Mayor's office accelerates eligibility determination.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="cal nb">
+  <strong>Indicative Total Stack:</strong> $2M Wells Fargo/Enterprise (submitted May 15) + $15–40M NMTC equity + $1–4M federal grants + $500K–$2M state grants + $250K–$1M philanthropic = <strong>$19M–$49M Phase 1 total.</strong> Seaford Phase 2 adds brownfield and USDA layers. <strong>The city and state contribute zero dollars and unlock the entire raise.</strong>
+</div>
+
+<div class="rule"></div>
+
+<!-- PHASE PLAN -->
+<div class="eyebrow">Section 5 — The Sequence</div>
+<div class="h2">Wilmington first. Seaford second. Delaware standard third.</div>
+
+<div class="phases nb">
+  <div class="phase now">
+    <div class="ph-lbl">Phase 1 · 2026–2027 · Wilmington</div>
+    <div class="ph-title">I-95 Corridor Campus</div>
+    <div class="ph-range">$19M–$49M · NMTC + Federal Grants</div>
+    <div class="ph-body">60,000–80,000 SF dual-line facility. CLT/SIP Line 1 + AAC Line 2 + modular wet wall. First L.E.E.P. workforce cohort: 20 trainees from Wilmington LMI neighborhoods. First panels delivered to 3 pipeline projects — including WHA and M-Well. DATP registered apprenticeship designation through Governor's DOL.</div>
+  </div>
+  <div class="phase next">
+    <div class="ph-lbl ph-lbl grn">Phase 2 · 2028–2029 · Seaford</div>
+    <div class="ph-title">DuPont Nylon Plant Site</div>
+    <div class="ph-range">NMTC + EPA Brownfield + USDA + EDA</div>
+    <div class="ph-body">Full-scale campus at the National Historic Chemical Landmark. 3DCP fabrication bay. U of Delaware research partnership formalized. L.E.E.P. statewide expansion anchors Sussex County workforce pipeline. DelTech Georgetown as training partner. The first nylon plant becomes the first sustainable construction campus.</div>
+  </div>
+  <div class="phase">
+    <div class="ph-lbl">Phase 3 · 2030+ · Delaware Standard</div>
+    <div class="ph-title">The Forward Home System</div>
+    <div class="ph-range">Operating revenue + licensing</div>
+    <div class="ph-body">Every structural component of a Mid-Atlantic affordable housing building under one Delaware roof. 80+ registered apprenticeship graduates annually. Affiliate licensing to Baltimore, Philadelphia, D.C. Wilmington and Seaford recognized nationally as the address where America reinvented affordable housing construction.</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- THE ASK -->
+<div class="ask nb">
+  <div class="ask-lbl">The Ask — City of Wilmington + State of Delaware</div>
+  <div class="ask-title">Six Steps. Zero Appropriation. One Generational Opportunity.</div>
+  <ul>
+    <li><strong>Mayor Carney — Letter of Support for EDA and HUD applications:</strong> The Wells Fargo/Enterprise application was submitted May 15. The next grant cycle targets EDA and HUD programs this summer. A Mayor's letter of support directly strengthens both applications and costs the city nothing.</li>
+    <li><strong>Mayor Carney — DEDO Introduction:</strong> A warm introduction to DEDO's Strategic Fund program officer and Opportunity Zone coordinator accelerates site identification for the Wilmington Phase 1 campus and positions Merge4Ward for Q3 2026 DEDO grant cycle.</li>
+    <li><strong>Mayor Carney — DSHA / Catalyst Fund Coordination:</strong> Facilitate a conversation between the Mayor's office, city-agency affordable housing developers, and DSHA to confirm Catalyst Fund eligibility pathways for projects using the Merge4Ward building system.</li>
+    <li><strong>Governor Meyer — DATP Registered Apprenticeship Designation:</strong> Formal recognition of Merge4Ward's workforce training program under the Delaware Apprenticeship and Training Program through the Department of Labor. 90-day process. Unlocks WIOA funding and Pell Grant eligibility for every trainee. Makes L.E.E.P.'s wraparound support financially self-sustaining.</li>
+    <li><strong>Governor Meyer — DEDO Seaford Site Engagement:</strong> An introduction to DEDO's Sussex County economic development team to establish Merge4Ward as a known interested party for the Seaford INVISTA site before the sale closes. Delaware should have a plan for that site before someone outside the state does.</li>
+    <li><strong>Both — Civic Platform:</strong> Recognition of the Merge4Ward campus as a Delaware economic development priority in appropriate communications, press, and stakeholder settings. This costs nothing. It returns the national recognition of being the state that brought sustainable construction manufacturing to the East Coast — on the site of the world's first nylon plant.</li>
+  </ul>
+</div>
+
+<!-- PARTNERS -->
+<div style="margin-top:0.18in;" class="nb">
+  <div class="partners">
+    <div class="partner">
+      <span class="partner-name">Merge4Ward LLC</span>
+      <span class="partner-role">Manufacturing entity · Initiative lead<br>Wilmington, Delaware</span>
+    </div>
+    <div class="partner">
+      <span class="partner-name">Merge 4 Design LLC</span>
+      <span class="partner-role">Architecture · Design lead<br>Knight · Ainsworth · Lynch · Davis</span>
+    </div>
+    <div class="partner">
+      <span class="partner-name">M4Di™</span>
+      <span class="partner-role">Predevelopment Intelligence<br>501(c)(3) · CB CDC fiscal sponsorship</span>
+    </div>
+    <div class="partner">
+      <span class="partner-name">Aubyn Architecture LLC</span>
+      <span class="partner-role">Architecture · AOR<br>David C. Ainsworth AIA · DE/PA/CT</span>
+    </div>
+    <div class="partner">
+      <span class="partner-name">L.E.E.P., Inc.</span>
+      <span class="partner-role">Community Developer · 501(c)(3)<br>Gwenevere Motley · Wilmington, DE</span>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <span>Merge4Ward LLC · Merge 4 Design LLC · M4Di™ · Aubyn Architecture LLC · L.E.E.P., Inc. · Wilmington, Delaware</span>
+  <span>Civic Briefing · June 2026 · Confidential — City of Wilmington · State of Delaware</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1212 Lobdel Avenue — Sustainability Systems Add-Alternate</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  @page { size: letter; margin: 0.55in 0.6in; }
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 10.5pt; }
+    .no-break { page-break-inside: avoid; }
+    .page-break { page-break-before: always; }
+  }
+  @media screen {
+    body { max-width: 8.5in; margin: 0 auto; padding: 0.55in 0.6in; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', Arial, sans-serif; color: #2c2c30; background: #fff; line-height: 1.55; }
+
+  /* Header strip */
+  .doc-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-bottom: 3px solid #196B23; padding-bottom: 8px; margin-bottom: 18px;
+  }
+  .firm-name { font-size: 13pt; font-weight: 600; color: #196B23; letter-spacing: .01em; }
+  .firm-sub  { font-size: 7.5pt; color: #888; letter-spacing: .12em; text-transform: uppercase; }
+  .doc-meta  { font-size: 7.5pt; color: #888; text-align: right; line-height: 1.6; }
+
+  /* Section heading */
+  .sec-h1 {
+    background: #CCCCCC; color: #444441; font-size: 13pt; font-weight: 600;
+    padding: 5px 10px; margin: 0 0 12px; letter-spacing: .01em;
+  }
+  .sec-h2 {
+    color: #196B23; font-size: 11pt; font-weight: 600;
+    border-left: 4px solid #196B23; padding-left: 8px; margin: 18px 0 8px;
+  }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin-bottom: 14px; }
+  th {
+    background: #444441; color: #fff; font-weight: 500; font-size: 8.5pt;
+    padding: 5px 8px; text-align: left; letter-spacing: .05em; text-transform: uppercase;
+  }
+  td { padding: 5px 8px; border-bottom: 1px solid #CCCCCC; vertical-align: top; line-height: 1.4; }
+  tr:nth-child(even) td { background: #F5F5F5; }
+  tr.total td { background: #CCCCCC; font-weight: 600; color: #444441; }
+  tr.highlight td { background: #FFF8DC; color: #B8860B; font-weight: 600; }
+  .mono { font-family: 'DM Mono', monospace; font-size: 9pt; }
+  .grn { color: #196B23; font-weight: 600; }
+  .muted { color: #888; font-size: 8.5pt; font-style: italic; }
+
+  /* Callout boxes */
+  .callout-gold {
+    background: #FFF8DC; border-left: 4px solid #B8860B;
+    padding: 10px 14px; margin: 14px 0; font-size: 10pt; line-height: 1.6;
+  }
+  .callout-gold strong { color: #B8860B; }
+  .callout-green {
+    background: #EAF3DE; border-left: 4px solid #196B23;
+    padding: 8px 12px; margin: 10px 0; font-size: 9pt; line-height: 1.55; color: #27500A;
+  }
+  .callout-amber {
+    background: #FAEEDA; border-left: 4px solid #BA7517;
+    padding: 7px 12px; margin: 6px 0; font-size: 8.5pt; line-height: 1.5; color: #633806;
+  }
+  .callout-amber::before { content: '⚠  '; font-weight: 600; }
+
+  /* Two-column layout */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
+
+  /* Flow chart for monthly cash flow */
+  .flow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .flow-box { border: 1px solid #CCCCCC; padding: 10px 12px; }
+  .flow-box-title { font-size: 8pt; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: #888; margin-bottom: 6px; }
+  .flow-item { display: flex; justify-content: space-between; font-size: 9pt; padding: 3px 0; border-bottom: 1px solid #EEEEEE; }
+  .flow-item:last-child { border-bottom: none; }
+  .flow-out { color: #A32D2D; font-weight: 500; }
+  .flow-in  { color: #196B23; font-weight: 500; }
+  .flow-total { display: flex; justify-content: space-between; font-size: 10pt; font-weight: 600; padding-top: 6px; margin-top: 4px; border-top: 2px solid #CCCCCC; }
+
+  /* Net result banner */
+  .net-banner {
+    background: #196B23; color: #fff; padding: 12px 18px;
+    display: flex; justify-content: space-between; align-items: center; margin: 14px 0;
+  }
+  .net-label { font-size: 11pt; font-weight: 500; }
+  .net-value { font-size: 20pt; font-weight: 600; }
+  .net-sub   { font-size: 8pt; opacity: .75; }
+
+  /* Mortgage check */
+  .mortgage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+  .m-card { background: #F5F5F5; padding: 8px 10px; }
+  .m-label { font-size: 7.5pt; color: #888; margin-bottom: 3px; }
+  .m-value { font-size: 14pt; font-weight: 600; color: #2c2c30; }
+  .m-sub   { font-size: 7.5pt; color: #888; }
+
+  /* Bar chart for monthly flow */
+  .bar-chart { margin: 14px 0; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 8.5pt; }
+  .bar-label { width: 200px; flex-shrink: 0; color: #5F5E5A; }
+  .bar-track { flex: 1; height: 16px; background: #F5F5F5; border: 1px solid #CCCCCC; position: relative; overflow: hidden; }
+  .bar-fill-out { height: 100%; background: #F09595; }
+  .bar-fill-in  { height: 100%; background: #9FE1CB; }
+  .bar-fill-net { height: 100%; background: #196B23; }
+  .bar-val { width: 55px; text-align: right; font-weight: 500; flex-shrink: 0; }
+  .bar-val.neg { color: #A32D2D; }
+  .bar-val.pos { color: #196B23; }
+
+  /* Footer */
+  .doc-footer { border-top: 1px solid #CCCCCC; padding-top: 6px; margin-top: 18px; display: flex; justify-content: space-between; font-size: 7pt; color: #bbb; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div>
+    <div class="firm-name">Merge 4 Design LLC  ·  M4Di™</div>
+    <div class="firm-sub">Architecture · Development · Predevelopment Intelligence</div>
+  </div>
+  <div class="doc-meta">
+    1212 Lobdel Avenue — Sustainability Systems<br>
+    M2_2026_005  ·  April 2026  ·  Internal Reference
+  </div>
+</div>
+
+<!-- SECTION TITLE -->
+<div class="sec-h1">3.6  Sustainability Systems Add-Alternate  —  1212 Lobdel Avenue</div>
+
+<p style="font-size:9.5pt;color:#5F5E5A;margin-bottom:14px;">All three systems designed for fee-simple individual lot ownership. Costs indexed to 54-unit Option D yield. PACE financing attaches to individual properties. HOA covers shared infrastructure under recorded easement plat.</p>
+
+<!-- SYSTEMS TABLE -->
+<div class="sec-h2">System costs &amp; primary benefit</div>
+<table class="no-break">
+  <colgroup><col style="width:28%"><col style="width:20%"><col style="width:16%"><col style="width:36%"></colgroup>
+  <thead><tr><th>System</th><th>Total cost</th><th>Per unit</th><th>Primary benefit</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Geothermal HVAC</strong><br><span class="muted">Shared bore field · 37 vertical bores<br>Drilled under drive aisles</span></td>
+      <td class="mono">$672,217<br><span class="muted">vs $459,000 conventional</span></td>
+      <td class="mono grn">$12,448</td>
+      <td>4.4-yr simple payback  ·  $900/unit/yr energy savings  ·  3.5 COP vs 1.0 gas</td>
+    </tr>
+    <tr>
+      <td><strong>Community Solar PV</strong><br><span class="muted">191 kW aisle canopy<br>267,120 kWh/yr  ·  66% community energy</span></td>
+      <td class="mono">$599,040 gross<br><span class="grn">$419,328 net (30% ITC)</span></td>
+      <td class="mono grn">$7,765 net</td>
+      <td>Virtual net metering (Delmarva)  ·  $693/unit/yr savings  ·  Covered parking</td>
+    </tr>
+    <tr>
+      <td><strong>Rainwater Harvesting</strong><br><span class="muted">6,000-gal underground cistern<br>Irrigation only  ·  Under center aisle</span></td>
+      <td class="mono">$26,820</td>
+      <td class="mono grn">$497</td>
+      <td>1,014,292 gal/yr collection  ·  Stormwater credit  ·  Enterprise Green Communities pts</td>
+    </tr>
+    <tr class="total">
+      <td><strong>Combined total</strong></td>
+      <td class="mono">$1,118,365</td>
+      <td class="mono">$20,710/unit</td>
+      <td>All three systems  ·  PACE-eligible  ·  Day-one cash flow positive</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- HOA + CASH FLOW side by side -->
+<div class="two-col no-break">
+  <div>
+    <div class="sec-h2" style="margin-top:0">HOA shared maintenance budget</div>
+    <table>
+      <thead><tr><th>Line item</th><th style="text-align:right">Annual</th><th style="text-align:right">$/unit/mo</th></tr></thead>
+      <tbody>
+        <tr><td>Geothermal loop maintenance</td><td class="mono" style="text-align:right">$2,400</td><td class="mono" style="text-align:right">$3.70</td></tr>
+        <tr><td>Solar PV (inverters, cleaning)</td><td class="mono" style="text-align:right">$3,200</td><td class="mono" style="text-align:right">$4.94</td></tr>
+        <tr><td>Rainwater system</td><td class="mono" style="text-align:right">$1,200</td><td class="mono" style="text-align:right">$1.85</td></tr>
+        <tr><td>Drive aisle maintenance</td><td class="mono" style="text-align:right">$4,000</td><td class="mono" style="text-align:right">$6.17</td></tr>
+        <tr><td>Landscaping + irrigation</td><td class="mono" style="text-align:right">$8,500</td><td class="mono" style="text-align:right">$13.12</td></tr>
+        <tr><td>Insurance</td><td class="mono" style="text-align:right">$3,600</td><td class="mono" style="text-align:right">$5.56</td></tr>
+        <tr><td>Reserve fund + management</td><td class="mono" style="text-align:right">$4,690</td><td class="mono" style="text-align:right">$7.24</td></tr>
+        <tr class="total"><td><strong>Total HOA</strong></td><td class="mono" style="text-align:right"><strong>$27,590</strong></td><td class="mono" style="text-align:right"><strong>$43/mo</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <div class="sec-h2" style="margin-top:0">Monthly cash flow per unit</div>
+    <div class="flow-box">
+      <div class="flow-box-title">Monthly costs</div>
+      <div class="flow-item"><span>PACE — geothermal premium</span><span class="flow-out">-$28</span></div>
+      <div class="flow-item"><span>PACE — solar (net of ITC)</span><span class="flow-out">-$54</span></div>
+      <div class="flow-item"><span>HOA fee (all systems)</span><span class="flow-out">-$43</span></div>
+      <div class="flow-total"><span>Total out</span><span class="flow-out">$125/mo</span></div>
+    </div>
+    <div class="flow-box" style="margin-top:8px">
+      <div class="flow-box-title">Monthly savings</div>
+      <div class="flow-item"><span>Energy savings — geothermal</span><span class="flow-in">+$75</span></div>
+      <div class="flow-item"><span>Solar net metering credits</span><span class="flow-in">+$58</span></div>
+      <div class="flow-item"><span>Water savings — irrigation</span><span class="flow-in">+$1</span></div>
+      <div class="flow-total"><span>Total savings</span><span class="flow-in">$134/mo</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- NET RESULT BANNER -->
+<div class="net-banner no-break">
+  <div>
+    <div class="net-label">Net per unit per month — savings minus all costs</div>
+    <div class="net-sub">PACE payments + HOA fee fully covered by energy and solar savings on day one</div>
+  </div>
+  <div class="net-value">+$9 / mo</div>
+</div>
+
+<!-- BAR CHART -->
+<div class="sec-h2">Monthly flow by component  (54-unit Option D)</div>
+<div class="bar-chart no-break">
+  <div class="bar-row">
+    <div class="bar-label">PACE — geothermal</div>
+    <div class="bar-track"><div class="bar-fill-out" style="width:20.9%"></div></div>
+    <div class="bar-val neg">-$28</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">PACE — solar (net ITC)</div>
+    <div class="bar-track"><div class="bar-fill-out" style="width:40.3%"></div></div>
+    <div class="bar-val neg">-$54</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">HOA fee</div>
+    <div class="bar-track"><div class="bar-fill-out" style="width:32.1%"></div></div>
+    <div class="bar-val neg">-$43</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Geo energy savings</div>
+    <div class="bar-track"><div class="bar-fill-in" style="width:56.0%"></div></div>
+    <div class="bar-val pos">+$75</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Solar net metering</div>
+    <div class="bar-track"><div class="bar-fill-in" style="width:43.3%"></div></div>
+    <div class="bar-val pos">+$58</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Water savings</div>
+    <div class="bar-track"><div class="bar-fill-in" style="width:0.75%"></div></div>
+    <div class="bar-val pos">+$1</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label"><strong>Net</strong></div>
+    <div class="bar-track"><div class="bar-fill-net" style="width:6.7%"></div></div>
+    <div class="bar-val pos"><strong>+$9</strong></div>
+  </div>
+</div>
+
+<!-- MORTGAGE CHECK -->
+<div class="sec-h2">FHA mortgage qualification check  ($215K purchase · 6.5% · 30 yr)</div>
+<div class="mortgage-grid no-break">
+  <div class="m-card">
+    <div class="m-label">Principal + interest</div>
+    <div class="m-value">$1,359</div>
+    <div class="m-sub">per month</div>
+  </div>
+  <div class="m-card">
+    <div class="m-label">HOA monthly</div>
+    <div class="m-value">$43</div>
+    <div class="m-sub">per month</div>
+  </div>
+  <div class="m-card">
+    <div class="m-label">Taxes + insurance (est.)</div>
+    <div class="m-value">$250</div>
+    <div class="m-sub">per month</div>
+  </div>
+  <div class="m-card" style="background:#EAF3DE">
+    <div class="m-label">Total PITI + HOA</div>
+    <div class="m-value" style="color:#196B23">$1,652</div>
+    <div class="m-sub">per month</div>
+  </div>
+  <div class="m-card" style="background:#EAF3DE">
+    <div class="m-label">Income required (FHA 31%)</div>
+    <div class="m-value" style="color:#196B23">$63,930</div>
+    <div class="m-sub">per year</div>
+  </div>
+  <div class="m-card" style="background:#196B23">
+    <div class="m-label" style="color:#9FE1CB">80% AMI (family of 3)</div>
+    <div class="m-value" style="color:#fff">✓ Qualifies</div>
+    <div class="m-sub" style="color:#9FE1CB">~$68,000/yr at 80% AMI</div>
+  </div>
+</div>
+
+<!-- SCALE TABLE -->
+<div class="sec-h2">Sustainability costs scaled to each yield option</div>
+<table class="no-break">
+  <thead><tr><th>Yield option</th><th>Units</th><th>Geo total</th><th>Solar (net ITC)</th><th>Rainwater</th><th>Combined</th><th>Per unit</th><th>HOA/mo</th></tr></thead>
+  <tbody>
+    <tr><td>Option B (full indep. setbacks)</td><td>36</td><td class="mono">$448,145</td><td class="mono">$419,328</td><td class="mono">$26,820</td><td class="mono">$894,293</td><td class="mono">$24,841</td><td class="mono">$45</td></tr>
+    <tr><td>Opt A+FW12 (cross street + fire wall)</td><td>33</td><td class="mono">$411,466</td><td class="mono">$419,328</td><td class="mono">$26,820</td><td class="mono">$857,614</td><td class="mono">$25,988</td><td class="mono">$47</td></tr>
+    <tr class="highlight"><td><strong>Option D (shared easements)</strong></td><td><strong>54</strong></td><td class="mono"><strong>$672,217</strong></td><td class="mono"><strong>$419,328</strong></td><td class="mono"><strong>$26,820</strong></td><td class="mono"><strong>$1,118,365</strong></td><td class="mono"><strong>$20,710</strong></td><td class="mono"><strong>$43</strong></td></tr>
+  </tbody>
+</table>
+<p class="muted" style="margin-bottom:14px">Solar canopy and rainwater system are largely fixed to site infrastructure; geo scales with units. Option D benefits most from scale — lowest per-unit cost and HOA.</p>
+
+<!-- FLAGS -->
+<div class="callout-amber">Confirm with Energize Delaware that PACE financing attaches to individual fee-simple lots, not PUD/condo structure only.</div>
+<div class="callout-amber">Confirm Delmarva Power virtual net metering participation for HOA subscriber structure before committing solar to aisle canopy configuration.</div>
+<div class="callout-amber">HOA covenant documents must cover geothermal loop access rights (bore field under drive aisles), solar canopy maintenance responsibilities, and rainwater system. Attorney review required before plat recording.</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <span>© 2026 Merge 4 Design LLC d/b/a M4Di™  ·  AOR: David C. Ainsworth AIA, Aubyn Architecture LLC</span>
+  <span>M2_2026_005  ·  Lobdel Sustainability Add-Alternate  ·  April 2026</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>City of Wilmington OED — Strategic Brief | April 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --city-dk:  #0a2342;
+  --city-md:  #1a3d6b;
+  --city-lt:  #e8eef6;
+  --grn:      #3a5a1c;
+  --grn-lt:   #7ca840;
+  --grn-pale: #edf4e1;
+  --gold:     #c89c2a;
+  --gold-lt:  #fdf3d4;
+  --warm:     #f7f6f2;
+  --line:     #dddbd3;
+  --blk:      #0f0f10;
+  --mid:      #2c2c30;
+  --muted:    #6b6b72;
+  --wht:      #ffffff;
+  --red-lt:   #fef2f2;
+  --red:      #b91c1c;
+  --fd: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fm: 'DM Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 12.7pt; }
+body {
+  font-family: var(--fb);
+  color: var(--mid);
+  background: var(--wht);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-size: 12.1pt; }
+  @page { size: letter; margin: 0.48in 0.58in; }
+  .page-break { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+}
+@media screen {
+  body { max-width: 8.5in; margin: 0 auto; padding: 0.48in 0.58in; }
+}
+
+/* ── HEADER ── */
+.hdr {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-bottom: 0.13in; margin-bottom: 0.18in;
+  border-bottom: 3px solid var(--city-dk);
+}
+.hdr-left { display: flex; align-items: center; gap: 10px; }
+.hdr-mark {
+  width: 36px; height: 36px; background: var(--city-dk);
+  display: flex; align-items: center; justify-content: center;
+}
+.hdr-mark span { font-family: var(--fd); font-size: 0.583rem; font-weight: 800; color: var(--gold); }
+.hdr-name { font-family: var(--fd); font-size: 1.034rem; font-weight: 700; color: var(--blk); }
+.hdr-sub { font-size: 0.726rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.hdr-meta { text-align: right; font-size: 0.726rem; color: var(--muted); line-height: 1.5; }
+
+/* ── COVER ── */
+.cover {
+  background: var(--city-dk); padding: 0.36in 0.42in 0.3in;
+  margin-bottom: 0.22in; position: relative; overflow: hidden;
+}
+.cover::before {
+  content: ''; position: absolute; top: 0; right: 0;
+  width: 2.8in; height: 100%; background: var(--city-md);
+  clip-path: polygon(35% 0%, 100% 0%, 100% 100%, 0% 100%); opacity: 0.5;
+}
+.cover::after {
+  content: ''; position: absolute; bottom: 0; right: 0.4in;
+  width: 1.4in; height: 0.04in; background: var(--gold);
+}
+.cover-eyebrow {
+  font-family: var(--fm); font-size: 0.649rem; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.06in; position: relative;
+}
+.cover-to { font-size: 0.946rem; color: #b0bfcc; margin-bottom: 0.16in; position: relative; }
+.cover-title {
+  font-family: var(--fd); font-size: 2.42rem; font-weight: 800;
+  color: var(--wht); line-height: 1.0; margin-bottom: 0.1in;
+  position: relative; max-width: 5.8in;
+}
+.cover-title em { color: var(--gold); font-style: normal; }
+.cover-sub {
+  font-size: 1.045rem; font-weight: 300; color: #d4dce8;
+  line-height: 1.55; max-width: 5.4in; position: relative; margin-bottom: 0.2in;
+}
+.cover-partners {
+  display: flex; gap: 0.16in; flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 0.12in; position: relative;
+}
+.cp-tag { font-family: var(--fm); font-size: 0.682rem; color: #9aaabb; white-space: nowrap; }
+
+/* ── STAT BAR ── */
+.stat-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 0.22in;
+}
+.stat-cell { background: var(--warm); padding: 0.1in 0.11in; }
+.stat-val { font-family: var(--fd); font-size: 1.452rem; font-weight: 800; color: var(--city-dk); line-height: 1; margin-bottom: 2px; }
+.stat-val.gold { color: var(--gold); }
+.stat-val.grn  { color: var(--grn); }
+.stat-sub { font-size: 0.693rem; color: var(--muted); line-height: 1.35; }
+
+/* ── TYPOGRAPHY ── */
+.sec-eyebrow { font-family: var(--fm); font-size: 0.627rem; letter-spacing: .2em; text-transform: uppercase; color: var(--city-md); margin-bottom: 3px; }
+.sec-h2 { font-family: var(--fd); font-size: 1.254rem; font-weight: 800; color: var(--blk); margin-bottom: 0.1in; line-height: 1.15; border-left: 3px solid var(--gold); padding-left: 9px; }
+.sec-h3 { font-family: var(--fd); font-size: 0.99rem; font-weight: 700; color: var(--city-dk); margin-bottom: 5px; margin-top: 0.1in; }
+p.body { font-size: 1.012rem; line-height: 1.65; margin-bottom: 0.07in; }
+.rule { border: none; border-top: 1px solid var(--line); margin: 0.18in 0; }
+
+/* ── LAYOUT ── */
+.two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 0.18in; margin-bottom: 0.18in; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.15in; margin-bottom: 0.16in; }
+.four-col  { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.12in; margin-bottom: 0.16in; }
+.col-6040  { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0.18in; margin-bottom: 0.18in; }
+
+/* ── CARDS ── */
+.feat-card { border: 1px solid var(--line); padding: 0.13in 0.14in; background: var(--wht); }
+.feat-card .fc-num { font-family: var(--fm); font-size: 0.671rem; color: var(--gold); letter-spacing: .1em; margin-bottom: 4px; text-transform: uppercase; }
+.feat-card .fc-title { font-family: var(--fd); font-size: 0.99rem; font-weight: 700; color: var(--blk); margin-bottom: 5px; line-height: 1.2; }
+.feat-card .fc-body { font-size: 0.924rem; line-height: 1.55; color: var(--mid); }
+
+.dark-card { background: var(--city-dk); padding: 0.13in 0.15in; border-left: 3px solid var(--gold); }
+.dark-card .dc-label { font-family: var(--fm); font-size: 0.638rem; color: #c8d8e8; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 4px; }
+.dark-card .dc-title { font-family: var(--fd); font-size: 1.012rem; font-weight: 700; color: var(--wht); margin-bottom: 6px; }
+.dark-card .dc-body { font-size: 0.891rem; color: #dce8f0; line-height: 1.52; }
+.dark-card .dc-body strong { color: var(--gold); }
+
+.grn-card { background: var(--grn); padding: 0.13in 0.15in; border-left: 3px solid var(--grn-lt); }
+.grn-card .gc-label { font-family: var(--fm); font-size: 0.638rem; color: #c8d8e8; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 4px; }
+.grn-card .gc-title { font-family: var(--fd); font-size: 1.012rem; font-weight: 700; color: var(--wht); margin-bottom: 6px; }
+.grn-card .gc-body { font-size: 0.891rem; color: #dce8d0; line-height: 1.52; }
+.grn-card .gc-body strong { color: #c8f09a; }
+
+/* ── ASK CARDS (4-up) ── */
+.ask-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 0.18in; }
+.ask-cell { background: var(--wht); padding: 0.13in 0.13in; position: relative; }
+.ask-cell.priority { background: var(--gold-lt); }
+.ask-num { font-family: var(--fm); font-size: 0.649rem; color: var(--gold); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 5px; }
+.ask-title { font-family: var(--fd); font-size: 0.946rem; font-weight: 700; color: var(--blk); margin-bottom: 5px; line-height: 1.2; }
+.ask-body { font-size: 0.847rem; color: var(--mid); line-height: 1.45; }
+
+/* ── SCENARIO TABLE ── */
+table.scn { width: 100%; border-collapse: collapse; font-size: 0.891rem; margin: 0.08in 0; }
+table.scn th { font-family: var(--fd); font-size: 0.649rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; background: var(--city-dk); color: var(--wht); padding: 6px 8px; text-align: left; }
+table.scn th.gold { background: var(--gold); color: var(--blk); }
+table.scn td { padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.4; }
+table.scn tr.recommended td { background: var(--gold-lt); font-weight: 500; }
+table.scn tr:nth-child(even):not(.recommended) td { background: var(--warm); }
+table.scn td.hi { font-family: var(--fm); font-size: 0.869rem; color: var(--grn); white-space: nowrap; font-weight: 600; }
+table.scn td.flag { font-family: var(--fm); font-size: 0.869rem; color: var(--city-dk); font-weight: 700; }
+table.scn td.dim { color: var(--muted); font-size: 0.847rem; }
+
+/* ── PROGRAM TABLE ── */
+table.grants { width: 100%; border-collapse: collapse; font-size: 0.891rem; margin: 0.07in 0; }
+table.grants th { font-family: var(--fd); font-size: 0.649rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; background: var(--city-dk); color: var(--wht); padding: 6px 9px; text-align: left; }
+table.grants td { padding: 5px 9px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.4; }
+table.grants tr:nth-child(even) td { background: var(--warm); }
+table.grants td.amt { font-family: var(--fm); font-size: 0.858rem; color: var(--grn); white-space: nowrap; font-weight: 500; }
+table.grants td.type { font-family: var(--fm); font-size: 0.726rem; color: var(--muted); white-space: nowrap; }
+table.grants tr.priority td { background: var(--gold-lt); }
+table.grants tr.priority td.amt { color: var(--city-dk); font-weight: 700; }
+
+/* ── CALLOUTS ── */
+.callout { background: var(--gold-lt); border-left: 3px solid var(--gold); padding: 0.1in 0.14in; margin: 0.1in 0; font-size: 0.99rem; line-height: 1.6; }
+.callout strong { color: var(--city-dk); font-family: var(--fd); font-size: 0.77rem; text-transform: uppercase; letter-spacing: .06em; }
+.city-callout { background: var(--city-lt); border-left: 3px solid var(--city-dk); padding: 0.1in 0.14in; margin: 0.1in 0; font-size: 0.99rem; line-height: 1.6; }
+.city-callout strong { color: var(--city-dk); font-family: var(--fd); font-size: 0.77rem; text-transform: uppercase; letter-spacing: .06em; }
+.grn-callout { background: var(--grn-pale); border-left: 3px solid var(--grn); padding: 0.1in 0.14in; margin: 0.1in 0; font-size: 0.99rem; line-height: 1.6; }
+.grn-callout strong { color: var(--grn); font-family: var(--fd); font-size: 0.77rem; text-transform: uppercase; letter-spacing: .06em; }
+
+/* ── WIN GRID ── */
+.win-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 0.18in; }
+.win-cell { background: var(--wht); padding: 0.12in 0.14in; }
+.win-cell.city { background: var(--city-lt); }
+.win-cell.state { background: var(--grn-pale); }
+.win-head { font-family: var(--fd); font-size: 0.99rem; font-weight: 700; color: var(--city-dk); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
+.win-head.grn { color: var(--grn); }
+.win-item { font-size: 0.924rem; color: var(--mid); line-height: 1.55; margin-bottom: 4px; padding-left: 10px; position: relative; }
+.win-item::before { content: '▸'; position: absolute; left: 0; color: var(--gold); font-size: 0.726rem; top: 2px; }
+
+/* ── PHASE STRIP ── */
+.phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 0.18in; }
+.phase-cell { background: var(--wht); padding: 0.12in 0.12in; }
+.phase-cell.now { background: var(--city-lt); }
+.phase-num { font-family: var(--fm); font-size: 0.649rem; color: var(--city-dk); margin-bottom: 3px; text-transform: uppercase; letter-spacing: .09em; }
+.phase-title { font-family: var(--fd); font-size: 0.946rem; font-weight: 700; color: var(--blk); margin-bottom: 3px; line-height: 1.2; }
+.phase-range { font-family: var(--fm); font-size: 0.693rem; color: var(--gold); margin-bottom: 5px; }
+.phase-body { font-size: 0.847rem; color: var(--mid); line-height: 1.45; }
+
+/* ── ASK BOX ── */
+.ask-box { background: var(--city-dk); padding: 0.2in 0.26in; margin-top: 0.2in; }
+.ask-box .ab-eyebrow { font-family: var(--fm); font-size: 0.649rem; color: var(--gold); text-transform: uppercase; letter-spacing: .16em; margin-bottom: 5px; }
+.ask-box .ab-title { font-family: var(--fd); font-size: 1.21rem; font-weight: 800; color: var(--wht); margin-bottom: 0.1in; line-height: 1.2; }
+.ask-box ul { padding-left: 1.2em; }
+.ask-box ul li { font-size: 0.99rem; color: #e8eef5; line-height: 1.65; margin-bottom: 4px; }
+.ask-box ul li strong { color: var(--gold); }
+
+/* ── PARTNER ROW ── */
+.partner-row { display: flex; gap: 0.1in; margin: 0.1in 0; flex-wrap: wrap; }
+.partner-chip { flex: 1 1 1.4in; border: 1px solid var(--line); padding: 0.08in 0.1in; text-align: center; }
+.partner-chip .pc-name { font-family: var(--fd); font-size: 0.847rem; font-weight: 700; color: var(--blk); display: block; margin-bottom: 2px; }
+.partner-chip .pc-role { font-size: 0.682rem; color: var(--muted); line-height: 1.4; }
+
+/* ── TICKER EVENT ── */
+.event-bar { background: var(--grn); display: flex; align-items: center; gap: 0.16in; padding: 0.08in 0.14in; margin-bottom: 0.18in; }
+.event-dot { width: 10px; height: 10px; background: #c8f09a; border-radius: 50%; flex-shrink: 0; }
+.event-text { font-family: var(--fm); font-size: 0.77rem; color: #f0f5f0; letter-spacing: .04em; }
+.event-text strong { color: #c8f09a; }
+
+/* ── FOOTER ── */
+.doc-footer { margin-top: 0.2in; padding-top: 0.08in; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 0.649rem; color: #bbb; }
+
+/* ── HORIZON SECTION (Section 9 — for follow-up) ── */
+.horizon-eyebrow {
+  font-family: var(--fm); font-size: 0.649rem; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 3px;
+}
+.horizon-h2 {
+  font-family: var(--fd); font-size: 1.21rem; font-weight: 800;
+  color: var(--blk); margin-bottom: 0.1in; line-height: 1.18;
+  border-left: 3px solid var(--gold); padding-left: 9px;
+}
+.horizon-intro {
+  font-size: 0.924rem; color: var(--mid); line-height: 1.55;
+  margin-bottom: 0.14in; font-style: italic;
+}
+.horizon-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.18in; margin-bottom: 0.16in;
+}
+.horizon-card {
+  border: 1px solid var(--line); padding: 0.14in 0.16in; background: var(--warm);
+  border-top: 3px solid var(--gold);
+}
+.horizon-card .hc-tag {
+  font-family: var(--fm); font-size: 0.649rem; color: var(--gold);
+  letter-spacing: .12em; text-transform: uppercase; margin-bottom: 4px;
+}
+.horizon-card .hc-title {
+  font-family: var(--fd); font-size: 1.012rem; font-weight: 700;
+  color: var(--city-dk); margin-bottom: 6px; line-height: 1.2;
+}
+.horizon-card .hc-body { font-size: 0.891rem; line-height: 1.55; color: var(--mid); margin-bottom: 0.07in; }
+.horizon-card .hc-body strong { color: var(--blk); }
+.horizon-card .hc-meta {
+  font-family: var(--fm); font-size: 0.748rem; color: var(--muted);
+  border-top: 1px solid var(--line); padding-top: 5px; margin-top: 6px;
+  line-height: 1.55;
+}
+.horizon-card .hc-meta strong { color: var(--city-dk); }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-mark"><span>M4D</span></div>
+    <div>
+      <div class="hdr-name">Merge 4 Design LLC &nbsp;·&nbsp; M4Di™ &nbsp;·&nbsp; Aubyn Architecture LLC &nbsp;·&nbsp; Merge4Ward LLC</div>
+      <div class="hdr-sub">Wilmington-Rooted. Built to Deliver. &nbsp;·&nbsp; merge4design.com &nbsp;·&nbsp; m4di.org</div>
+    </div>
+  </div>
+  <div class="hdr-meta">
+    City of Wilmington — OED Strategic Brief<br>
+    Office of Economic Development<br>
+    April 2026 · Zoom Meeting
+  </div>
+</div>
+
+<!-- ── COVER ── -->
+<div class="cover">
+  <div class="cover-eyebrow">Presented to the City of Wilmington — Office of Economic Development</div>
+  <div class="cover-to">Office of Economic Development &nbsp;·&nbsp; April 2026 &nbsp;·&nbsp; Zoom Meeting</div>
+  <div class="cover-title">Four Asks. <em>One Aligned</em><br>Strategy.</div>
+  <div class="cover-sub">A coordinated proposal pairing the Merge4Ward sustainable manufacturing initiative with the M4Di Operational Intelligence platform — and a pathway to evolve the City's existing A&amp;E Feasibility Assistance program into a regional cost-credibility standard. No new City programs required. Every existing OED tool already fits.</div>
+  <div class="cover-partners">
+    <span class="cp-tag">Merge4Ward LLC</span>
+    <span class="cp-tag">&nbsp;·&nbsp; Merge 4 Design LLC (M4D)</span>
+    <span class="cp-tag">&nbsp;·&nbsp; M4Di™ — Merge 4 Development Institute</span>
+    <span class="cp-tag">&nbsp;·&nbsp; Aubyn Architecture LLC</span>
+    <span class="cp-tag">&nbsp;·&nbsp; L.E.E.P., Inc.</span>
+    <span class="cp-tag">&nbsp;·&nbsp; Central Baptist CDC</span>
+  </div>
+</div>
+
+<!-- ── STAT BAR ── -->
+<div class="stat-bar">
+  <div class="stat-cell">
+    <div class="stat-val gold">$2M × 2</div>
+    <div class="stat-sub">Two coordinated Wells Fargo / Enterprise Housing Affordability Breakthrough Challenge applications. Submission deadline May 15, 2026. OED letter requested by May 1.</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-val">$15K</div>
+    <div class="stat-sub">Current A&amp;E Feasibility Assistance ceiling. M4Di adds independent verification at $3.5K–$6.5K — without changing the existing program structure.</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-val grn">22–35</div>
+    <div class="stat-sub">Year-3 manufacturing jobs at the Port — Merge4Ward CLT/SIP production. Wage tax base inside the Strategic Fund's 2–3 year recoup window.</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-val">5</div>
+    <div class="stat-sub">Existing OED programs the HQ ask is built around: Strategic Fund, Property Tax Abatement, DDD, Head Tax Exemption, A&amp;E Feasibility Assistance.</div>
+  </div>
+</div>
+
+<!-- ── EVENT BAR ── -->
+<div class="event-bar">
+  <div class="event-dot"></div>
+  <div class="event-text"><strong>TIME-CRITICAL:</strong> &nbsp; OED letter of support requested by <strong>May 1, 2026</strong> &nbsp;·&nbsp; Wells Fargo / Enterprise application deadline <strong>May 15, 2026</strong> &nbsp;·&nbsp; Claymont CLT/SIP pilot panels in production</div>
+</div>
+
+<div class="rule"></div>
+
+<!-- ── SECTION 1: WHY THIS MEETING MATTERS ── -->
+<div class="no-break">
+  <div class="sec-eyebrow">Section 1 — Why This Meeting Matters</div>
+  <div class="sec-h2">A Documented Cost-Credibility Gap. A Working Solution. A 14-Day Decision Window.</div>
+  <p class="body">The City of Wilmington has a quiet but well-documented predevelopment cost-credibility problem that affects every funded project the Office of Economic Development touches. The A&amp;E Feasibility Assistance grant, the Strategic Fund, the DDD rebate, and the Property Tax Abatement program all make commitments downstream against early-stage construction estimates of varying — and unverified — quality. When those estimates collapse during construction documentation or after permit, the City has already absorbed program cost and lost the project.</p>
+  <p class="body">Merge 4 Design and M4Di have spent the last eighteen months building the methodology, the platform, and the local partnerships that close that gap. We arrive at this meeting with one coherent strategy, four entry points, and zero requests for new City appropriation. Every ask routes through OED programs that already exist.</p>
+</div>
+
+<div class="win-grid no-break">
+  <div class="win-cell city">
+    <div class="win-head">What Wilmington OED Receives</div>
+    <div class="win-item">A coordinated $4M federal grant push — two applications, one City letter — with measurable Year-3 wage-tax return inside the Strategic Fund's recoup window</div>
+    <div class="win-item">An independent, architect-led cost-verification standard for the A&amp;E Feasibility Assistance grant — protecting every downstream OED program decision</div>
+    <div class="win-item">A vacant Wilmington building put back into productive use as a multi-firm professional services anchor — three named brands at one address</div>
+    <div class="win-item">A documented economic development case study: City programs stacked correctly on a tenant who actually uses them</div>
+    <div class="win-item">A growing proprietary regional cost benchmark dataset (the M4Di ALDDB) that becomes the City's own standing reference for what construction in Wilmington really costs</div>
+  </div>
+  <div class="win-cell state">
+    <div class="win-head grn">What the City of Delaware Wins Alongside</div>
+    <div class="win-item">First-of-state CLT/SIP hybrid manufacturing operation in Delaware — the Claymont pilot is the foundation case</div>
+    <div class="win-item">DEDO Strategic Fund leverage at the Port — manufacturing jobs paying $22–$34/hr against state grants of $250K–$1M</div>
+    <div class="win-item">EPA Brownfields and EDA Public Works alignment on Site A scenarios — federal capital flowing through Wilmington toward state economic development priorities</div>
+    <div class="win-item">L.E.E.P. workforce training pipeline — 80–120 Delaware-resident graduates per cycle by Year 3 across CLT/SIP production roles</div>
+    <div class="win-item">A regional predevelopment cost intelligence standard <strong>headquartered in Wilmington</strong>, with the City as its first municipal partner</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- ── SECTION 2: THE FOUR ASKS AT A GLANCE ── -->
+<div class="no-break">
+  <div class="sec-eyebrow">Section 2 — The Four Asks</div>
+  <div class="sec-h2">One Strategy. Four Entry Points. Sequential — Not Parallel.</div>
+  <p class="body">The asks are presented in meeting order. Ask 1 is time-critical with a hard May 1 letter deadline. Ask 2 is the relationship-defining ask. Asks 3 and 4 are the structural commitments that anchor everything that follows.</p>
+</div>
+
+<div class="ask-strip no-break">
+  <div class="ask-cell priority">
+    <div class="ask-num">Ask 1 · Urgent</div>
+    <div class="ask-title">Letter of Support — Wells Fargo / Enterprise Grant</div>
+    <div class="ask-body">Two coordinated $2M applications by May 15. Merge4Ward (Design &amp; Construction). M4Di OI Tool (Service &amp; Delivery, via CB CDC). OED letter materially affects scoring.</div>
+  </div>
+  <div class="ask-cell">
+    <div class="ask-num">Ask 2 · Strategic</div>
+    <div class="ask-title">M4Di as OED's Cost Verification Standard</div>
+    <div class="ask-body">Position M4Di as the cost-intelligence benchmark for the A&amp;E Feasibility Assistance grant and the Strategic Fund. Pilot engagement on 3–5 funded projects in FY26.</div>
+  </div>
+  <div class="ask-cell">
+    <div class="ask-num">Ask 3 · Structural</div>
+    <div class="ask-title">Site Identification — Merge4Ward Manufacturing</div>
+    <div class="ask-body">Port-adjacent industrial parcel, 1–6 acres. City-controlled or City-facilitated land. Letter of intent within 60 days for inclusion in EDA grant stack.</div>
+  </div>
+  <div class="ask-cell">
+    <div class="ask-num">Ask 4 · Anchor</div>
+    <div class="ask-title">M4D / Aubyn Headquarters — Vacant Building Match</div>
+    <div class="ask-body">4,000–8,000 SF vacant warehouse or light-industrial building. Fitted out as client-facing HQ. Stacked on Strategic Fund + Property Tax Abatement + DDD where eligible.</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- ── SECTION 3: ASK 1 — THE GRANT LETTER ── -->
+<div class="no-break">
+  <div class="sec-eyebrow">Section 3 — Ask 1</div>
+  <div class="sec-h2">Letter of Support — Enterprise / Wells Fargo Housing Affordability Breakthrough Challenge</div>
+  <p class="body">The 2026 Housing Affordability Breakthrough Challenge — managed by Enterprise Community Partners and funded by Wells Fargo — will award five $2M grants ($10M total) to ready-to-scale solutions. Applications close May 15, 2026. We are filing two coordinated applications under two of the three eligible categories. Both pull from work already underway in Wilmington.</p>
+</div>
+
+<div class="two-col no-break">
+  <div class="dark-card">
+    <div class="dc-label">Application 1 · Design &amp; Construction</div>
+    <div class="dc-title">Merge4Ward — CLT/SIP Manufacturing</div>
+    <div class="dc-body">
+      Merge4Ward LLC is a forming SIP/CLT manufacturing company anchored by a partnership between Merge 4 Design and L.E.E.P., Inc. (Gwen Motley, Executive Director). The Claymont CLT/SIP hybrid townhouse pilot — 4 units, $1.875M ROM, foundation permit imminent, panels arriving May 27 — is the proof-of-concept.<br><br>
+      <strong>First-of-state CLT/SIP hybrid application in Delaware.</strong> The grant funds Phase 1 launch: leased facility, equipment procurement, first production run, first L.E.E.P. workforce training cohort.<br><br>
+      <strong>For-profit eligible</strong> under Design &amp; Construction. No nonprofit lead applicant required.
+    </div>
+  </div>
+  <div class="grn-card">
+    <div class="gc-label">Application 2 · Service &amp; Delivery Programs</div>
+    <div class="gc-title">M4Di OI Tool — Cost Intelligence Platform</div>
+    <div class="gc-body">
+      The M4Di Operational Intelligence Tool is a regionally calibrated predevelopment cost intelligence platform — architect-led, methodology-grounded — currently in active deployment on Central Baptist CDC's two-site feasibility engagement, funded by Sea Change Capital Partners.<br><br>
+      <strong>Lead applicant: Central Baptist CDC</strong> (Dr. Rev. Keeling presiding) under M4Di's existing fiscal sponsorship structure. Funds the Phase 1 web application build and regional deployment to CDFIs, faith-based developers, and community land trusts across the Mid-Atlantic.<br><br>
+      Service &amp; Delivery requires a 501(c)(3) nonprofit lead. CB CDC fits cleanly.
+    </div>
+  </div>
+</div>
+
+<div class="city-callout no-break">
+  <strong>Why the OED Letter Moves the Needle</strong><br>
+  Past Breakthrough Challenge scoring has weighted demonstrated municipal alignment heavily. A Wilmington OED letter referencing the existing A&amp;E Feasibility Assistance program and the Strategic Fund — and stating that M4Di's methodology is being evaluated for adoption as the City's cost-verification standard — is direct evidence to the panel that the City has skin in the game. Without that signal, the applications read as private-sector innovations seeking validation. With it, they read as proven municipal partnerships ready to scale. <strong>We will provide ready-to-sign draft language for OED to mark up directly.</strong>
+</div>
+
+<div class="rule"></div>
+
+<!-- ── SECTION 4: ASK 2 — M4Di AS COST VERIFICATION STANDARD ── -->
+<div class="no-break">
+  <div class="sec-eyebrow">Section 4 — Ask 2</div>
+  <div class="sec-h2">Adopt the M4Di OI Tool as OED's Cost Verification Standard</div>
+  <p class="body">The DBE A&amp;E Feasibility Assistance program offers a 50% match up to $15,000 to enumerate construction costs for Wilmington projects. The program's structural design is correct. What it currently lacks — and what M4Di provides — is a standardized, independent, regionally calibrated verification layer that protects every downstream OED commitment.</p>
+</div>
+
+<div class="col-6040 no-break">
+  <div>
+    <table class="scn">
+      <thead>
+        <tr>
+          <th>Today's Workflow</th>
+          <th>Risk Profile</th>
+          <th>What's Missing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>DBE applicant secures A&amp;E firm. 50% match up to $15K. Estimate produced.</td>
+          <td class="dim">Variable quality. Methodology unknown. Sometimes produced by the GC who would build the project.</td>
+          <td class="dim">Independent verification</td>
+        </tr>
+        <tr>
+          <td>Strategic Fund / DDD / Property Tax Abatement decisions made downstream.</td>
+          <td class="dim">Decisions stack on the same unverified estimate.</td>
+          <td class="dim">Regional calibration</td>
+        </tr>
+        <tr>
+          <td>Project enters CD phase. Real bids arrive.</td>
+          <td class="dim">Budget collapses on 25–40% of community-development projects nationally.</td>
+          <td class="dim">A growing benchmark dataset</td>
+        </tr>
+        <tr class="recommended">
+          <td><strong>WITH M4Di OI TOOL VERIFICATION</strong></td>
+          <td class="hi">Independent. Standardized. Methodology documented.</td>
+          <td class="flag">All three resolved</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size: 0.748rem; color: var(--muted); margin-top: 5px;">M4Di does not replace the A&amp;E firm or the existing program. It adds a parallel, independent verification layer at $3,500–$6,500 per project — well below the $15,000 program ceiling.</div>
+  </div>
+  <div class="dark-card" style="align-self: start;">
+    <div class="dc-label">Pilot Structure — FY26</div>
+    <div class="dc-title">3–5 Projects. One Quarter to Prove the Model.</div>
+    <div class="dc-body">
+      <strong>Per project:</strong> Independent Gate 0 ROM with regional calibration narrative, gate report, and reconciliation against the applicant's submitted estimate. Two-page summary suitable for OED program file.<br><br>
+      <strong>Cost to OED:</strong> $3,500–$6,500 per engagement.<br><br>
+      <strong>Outputs:</strong> Standardized cost reports. Aggregate annual benchmark data for OED's internal use. Quarterly review.<br><br>
+      <strong>Year 2:</strong> Convert pilot to standing OED engagement. Add Strategic Fund and DDD applications. M4Di publishes the <strong>Wilmington Predevelopment Cost Index</strong> annually.
+    </div>
+  </div>
+</div>
+
+<div class="callout no-break">
+  <strong>The Framing That Will Land</strong><br>
+  The A&amp;E Feasibility Assistance program is the right idea. M4Di is the natural infrastructure under it. <strong>FICO did not replace mortgage underwriting — it standardized the credit signal that mortgage underwriting depended on.</strong> M4Di does the same thing for predevelopment cost. OED becomes the first municipality in the Mid-Atlantic to formalize a cost-credibility standard for community development projects — and the precedent it sets is exportable to every peer city in the region.
+</div>
+
+<div class="rule"></div>
+
+<!-- ── SECTION 5: ASK 3 — MANUFACTURING SITE ── -->
+<div class="no-break">
+  <div class="sec-eyebrow">Section 5 — Ask 3</div>
+  <div class="sec-h2">Site Identification — Merge4Ward Manufacturing</div>
+  <p class="body">Merge4Ward Phase 1 requires 1–6 acres of industrial land for SIP press operations, CLT staging and cutting, and L.E.E.P. workforce training. Phase 1 building footprint is approximately 30,000–45,000 SF. Port adjacency is strongly preferred — it reduces transportation cost on raw timber inputs and unlocks regional export potential by water.</p>
+</div>
+
+<table class="scn no-break">
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Site A — Existing Industrial</th>
+      <th>Site B — City-Controlled Port Parcel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Acreage</strong></td>
+      <td>4–6 acres with existing building shell</td>
+      <td>1–2 acres, new construction required</td>
+    </tr>
+    <tr>
+      <td><strong>Construction cost</strong></td>
+      <td class="hi">Lower — fitout of existing shell</td>
+      <td class="dim">Higher by $800K–$1.4M — pre-engineered metal building</td>
+    </tr>
+    <tr>
+      <td><strong>Timeline to operations</strong></td>
+      <td class="hi">Faster (existing building)</td>
+      <td class="dim">6–12 months longer</td>
+    </tr>
+    <tr>
+      <td><strong>Brownfield potential</strong></td>
+      <td class="hi">Yes — EPA Brownfields grant eligible ($200K–$500K)</td>
+      <td class="dim">No — clean parcel</td>
+    </tr>
+    <tr>
+      <td><strong>Political path</strong></td>
+      <td class="dim">Private seller negotiation</td>
+      <td class="flag">Direct OED engagement — fastest agency path</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="three-col no-break">
+  <div class="feat-card">
+    <div class="fc-num">Year 3 · Permanent Jobs</div>
+    <div class="fc-title">22–35 Manufacturing Roles</div>
+    <div class="fc-body">CNC operators, panel assembly technicians, QC inspectors, dispatch and logistics. Average wage $26–$34/hr by Year 3. All accessible without a four-year degree. L.E.E.P. trains the pipeline.</div>
+  </div>
+  <div class="feat-card">
+    <div class="fc-num">Year 3 · Workforce Pipeline</div>
+    <div class="fc-title">80–120 L.E.E.P. Graduates / Cycle</div>
+    <div class="fc-body">Two cohorts per year by Phase 3. CLT/SIP production track plus building science fundamentals. Delaware residents trained for Delaware-headquartered employers.</div>
+  </div>
+  <div class="feat-card">
+    <div class="fc-num">Year 3 · Tax Base</div>
+    <div class="fc-title">$220K–$380K / Year</div>
+    <div class="fc-body">State and local tax contribution from Merge4Ward operations alone. Inside the Strategic Fund's documented 2–3 year recoup window — the deal the Fund was designed to underwrite.</div>
+  </div>
+</div>
+
+<div class="grn-callout no-break">
+  <strong>Strategic Fund Alignment</strong><br>
+  The City of Wilmington Strategic Fund recoups incentive expenditures within two to three years through wage taxes from new or retained jobs. Merge4Ward's Year-1 wage-tax contribution alone — 12–18 manufacturing jobs at $22–$28/hour — falls squarely inside the Strategic Fund's recoup window. <strong>This is exactly the deal the Strategic Fund was designed to underwrite.</strong>
+</div>
+
+<div class="rule"></div>
+
+<!-- ── SECTION 6: ASK 4 — HEADQUARTERS ── -->
+<div class="no-break">
+  <div class="sec-eyebrow">Section 6 — Ask 4</div>
+  <div class="sec-h2">M4D / Aubyn Headquarters — A Vacant Wilmington Building, Brought Back to Life</div>
+  <p class="body">The M4D book of business now includes capital projects with M-Well Medical Group ($76M campus), Wilmington Housing Authority (1212 Lobdel Avenue), L.E.E.P., Inc. (Claymont pilot), Culture Restoration Project (Monroe Street church adaptive reuse), and an active client conversation pipeline across the predevelopment platform. These conversations require a client-facing space that signals scale and seriousness — investor briefings, capital-stack working sessions, multi-party design reviews, and live OI Tool demonstrations.</p>
+  <p class="body">We are asking OED to point us at a vacant warehouse, light-industrial, or commercial building (4,000–8,000 SF) in Wilmington that the City has interest in seeing brought back into productive use. We will fit it out as a working headquarters with the program below.</p>
+</div>
+
+<div class="four-col no-break">
+  <div class="feat-card">
+    <div class="fc-num">Zone 1</div>
+    <div class="fc-title">Open Studio</div>
+    <div class="fc-body">Design and BIM production. Travis-led visualization workflow — Revit, Bonsai, FLUX. Daily working environment for the four principals.</div>
+  </div>
+  <div class="feat-card">
+    <div class="fc-num">Zone 2</div>
+    <div class="fc-title">Investor Lounge</div>
+    <div class="fc-body">Client-facing conference room with full AV — multi-source video, projection, audio for hybrid meetings, secure network. Capital stack working sessions, design reviews.</div>
+  </div>
+  <div class="feat-card">
+    <div class="fc-num">Zone 3</div>
+    <div class="fc-title">M4Di Demo Station</div>
+    <div class="fc-body">Live OI Tool, ALDi Tracker, and Terminal walkthrough station for funder, CDFI, and municipal client visits. The room where the methodology becomes tangible.</div>
+  </div>
+  <div class="feat-card">
+    <div class="fc-num">Zone 4</div>
+    <div class="fc-title">Material Library</div>
+    <div class="fc-body">CLT/SIP component display, architectural samples, modest physical archive. A space the City can co-host A&amp;E feasibility cohort meetings in.</div>
+  </div>
+</div>
+
+<table class="grants no-break">
+  <thead>
+    <tr>
+      <th>OED / City Program</th>
+      <th>Type</th>
+      <th>How It Applies to the HQ Build</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="priority">
+      <td><strong>City of Wilmington Strategic Fund</strong></td>
+      <td class="type">Local Incentive</td>
+      <td>Job-creation incentive against the four Wilmington-based principal positions plus 1–2 hires planned in FY26. Recoup window aligns with Strategic Fund design.</td>
+    </tr>
+    <tr>
+      <td><strong>Property Tax Abatement (Sec. 44-71)</strong></td>
+      <td class="type">Local Incentive</td>
+      <td>Applies to fitout investment if the building qualifies as commercial, mixed-use, or multi-family rehabilitation. Encourages exactly the kind of redevelopment we're proposing.</td>
+    </tr>
+    <tr>
+      <td><strong>Downtown Development District (DDD)</strong></td>
+      <td class="type">Local + State</td>
+      <td>If the property falls inside a designated DDD, our Qualified Real Property Investment for fitout may rebate up to 20% via DSHA. Stackable with the above.</td>
+    </tr>
+    <tr>
+      <td><strong>Head Tax Exemption</strong></td>
+      <td class="type">Local Incentive</td>
+      <td>Applicable to net new hires at the HQ location. Modest dollars but signals the City's posture toward the tenant.</td>
+    </tr>
+    <tr>
+      <td><strong>Opportunity Zone (if located in OZ)</strong></td>
+      <td class="type">Federal</td>
+      <td>Applies to investor capital placed in the project — relevant if outside expansion capital is brought in to accelerate the fitout.</td>
+    </tr>
+    <tr>
+      <td><strong>A&amp;E Feasibility Assistance (DBE)</strong></td>
+      <td class="type">Local Grant</td>
+      <td>Aubyn Architecture LLC is the licensed firm of record. Eligible to apply the program to feasibility work on the building itself — a DBE-eligible firm with the technical capability to use the matched funds well.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="city-callout no-break">
+  <strong>What This Returns to the City</strong><br>
+  A vacant Wilmington building put back into productive use. Three named brand-active firms (Aubyn Architecture, Merge 4 Design, M4Di) operating from a single Wilmington address — visible, marketable, photographable for OED's own success-stories pipeline. A professionally fitted-out venue the City can co-host events at: DBE roundtables, A&amp;E feasibility cohort meetings, workforce-development announcements. A durable wage tax base. <strong>OED already has the tools. We are asking OED to point them at the right vacant building.</strong>
+</div>
+
+<div class="rule"></div>
+
+<!-- ── SECTION 7: TIMELINE ── -->
+<div class="no-break">
+  <div class="sec-eyebrow">Section 7 — Why These Asks Belong Together</div>
+  <div class="sec-h2">Three Horizons. Returns Compound at Each.</div>
+</div>
+
+<div class="phases no-break">
+  <div class="phase-cell now">
+    <div class="phase-num">90 Days · 2026 ← NOW</div>
+    <div class="phase-title">Letter, Site Shortlist, Pilot</div>
+    <div class="phase-range">May 1 letter · May 15 grant deadlines</div>
+    <div class="phase-body">OED letter delivered. Site shortlist active. HQ candidate buildings under review. Pilot M4Di engagement begins on first FY26 A&amp;E Feasibility project. Two grant applications submitted with City endorsement.</div>
+  </div>
+  <div class="phase-cell">
+    <div class="phase-num">12 Months · 2027</div>
+    <div class="phase-title">Awards Land. HQ Operational.</div>
+    <div class="phase-range">Strategic Fund deal closed</div>
+    <div class="phase-body">Wilmington named in any awarded grants. First Strategic Fund deal closed for HQ tenant. M4Di pilot data report delivered to OED. Manufacturing site secured. M4Di OI Tool deployed on 3–5 funded City projects.</div>
+  </div>
+  <div class="phase-cell">
+    <div class="phase-num">36 Months · 2029</div>
+    <div class="phase-title">Standard-Setting Anchor</div>
+    <div class="phase-range">Self-sustaining</div>
+    <div class="phase-body">Manufacturing operations producing for affordable housing pipeline. 22–35 permanent jobs at the Port. M4Di adopted as City cost-verification standard. HQ established as DBE/A&amp;E case study. Wilmington Predevelopment Cost Index published annually.</div>
+  </div>
+  <div class="phase-cell">
+    <div class="phase-num">Beyond · 2030+</div>
+    <div class="phase-title">Regional Export</div>
+    <div class="phase-range">Licensing &amp; affiliate</div>
+    <div class="phase-body">M4Di expanded across Mid-Atlantic with Wilmington as anchor reference site. Cooperative conversion underway at Merge4Ward. Municipal cost-verification standard exported to Baltimore, Philadelphia, D.C. peers — Wilmington gets the precedent credit.</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- ── SECTION 8: THE ASK BOX ── -->
+<div class="ask-box no-break">
+  <div class="ab-eyebrow">Section 8 — The Ask in Four Steps</div>
+  <div class="ab-title">Four Steps. Each Maps to an Existing OED Tool.</div>
+  <ul>
+    <li><strong>Step 1 — Letter of Support by May 1 (URGENT):</strong> A letter from OED endorsing both Wells Fargo / Enterprise Housing Affordability Breakthrough Challenge applications — Merge4Ward (Design &amp; Construction) and the M4Di OI Tool via Central Baptist CDC (Service &amp; Delivery). The deadline is May 15, 2026. We will provide ready-to-sign draft language. The letter materially separates a winning application from a strong one.</li>
+    <li><strong>Step 2 — M4Di Pilot on 3–5 FY26 A&amp;E Feasibility Projects:</strong> A pilot engagement positioning M4Di as the cost-verification layer beneath the existing A&amp;E Feasibility Assistance program. $3,500–$6,500 per project. Standardized outputs, aggregate annual benchmark data, quarterly review meeting. Year 2 evolution: standing OED engagement and a published Wilmington Predevelopment Cost Index.</li>
+    <li><strong>Step 3 — Site Identification for Merge4Ward Manufacturing:</strong> Identification of City-controlled or City-facilitated parcels in the Port corridor matching the Phase 1 footprint (1–6 acres). Indication of available terms — ground lease, long-term lease, nominal transfer with job-creation covenants, or land-bank facilitation. Letter of interest within 60 days for inclusion in the Breakthrough Challenge application and the EDA grant stack.</li>
+    <li><strong>Step 4 — HQ Vacant Building Match:</strong> A vacant warehouse, light-industrial, or commercial building (4,000–8,000 SF) brought to our attention. Stack Strategic Fund + Property Tax Abatement + DDD where eligible. We become the OED case study used in the next ten conversations like this one.</li>
+  </ul>
+</div>
+
+<!-- ── SECTION 9: ON THE HORIZON ── -->
+<div style="margin-top: 0.2in;" class="no-break">
+  <div class="horizon-eyebrow">Section 9 — On the Horizon · For Follow-Up Conversation</div>
+  <div class="horizon-h2">Two Adjacent Opportunities the Meeting Did Not Have Time to Cover</div>
+  <div class="horizon-intro">Both items below were prepared for the meeting but deferred for time. They are presented here for OED's awareness and as conversation points for a follow-up session — not as additional asks against the four already on the table. Both directly extend the strategy already discussed.</div>
+</div>
+
+<div class="horizon-grid no-break">
+  <div class="horizon-card">
+    <div class="hc-tag">Horizon Item 1 · Anchor / Signature Project</div>
+    <div class="hc-title">Riverfront East, Parcel B — A First-of-State CLT/SIP Public Pavilion</div>
+    <div class="hc-body">RDC's <strong>Parcel B</strong> sits at the bend of the Christina River, eminently visible from Riverfront West, and is described in the Riverfront East public materials as <em>"an anchor point at the bend in the river"</em> and <em>"a chance for striking retail presence — or whatever your vision holds."</em> The 0.19-acre parcel with a 3,019 SF parcel limit is well-matched to a single-volume CLT/SIP timber pavilion.</div>
+    <div class="hc-body">Our concept — and we want to underscore that this is concept stage, not a proposal — is an <strong>open-air farmers market and entertainment pavilion</strong> built with Merge4Ward-produced CLT structural panels and SIP roof assemblies. A first-of-state demonstration of regional sustainable timber manufacturing in a civic, public-facing form. It would visibly mark Wilmington as the East Coast's earliest mover on regional CLT supply, while delivering a permanent public amenity at the most visible point on Riverfront East.</div>
+    <div class="hc-meta">
+      <strong>Parcel:</strong> 0.19 acres, 3,019 SF parcel limit, 109 ft frontage<br>
+      <strong>Owner / Steward:</strong> Riverfront Development Corporation of Delaware<br>
+      <strong>Ask of OED (future):</strong> Facilitated introduction to RDC (Megan McGlinchey, Executive Director). City-RDC alignment around a Phase-2 anchor concept.
+    </div>
+  </div>
+
+  <div class="horizon-card">
+    <div class="hc-tag">Horizon Item 2 · Specific HQ Candidate</div>
+    <div class="hc-title">1601 Jessup Street — A Brandywine HQ Candidate, Already Identified</div>
+    <div class="hc-body">In addition to the general HQ ask in Section 6, we have identified a specific candidate property worth OED's evaluation. <strong>1601 Jessup Street</strong> (Parcel #2602930259) is a 0.15-acre Brandywine peninsula site with an existing brick light-manufacturing building (~8,706 SF + secondary structures), ample asphalt parking already in place, and existing perimeter security fencing.</div>
+    <div class="hc-body">The site offers downstream views of the Wilmington skyline — making it an unusually well-suited <strong>client-facing HQ and marketing lounge</strong> for M4D, Aubyn Architecture, M4Di, and Merge4Ward. The architectural intervention required is modest: open the riverside elevation, frame the view, refresh the interior to studio + investor lounge + M4Di demo configuration. The brick industrial character is the asset, not the obstacle.</div>
+    <div class="hc-meta">
+      <strong>Parcel:</strong> 0.15 acres, 30 ft frontage × 89.30 ft depth, ~8,700 SF main building<br>
+      <strong>Zoning:</strong> Currently classified Light Manufacturing — Waterfront Res/Comm overlay; <em>City Chapter 48 zoning to be confirmed</em><br>
+      <strong>Ask of OED (future):</strong> Confirm ownership status and any City interest. Evaluate as Ask 4 candidate against Strategic Fund + Property Tax Abatement stack.
+    </div>
+  </div>
+</div>
+
+<!-- ── PARTNERS ── -->
+<div style="margin-top: 0.2in;" class="no-break">
+  <div class="sec-h3" style="margin-top: 0; color: var(--blk);">The Team Behind This Proposal</div>
+  <div class="partner-row">
+    <div class="partner-chip">
+      <span class="pc-name">Merge 4 Design LLC</span>
+      <span class="pc-role">Architecture · Design · Predevelopment Intelligence<br>Knight · Ainsworth · Lynch · Davis</span>
+    </div>
+    <div class="partner-chip">
+      <span class="pc-name">Aubyn Architecture LLC</span>
+      <span class="pc-role">Architecture · AOR<br>David C. Ainsworth, AIA · DE/PA/CT</span>
+    </div>
+    <div class="partner-chip">
+      <span class="pc-name">M4Di™</span>
+      <span class="pc-role">Predevelopment Cost Intelligence<br>CB CDC fiscal sponsorship</span>
+    </div>
+    <div class="partner-chip">
+      <span class="pc-name">Merge4Ward LLC</span>
+      <span class="pc-role">Manufacturing entity · Wilmington, DE<br>Ainsworth · Motley · Knight · Lynch · Davis</span>
+    </div>
+    <div class="partner-chip">
+      <span class="pc-name">L.E.E.P., Inc.</span>
+      <span class="pc-role">Community Developer · 501(c)(3)<br>Gwenevere Motley · Wilmington, DE</span>
+    </div>
+    <div class="partner-chip">
+      <span class="pc-name">Central Baptist CDC</span>
+      <span class="pc-role">501(c)(3) · Service &amp; Delivery lead<br>Dr. Rev. Keeling</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SIGN-OFF ── -->
+<div style="margin-top: 0.18in; padding: 0.12in 0.14in; background: var(--warm); border: 1px solid var(--line);" class="no-break">
+  <div class="sec-h3" style="margin-top: 0;">Prepared By</div>
+  <p class="body" style="margin-bottom: 0.04in;"><strong>David C. Ainsworth, AIA</strong> &nbsp;·&nbsp; Principal, Aubyn Architecture LLC &nbsp;·&nbsp; Co-Founder, Merge 4 Design LLC &nbsp;·&nbsp; Predevelopment Lead, M4Di</p>
+  <p class="body" style="margin-bottom: 0.04in;">215 N. Market Street, Suite 317, Wilmington, DE 19801 &nbsp;·&nbsp; merge4design.com &nbsp;·&nbsp; m4di.org</p>
+  <p class="body" style="margin-bottom: 0;">On behalf of the Merge 4 Design partnership: <strong>Trevor Knight</strong> (GMD), <strong>Leo Lynch</strong> (Operations), <strong>Travis Davis</strong> (Delivery).</p>
+</div>
+
+<div class="doc-footer">
+  <span>Merge 4 Design LLC · M4Di™ · Aubyn Architecture LLC · Merge4Ward LLC · L.E.E.P., Inc. · Central Baptist CDC · Wilmington, Delaware</span>
+  <span>OED Strategic Brief v2 · April 2026 · Confidential — City of Wilmington Office of Economic Development</span>
+</div>
+
+</body>
+</html>

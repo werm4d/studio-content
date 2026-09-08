@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M4Di Project Terminal</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg0:#06080d;--bg1:#0a0e17;--bg2:#0e1420;--bg3:#13192c;--bg4:#1a2238;
+  --line:#1e2d47;--line2:#253654;
+  --tx0:#dce8f5;--tx1:#8fb3d4;--tx2:#4d7099;--tx3:#2a4a6b;
+  --acc:#c8952a;--acc2:#a07520;
+  --gold:#e8b84b;--gold2:#c89030;
+  --up:#2ecc8f;--dn:#e05252;--warn:#e8a030;
+  --teal:#20b8c4;--purple:#7a5af8;
+  --font-mono:'SF Mono','Cascadia Code','Fira Code',monospace;
+  --font-ui:'SF Pro Display',-apple-system,'Segoe UI',system-ui,sans-serif;
+  --r:5px;--r2:9px;
+}
+
+html.light{
+  --bg0:#f0f2f5;--bg1:#ffffff;--bg2:#f5f7fa;--bg3:#eaecf0;--bg4:#dde1e8;
+  --line:#d0d5de;--line2:#b8bfcc;
+  --tx0:#1a2235;--tx1:#374560;--tx2:#6b7a99;--tx3:#9aa3b8;
+  --acc:#a07520;--acc2:#7a5a18;
+  --gold:#b07a20;--gold2:#8a5e14;
+  --up:#1a9e6a;--dn:#c03a3a;--warn:#c07a18;
+  --teal:#1290a0;--purple:#5a3fd4;
+}
+.theme-toggle{
+  display:flex;align-items:center;gap:5px;cursor:pointer;font-size:9px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--tx2);padding:4px 9px;
+  border-radius:var(--r);border:1px solid var(--line2);background:transparent;transition:all .15s;
+}
+.theme-toggle:hover{border-color:var(--gold2);color:var(--gold)}
+html{font-size:13px;background:var(--bg0);color:var(--tx0)}
+body{font-family:var(--font-ui);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--acc);text-decoration:none}
+button{font-family:var(--font-ui);cursor:pointer}
+input,select,textarea{font-family:var(--font-ui)}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg1)}
+::-webkit-scrollbar-thumb{background:var(--line2);border-radius:2px}
+
+/* ── TOPBAR ─────────────────────────────────── */
+#topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;height:46px;
+  background:var(--bg1);border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:200;flex-shrink:0;
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{
+  font-size:14px;font-weight:700;letter-spacing:.18em;
+  color:var(--tx0);text-transform:uppercase
+}
+.logo-mark span{color:var(--gold)}
+.logo-sub{font-size:9px;color:var(--tx2);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.topbar-center{display:flex;align-items:center;gap:6px}
+.project-pill{
+  font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;border:1px solid;cursor:pointer;transition:all .15s
+}
+.project-pill.active{color:var(--gold);border-color:var(--gold);background:rgba(200,149,42,.12)}
+.project-pill.idle{color:var(--tx2);border-color:var(--line2);background:transparent}
+.project-pill.idle:hover{border-color:var(--acc);color:var(--acc)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+#clock{font-size:10px;font-family:var(--font-mono);color:var(--tx2)}
+.tbtn{
+  font-size:9px;font-weight:700;padding:4px 10px;border-radius:var(--r);
+  border:1px solid var(--line2);background:transparent;color:var(--tx1);
+  letter-spacing:.06em;text-transform:uppercase;transition:all .15s
+}
+.tbtn:hover{border-color:var(--gold);color:var(--gold)}
+.tbtn.gold{border-color:var(--gold2);color:var(--gold);background:rgba(200,149,42,.09)}
+
+/* ── NAV TABS ───────────────────────────────── */
+#nav{
+  display:flex;align-items:stretch;
+  background:var(--bg0);border-bottom:1px solid var(--line);
+  overflow-x:auto;white-space:nowrap;flex-shrink:0;
+}
+#nav::-webkit-scrollbar{height:0}
+.ntab{
+  padding:10px 18px;font-size:10px;font-weight:600;color:var(--tx2);
+  border-bottom:2px solid transparent;cursor:pointer;
+  transition:all .15s;user-select:none;white-space:nowrap;
+  background:transparent;border-left:none;border-right:none;border-top:none;
+  letter-spacing:.06em;text-transform:uppercase
+}
+.ntab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.ntab:hover:not(.active){color:var(--tx1)}
+
+/* ── LAYOUT ─────────────────────────────────── */
+#workspace{display:flex;flex:1;min-height:0;overflow:hidden}
+#sidebar{
+  width:220px;flex-shrink:0;
+  background:var(--bg1);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;overflow:hidden
+}
+#main{flex:1;overflow-y:auto;padding:0}
+.panel{display:none}
+.panel.active{display:block}
+
+/* ── SIDEBAR ─────────────────────────────────── */
+.sb-section{padding:12px 14px 6px;font-size:8px;font-weight:700;letter-spacing:.14em;color:var(--tx3);text-transform:uppercase}
+.sb-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 14px;cursor:pointer;transition:background .12s;border-left:2px solid transparent
+}
+.sb-item:hover{background:var(--bg2)}
+.sb-item.active{background:var(--bg2);border-left-color:var(--gold)}
+.sb-item-left{display:flex;align-items:center;gap:8px}
+.sb-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sb-name{font-size:11px;color:var(--tx1);font-weight:500}
+.sb-item.active .sb-name{color:var(--gold)}
+.sb-badge{font-size:8px;font-weight:700;padding:2px 6px;border-radius:20px}
+.badge-gate0{color:var(--teal);background:rgba(32,184,196,.12);border:1px solid rgba(32,184,196,.3)}
+.badge-gate1{color:var(--warn);background:rgba(232,160,48,.12);border:1px solid rgba(232,160,48,.3)}
+.badge-gate2{color:var(--purple);background:rgba(122,90,248,.12);border:1px solid rgba(122,90,248,.3)}
+.badge-gate3{color:var(--up);background:rgba(46,204,143,.12);border:1px solid rgba(46,204,143,.3)}
+.badge-close{color:var(--tx3);background:transparent;border:1px solid var(--line2)}
+.sb-divider{height:1px;background:var(--line);margin:6px 0}
+.sb-btn{
+  margin:12px;padding:8px;border-radius:var(--r2);
+  border:1px dashed var(--line2);background:transparent;color:var(--tx2);
+  font-size:10px;font-weight:600;letter-spacing:.04em;text-align:center;
+  cursor:pointer;transition:all .15s
+}
+.sb-btn:hover{border-color:var(--gold2);color:var(--gold)}
+
+/* ── DASHBOARD ───────────────────────────────── */
+.dash-header{
+  padding:20px 24px 0;
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding-bottom:16px;
+}
+.dash-title{font-size:18px;font-weight:700;color:var(--tx0);letter-spacing:.02em}
+.dash-sub{font-size:11px;color:var(--tx2);margin-top:3px}
+.dash-actions{display:flex;gap:8px}
+.dact{
+  font-size:9px;font-weight:700;padding:5px 12px;border-radius:var(--r);
+  border:1px solid var(--line2);background:transparent;color:var(--tx1);
+  letter-spacing:.06em;text-transform:uppercase;transition:all .15s;cursor:pointer
+}
+.dact:hover{border-color:var(--gold);color:var(--gold)}
+.dact.gold{border-color:var(--gold2);background:rgba(200,149,42,.1);color:var(--gold)}
+
+/* stat cards */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:20px 24px}
+.stat-card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);padding:14px}
+.stat-label{font-size:9px;color:var(--tx2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.stat-val{font-size:22px;font-weight:700;color:var(--tx0);font-family:var(--font-mono)}
+.stat-val.gold{color:var(--gold)}
+.stat-val.up{color:var(--up)}
+.stat-val.warn{color:var(--warn)}
+.stat-val.dn{color:var(--dn)}
+.stat-sub{font-size:10px;color:var(--tx2);margin-top:4px}
+.stat-bar{height:3px;background:var(--bg4);border-radius:2px;margin-top:8px;overflow:hidden}
+.stat-bar-fill{height:100%;border-radius:2px;transition:width .6s ease}
+
+/* section labels */
+.section-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:16px 24px 10px;
+  font-size:9px;font-weight:700;letter-spacing:.14em;color:var(--tx2);text-transform:uppercase
+}
+.section-hdr::before{content:'';flex:1;height:1px;background:var(--line);max-width:16px}
+.section-hdr::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* data table */
+.tbl-wrap{padding:0 24px 24px;overflow-x:auto}
+table.data{width:100%;border-collapse:collapse;font-size:11px}
+table.data th{
+  font-size:8px;font-weight:700;letter-spacing:.1em;color:var(--tx3);text-transform:uppercase;
+  padding:6px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap
+}
+table.data td{padding:8px 10px;border-bottom:1px solid rgba(30,45,71,.5);color:var(--tx1);white-space:nowrap}
+table.data tr:hover td{background:var(--bg2)}
+table.data td.mono{font-family:var(--font-mono);font-size:11px}
+table.data td.up{color:var(--up)}
+table.data td.warn{color:var(--warn)}
+table.data td.dn{color:var(--dn)}
+table.data td.gold{color:var(--gold)}
+table.data td.muted{color:var(--tx3)}
+.chip{
+  display:inline-block;font-size:8px;font-weight:700;padding:2px 7px;border-radius:20px;
+  letter-spacing:.05em;white-space:nowrap
+}
+.chip-pend{color:var(--warn);background:rgba(232,160,48,.12);border:1px solid rgba(232,160,48,.3)}
+.chip-ok{color:var(--up);background:rgba(46,204,143,.12);border:1px solid rgba(46,204,143,.3)}
+.chip-hi{color:var(--dn);background:rgba(224,82,82,.12);border:1px solid rgba(224,82,82,.3)}
+.chip-med{color:var(--warn);background:rgba(232,160,48,.12);border:1px solid rgba(232,160,48,.3)}
+.chip-lo{color:var(--teal);background:rgba(32,184,196,.12);border:1px solid rgba(32,184,196,.3)}
+.chip-watch{color:var(--purple);background:rgba(122,90,248,.12);border:1px solid rgba(122,90,248,.3)}
+
+/* two-col layout */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:0 24px 24px}
+.box-card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);padding:16px}
+.box-card-title{font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--tx2);text-transform:uppercase;margin-bottom:12px}
+
+/* gate tracker */
+.gate-row{display:flex;align-items:center;gap:0;padding:0 24px 24px}
+.gate-step{flex:1;text-align:center;position:relative}
+.gate-step:not(:last-child)::after{
+  content:'';position:absolute;top:18px;left:50%;right:-50%;
+  height:2px;background:var(--line);z-index:0
+}
+.gate-step.done::after{background:var(--up)}
+.gate-step.active::after{background:var(--gold)}
+.gate-circle{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 6px;position:relative;z-index:1;
+  font-size:12px;font-weight:700;
+}
+.gate-circle.done{background:rgba(46,204,143,.15);border:2px solid var(--up);color:var(--up)}
+.gate-circle.active{background:rgba(200,149,42,.15);border:2px solid var(--gold);color:var(--gold)}
+.gate-circle.idle{background:var(--bg3);border:2px solid var(--line);color:var(--tx3)}
+.gate-lbl{font-size:9px;color:var(--tx2);font-weight:600;letter-spacing:.06em}
+.gate-sub{font-size:8px;color:var(--tx3);margin-top:2px}
+
+/* progress bar */
+.prog-wrap{padding:0 24px 20px}
+.prog-label{display:flex;justify-content:space-between;font-size:10px;color:var(--tx2);margin-bottom:5px}
+.prog-track{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold2),var(--gold));transition:width .8s ease}
+
+/* allowance items */
+.alw-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(30,45,71,.5)}
+.alw-row:last-child{border-bottom:none}
+.alw-id{font-size:9px;font-family:var(--font-mono);color:var(--tx3);width:54px;flex-shrink:0}
+.alw-desc{flex:1;font-size:11px;color:var(--tx1);padding:0 10px}
+.alw-amt{font-size:11px;font-family:var(--font-mono);color:var(--gold);min-width:80px;text-align:right}
+
+/* floor summary bars */
+.floor-bars{padding:0 24px 24px}
+.floor-item{margin-bottom:14px}
+.floor-meta{display:flex;justify-content:space-between;font-size:10px;margin-bottom:4px}
+.floor-name{color:var(--tx1);font-weight:600}
+.floor-amt{font-family:var(--font-mono);color:var(--gold)}
+.floor-bar-track{height:8px;background:var(--bg4);border-radius:4px;overflow:hidden}
+.floor-bar-fill{height:100%;border-radius:4px;display:flex}
+.floor-base{background:var(--gold2);height:100%;border-radius:4px 0 0 4px}
+.floor-equip{background:var(--teal);height:100%;border-radius:0 4px 4px 0}
+
+/* variance gauge */
+.var-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(30,45,71,.5)}
+.var-row:last-child{border-bottom:none}
+.var-name{flex:1;font-size:11px;color:var(--tx1)}
+.var-pct{font-size:11px;font-family:var(--font-mono);width:46px;text-align:right}
+.var-bar-wrap{width:100px;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;flex-shrink:0}
+.var-bar-inner{height:100%;border-radius:3px}
+
+/* draw schedule */
+.draw-source{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(30,45,71,.5)}
+.draw-source:last-child{border-bottom:none}
+.draw-name{flex:1;font-size:11px;color:var(--tx1)}
+.draw-committed{font-size:10px;font-family:var(--font-mono);color:var(--tx2);min-width:80px;text-align:right}
+.draw-pct{font-size:9px;color:var(--tx3);min-width:36px;text-align:right}
+.draw-bar{width:80px;height:4px;background:var(--bg4);border-radius:2px;overflow:hidden;flex-shrink:0}
+.draw-bar-fill{height:100%;background:var(--teal);border-radius:2px}
+
+/* AI chat pane */
+#pane-ai{display:flex;flex-direction:column;height:calc(100vh - 90px)}
+.ai-hdr{display:flex;align-items:center;gap:10px;padding:14px 20px;background:var(--bg1);border-bottom:1px solid var(--line);flex-shrink:0}
+.ai-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;color:var(--bg0);font-weight:700}
+.ai-name{font-size:13px;font-weight:700;color:var(--tx0)}
+.ai-sub{font-size:9px;color:var(--tx2)}
+#ai-key-row{padding:10px 20px;background:rgba(200,149,42,.06);border-bottom:1px solid var(--line);flex-shrink:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#ai-key-row label{font-size:10px;color:var(--tx2);white-space:nowrap}
+#ai-api-key{
+  flex:1;min-width:200px;max-width:400px;
+  background:var(--bg2);border:1px solid var(--line2);color:var(--tx0);
+  padding:5px 10px;border-radius:var(--r);font-size:11px;font-family:var(--font-mono)
+}
+#ai-save-key{font-size:9px;padding:5px 12px;background:var(--gold2);color:var(--bg0);border:none;border-radius:var(--r);cursor:pointer;font-weight:700}
+#ai-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.cmsg{display:flex;gap:10px;max-width:90%}
+.cmsg.user{align-self:flex-end;flex-direction:row-reverse}
+.cmsg.assistant{align-self:flex-start}
+.cmsg-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.cmsg.user .cmsg-av{background:var(--bg4);color:var(--tx1)}
+.cmsg.assistant .cmsg-av{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg0)}
+.cmsg-bubble{padding:10px 14px;border-radius:10px;font-size:12px;line-height:1.65;word-break:break-word}
+.cmsg.user .cmsg-bubble{background:var(--acc2);color:var(--tx0);border-bottom-right-radius:3px}
+.cmsg.assistant .cmsg-bubble{background:var(--bg2);border:1px solid var(--line);color:var(--tx0);border-bottom-left-radius:3px}
+.cmsg-bubble code{font-family:var(--font-mono);font-size:10px;background:var(--bg3);padding:1px 5px;border-radius:3px}
+.cmsg-bubble pre{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:10px;margin:6px 0;overflow-x:auto;font-size:10px;font-family:var(--font-mono);line-height:1.5}
+.cmsg-typing{color:var(--tx2);font-style:italic;font-size:11px}
+.ai-quick{padding:6px 16px;display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;background:var(--bg0);border-top:1px solid var(--line)}
+.qbtn{font-size:9px;padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;border:1px solid var(--line2);background:transparent;color:var(--tx2);letter-spacing:.03em;transition:all .12s}
+.qbtn:hover{border-color:var(--gold2);color:var(--gold)}
+#ai-input-row{padding:12px 16px;background:var(--bg1);border-top:1px solid var(--line);display:flex;gap:8px;align-items:flex-end;flex-shrink:0}
+#ai-input{flex:1;background:var(--bg2);border:1px solid var(--line2);color:var(--tx0);padding:9px 12px;border-radius:8px;font-size:12px;font-family:var(--font-ui);resize:none;min-height:38px;max-height:120px;line-height:1.5;transition:border-color .15s}
+#ai-input:focus{outline:none;border-color:var(--gold)}
+#ai-send{background:var(--gold2);color:var(--bg0);border:none;width:38px;height:38px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;font-weight:700}
+#ai-send:hover{background:var(--gold)}
+#ai-send:disabled{background:var(--bg4);color:var(--tx3);cursor:default}
+
+/* new project modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;display:flex;align-items:center;justify-content:center;display:none}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);padding:24px;width:420px;max-width:94vw}
+.modal-title{font-size:14px;font-weight:700;color:var(--tx0);margin-bottom:4px}
+.modal-sub{font-size:10px;color:var(--tx2);margin-bottom:20px}
+.form-row{margin-bottom:14px}
+.form-label{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--tx2);text-transform:uppercase;margin-bottom:5px;display:block}
+.form-input{
+  width:100%;background:var(--bg3);border:1px solid var(--line2);color:var(--tx0);
+  padding:8px 12px;border-radius:var(--r);font-size:12px;
+  transition:border-color .15s
+}
+.form-input:focus{outline:none;border-color:var(--gold)}
+.form-select{
+  width:100%;background:var(--bg3);border:1px solid var(--line2);color:var(--tx0);
+  padding:8px 12px;border-radius:var(--r);font-size:12px;cursor:pointer
+}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+.mbtn{
+  font-size:10px;font-weight:700;padding:7px 16px;border-radius:var(--r);
+  border:1px solid var(--line2);background:transparent;color:var(--tx1);
+  letter-spacing:.05em;cursor:pointer;transition:all .15s
+}
+.mbtn:hover{border-color:var(--gold2);color:var(--gold)}
+.mbtn.primary{background:var(--gold2);border-color:var(--gold2);color:var(--bg0)}
+.mbtn.primary:hover{background:var(--gold)}
+
+/* toast */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:var(--bg3);border:1px solid var(--gold2);color:var(--tx0);
+  padding:8px 18px;border-radius:20px;font-size:11px;font-weight:600;
+  z-index:600;transition:opacity .3s;opacity:0;pointer-events:none;
+}
+#toast.show{opacity:1}
+
+/* co log */
+.co-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(30,45,71,.5);flex-wrap:wrap}
+.co-row:last-child{border-bottom:none}
+.co-num{font-size:9px;font-family:var(--font-mono);color:var(--tx3);width:50px;flex-shrink:0}
+.co-desc{flex:1;font-size:11px;color:var(--tx1);min-width:150px}
+.co-amt{font-size:11px;font-family:var(--font-mono);min-width:70px;text-align:right}
+.co-pct{font-size:9px;color:var(--tx2);min-width:40px;text-align:right}
+
+/* benchmark */
+.bench-item{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(30,45,71,.5)}
+.bench-item:last-child{border-bottom:none}
+.bench-name{flex:1;font-size:11px;color:var(--tx1)}
+.bench-year{font-size:10px;color:var(--tx3);width:36px}
+.bench-psf{font-size:11px;font-family:var(--font-mono);color:var(--gold);width:68px;text-align:right}
+.bench-bar{width:80px;height:4px;background:var(--bg4);border-radius:2px;overflow:hidden;flex-shrink:0}
+.bench-bar-fill{height:100%;background:var(--gold2);border-radius:2px}
+
+@media(max-width:700px){
+  #sidebar{display:none}
+  .two-col{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ── PROJECT PLAN ───────────────── */
+.plan-controls{display:flex;align-items:center;gap:8px;padding:12px 24px 8px;flex-wrap:wrap}
+.plan-filter{font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;border:1px solid var(--line2);background:transparent;color:var(--tx2);cursor:pointer;letter-spacing:.05em;transition:all .15s}
+.plan-filter.active,.plan-filter:hover{border-color:var(--gold2);color:var(--gold);background:rgba(200,149,42,.08)}
+.gantt-wrap{padding:0 24px 24px;overflow-x:auto}
+.gantt-tbl{border-collapse:collapse;font-size:10px;min-width:860px;width:100%}
+.gantt-tbl th{font-size:8px;font-weight:700;letter-spacing:.08em;color:var(--tx3);text-transform:uppercase;padding:5px 7px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--bg1);position:sticky;top:0;z-index:5}
+.gantt-tbl td{padding:6px 7px;border-bottom:1px solid rgba(30,45,71,.35);color:var(--tx1);white-space:nowrap;vertical-align:middle}
+.gantt-tbl tr:hover td{background:var(--bg2)}
+.gantt-tbl td.tname{font-size:11px;color:var(--tx0);white-space:normal;min-width:160px;max-width:200px}
+.gantt-tbl td.tcat{font-size:9px;color:var(--tx2);font-weight:600}
+.gantt-tbl td.twho{font-size:9px;font-family:var(--font-mono);color:var(--teal)}
+.gantt-bar-cell{min-width:240px;padding:5px 8px}
+.gantt-bar-outer{height:12px;background:var(--bg4);border-radius:3px;position:relative;overflow:hidden}
+.gantt-bar-inner{height:100%;border-radius:3px;position:absolute;top:0;transition:width .5s}
+.plan-proj-hdr{background:var(--bg3);padding:6px 24px;font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;border-bottom:1px solid var(--line);border-top:1px solid var(--line)}
+.plan-legend{display:flex;gap:12px;align-items:center;padding:8px 24px 4px;flex-wrap:wrap}
+.plan-leg-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--tx2);font-weight:600}
+.plan-leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="logo">
+    <div>
+      <div class="logo-mark">M<span>4</span>Di</div>
+      <div class="logo-sub">Project Terminal</div>
+    </div>
+  </div>
+  <div class="topbar-center" id="project-pills"></div>
+  <div class="topbar-right">
+    <span id="clock"></span>
+    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()"><span>☀</span> Light</button>
+    <button class="tbtn gold" onclick="openNewProject()">+ New Project</button>
+    <button class="tbtn" onclick="showTab('ai')">AI Advisor</button>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<div id="nav">
+  <button class="ntab active" data-tab="overview" onclick="showTab('overview')">Overview</button>
+  <button class="ntab" data-tab="oi" onclick="showTab('oi')">OI Estimate</button>
+  <button class="ntab" data-tab="allowances" onclick="showTab('allowances')">Allowances</button>
+  <button class="ntab" data-tab="budget" onclick="showTab('budget')">ALDi Budget</button>
+  <button class="ntab" data-tab="changes" onclick="showTab('changes')">Change Orders</button>
+  <button class="ntab" data-tab="draws" onclick="showTab('draws')">Draw Schedule</button>
+  <button class="ntab" data-tab="plan" onclick="showTab('plan')">Project Plan</button>
+  <button class="ntab" data-tab="benchmark" onclick="showTab('benchmark')">Benchmarks</button>
+  <button class="ntab" data-tab="ai" onclick="showTab('ai')">AI Advisor</button>
+</div>
+
+<div id="workspace">
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sb-section">Active Projects</div>
+  <div id="sb-projects"></div>
+  <div class="sb-divider"></div>
+  <div class="sb-section">Closed / Archive</div>
+  <div id="sb-closed"></div>
+  <button class="sb-btn" onclick="openNewProject()">+ Add Project</button>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- ── OVERVIEW ─────────────────────────────── -->
+<div id="panel-overview" class="panel active">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title" id="overview-title">WHACC Athletic Improvements</div>
+      <div class="dash-sub" id="overview-sub">Gate 0 — ROM Complete · Interior Improvement · 8,700 SF · Delaware</div>
+    </div>
+    <div class="dash-actions">
+      <button class="dact gold" onclick="showTab('oi')">View Estimate →</button>
+    </div>
+  </div>
+
+  <!-- gate tracker -->
+  <div class="section-hdr">ALDi Gate Progress</div>
+  <div class="gate-row" id="gate-track"></div>
+
+  <!-- stat cards -->
+  <div class="stat-grid" id="stat-cards"></div>
+
+  <!-- two col -->
+  <div class="two-col">
+    <div class="box-card">
+      <div class="box-card-title">Floor Cost Breakdown</div>
+      <div class="floor-bars" id="floor-breakdown" style="padding:0"></div>
+    </div>
+    <div class="box-card">
+      <div class="box-card-title">Open Allowances</div>
+      <div id="overview-allowances"></div>
+    </div>
+  </div>
+
+  <!-- clarifications -->
+  <div class="section-hdr">Risk & Clarification Log</div>
+  <div class="tbl-wrap">
+    <table class="data" id="risk-table">
+      <thead><tr><th>Category</th><th>Item</th><th>Status</th><th>Risk</th><th>Note</th></tr></thead>
+      <tbody id="risk-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── OI ESTIMATE ───────────────────────────── -->
+<div id="panel-oi" class="panel">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">OI Tool — ROM Estimate</div>
+      <div class="dash-sub">Quantity-based takeoff · M4Di Phase 0 · Regional factors applied</div>
+    </div>
+    <div class="dash-actions">
+      <button class="dact">Export PDF</button>
+      <button class="dact gold">QA Check</button>
+    </div>
+  </div>
+  <div class="stat-grid" id="oi-stats"></div>
+
+  <div class="section-hdr">Bid Summary</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>Line Item</th><th>Amount</th><th>% of Hard Cost</th><th>Notes</th></tr></thead>
+      <tbody id="bid-body"></tbody>
+    </table>
+  </div>
+
+  <div class="section-hdr">Quantity Takeoff (Sample Lines)</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>Floor</th><th>Zone</th><th>Div</th><th>Scope Item</th><th>Unit</th><th>Qty</th><th>Adj. Unit Cost</th><th>Line Total</th><th>Incl.</th></tr></thead>
+      <tbody id="takeoff-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── ALLOWANCES ────────────────────────────── -->
+<div id="panel-allowances" class="panel">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">Owner Selection & Allowance Log</div>
+      <div class="dash-sub">ALDi gate reporting — all pending items require resolution before GMP</div>
+    </div>
+  </div>
+  <div class="stat-grid" id="alw-stats"></div>
+  <div class="section-hdr">Open Allowances — ALDi Log</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>ID</th><th>Category</th><th>Description</th><th>Amount</th><th>Basis</th><th>Owner Decision?</th><th>Status</th><th>Next Action</th></tr></thead>
+      <tbody id="alw-body"></tbody>
+    </table>
+  </div>
+  <div class="section-hdr">Equipment Selection Matrix</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>Ref</th><th>Category</th><th>System</th><th>Spec</th><th>BOD</th><th>Owner Confirm?</th><th>Allowance Each</th><th>Qty</th><th>Total</th><th>Decision</th></tr></thead>
+      <tbody id="equip-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── ALDI BUDGET ────────────────────────────── -->
+<div id="panel-budget" class="panel">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">ALDi Budget Tracker</div>
+      <div class="dash-sub">Design → construction lifecycle cost control · ROM locked at Gate 0</div>
+    </div>
+  </div>
+  <div class="stat-grid" id="budget-stats"></div>
+  <div class="section-hdr">Total Project Budget</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>Budget Item</th><th>Amount ($)</th><th>% of Hard Cost</th><th>% of Total</th><th>Notes</th></tr></thead>
+      <tbody id="budget-body"></tbody>
+    </table>
+  </div>
+  <div class="section-hdr">Soft Costs — Fees & Pre-Construction</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>Fee Category</th><th>Rate</th><th>Base</th><th>Amount</th><th>Notes</th></tr></thead>
+      <tbody id="soft-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── CHANGE ORDERS ──────────────────────────── -->
+<div id="panel-changes" class="panel">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">Change Order Log</div>
+      <div class="dash-sub">ALDi Gate 3–4 · All changes to contracted GMP/SOV logged here</div>
+    </div>
+  </div>
+  <div class="stat-grid" id="co-stats"></div>
+  <div class="section-hdr">Change Order Register</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>CO #</th><th>Description</th><th>Date</th><th>GC Amt</th><th>Owner Cost</th><th>Cumul. COs</th><th>% of GMP</th><th>Category</th><th>Status</th></tr></thead>
+      <tbody id="co-body"></tbody>
+    </table>
+  </div>
+  <div class="section-hdr">Variance Log — &gt;5% Changes</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>Budget Category</th><th>Gate</th><th>ROM Amt</th><th>New Est.</th><th>Variance $</th><th>Var %</th><th>Status</th><th>Root Cause</th><th>Approved By</th></tr></thead>
+      <tbody id="var-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── DRAW SCHEDULE ──────────────────────────── -->
+<div id="panel-draws" class="panel">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">Funding Draw Schedule</div>
+      <div class="dash-sub">Budget vs. actual spend · Updated monthly with each pay application</div>
+    </div>
+  </div>
+  <div class="stat-grid" id="draw-stats"></div>
+  <div class="section-hdr">Funding Sources & Draws</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>Funding Source</th><th>Committed ($)</th><th>Draw 1</th><th>Draw 2</th><th>Draw 3</th><th>Total Drawn</th><th>Remaining</th><th>% Drawn</th></tr></thead>
+      <tbody id="draw-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── BENCHMARK ──────────────────────────────── -->
+<div id="panel-benchmark" class="panel">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">SF Benchmark & Historical DB</div>
+      <div class="dash-sub">M4Di proprietary cost data · Do not distribute externally</div>
+    </div>
+    <div class="dash-actions">
+      <button class="dact gold" onclick="showToast('Add project to historical DB — update spreadsheet')">+ Add to DB</button>
+    </div>
+  </div>
+  <div class="stat-grid" id="bench-stats"></div>
+  <div class="section-hdr">Cost/SF Benchmark Dashboard</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>Metric</th><th>Value</th><th>Comparison</th></tr></thead>
+      <tbody id="bench-meta-body"></tbody>
+    </table>
+  </div>
+  <div class="section-hdr">Historical Project Database</div>
+  <div class="tbl-wrap">
+    <table class="data">
+      <thead><tr><th>Project</th><th>Type</th><th>Region</th><th>Year</th><th>SF</th><th>Final Cost</th><th>Cost/SF</th><th>Scope</th></tr></thead>
+      <tbody id="hist-body"></tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ── PROJECT PLAN ─────────────────────────────── -->
+<div id="panel-plan" class="panel">
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">Project Plan — Active Schedule</div>
+      <div class="dash-sub">M4D / M4Di · FY2024–26 · All projects · Gantt view</div>
+    </div>
+    <div class="dash-actions">
+      <button class="dact gold" onclick="showToast('Inline task editing — Phase 1 roadmap feature')">+ Add Task</button>
+    </div>
+  </div>
+  <div class="plan-legend">
+    <div class="plan-leg-item"><div class="plan-leg-dot" style="background:var(--up)"></div>Complete</div>
+    <div class="plan-leg-item"><div class="plan-leg-dot" style="background:var(--gold2)"></div>In-Process</div>
+    <div class="plan-leg-item"><div class="plan-leg-dot" style="background:var(--dn)"></div>Behind</div>
+    <div class="plan-leg-item"><div class="plan-leg-dot" style="background:var(--tx3)"></div>Not Started</div>
+  </div>
+  <div class="plan-controls">
+    <span style="font-size:9px;color:var(--tx2);font-weight:700">FILTER:</span>
+    <button class="plan-filter active" onclick="filterPlan('all',this)">All Projects</button>
+    <button class="plan-filter" onclick="filterPlan('claymont',this)">Claymont CLT/SIP</button>
+    <button class="plan-filter" onclick="filterPlan('leep',this)">LEEP HQ</button>
+    <button class="plan-filter" onclick="filterPlan('daycare',this)">LaMotte Daycare</button>
+    <button class="plan-filter" onclick="filterPlan('active',this)">In-Progress / Behind</button>
+    <button class="plan-filter" onclick="filterPlan('complete',this)">Complete Only</button>
+  </div>
+  <div class="gantt-wrap">
+    <table class="gantt-tbl">
+      <thead><tr>
+        <th>Phase</th><th>Type</th><th style="min-width:170px">Task</th>
+        <th>Lead</th><th>Assist</th><th>Status</th>
+        <th>Wk↗</th><th>Wk↘</th>
+        <th style="min-width:240px">Schedule Bar</th>
+        <th style="min-width:120px">Notes</th>
+      </tr></thead>
+      <tbody id="gantt-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── AI ADVISOR ─────────────────────────────── -->
+<div id="panel-ai" class="panel">
+  <div id="pane-ai">
+    <div class="ai-hdr">
+      <div class="ai-avatar">M4</div>
+      <div>
+        <div class="ai-name">M4Di AI Advisor</div>
+        <div class="ai-sub">Predevelopment · Cost intelligence · ALDi methodology</div>
+      </div>
+    </div>
+    <div id="ai-key-row">
+      <label for="ai-api-key">Anthropic API Key</label>
+      <input type="password" id="ai-api-key" placeholder="sk-ant-..." />
+      <button id="ai-save-key" onclick="saveAIKey()">Save Key</button>
+      <span id="ai-key-status" style="font-size:9px;color:var(--tx2)"></span>
+    </div>
+    <div id="ai-msgs">
+      <div class="cmsg assistant">
+        <div class="cmsg-av">M4</div>
+        <div class="cmsg-bubble">Craig — M4Di AI Advisor online. I'm loaded with the OI Tool methodology, ALDi gate structure, unit price logic, and regional factor framework. What do you need on this project?</div>
+      </div>
+    </div>
+    <div class="ai-quick">
+      <button class="qbtn" onclick="quickPrompt('Summarize the current project estimate and open allowances.')">Estimate summary</button>
+      <button class="qbtn" onclick="quickPrompt('What are the highest-risk open allowances and what needs owner decision?')">Risk allowances</button>
+      <button class="qbtn" onclick="quickPrompt('Compare the current project $/SF to the M4Di historical database. Is this within range?')">Benchmark check</button>
+      <button class="qbtn" onclick="quickPrompt('Draft a gate 0 summary memo for the owner.')">Gate 0 memo</button>
+      <button class="qbtn" onclick="quickPrompt('What are the soft cost assumptions and how do fees break down?')">Soft costs</button>
+      <button class="qbtn" onclick="quickPrompt('What items are excluded from this estimate that the owner should budget for separately?')">Exclusions</button>
+    </div>
+    <div id="ai-input-row">
+      <textarea id="ai-input" rows="1" placeholder="Ask about costs, methodology, gate status, or draft a report…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAIMsg()}"></textarea>
+      <button id="ai-send" onclick="sendAIMsg()">↑</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /workspace -->
+
+<!-- NEW PROJECT MODAL -->
+<div class="modal-overlay" id="modal-new">
+  <div class="modal-box">
+    <div class="modal-title">Add New Project</div>
+    <div class="modal-sub">Enter project details to initialize ALDi tracking</div>
+    <div class="form-row">
+      <label class="form-label">Project Name / Code</label>
+      <input class="form-input" id="np-name" placeholder="e.g., WHACC-2026" />
+    </div>
+    <div class="form-row">
+      <label class="form-label">Client / Owner</label>
+      <input class="form-input" id="np-client" placeholder="Legal entity name" />
+    </div>
+    <div class="form-row">
+      <label class="form-label">Project Type</label>
+      <select class="form-select" id="np-type">
+        <option>Interior Improvement</option>
+        <option>Adaptive Reuse</option>
+        <option>New Construction</option>
+        <option>Mixed-Use</option>
+        <option>Community Facility Renovation</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Gross Area (SF)</label>
+      <input class="form-input" id="np-sf" type="number" placeholder="0" />
+    </div>
+    <div class="form-row">
+      <label class="form-label">Current Gate</label>
+      <select class="form-select" id="np-gate">
+        <option value="0">Gate 0 — ROM / Conceptual</option>
+        <option value="1">Gate 1 — Feasibility</option>
+        <option value="2">Gate 2 — 75% DD</option>
+        <option value="3">Gate 3 — GMP / Contracted</option>
+        <option value="4">Gate 4 — Construction</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label class="form-label">M4Di Lead</label>
+      <select class="form-select" id="np-lead">
+        <option>Craig (David Ainsworth)</option>
+        <option>Trevor Knight</option>
+        <option>Travis Davis</option>
+        <option>Leo Lynch</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="mbtn" onclick="closeModal()">Cancel</button>
+      <button class="mbtn primary" onclick="addProject()">Add Project</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+const PROJECTS = [
+
+
+  {
+    id:'claymont',
+    name:'Claymont CLT/SIP',
+    client:'L.E.E.P., Inc. / Gwenevere Motley',
+    type:'New Construction — CLT/SIP Hybrid',
+    sf:7080, gate:1, lead:'David Ainsworth (AOR)',
+    region:'City of Wilmington, DE', status:'active',
+    romHard:1875000, romEquip:0,
+    gcRate:0.08, ohpRate:0.108, contingency:0.10, totalBudget:2288750,
+    softCosts:[
+      {cat:'Architecture — M4D / Aubyn Architecture LLC (AOR)',rate:'4.5%',base:1875000,amt:84375,note:'David C. Ainsworth AIA as AOR. Phased fee per PSA AE24-002.'},
+      {cat:'Civil Engineering — Merestone Consultants Inc.',rate:'1.8%',base:1875000,amt:33750,note:'Site survey, lot subdivision approval, FEMA Elevation Certificate.'},
+      {cat:'Structural Engineering — CLT/SIP Peer Review',rate:'2.5%',base:1875000,amt:46875,note:'Mass timber EOR + SIP coordination. ANSI/APA PRG 320 compliance.'},
+      {cat:'MEP Engineering',rate:'3.0%',base:1875000,amt:56250,note:'Mini-split/VRF system. 4 residential units. Ben at Paragon (TBD confirmation).'},
+      {cat:'Owner Contingency (10%)',rate:'10.0%',base:1875000,amt:187500,note:'Elevated for first-of-state CLT/SIP system. Reduce at Gate 2.'},
+    ],
+    floors:[
+      {name:'Unit A',base:420000,equip:0,total:468000},
+      {name:'Unit B',base:420000,equip:0,total:468000},
+      {name:'Unit C',base:420000,equip:0,total:468000},
+      {name:'Unit D',base:415000,equip:0,total:471000},
+    ],
+    allowances:[
+      {id:'ALW-01',cat:'CLT Structure',desc:'CLT floor + roof panels — 3-ply 4" E1M1 grade',amt:185000,basis:'Illinois / West Coast mfr.; 2,000+ mi. freight included in unit cost',ownerDecision:false,status:'Pending',next:'Confirm manufacturer, grade, and delivery schedule. Lead time 8–12 weeks — order immediately on permit.'},
+      {id:'ALW-02',cat:'SIP Envelope',desc:'SIP wall + roof panel system — EPS core',amt:95000,basis:'Thickness and R-value TBD by EOR',ownerDecision:true,status:'Pending',next:'Owner confirm R-value target and exterior finish system at DD.'},
+      {id:'ALW-03',cat:'MEP',desc:'Mini-split / VRF HVAC system — 4 units',amt:48000,basis:'Ductless multi-zone; 12,000 BTU/unit minimum assumed',ownerDecision:true,status:'Pending',next:'Confirm system brand, zoning, and ERV/HRV integration at DD.'},
+      {id:'ALW-04',cat:'Finishes',desc:'Kitchen + bath finish allowance — per unit',amt:32000,basis:'$8,000/unit; appliances included',ownerDecision:true,status:'Pending',next:'Owner selections required at DD milestone.'},
+      {id:'ALW-05',cat:'Site Work',desc:'Lot subdivision + site utility rough-in',amt:55000,basis:'Merestone civil scope pending final survey',ownerDecision:false,status:'Pending',next:'Survey to confirm utility locations and lot line adjustments.'},
+    ],
+    takeoff:[
+      {floor:'All Units',zone:'Structural System',div:'06',item:'CLT floor + roof panels — 3-ply 4" E1M1',unit:'SF',qty:7080,adjUnit:26.15,total:185142,incl:'Yes'},
+      {floor:'All Units',zone:'Envelope',div:'06',item:'SIP wall panels — 6" EPS core w/ OSB facing',unit:'SF',qty:5200,adjUnit:18.27,total:95004,incl:'Yes'},
+      {floor:'All Units',zone:'Foundation',div:'03',item:'CMU foundation walls — 8" & 12" reinforced',unit:'LF',qty:320,adjUnit:185.50,total:59360,incl:'Yes'},
+      {floor:'All Units',zone:'Finishes',div:'09',item:'Interior finishes — floors, walls, ceilings',unit:'SF',qty:7080,adjUnit:38.50,total:272580,incl:'Yes'},
+      {floor:'All Units',zone:'MEP',div:'15',item:'Plumbing rough-in + fixtures — 4 units',unit:'EA',qty:4,adjUnit:18500,total:74000,incl:'Yes'},
+      {floor:'All Units',zone:'MEP',div:'16',item:'Electrical service + wiring — 4 units',unit:'EA',qty:4,adjUnit:12500,total:50000,incl:'Yes'},
+      {floor:'All Units',zone:'Site',div:'02',item:'Site utility connections + grading',unit:'LS',qty:1,adjUnit:55000,total:55000,incl:'Yes'},
+    ],
+    bidSummary:[
+      {item:'CLT/SIP Structural System',amt:280146,pctHard:0.149,note:'CLT panels + SIP wall/roof envelope'},
+      {item:'Foundation — CMU System',amt:59360,pctHard:0.032,note:'8" & 12" reinforced CMU per structural drawings'},
+      {item:'Interior Finishes',amt:272580,pctHard:0.145,note:'All 4 units — floors, walls, ceilings'},
+      {item:'MEP Systems',amt:172000,pctHard:0.092,note:'Plumbing + electrical; HVAC allowance separate'},
+      {item:'Site Work',amt:55000,pctHard:0.029,note:'Utility connections + grading; civil scope TBD'},
+      {item:'Owner Allowances (MEP/Finishes/Site)',amt:335000,pctHard:0.179,note:'Pending owner decisions and MEP fee confirmation'},
+      {item:'Subtotal Before Markups',amt:1174086,pctHard:0.626,note:''},
+      {item:'General Conditions (8%)',amt:93927,pctHard:0.050,note:''},
+      {item:'Overhead & Profit (10.8%)',amt:126801,pctHard:0.068,note:''},
+      {item:'Contingency (10%) — First-of-State System',amt:139481,pctHard:0.074,note:'Elevated for CLT/SIP — reduce at Gate 2 with structural confirmation'},
+      {item:'Permit + Peer Review + Bonds',amt:24000,pctHard:0.013,note:'Building permit + CLT/SIP IBC special inspection fee'},
+      {item:'ROM Hard Cost Total',amt:1875000,pctHard:1.000,note:'Gate 0 baseline locked April 2026 · Target: May–June 2026 construction'},
+    ],
+    risks:[
+      {cat:'Structural',item:'CLT/SIP IBC peer review required — first-of-state application in Wilmington',status:'Included',risk:'High',note:'Allowance in budget. Coordinate with AHJ early. EOR required before permit.'},
+      {cat:'Procurement',item:'CLT panel lead time 8–12 weeks — nearest factory 2,000+ miles',status:'Included',risk:'High',note:'Order must be placed immediately upon permit issuance to hit May start.'},
+      {cat:'Code',item:'FEMA Elevation Certificate — flood zone AE confirmed; Level 1 garage is flood enclosure',status:'Included',risk:'Medium',note:'Merestone certifies. Level 1 non-occupied. Two ECs required (pre + as-built).'},
+      {cat:'Civil',item:'Lot subdivision approval pending — ZBR timeline risk',status:'Included',risk:'Medium',note:'Merestone civil scope. ZBR approval timeline could push May start.'},
+      {cat:'Data',item:'ROM-to-actual comparison data — primary M4Di grant evidence base for Enterprise/WF',status:'Included',risk:'Low',note:'CRITICAL: track all actual costs vs. ROM through closeout. First ALDDB entry.'},
+      {cat:'MEP',item:'Mini-split sizing and zoning pending MEP engineer confirmation',status:'Allowance',risk:'Low',note:'12,000 BTU/unit assumed. Confirm at DD. Paragon to confirm engagement.'},
+    ],
+    changeOrders:[],
+    variances:[],
+    draws:[
+      {source:"Owner Equity — L.E.E.P., Inc.",committed:500000,draws:[0,0,0,0,0],drawn:0},
+      {source:'DSHA Affordable Housing Construction Financing',committed:950000,draws:[0,0,0,0,0],drawn:0},
+      {source:'CDBG / HOME Program — City of Wilmington',committed:350000,draws:[0,0,0,0,0],drawn:0},
+      {source:'Grant / Philanthropic (TBD — Enterprise/WF pending)',committed:150000,draws:[0,0,0,0,0],drawn:0},
+    ],
+    historicalDB:[
+      {name:'CLT Townhouse Comparable — Mid-Atlantic',type:'New Construction CLT',region:'Maryland',year:2024,sf:6800,cost:1820000,psf:267.65,scope:'6-unit CLT townhouse, wood frame hybrid. No SIP panels. Benchmark only.'},
+      {name:'SIP Residential Comparable — Delaware',type:'New Construction SIP',region:'Delaware',year:2023,sf:4200,cost:1050000,psf:250.00,scope:'3-unit SIP townhouse, conventional foundation. No CLT structure.'},
+      {name:'YMCA Gymnasium Renovation',type:'Athletic Facility Upgrade',region:'Pennsylvania',year:2023,sf:18000,cost:3200000,psf:177.78,scope:'Interior athletic renovation — different type, included for regional labor benchmark.'},
+      {name:'Faith-Based Youth Center Renovation',type:'Community Facility Renovation',region:'New Jersey',year:2024,sf:9200,cost:2280000,psf:247.83,scope:'Full interior renovation, new MEP — different type, regional benchmark.'},
+    ],
+    benchmarkMeta:[
+      {metric:'Project Area (SF)',value:'7,080',comparison:'CLT comparable $/SF (MD, 2024)',cval:'$267.65/SF'},
+      {metric:'ROM Hard Cost',value:'$1,875,000',comparison:'This project $/SF',cval:'$264.83/SF — within comparable range'},
+      {metric:'Construction Window',value:'May–June 2026',comparison:'CLT/SIP vs. stick-build',cval:'8-week target — CLT speed advantage being tracked for ALDDB'},
+    ],
+  },
+  {
+    id:'whacc',name:'WHACC Athletic Improvements',client:'West Hempfield Athletic Community Center',
+    type:'Interior Improvement',sf:8700,gate:0,lead:'Craig (David Ainsworth)',
+    region:'Delaware',status:'active',
+    romHard:1298236.62,romEquip:328735.67,
+    gcRate:0.08,ohpRate:0.108,contingency:0.12,
+    totalBudget:1922403.11,
+    softCosts:[
+      {cat:'Architecture (M4Di/Aubyn)',rate:'8.5%',base:1298236.62,amt:110350.11,note:'Phase 0 ROM fee — AIA-aligned M4Di base schedule'},
+      {cat:'Structural Engineering',rate:'2.5%',base:1298236.62,amt:32455.91,note:'Benchmark rate for interior renovation'},
+      {cat:'MEP Engineering',rate:'4.0%',base:1298236.62,amt:51929.46,note:'Power/data/HVAC coordination included'},
+      {cat:'Specialty Consulting (Acoustics)',rate:'1.0%',base:1298236.62,amt:12982.37,note:'For gym and pool areas'},
+      {cat:'Owner Contingency (10%)',rate:'10.0%',base:1298236.62,amt:129823.66,note:'Pre-construction and construction phase'},
+    ],
+    floors:[
+      {name:'LL',base:230181.93,equip:0,total:362602.83},
+      {name:'1F',base:67378.50,equip:16958.48,total:132855.02},
+      {name:'2F',base:302371.63,equip:241138.44,total:856184.89},
+      {name:'3F',base:104141.70,equip:70638.75,total:275329.55},
+    ],
+    allowances:[
+      {id:'ALW-01',cat:'Gym Equipment',desc:'Basketball backstop systems',amt:65000,basis:'Model TBD — Jaypro J800 or equal',ownerDecision:true,status:'Pending',next:'Owner confirm model/extension/mounting. Due before DD.'},
+      {id:'ALW-02',cat:'Gym Equipment',desc:'Telescoping bleacher system',amt:95000,basis:'Layout and ADA seating TBD',ownerDecision:true,status:'Pending',next:'Owner confirm row count, ADA config, finish. Structural coord required.'},
+      {id:'ALW-03',cat:'Gym Equipment',desc:'Scoreboard / control system',amt:18000,basis:'Manufacturer TBD',ownerDecision:true,status:'Pending',next:'Confirm display type, clock size, controller. Power/data coord required.'},
+      {id:'ALW-04',cat:'Gym Equipment',desc:'Wall padding and graphics',amt:32000,basis:'Owner graphics and color scope TBD',ownerDecision:true,status:'Pending',next:'Confirm extents, color, logos, stage pad scope.'},
+      {id:'ALW-05',cat:'Boxing Equipment',desc:'Boxing ring and accessories',amt:18000,basis:'Model TBD — Title/Ringside/Everlast',ownerDecision:true,status:'Pending',next:'Confirm ring size (14x14 assumed), ropes, corner pads, canvas.'},
+      {id:'ALW-06',cat:'Athletic Flooring',desc:'Rubber flooring — boxing gym',amt:28000,basis:'Thickness and color TBD by owner',ownerDecision:true,status:'Pending',next:'Confirm thickness (6/8/10mm), color, wall base. Coord transitions.'},
+      {id:'ALW-07',cat:'Gym Equipment',desc:'Volleyball post/sleeve system',amt:3500,basis:'Jaypro 7000-series or equal',ownerDecision:true,status:'Pending',next:'Confirm post/sleeve configuration.'},
+      {id:'ALW-08',cat:'Boxing Equipment',desc:'Bag systems / speed bag stations',amt:14000,basis:'Various manufacturers',ownerDecision:true,status:'Pending',next:'Confirm bag count, support frame, style, speed bag platform.'},
+    ],
+    takeoff:[
+      {floor:'LL',zone:'Pump Room/Pool Area',div:'02',item:'Selective demolition – interior finishes',unit:'SF',qty:953,adjUnit:6.7275,total:6411.31,incl:'Yes'},
+      {floor:'LL',zone:'Pump Room/Pool Area',div:'09',item:'High-performance corrosion coating – pump room',unit:'SF',qty:3170,adjUnit:9.8325,total:31169.03,incl:'Yes'},
+      {floor:'LL',zone:'Pool Area',div:'09',item:'High-performance corrosion coating – pool walls',unit:'SF',qty:16300,adjUnit:9.8325,total:160269.75,incl:'Yes'},
+      {floor:'1F',zone:'Bleachers/Balcony',div:'05',item:'Aluminum/glass guardrail',unit:'LF',qty:92,adjUnit:362.25,total:33327.00,incl:'Yes'},
+      {floor:'1F',zone:'Bleachers/Balcony',div:'06',item:'Rough carpentry, blocking and backing',unit:'SF',qty:460,adjUnit:18.63,total:8569.80,incl:'Yes'},
+      {floor:'2F',zone:'Gymnasium',div:'09',item:'Athletic hardwood flooring – gym floor',unit:'SF',qty:8700,adjUnit:22.445,total:195271.50,incl:'Yes'},
+      {floor:'2F',zone:'Gymnasium',div:'09',item:'Wall padding / graphics',unit:'LS',qty:1,adjUnit:32000,total:32000,incl:'Yes'},
+      {floor:'3F',zone:'Boxing Gym',div:'09',item:'Rubber flooring – boxing gym',unit:'SF',qty:2400,adjUnit:9.8325,total:23598.00,incl:'Yes'},
+    ],
+    bidSummary:[
+      {item:'Base Building Subtotal',amt:704073.76,pctHard:0.542,note:'Quantity-based takeoff from TAKEOFF. Excl. allowances.'},
+      {item:'Equipment Allowances',amt:328735.67,pctHard:0.253,note:'Owner-selection-dependent athletic & specialty equipment. Pending.'},
+      {item:'Subtotal Before Markups',amt:1032809.42,pctHard:0.795,note:''},
+      {item:'General Conditions (8%)',amt:82624.75,pctHard:0.064,note:'Rate per ASSUMPTIONS'},
+      {item:'Overhead & Profit (10.8%)',amt:111543.42,pctHard:0.086,note:'Rate per ASSUMPTIONS'},
+      {item:'Contingency (12%)',amt:71268.98,pctHard:0.055,note:'Rate per ASSUMPTIONS'},
+      {item:'Bid/Permit/Bonds',amt:31901.42,pctHard:0.025,note:''},
+      {item:'ROM Construction Total',amt:1298236.62,pctHard:1.000,note:'Excludes soft costs and owner costs'},
+    ],
+    risks:[
+      {cat:'General',item:'All quantities are conceptual — field verification required before GMP',status:'Included',risk:'High',note:'ROM only. Not a GMP.'},
+      {cat:'General',item:'Estimate based on scope narrative only — no drawings',status:'Included',risk:'High',note:'Field verify before DD.'},
+      {cat:'Equipment',item:'Athletic equipment model numbers and manufacturers',status:'Allowance',risk:'High',note:'Owner selections pending.'},
+      {cat:'MEP',item:'Power/data for scoreboards and specialty equipment',status:'Allowance',risk:'Medium',note:'Requires MEP engineer coord.'},
+      {cat:'MEP',item:'HVAC modifications or upgrades',status:'Excluded',risk:'Medium',note:'Carry separate MEP budget if anticipated.'},
+      {cat:'Structural',item:'Pool deck structural reinforcement',status:'Excluded',risk:'Medium',note:'Structural assessment required.'},
+      {cat:'Code',item:'ADA path of travel upgrades beyond project area',status:'Excluded',risk:'Low',note:'Coordinate with accessibility consultant.'},
+    ],
+    changeOrders:[
+      {num:'CO-001',desc:'Hazardous Materials Abatement — asbestos, 3 locations',date:'04/15/2026',gcAmt:73000,ownerCost:0,cumul:73000,pctGMP:2.1,cat:'Existing Conditions',status:'Approved'},
+      {num:'CO-002',desc:'Additional HVAC ductwork — DDDS ventilation compliance',date:'05/01/2026',gcAmt:55000,ownerCost:0,cumul:128000,pctGMP:3.7,cat:'Regulatory',status:'Pending'},
+    ],
+    variances:[
+      {item:'Existing Conditions Contingency — higher than ROM',gate:'Gate 2',romAmt:347000,newAmt:420000,varD:73000,varP:21.0,status:'Approved',cause:'Hazmat survey confirmed asbestos in 3 locations. Owner approved $73K increase.',approver:'T. Maxwell / M4Di'},
+      {item:'HVAC — Phase 1A scope expanded per DDDS requirements',gate:'Gate 2',romAmt:310000,newAmt:365000,varD:55000,varP:17.7,status:'Watch',cause:'DDDS licensing pre-app required supplemental ventilation for clinical areas.',approver:'Pending owner'},
+    ],
+    draws:[
+      {source:'Owner / Developer Equity (Dr. Maxwell)',committed:2500000,draws:[0,0,0,0,0],drawn:0},
+      {source:'CDFI Construction Loan (NCALL)',committed:3500000,draws:[0,0,0,0,0],drawn:0},
+      {source:'HUD CDBG Grant',committed:750000,draws:[0,0,0,0,0],drawn:0},
+      {source:'Delaware DDDS Capital Support',committed:500000,draws:[0,0,0,0,0],drawn:0},
+      {source:'Philanthropic Grants (Longwood / Welfare Fdn)',committed:750000,draws:[0,0,0,0,0],drawn:0},
+    ],
+    historicalDB:[
+      {name:'YMCA Gymnasium Renovation',type:'Athletic Facility Upgrade',region:'Pennsylvania',year:2023,sf:18000,cost:3200000,psf:177.78,scope:'Gym upgrades, flooring, bleachers, scoring equipment, wall padding.'},
+      {name:'High School Gymnasium Upgrade',type:'Athletic Facility Upgrade',region:'Delaware',year:2022,sf:12000,cost:2100000,psf:175.00,scope:'Bleacher replacement, floor refinish, scoreboard, accessible path of travel.'},
+      {name:'Community Rec Center Interior',type:'Community Facility Renovation',region:'Maryland',year:2021,sf:8000,cost:950000,psf:118.75,scope:'Interior renovation, athletic flooring, community room upgrades.'},
+      {name:'Church Fellowship Hall Adaptive Reuse',type:'Adaptive Reuse',region:'Delaware',year:2023,sf:6500,cost:1450000,psf:223.08,scope:'Fellowship hall converted to community clinic and gathering space. ADA upgrades.'},
+      {name:'Faith-Based Youth Center Renovation',type:'Community Facility Renovation',region:'New Jersey',year:2024,sf:9200,cost:2280000,psf:247.83,scope:'Full interior renovation, new MEP, gymnasium floor, community kitchen.'},
+    ],
+    benchmarkMeta:[
+      {metric:'Project Area (SF)',value:'8,700',comparison:'Historical Avg $/SF',cval:'$1,996,000'},
+      {metric:'ROM Construction Cost',value:'$1,298,237',comparison:'Historical Median $/SF',cval:'$2,100,000'},
+      {metric:'Calculated Project $/SF',value:'$149.22',comparison:'Sanity Check',cval:'Within historical range'},
+    ],
+  }
+];
+
+let activeProjectId = 'claymont';
+let aiHistory = [];
+let CFG = {aiKey:''};
+
+function fmt$(n){return '$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function fmtP(n){return (n*100).toFixed(1)+'%'}
+function fmtN(n){return Number(n).toLocaleString()}
+function pct(n,t){return t?((n/t)*100).toFixed(0)+'%':'0%'}
+
+function getProject(){return PROJECTS.find(p=>p.id===activeProjectId)||PROJECTS[0]}
+
+// ── CLOCK ────────────────────────────────────────────────────
+function updateClock(){
+  const d=new Date();
+  document.getElementById('clock').textContent=
+    d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+// ── SIDEBAR ──────────────────────────────────────────────────
+function renderSidebar(){
+  const active=document.getElementById('sb-projects');
+  const closed=document.getElementById('sb-closed');
+  active.innerHTML='';closed.innerHTML='';
+  const pills=document.getElementById('project-pills');
+  pills.innerHTML='';
+  PROJECTS.forEach(p=>{
+    const isActive=p.id===activeProjectId;
+    const gateLabels=['G0','G1','G2','G3','G4','CL'];
+    const badgeClasses=['badge-gate0','badge-gate1','badge-gate2','badge-gate3','badge-gate3','badge-close'];
+    const dot=isActive?'var(--gold)':p.status==='closed'?'var(--tx3)':'var(--teal)';
+    const container=p.status==='closed'?closed:active;
+    container.innerHTML+=`<div class="sb-item${isActive?' active':''}" onclick="selectProject('${p.id}')">
+      <div class="sb-item-left">
+        <div class="sb-dot" style="background:${dot}"></div>
+        <span class="sb-name">${p.name.substring(0,20)}</span>
+      </div>
+      <span class="chip ${badgeClasses[p.gate]}">${gateLabels[p.gate]}</span>
+    </div>`;
+    pills.innerHTML+=`<button class="project-pill ${isActive?'active':'idle'}" onclick="selectProject('${p.id}')">${p.name.substring(0,16)}</button>`;
+  });
+}
+
+function selectProject(id){
+  activeProjectId=id;
+  renderSidebar();
+  renderAll();
+}
+
+// ── TABS ─────────────────────────────────────────────────────
+function showTab(tab){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(n=>n.classList.remove('active'));
+  const p=document.getElementById('panel-'+tab);
+  const n=document.querySelector(`.ntab[data-tab="${tab}"]`);
+  if(p)p.classList.add('active');
+  if(n)n.classList.add('active');
+}
+
+// ── OVERVIEW ─────────────────────────────────────────────────
+function renderOverview(){
+  const p=getProject();
+  document.getElementById('overview-title').textContent=p.name;
+  document.getElementById('overview-sub').textContent=
+    `Gate ${p.gate} · ${p.type} · ${fmtN(p.sf)} SF · ${p.region}`;
+
+  // Gate tracker
+  const gateNames=['Gate 0\nROM','Gate 1\nFeasibility','Gate 2\n75% DD','Gate 3\nGMP','Gate 4\nConstruction'];
+  const gateSubs=['ROM complete','Site analysis','DD estimate','Contracted','Active build'];
+  let gateHtml='';
+  for(let i=0;i<5;i++){
+    const state=i<p.gate?'done':i===p.gate?'active':'idle';
+    gateHtml+=`<div class="gate-step ${state}">
+      <div class="gate-circle ${state}">${i<p.gate?'✓':i}</div>
+      <div class="gate-lbl">${gateNames[i].split('\n')[0]}</div>
+      <div class="gate-sub">${gateSubs[i]}</div>
+    </div>`;
+  }
+  document.getElementById('gate-track').innerHTML=gateHtml;
+
+  // Stat cards
+  const totalEquip=p.allowances.reduce((s,a)=>s+a.amt,0);
+  const pendingCount=p.allowances.filter(a=>a.status==='Pending').length;
+  const coTotal=p.changeOrders.reduce((s,c)=>s+(c.status==='Approved'?c.gcAmt:0),0);
+  document.getElementById('stat-cards').innerHTML=`
+    <div class="stat-card"><div class="stat-label">ROM Hard Cost</div><div class="stat-val gold">${fmt$(p.romHard)}</div><div class="stat-sub">${fmtN(p.sf)} SF · ${fmt$(Math.round(p.romHard/p.sf))}/SF</div></div>
+    <div class="stat-card"><div class="stat-label">Equipment Allowances</div><div class="stat-val warn">${fmt$(totalEquip)}</div><div class="stat-sub">${pendingCount} items pending owner decision</div></div>
+    <div class="stat-card"><div class="stat-label">Total Budget (Est.)</div><div class="stat-val">${fmt$(p.romHard+totalEquip)}</div><div class="stat-sub">Hard costs + allowances</div></div>
+    <div class="stat-card"><div class="stat-label">Approved COs</div><div class="stat-val ${coTotal>0?'warn':'up'}">${fmt$(coTotal)}</div><div class="stat-sub">${p.changeOrders.filter(c=>c.status==='Approved').length} approved · ${p.changeOrders.filter(c=>c.status==='Pending').length} pending</div></div>
+    <div class="stat-card"><div class="stat-label">Project Area</div><div class="stat-val">${fmtN(p.sf)}</div><div class="stat-sub">${p.type}</div></div>
+    <div class="stat-card"><div class="stat-label">ALDi Gate</div><div class="stat-val gold">G${p.gate}</div><div class="stat-sub">Lead: ${p.lead.split(' ')[0]}</div></div>
+  `;
+
+  // Floor breakdown
+  const maxFloor=Math.max(...p.floors.map(f=>f.total));
+  let floorHtml='';
+  p.floors.forEach(f=>{
+    const basePct=Math.round((f.base/f.total)*100);
+    const eqPct=100-basePct;
+    floorHtml+=`<div class="floor-item">
+      <div class="floor-meta">
+        <span class="floor-name">Level ${f.name}</span>
+        <span class="floor-amt">${fmt$(Math.round(f.total))}</span>
+      </div>
+      <div class="floor-bar-track">
+        <div class="floor-bar-fill" style="width:${Math.round((f.total/maxFloor)*100)}%">
+          <div class="floor-base" style="flex:${basePct}"></div>
+          <div class="floor-equip" style="flex:${eqPct}"></div>
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('floor-breakdown').innerHTML=floorHtml;
+
+  // Open allowances preview
+  let awHtml='';
+  p.allowances.slice(0,5).forEach(a=>{
+    awHtml+=`<div class="alw-row">
+      <span class="alw-id">${a.id}</span>
+      <span class="alw-desc">${a.desc}</span>
+      <span class="alw-amt">${fmt$(a.amt)}</span>
+    </div>`;
+  });
+  document.getElementById('overview-allowances').innerHTML=awHtml;
+
+  // Risk table
+  let riskHtml='';
+  p.risks.forEach(r=>{
+    const rClass=r.risk==='High'?'chip-hi':r.risk==='Medium'?'chip-med':'chip-lo';
+    const sClass=r.status==='Excluded'?'chip-pend':r.status==='Allowance'?'chip-watch':'chip-ok';
+    riskHtml+=`<tr>
+      <td>${r.cat}</td>
+      <td>${r.item}</td>
+      <td><span class="chip ${sClass}">${r.status}</span></td>
+      <td><span class="chip ${rClass}">${r.risk}</span></td>
+      <td class="muted">${r.note}</td>
+    </tr>`;
+  });
+  document.getElementById('risk-body').innerHTML=riskHtml;
+}
+
+// ── OI ESTIMATE ──────────────────────────────────────────────
+function renderOI(){
+  const p=getProject();
+  document.getElementById('oi-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Base Building</div><div class="stat-val gold">${fmt$(p.floors.reduce((s,f)=>s+f.base,0))}</div><div class="stat-sub">Excl. equipment allowances</div></div>
+    <div class="stat-card"><div class="stat-label">Equipment Allowances</div><div class="stat-val warn">${fmt$(p.floors.reduce((s,f)=>s+f.equip,0))}</div><div class="stat-sub">Owner selection dependent</div></div>
+    <div class="stat-card"><div class="stat-label">ROM Construction Total</div><div class="stat-val">${fmt$(p.romHard)}</div><div class="stat-sub">After all markups</div></div>
+    <div class="stat-card"><div class="stat-label">Cost per SF</div><div class="stat-val gold">$${Math.round(p.romHard/p.sf)}</div><div class="stat-sub">${fmtN(p.sf)} SF gross</div></div>
+  `;
+  let bidHtml='';
+  p.bidSummary.forEach(b=>{
+    const isTotal=b.item.includes('Total');
+    bidHtml+=`<tr ${isTotal?'style="border-top:1px solid var(--line2)"':''}>
+      <td ${isTotal?'style="font-weight:700;color:var(--tx0)"':''}>${b.item}</td>
+      <td class="mono gold">${fmt$(Math.round(b.amt))}</td>
+      <td class="mono">${b.pctHard?(b.pctHard*100).toFixed(1)+'%':''}</td>
+      <td class="muted">${b.note}</td>
+    </tr>`;
+  });
+  document.getElementById('bid-body').innerHTML=bidHtml;
+  let tkHtml='';
+  p.takeoff.forEach(t=>{
+    tkHtml+=`<tr>
+      <td>${t.floor}</td>
+      <td class="muted">${t.zone}</td>
+      <td class="mono muted">${t.div}</td>
+      <td>${t.item}</td>
+      <td class="mono muted">${t.unit}</td>
+      <td class="mono">${fmtN(t.qty)}</td>
+      <td class="mono gold">$${t.adjUnit.toFixed(2)}</td>
+      <td class="mono gold">${fmt$(Math.round(t.total))}</td>
+      <td><span class="chip ${t.incl==='Yes'?'chip-ok':'chip-pend'}">${t.incl}</span></td>
+    </tr>`;
+  });
+  document.getElementById('takeoff-body').innerHTML=tkHtml;
+}
+
+// ── ALLOWANCES ───────────────────────────────────────────────
+function renderAllowances(){
+  const p=getProject();
+  const total=p.allowances.reduce((s,a)=>s+a.amt,0);
+  const pending=p.allowances.filter(a=>a.status==='Pending').length;
+  document.getElementById('alw-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Total Allowances</div><div class="stat-val gold">${fmt$(total)}</div><div class="stat-sub">${p.allowances.length} line items</div></div>
+    <div class="stat-card"><div class="stat-label">Pending Decisions</div><div class="stat-val warn">${pending}</div><div class="stat-sub">Owner action required</div></div>
+    <div class="stat-card"><div class="stat-label">Gym Equipment</div><div class="stat-val">${fmt$(p.allowances.filter(a=>a.cat==='Gym Equipment').reduce((s,a)=>s+a.amt,0))}</div><div class="stat-sub">Gym category</div></div>
+    <div class="stat-card"><div class="stat-label">Boxing Equipment</div><div class="stat-val">${fmt$(p.allowances.filter(a=>a.cat.includes('Boxing')).reduce((s,a)=>s+a.amt,0))}</div><div class="stat-sub">Boxing category</div></div>
+  `;
+  let html='';
+  p.allowances.forEach(a=>{
+    html+=`<tr>
+      <td class="mono muted">${a.id}</td>
+      <td>${a.cat}</td>
+      <td>${a.desc}</td>
+      <td class="mono gold">${fmt$(a.amt)}</td>
+      <td class="muted">${a.basis}</td>
+      <td><span class="chip ${a.ownerDecision?'chip-hi':'chip-ok'}">${a.ownerDecision?'Yes':'No'}</span></td>
+      <td><span class="chip chip-pend">${a.status}</span></td>
+      <td class="muted">${a.next}</td>
+    </tr>`;
+  });
+  document.getElementById('alw-body').innerHTML=html;
+  // Equipment matrix (reuse allowance data as proxy)
+  let eqHtml='';
+  p.allowances.forEach((a,i)=>{
+    const specMap={'Basketball backstop systems':'11 66 23','Telescoping bleacher system':'11 66 23','Scoreboard / control system':'11 66 23','Wall padding and graphics':'11 66 23','Boxing ring and accessories':'11 66 43','Rubber flooring — boxing gym':'09 65 00','Volleyball post/sleeve system':'11 66 23','Bag systems / speed bag stations':'11 66 43'};
+    eqHtml+=`<tr>
+      <td class="mono muted">ATH-0${i+1}</td>
+      <td>${a.cat.split(' ')[0]}</td>
+      <td>${a.desc}</td>
+      <td class="mono muted">${specMap[a.desc]||'—'}</td>
+      <td class="muted">Various</td>
+      <td><span class="chip chip-pend">Pending</span></td>
+      <td class="mono gold">${fmt$(a.amt)}</td>
+      <td class="mono">1</td>
+      <td class="mono gold">${fmt$(a.amt)}</td>
+      <td class="muted">${a.next.substring(0,40)}…</td>
+    </tr>`;
+  });
+  document.getElementById('equip-body').innerHTML=eqHtml;
+}
+
+// ── BUDGET ───────────────────────────────────────────────────
+function renderBudget(){
+  const p=getProject();
+  const totalEquip=p.allowances.reduce((s,a)=>s+a.amt,0);
+  const softTotal=p.softCosts.reduce((s,c)=>s+c.amt,0);
+  const totalProject=p.romHard+softTotal;
+  document.getElementById('budget-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Hard Costs (ROM)</div><div class="stat-val gold">${fmt$(p.romHard)}</div><div class="stat-sub">Construction cost base</div></div>
+    <div class="stat-card"><div class="stat-label">Soft Costs</div><div class="stat-val">${fmt$(softTotal)}</div><div class="stat-sub">Fees & pre-construction</div></div>
+    <div class="stat-card"><div class="stat-label">Total Project Budget</div><div class="stat-val gold">${fmt$(totalProject)}</div><div class="stat-sub">Hard + soft</div></div>
+    <div class="stat-card"><div class="stat-label">Total w/ Equipment</div><div class="stat-val warn">${fmt$(totalProject+totalEquip)}</div><div class="stat-sub">Pending owner selections</div></div>
+  `;
+  let html='';
+  p.bidSummary.forEach(b=>{
+    const total=p.romHard;
+    html+=`<tr>
+      <td>${b.item}</td>
+      <td class="mono gold">${fmt$(Math.round(b.amt))}</td>
+      <td class="mono">${b.pctHard?(b.pctHard*100).toFixed(1)+'%':''}</td>
+      <td class="mono">${b.pctHard?((b.amt/totalProject)*100).toFixed(1)+'%':''}</td>
+      <td class="muted">${b.note}</td>
+    </tr>`;
+  });
+  document.getElementById('budget-body').innerHTML=html;
+  let softHtml='';
+  p.softCosts.forEach(s=>{
+    softHtml+=`<tr>
+      <td>${s.cat}</td>
+      <td class="mono">${s.rate}</td>
+      <td class="mono muted">${fmt$(Math.round(s.base))}</td>
+      <td class="mono gold">${fmt$(Math.round(s.amt))}</td>
+      <td class="muted">${s.note}</td>
+    </tr>`;
+  });
+  document.getElementById('soft-body').innerHTML=softHtml;
+}
+
+// ── CHANGE ORDERS ────────────────────────────────────────────
+function renderChanges(){
+  const p=getProject();
+  const approved=p.changeOrders.filter(c=>c.status==='Approved');
+  const pending=p.changeOrders.filter(c=>c.status==='Pending');
+  const approvedTotal=approved.reduce((s,c)=>s+c.gcAmt,0);
+  const pendingTotal=pending.reduce((s,c)=>s+c.gcAmt,0);
+  document.getElementById('co-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Approved COs</div><div class="stat-val up">${fmt$(approvedTotal)}</div><div class="stat-sub">${approved.length} change orders</div></div>
+    <div class="stat-card"><div class="stat-label">Pending COs</div><div class="stat-val warn">${fmt$(pendingTotal)}</div><div class="stat-sub">${pending.length} pending authorization</div></div>
+    <div class="stat-card"><div class="stat-label">Cumulative COs</div><div class="stat-val">${fmt$(approvedTotal+pendingTotal)}</div><div class="stat-sub">${((approvedTotal+pendingTotal)/p.romHard*100).toFixed(1)}% of ROM</div></div>
+    <div class="stat-card"><div class="stat-label">Variance Log Items</div><div class="stat-val warn">${p.variances.length}</div><div class="stat-sub">Require documentation</div></div>
+  `;
+  let coHtml='';
+  p.changeOrders.forEach(c=>{
+    coHtml+=`<tr>
+      <td class="mono muted">${c.num}</td>
+      <td>${c.desc}</td>
+      <td class="mono muted">${c.date}</td>
+      <td class="mono gold">${fmt$(c.gcAmt)}</td>
+      <td class="mono">${fmt$(c.ownerCost)}</td>
+      <td class="mono gold">${fmt$(c.cumul)}</td>
+      <td class="mono">${c.pctGMP}%</td>
+      <td class="muted">${c.cat}</td>
+      <td><span class="chip ${c.status==='Approved'?'chip-ok':'chip-pend'}">${c.status}</span></td>
+    </tr>`;
+  });
+  document.getElementById('co-body').innerHTML=coHtml;
+  let varHtml='';
+  p.variances.forEach(v=>{
+    varHtml+=`<tr>
+      <td>${v.item}</td>
+      <td class="mono muted">${v.gate}</td>
+      <td class="mono muted">${fmt$(v.romAmt)}</td>
+      <td class="mono gold">${fmt$(v.newAmt)}</td>
+      <td class="mono ${v.varD>0?'dn':'up'}">${v.varD>0?'+':''}${fmt$(v.varD)}</td>
+      <td class="mono ${v.varP>10?'dn':'warn'}">${v.varP.toFixed(1)}%</td>
+      <td><span class="chip ${v.status==='Approved'?'chip-ok':v.status==='Watch'?'chip-watch':'chip-pend'}">${v.status}</span></td>
+      <td class="muted">${v.cause.substring(0,60)}…</td>
+      <td class="muted">${v.approver}</td>
+    </tr>`;
+  });
+  document.getElementById('var-body').innerHTML=varHtml;
+}
+
+// ── DRAWS ────────────────────────────────────────────────────
+function renderDraws(){
+  const p=getProject();
+  const totalCommitted=p.draws.reduce((s,d)=>s+d.committed,0);
+  const totalDrawn=p.draws.reduce((s,d)=>s+d.drawn,0);
+  document.getElementById('draw-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Total Committed</div><div class="stat-val gold">${fmt$(totalCommitted)}</div><div class="stat-sub">${p.draws.length} funding sources</div></div>
+    <div class="stat-card"><div class="stat-label">Total Drawn</div><div class="stat-val">${fmt$(totalDrawn)}</div><div class="stat-sub">${totalCommitted?((totalDrawn/totalCommitted)*100).toFixed(0):'0'}% of committed</div></div>
+    <div class="stat-card"><div class="stat-label">Remaining</div><div class="stat-val up">${fmt$(totalCommitted-totalDrawn)}</div><div class="stat-sub">Available to draw</div></div>
+    <div class="stat-card"><div class="stat-label">Construction Coverage</div><div class="stat-val gold">${fmt$(totalCommitted)}</div><div class="stat-sub">vs. ROM ${fmt$(Math.round(p.romHard))}</div></div>
+  `;
+  let html='';
+  p.draws.forEach(d=>{
+    const remaining=d.committed-d.drawn;
+    const pctDrawn=d.committed?(d.drawn/d.committed*100).toFixed(0):0;
+    html+=`<tr>
+      <td>${d.source}</td>
+      <td class="mono gold">${fmt$(d.committed)}</td>
+      <td class="mono muted">${d.draws[0]?fmt$(d.draws[0]):'—'}</td>
+      <td class="mono muted">${d.draws[1]?fmt$(d.draws[1]):'—'}</td>
+      <td class="mono muted">${d.draws[2]?fmt$(d.draws[2]):'—'}</td>
+      <td class="mono">${fmt$(d.drawn)}</td>
+      <td class="mono up">${fmt$(remaining)}</td>
+      <td class="mono">${pctDrawn}%</td>
+    </tr>`;
+  });
+  document.getElementById('draw-body').innerHTML=html;
+}
+
+// ── BENCHMARKS ───────────────────────────────────────────────
+function renderBenchmark(){
+  const p=getProject();
+  const curPSF=Math.round(p.romHard/p.sf);
+  const maxPSF=Math.max(...p.historicalDB.map(h=>h.psf));
+  document.getElementById('bench-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Current Project $/SF</div><div class="stat-val gold">$${curPSF}</div><div class="stat-sub">ROM basis</div></div>
+    <div class="stat-card"><div class="stat-label">Historical Avg $/SF</div><div class="stat-val">${fmt$(Math.round(p.historicalDB.reduce((s,h)=>s+h.psf,0)/p.historicalDB.length))}</div><div class="stat-sub">${p.historicalDB.length} M4Di projects</div></div>
+    <div class="stat-card"><div class="stat-label">Range</div><div class="stat-val">$${Math.round(Math.min(...p.historicalDB.map(h=>h.psf)))}–$${Math.round(maxPSF)}</div><div class="stat-sub">Min–max $/SF</div></div>
+    <div class="stat-card"><div class="stat-label">Sanity Check</div><div class="stat-val up">✓ OK</div><div class="stat-sub">Within historical range</div></div>
+  `;
+  let metaHtml='';
+  p.benchmarkMeta.forEach(b=>{
+    metaHtml+=`<tr><td>${b.metric}</td><td class="mono gold">${b.value}</td><td class="mono muted">${b.cval}</td></tr>`;
+  });
+  document.getElementById('bench-meta-body').innerHTML=metaHtml;
+  let histHtml='';
+  p.historicalDB.forEach(h=>{
+    const barW=Math.round((h.psf/maxPSF)*100);
+    histHtml+=`<tr>
+      <td>${h.name}</td>
+      <td class="muted">${h.type}</td>
+      <td class="muted">${h.region}</td>
+      <td class="mono muted">${h.year}</td>
+      <td class="mono">${fmtN(h.sf)}</td>
+      <td class="mono gold">${fmt$(h.cost)}</td>
+      <td class="mono gold">$${h.psf.toFixed(2)}</td>
+      <td class="muted">${h.scope.substring(0,50)}…</td>
+    </tr>`;
+  });
+  document.getElementById('hist-body').innerHTML=histHtml;
+}
+
+function renderAll(){
+  renderOverview();
+  renderOI();
+  renderAllowances();
+  renderBudget();
+  renderChanges();
+  renderDraws();
+  renderBenchmark();
+}
+
+// ── AI ADVISOR ───────────────────────────────────────────────
+const AI_SYSTEM=`You are the M4Di AI Advisor — embedded in the M4Di Project Terminal, a predevelopment and cost intelligence platform built for the M4Di team: Craig (David Ainsworth), Trevor Knight, Travis Davis, and Leo Lynch.
+
+ACTIVE PROJECTS:
+1. Claymont CLT/SIP Hybrid Townhouses (DEFAULT)
+   Address: 1316–1324 N. Claymont St., Wilmington DE 19802
+   Client: L.E.E.P., Inc. / Gwenevere Motley
+   AOR: David C. Ainsworth AIA / Aubyn Architecture LLC
+   Lead Firm: Merge 4 Design LLC
+   Type: New Construction — CLT/SIP Hybrid (first-of-state, possibly first-in-country)
+   SF: 7,080 total (4 units × 1,770 SF each)
+   Gate: 1 (Feasibility)
+   ROM Hard Cost: $1,875,000 ($264.83/SF)
+   ROM Total w/ Soft Costs: ~$2.3M
+   Construction Window: May–June 2026 (8-week target, CLT/SIP speed advantage)
+   Open Allowances: CLT panels ($185K), SIP system ($95K), MEP/HVAC ($48K), finishes ($32K), site work ($55K)
+   Key risk: CLT panel lead time 8–12 weeks; peer review required (first-of-state IBC application)
+   M4Di Role: ROM-to-actual tracking as primary ALDDB data entry and Enterprise/WF grant evidence base
+
+2. WHACC Athletic Improvements
+   Type: Interior Improvement, 8,700 SF
+   Gate: 0 (ROM complete)
+   ROM: $1,298,237 ($149/SF)
+   Open equipment allowances: $274,500 (8 items pending owner decision)
+
+KEY TOOLS:
+1. OI Tool (Operational Intelligence) — M4Di ROM estimating platform. Methodology: unit price library → quantity takeoff → regional factor adjustment → floor summary → bid summary → soft costs → total project budget. Regional factors calibrated against Delaware BLS OEWS 2024 baseline.
+2. ALDi Tracker — design and construction budget tracker. Gates: 0=ROM, 1=Feasibility, 2=75%DD, 3=GMP/Contracted, 4=Construction closeout. Budget tracked from ROM through actual.
+
+M4Di METHODOLOGY: Predevelopment intelligence firm. Positions ROM estimates as client protection tools — not just numbers but gate management, allowance resolution, and cost control through construction.
+
+Open allowances requiring owner decision: basketball backstops ($65K), bleachers ($95K), scoreboard ($18K), wall padding ($32K), boxing ring ($18K), rubber flooring ($28K), volleyball system ($3.5K), bag systems ($14K).
+
+Be direct. Lead with the answer. Architectural and development context always in frame. Craig is experienced — no need to explain basics.`;
+
+function saveAIKey(){
+  const k=document.getElementById('ai-api-key').value.trim();
+  if(!k.startsWith('sk-ant-')){showToast('Key format invalid — should start with sk-ant-');return}
+  CFG.aiKey=k;
+  try{localStorage.setItem('m4di_cfg',JSON.stringify(CFG))}catch(e){}
+  document.getElementById('ai-key-status').textContent='✓ Key saved';
+  document.getElementById('ai-key-status').style.color='var(--up)';
+  showToast('API key saved ✓');
+}
+
+function quickPrompt(t){
+  document.getElementById('ai-input').value=t;
+  sendAIMsg();
+}
+
+function appendMsg(role,text){
+  const msgs=document.getElementById('ai-msgs');
+  const div=document.createElement('div');
+  div.className=`cmsg ${role}`;
+  const av=document.createElement('div');
+  av.className='cmsg-av';
+  av.textContent=role==='user'?'CA':'M4';
+  const bubble=document.createElement('div');
+  bubble.className='cmsg-bubble';
+  bubble.innerHTML=text
+    .replace(/```([\s\S]*?)```/g,'<pre>$1</pre>')
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+  div.appendChild(av);div.appendChild(bubble);
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function sendAIMsg(){
+  const input=document.getElementById('ai-input');
+  const send=document.getElementById('ai-send');
+  const text=input.value.trim();
+  if(!text)return;
+  if(!CFG.aiKey){showToast('Add your Anthropic API key in the AI panel first');return}
+  input.value='';input.style.height='auto';send.disabled=true;
+  appendMsg('user',text);
+  aiHistory.push({role:'user',content:text});
+  const msgs=document.getElementById('ai-msgs');
+  const typingDiv=document.createElement('div');
+  typingDiv.className='cmsg assistant';
+  typingDiv.innerHTML='<div class="cmsg-av">M4</div><div class="cmsg-bubble cmsg-typing">analyzing…</div>';
+  msgs.appendChild(typingDiv);msgs.scrollTop=msgs.scrollHeight;
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:AI_SYSTEM,
+        messages:aiHistory
+      })
+    });
+    typingDiv.remove();
+    if(!resp.ok){const e=await resp.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${resp.status}`)}
+    const data=await resp.json();
+    const reply=data.content?.find(b=>b.type==='text')?.text||'(no response)';
+    aiHistory.push({role:'assistant',content:reply});
+    if(aiHistory.length>40)aiHistory=aiHistory.slice(-40);
+    appendMsg('assistant',reply);
+  }catch(e){
+    typingDiv.remove();
+    appendMsg('assistant',`⚠ Error: ${e.message}`);
+  }
+  send.disabled=false;
+  input.focus();
+}
+
+// ── NEW PROJECT ───────────────────────────────────────────────
+function openNewProject(){document.getElementById('modal-new').classList.add('open')}
+function closeModal(){document.getElementById('modal-new').classList.remove('open')}
+function addProject(){
+  const name=document.getElementById('np-name').value.trim();
+  if(!name){showToast('Enter a project name');return}
+  const id='proj_'+Date.now();
+  PROJECTS.push({
+    id,name,
+    client:document.getElementById('np-client').value||'—',
+    type:document.getElementById('np-type').value,
+    sf:parseInt(document.getElementById('np-sf').value)||0,
+    gate:parseInt(document.getElementById('np-gate').value)||0,
+    lead:document.getElementById('np-lead').value,
+    region:'—',status:'active',
+    romHard:0,romEquip:0,gcRate:0.08,ohpRate:0.108,contingency:0.12,totalBudget:0,
+    softCosts:[],floors:[],allowances:[],takeoff:[],bidSummary:[],risks:[],
+    changeOrders:[],variances:[],draws:[],historicalDB:[],benchmarkMeta:[],
+  });
+  activeProjectId=id;
+  closeModal();
+  renderSidebar();
+  renderAll();
+  showToast(`Project "${name}" added ✓`);
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+
+// ── PLAN DATA (from ProjectPlanningTEMPLATE.xlsx) ─────────────
+const PLAN_PROJECTS = [
+  {
+    id:'daycare', label:'A24-001 — LaMotte Street Daycare',
+    tasks:[
+      {phase:'SD',type:'ZBR',task:'Zoning application submitted for review',lead:'LEO',assist:'TRAVIS',status:'Complete',ws:1,wd:3,notes:'Required mailers and application submitted'},
+      {phase:'SD',type:'ZBR',task:'Proposal response due from Client',lead:'CLIENT',assist:'',status:'Complete',ws:2,wd:5,notes:''},
+    ]
+  },
+  {
+    id:'elsmere', label:'AE24-011 — Elsmere Town Hall Window Replacement',
+    tasks:[
+      {phase:'Proposal',type:'DesignEst',task:'Proposal to design and specify replacement windows for Elsmere Town Hall',lead:'DAVID',assist:'TREVOR',status:'Behind',ws:0,wd:1,notes:'AE24-011 — Behind schedule'},
+      {phase:'Proposal',type:'DesignEst',task:'Proposal response due from Client',lead:'CLIENT',assist:'',status:'In-Process',ws:2,wd:5,notes:''},
+    ]
+  },
+  {
+    id:'market', label:'AE24-012 — 2304 N Market Street Renovation & Addition',
+    tasks:[
+      {phase:'Proposal',type:'DesignEst',task:'Provide full AE services proposal for renovation and addition',lead:'DAVID',assist:'TREVOR',status:'In-Process',ws:1,wd:2,notes:'AE24-012'},
+    ]
+  },
+  {
+    id:'leep', label:'AE24-004 — 801 S Harrison / LEEP HQ & Training Center',
+    tasks:[
+      {phase:'SD',type:'ZBR',task:'Zoning application submitted for review',lead:'LEO',assist:'TRAVIS',status:'Complete',ws:1,wd:3,notes:'Required mailers and application submitted'},
+      {phase:'SD',type:'ZBR',task:'Expected ZBR meeting — approval anticipated',lead:'AHJ',assist:'AHJ',status:'Not Started',ws:4,wd:9,notes:'AHJ timeline'},
+      {phase:'DD',type:'Design',task:'Get fee proposal for MEP engineer',lead:'DAVID',assist:'TREVOR',status:'In-Process',ws:4,wd:8,notes:'Ben at Paragon — confirm engagement'},
+      {phase:'DD',type:'Design',task:'Enhanced DD drawings + MEP narrative for construction pricing',lead:'M4D',assist:'ENG',status:'Not Started',ws:12,wd:16,notes:''},
+      {phase:'CD',type:'Design',task:'CDs for permit',lead:'M4D',assist:'ENG',status:'Not Started',ws:16,wd:25,notes:''},
+    ]
+  },
+  {
+    id:'claymont', label:'AE24-002 — 1316–1324 N Claymont St · CLT/SIP Hybrid Townhouses (LEEP-DE / L.E.E.P. Inc.)',
+    tasks:[
+      {phase:'Pre-Design',type:'Civil',task:'Coordinate site survey w/ Civil Eng — lot subdivision approval',lead:'TRAVIS',assist:'M4D',status:'Not Started',ws:6,wd:13,notes:'NTP from client 11/6. Merestone civil lead.'},
+      {phase:'SD',type:'Design',task:'SD layout option for client review and approval',lead:'LEO',assist:'TRAVIS',status:'Not Started',ws:13,wd:17,notes:''},
+      {phase:'DD',type:'Design',task:'Get fee proposal for MEP engineer',lead:'DAVID',assist:'TREVOR',status:'Not Started',ws:13,wd:15,notes:'Mini-split/VRF assumed in ROM. Ben at Paragon TBD.'},
+      {phase:'DD',type:'Design',task:'Enhanced DD drawings + MEP narrative — CLT/SIP coordination',lead:'M4D',assist:'ENG',status:'Not Started',ws:17,wd:22,notes:'ANSI/APA PRG 320 + NDS Ch.16 compliance'},
+      {phase:'CD',type:'Design',task:'CDs for permit — CLT/SIP structural package + IBC peer review',lead:'M4D',assist:'ENG',status:'Not Started',ws:22,wd:31,notes:'Structural peer review required — first-of-state'},
+      {phase:'Construction',type:'Build',task:'Foundation permit + CLT panel installation — Phase 1 enclosure',lead:'GC',assist:'DAVID',status:'Not Started',ws:28,wd:32,notes:'Target May 2026 start · 8-week window'},
+      {phase:'M4Di',type:'Data',task:'ROM-to-Actual cost tracking — ALDi Gate 0→4 (ALDDB entry #1)',lead:'DAVID',assist:'M4Di',status:'Not Started',ws:28,wd:36,notes:'Primary grant evidence base. Track all actuals vs. ROM.'},
+    ]
+  },
+];
+
+// ── THEME ──────────────────────────────────────────────────────
+function toggleTheme(){
+  const light=document.documentElement.classList.toggle('light');
+  const btn=document.getElementById('theme-btn');
+  if(btn)btn.innerHTML=light?'<span>☾</span> Dark':'<span>☀</span> Light';
+  CFG.theme=light?'light':'dark';
+  try{localStorage.setItem('m4di_cfg',JSON.stringify(CFG))}catch(e){}
+}
+
+// ── PROJECT PLAN ───────────────────────────────────────────────
+let planFilter='all';
+function filterPlan(f,btn){
+  planFilter=f;
+  document.querySelectorAll('.plan-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPlan();
+}
+
+function renderPlan(){
+  const body=document.getElementById('gantt-body');
+  if(!body)return;
+  const MAX=36;
+  const sCol={'Complete':'var(--up)','In-Process':'var(--gold2)','Behind':'var(--dn)','Not Started':'var(--tx3)'};
+  const sCls={'Complete':'chip-ok','In-Process':'chip-pend','Behind':'chip-hi','Not Started':'chip-lo'};
+  let html='';
+  PLAN_PROJECTS.forEach(proj=>{
+    let tasks=proj.tasks;
+    if(planFilter==='claymont')tasks=proj.id==='claymont'?tasks:[];
+    if(planFilter==='leep')tasks=proj.id==='leep'?tasks:[];
+    if(planFilter==='daycare')tasks=proj.id==='daycare'?tasks:[];
+    if(planFilter==='active')tasks=tasks.filter(t=>t.status==='In-Process'||t.status==='Behind');
+    if(planFilter==='complete')tasks=tasks.filter(t=>t.status==='Complete');
+    if(!tasks.length)return;
+    html+=`<tr><td colspan="10" style="padding:0"><div class="plan-proj-hdr">${proj.label}</div></td></tr>`;
+    tasks.forEach(t=>{
+      const left=((t.ws/MAX)*100).toFixed(1);
+      const w=(Math.max(1.5,(t.wd-t.ws)/MAX*100)).toFixed(1);
+      html+=`<tr>
+        <td class="tcat">${t.phase}</td>
+        <td class="tcat" style="color:var(--purple)">${t.type}</td>
+        <td class="tname">${t.task}</td>
+        <td class="twho">${t.lead}</td>
+        <td class="twho" style="color:var(--tx2)">${t.assist||'—'}</td>
+        <td><span class="chip ${sCls[t.status]||'chip-lo'}">${t.status}</span></td>
+        <td class="mono muted" style="font-size:9px">${t.ws}</td>
+        <td class="mono muted" style="font-size:9px">${t.wd}</td>
+        <td class="gantt-bar-cell">
+          <div class="gantt-bar-outer">
+            <div class="gantt-bar-inner" style="left:${left}%;width:${w}%;background:${sCol[t.status]||'var(--tx3)'}"></div>
+          </div>
+        </td>
+        <td class="muted" style="font-size:9px;white-space:normal;max-width:130px">${t.notes}</td>
+      </tr>`;
+    });
+  });
+  body.innerHTML=html||'<tr><td colspan="10" style="padding:16px 24px;color:var(--tx3);font-size:11px">No tasks match current filter.</td></tr>';
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+function init(){
+  try{
+    const saved=localStorage.getItem('m4di_cfg');
+    if(saved){
+      CFG=JSON.parse(saved);
+      if(CFG.aiKey)document.getElementById('ai-api-key').value=CFG.aiKey;
+      if(CFG.theme==='light'){
+        document.documentElement.classList.add('light');
+        const btn=document.getElementById('theme-btn');
+        if(btn)btn.innerHTML='<span>☾</span> Dark';
+      }
+    }
+  }catch(e){}
+  updateClock();setInterval(updateClock,1000);
+  renderSidebar();
+  renderAll();
+  renderPlan();
+  document.getElementById('ai-input').addEventListener('input',function(){
+    this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px';
+  });
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

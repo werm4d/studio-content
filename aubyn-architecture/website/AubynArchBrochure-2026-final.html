@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Aubyn Architecture LLC — Firm Profile 2026. Principal architect David C. Ainsworth AIA, NCARB. Licensed in Delaware, Pennsylvania, and Connecticut. Architecture, landscape design, and consulting.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aubyn Architecture LLC — Firm Profile 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive: #9dab3a;
+    --olive-dark: #7a8828;
+    --olive-text: #6e7a1e;
+    --olive-light: #b8c65c;
+    --charcoal: #59595c;
+    --black: #111111;
+    --gray: #6b6b6e;
+    --gray-light: #9a9a9c;
+    --rule: #deded8;
+    --cream: #f7f6f2;
+    --white: #ffffff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    color: var(--charcoal);
+    background: #c4c4be;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 816px;
+    background: var(--white);
+    margin: 28px auto;
+    box-shadow: 0 8px 60px rgba(0,0,0,0.28);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+  .util-bar {
+    position: fixed; top:14px; right:14px; z-index:200;
+    display: flex; gap: 8px;
+  }
+  .util-btn {
+    background: var(--olive); color: #fff; border: none;
+    padding: 9px 20px;
+    font-family: 'Jost', sans-serif; font-size: 10px;
+    font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase;
+    cursor: pointer; border-radius: 2px;
+  }
+  .util-btn:hover { background: var(--olive-dark); }
+  @media print {
+    .util-bar { display:none; }
+    body { background:none; }
+    .page { margin:0; box-shadow:none; width:8.5in; }
+  }
+
+  /* ═══════════════════ PAGE 1: COVER ═══════════════════
+     Composition: black field, giant C-arc bleeds off-left,
+     olive vertical stripe (ARCHITECTURE), lockup top-right,
+     cream content panel right, tagline + contact on black.
+  */
+  .cover {
+    position: relative;
+    height: 1056px;
+    background: var(--black);
+    overflow: hidden;
+  }
+
+  /* THE C-ARC: positioned to bleed off the left edge exactly
+     like the 2025 brochure — it's a composition element, not a badge */
+  .cover-arc {
+    position: absolute;
+    top: -30px;
+    left: -160px;
+    width: 660px;
+    height: 660px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.95;
+  }
+  /* Force the white background rect in the SVG to be transparent */
+  .cover-arc svg rect#rect1 { fill: transparent !important; }
+  .cover-arc svg rect { fill: transparent !important; }
+
+  /* OLIVE VERTICAL STRIPE — echoes "ARCHITECTURE" bar from 2025 */
+  .cover-vert {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 336px;
+    width: 54px;
+    background: var(--olive);
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cover-vert-text {
+    font-family: 'Jost', sans-serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 8px;
+    color: var(--white);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* LOCKUP: sits top-right of the black zone, left of olive stripe */
+  .cover-lockup {
+    position: absolute;
+    top: 40px;
+    left: 44px;
+    z-index: 6;
+    width: 200px;
+  }
+  .cover-lockup svg {
+    width: 100%;
+    height: auto;
+    /* The SVG has charcoal/olive fills — charcoal should be white on black bg */
+  }
+  /* Make the wordmark text white against black bg */
+  .cover-lockup svg path[fill="#59595c"],
+  .cover-lockup svg path[style*="59595c"] {
+    fill: rgba(255,255,255,0.85) !important;
+  }
+
+  .cover-profile-tag {
+    position: absolute;
+    top: 88px;
+    left: 44px;
+    z-index: 6;
+    font-size: 9px;
+    font-weight: 400;
+    color: var(--gray-light);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* TAGLINE mid-left */
+  .cover-tagline {
+    position: absolute;
+    left: 44px;
+    top: 500px;
+    transform: translateY(-50%);
+    z-index: 6;
+    width: 270px;
+  }
+  .tag-word {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.06;
+    letter-spacing: 1px;
+  }
+  .tag-word.italic { font-style: italic; color: var(--olive-light); }
+  .tag-rule { width: 40px; height: 2px; background: var(--olive); margin: 20px 0; }
+  .tag-sub {
+    font-size: 9px; font-weight: 400;
+    color: var(--gray-light); letter-spacing: 3px; text-transform: uppercase;
+  }
+
+  /* CONTACT bottom-left */
+  .cover-contact {
+    position: absolute;
+    bottom: 48px; left: 44px;
+    z-index: 6;
+    width: 270px;
+  }
+  .cc-name {
+    font-size: 11px; font-weight: 500; color: var(--white);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 9px;
+  }
+  .cc-line { font-size: 10px; font-weight: 300; color: var(--gray-light); line-height: 2; }
+  .cc-olive { color: var(--olive-light); }
+
+  /* CREAM CONTENT PANEL — right side */
+  .cover-panel {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 422px;
+    background: var(--cream);
+    z-index: 3;
+    padding: 52px 48px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .section-label {
+    font-size: 9px; font-weight: 600; color: var(--olive);
+    letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .about-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px; font-weight: 300; color: var(--black);
+    line-height: 1.3; margin-bottom: 15px;
+  }
+  .body-text {
+    font-size: 10.5px; font-weight: 300; color: var(--gray);
+    line-height: 1.84; margin-bottom: 10px;
+  }
+  .stat-row {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    padding: 14px 0; margin: 16px 0;
+  }
+  .stat { text-align:center; border-right:1px solid var(--rule); padding:0 6px; }
+  .stat:last-child { border-right:none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; color: var(--olive); line-height: 1;
+  }
+  .stat-label {
+    font-size: 9.5px; font-weight: 500; color: var(--gray);
+    letter-spacing: 2px; text-transform: uppercase; margin-top: 4px;
+  }
+  .strength-item { padding: 10px 0; border-top: 1px solid var(--rule); }
+  .strength-title {
+    font-size: 9px; font-weight: 600; color: var(--olive-dark);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .strength-body { font-size: 10.5px; font-weight: 300; color: var(--gray); line-height: 1.7; }
+
+  /* ═══════════════════ PAGE 2 ═══════════════════ */
+  .page-inner { padding: 48px 52px; }
+  .page-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 26px; padding-bottom: 14px; border-bottom: 2px solid var(--olive);
+  }
+  .page-header-logo { width:240px; }
+  .page-header-logo svg { width:100%; height:auto; }
+  .page-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; color: var(--black); line-height: 1;
+  }
+  .page-headline em { color: var(--olive); font-style: italic; }
+  .projects-cols { display:grid; grid-template-columns:1fr 1fr; margin-bottom:32px; }
+  .proj-col { padding-right:24px; }
+  .proj-col:last-child { padding-right:0; padding-left:24px; border-left:1px solid var(--rule); }
+  .proj-col-head {
+    font-size: 9.5px; font-weight: 600; color: var(--white);
+    background: var(--charcoal); letter-spacing: 3px; text-transform: uppercase; padding: 5px 10px;
+  }
+  .proj-col-sub {
+    font-size: 9px; font-weight: 300; color: var(--gray-light); font-style: italic;
+    padding: 5px 10px 7px; border-bottom: 1px solid var(--rule); margin-bottom: 2px;
+  }
+  .project-entry { padding: 8px 0; border-bottom: 1px solid var(--rule); }
+  .project-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13.5px; font-weight: 600; color: var(--black); margin-bottom: 2px;
+  }
+  .project-loc { font-size: 10px; font-weight: 300; color: var(--gray); line-height: 1.5; }
+  .project-type {
+    display: inline-block; font-size: 9.5px; font-weight: 600;
+    color: var(--olive-dark); letter-spacing: 2px; text-transform: uppercase; margin-top: 3px;
+  }
+  .aldb-block {
+    background: var(--black); margin: 0 -52px;
+    padding: 36px 52px 40px; position: relative; overflow: hidden;
+  }
+  .aldb-block::before {
+    content:''; position:absolute; top:-100px; right:-100px;
+    width:320px; height:320px;
+    border:72px solid var(--olive); border-radius:50%; opacity:0.1;
+  }
+  .aldb-label {
+    font-size:9px; font-weight:600; color:var(--olive-light); /* on black bg — passes */
+    letter-spacing:4px; text-transform:uppercase; margin-bottom:6px;
+  }
+  .aldb-headline {
+    font-family:'Cormorant Garamond',serif;
+    font-size:22px; font-weight:300; color:var(--white); margin-bottom:8px;
+  }
+  .aldb-headline em { color:var(--olive-light); font-style:italic; }
+  .aldb-intro {
+    font-size:10px; font-weight:300; color:var(--gray-light);
+    line-height:1.72; max-width:520px; margin-bottom:22px;
+  }
+  .aldb-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; position:relative; z-index:1; }
+  .aldb-item { border-top:1px solid var(--olive-dark); padding-top:11px; }
+  .aldb-num {
+    font-family:'Cormorant Garamond',serif;
+    font-size:24px; font-weight:300; color:var(--olive); line-height:1; margin-bottom:4px;
+  }
+  .aldb-title {
+    font-size: 9.5px; font-weight:600; color:var(--white);
+    letter-spacing:2px; text-transform:uppercase; margin-bottom:4px;
+  }
+  .aldb-body { font-size:9.5px; font-weight:300; color:var(--gray-light); line-height:1.62; }
+
+  /* ═══════════════════ PAGE 3 ═══════════════════ */
+  .mission-split { display:grid; grid-template-columns:1fr 1fr; }
+  .mission-left {
+    background:var(--olive); padding:52px 44px;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .mission-left::after {
+    content:''; position:absolute; bottom:-90px; left:-90px;
+    width:300px; height:300px; border:3px solid rgba(255,255,255,0.15); border-radius:50%;
+  }
+  .mission-label { font-size:9px; font-weight:500; color:rgba(255,255,255,0.6); letter-spacing:4px; text-transform:uppercase; margin-bottom:18px; }
+  .mission-headline { font-family:'Cormorant Garamond',serif; font-size:44px; font-weight:300; color:var(--white); line-height:1.1; margin-bottom:22px; }
+  .mission-headline em { font-style:italic; }
+  .mission-body { font-size:11px; font-weight:300; color:rgba(255,255,255,0.82); line-height:1.82; margin-bottom:10px; }
+  .mission-quote { margin-top:24px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.25); font-family:'Cormorant Garamond',serif; font-size:15px; font-style:italic; color:rgba(255,255,255,0.65); line-height:1.55; }
+  .mission-right { background:var(--cream); padding:52px 44px; display:flex; flex-direction:column; justify-content:space-between; }
+  .value-item { padding:13px 0; border-bottom:1px solid var(--rule); }
+  .value-item:first-child { padding-top:0; }
+  .value-title { font-size:9px; font-weight:600; color:var(--olive-text); letter-spacing:2px; text-transform:uppercase; margin-bottom:5px; }
+  .value-body { font-size:10.5px; font-weight:300; color:var(--gray); line-height:1.72; }
+  .certs-block { margin-top:18px; padding-top:14px; border-top:2px solid var(--olive); }
+  .cert-label { font-size:9px; font-weight:600; color:var(--olive-text); letter-spacing:3px; text-transform:uppercase; margin-bottom:8px; }
+  .cert-line { font-size:10.5px; font-weight:300; color:var(--gray); line-height:1.8; }
+  .contact-footer {
+    background:var(--charcoal); padding:26px 52px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .cf-logo { width:56px; height:56px; }
+  .cf-logo svg { width:100%; height:100%; }
+  .cf-details { display:flex; gap:26px; }
+  .cf-item .ci-label { font-size: 9.5px; font-weight:600; color:var(--olive-light); letter-spacing:2px; text-transform:uppercase; margin-bottom:2px; }
+  .cf-item .ci-val { font-size:10.5px; font-weight:300; color:var(--white); }
+
+  /* Accessibility: skip link */
+  .skip-link {
+    position: absolute;
+    top: -40px; left: 0;
+    background: var(--olive); color: var(--white);
+    padding: 8px 16px; font-size: 14px;
+    font-family: 'Jost', sans-serif; font-weight: 500;
+    z-index: 9999; text-decoration: none;
+    transition: top 0.2s;
+  }
+  .skip-link:focus { top: 0; }
+  /* Visually hidden but accessible */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<h1 class="sr-only">Aubyn Architecture LLC — Firm Profile 2026</h1>
+<div class="util-bar">
+  <button class="util-btn" onclick="window.print()">&#x2399; Print / Save PDF</button>
+</div>
+
+<!-- ════════════════════════════════ PAGE 1: COVER -->
+<main id="main-content" role="main" aria-label="Aubyn Architecture LLC Firm Profile 2026">
+<div class="page">
+  <div class="cover">
+
+    <!-- C-ARC: compositional anchor, bleeds off left just like 2025 brochure -->
+    <div class="cover-arc" role="img" aria-label="Aubyn Architecture stylized A icon mark — large decorative background element">
+      <svg
+   viewBox="0 0 500 500"
+   width="500"
+   height="500"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="aa-icon-mark_arch.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="swatch1"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#swatch1"
+       id="linearGradient1"
+       x1="13.592652"
+       y1="252.5"
+       x2="468.125"
+       y2="252.5"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="1.1313708"
+     inkscape:cx="304.49786"
+     inkscape:cy="324.82718"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1913"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1" />
+  <title
+     id="title1">Aubyn Architecture — Icon Mark</title>
+  <!--
+    Mark anatomy (from image):
+    - Bold C-arc sweeping from top-right, around left, to bottom-right
+    - Two rectangular tabs on right side: upper-right corner piece, lower-right corner piece
+    - Creates the negative space opening in the middle-right
+  -->
+  <!-- Outer boundary of C shape + right tabs -->
+  <!-- Upper right notch tab -->
+  <!-- Lower right notch tab -->
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Aubyn Architecture — Icon Mark</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="g1"
+     transform="matrix(0,-0.69610799,0.69610799,0,285.80765,471.53776)">
+    <g
+       id="g3">
+      <path
+         style="fill:#9dab3a;fill-opacity:1;stroke:url(#linearGradient1);stroke-width:0.75;stroke-dasharray:none"
+         d="m 204.375,468.14652 c -7.21875,-1.23473 -17.76451,-3.4439 -23.43504,-4.90923 C 99.57222,442.21072 35.33644,376.48189 18.35666,296.875 12.46104,269.23436 12.06487,245.25759 17.01559,215.71164 30.76848,133.63435 96.80045,63.649401 180.96371,41.948817 209.29977,34.64267 214.1267,34.375 317.54298,34.375 H 411.875 v 27.42303 27.42303 l -95.9375,0.50138 c -91.59459,0.47869 -96.47506,0.6194 -107.8125,3.10829 -35.3443,7.75908 -61.78582,21.4469 -85.82493,44.42843 -26.60919,25.43855 -42.69834,55.5064 -48.60587,90.83598 -3.18803,19.06581 -2.03338,43.17624 3.01177,62.88923 6.81773,26.63905 20.50758,50.99627 40.08108,71.31299 14.51919,15.0705 29.03967,25.73724 46.96295,34.49898 17.00953,8.31505 26.05256,11.47245 43.82586,15.30191 11.95185,2.57517 16.04737,2.69602 107.73664,3.17924 l 95.3125,0.50231 V 279.4524 143.125 h 28.75 28.75 v 163.75 163.75 l -125.3125,-0.11675 c -114.53267,-0.1067 -126.44156,-0.30986 -138.4375,-2.36173 z"
+         id="path4"
+         transform="matrix(0,1.4365587,-1.4365587,0,677.39168,-410.57947)" />
+      <g
+         id="g2"
+         transform="matrix(1.1173752,0,0,1.1173752,-68.945356,-18.244382)">
+        <path
+           d="m 157.8425,118.61684 c -2.80236,-0.77492 -5.71833,-0.37076 -8.23764,1.13725 v -1.52103 h -5.64604 v 0.11591 h -0.0989 v 47.90531 h 5.75439 v -35.95801 c 0,-1.01954 0.25027,-2.03171 0.72507,-2.92605 1.50018,-2.7983 4.82896,-3.76031 7.42313,-2.14483 l 0.16174,0.1001 v -6.68645 l -0.0809,-0.0222 z"
+           fill="#59595c"
+           id="path9-5"
+           style="display:inline;stroke-width:0.102811" />
+        <path
+           d="m 198.37718,153.94419 -0.0746,0.0853 c -0.27598,0.31521 -0.51149,0.57289 -0.74256,0.81114 -6.73308,6.94253 -17.6882,6.94253 -24.42129,0 -3.26188,-3.36324 -5.0582,-7.83436 -5.0582,-12.59091 0,-4.75665 1.79632,-9.22766 5.0582,-12.591 3.26179,-3.36324 7.59791,-5.21544 12.21107,-5.21544 4.61315,0 8.94928,1.8522 12.21105,5.21544 l 0.0792,0.0817 4.17888,-4.30887 0.18251,-0.19747 h -0.22486 c -4.39637,-4.51563 -10.2313,-7.00187 -16.43672,-7.00187 -6.20532,0 -12.06902,2.4983 -16.46903,7.03528 -9.08147,9.36387 -9.08147,24.59974 0,33.96361 4.54121,4.68246 10.50471,7.02323 16.46996,7.02323 5.9635,0 11.92886,-2.34077 16.46821,-7.02227 0.35062,-0.3514 0.67703,-0.72681 1.00239,-1.09945 l 0.0755,-0.0871 -4.51057,-4.10221 z"
+           fill="#59595c"
+           id="path10-5"
+           style="display:inline;stroke-width:0.105119" />
+        <path
+           d="m 233.10906,119.49086 c -6.36375,0 -12.43109,2.8017 -16.69156,7.69642 V 96.222023 h -5.81445 v 69.919387 h 0.11728 v 0.11287 h 5.70586 v -23.38171 c 0,-9.5585 7.48751,-17.33432 16.69158,-17.33432 9.20397,0 16.69156,7.77582 16.69156,17.33432 v 23.38171 h 5.81446 v -23.38171 c 0,-12.89263 -10.10016,-23.38171 -22.51473,-23.38171 z"
+           fill="#59595c"
+           id="path11-1"
+           style="display:inline;stroke-width:0.101984" />
+        <path
+           d="m 272.26782,166.25428 v -48.02212 h -6.15254 v 48.02212 z"
+           fill="#59595c"
+           id="path12-7"
+           style="display:inline;stroke-width:0.106309" />
+        <path
+           d="M 296.07407,119.49086 V 96.222023 h -6.17038 v 23.268837 h -8.92034 v 6.03835 h 8.92034 v 40.72507 h 6.17038 v -40.72507 h 8.92034 v -6.03835 z"
+           fill="#59595c"
+           id="path13-1"
+           style="display:inline;stroke-width:0.105066" />
+        <path
+           d="m 346.44999,154.02185 c -3.42836,3.83397 -8.36324,6.03274 -13.53868,6.03274 -9.91293,0 -17.98475,-7.92379 -18.04871,-17.68677 h 29.24634 v -6.21078 h -28.15427 c 1.85508,-5.02419 5.83509,-8.91751 10.94289,-10.69457 9.3801,-3.27126 19.71496,1.59539 23.03522,10.84944 l 0.0273,0.0769 h 6.55979 l -0.0385,-0.14452 c -3.35608,-12.81372 -16.65787,-20.5503 -29.65235,-17.25118 -12.9907,3.31022 -20.83711,16.43166 -17.48948,29.24815 2.83244,10.81411 12.74732,18.01306 23.58309,18.01306 2.00461,0 4.04115,-0.24657 6.06915,-0.76199 4.73653,-1.20783 8.94595,-3.7552 12.17315,-7.36759 l 0.078,-0.0872 -4.71585,-4.10188 -0.078,0.0872 z"
+           fill="#59595c"
+           id="path14-1"
+           style="display:inline;stroke-width:0.107472" />
+        <path
+           d="m 469.99765,118.34806 v -0.1159 h -5.85137 v 41.81196 h -8.50736 c -9.43869,0 -17.11723,-7.98512 -17.11723,-17.8009 v -24.01106 h -5.9618 v 24.01106 c 0,13.23965 10.35772,24.01105 23.08796,24.01105 h 14.47009 v -47.90621 z"
+           fill="#59595c"
+           id="path17-5"
+           style="display:inline;stroke-width:0.104656" />
+        <path
+           d="M 419.28555,119.49086 V 96.222023 h -6.17039 v 23.268837 h -8.92033 v 6.03835 h 8.92033 v 40.72508 h 6.17039 v -40.72508 h 8.92034 v -6.03835 z"
+           fill="#59595c"
+           id="path20"
+           style="display:inline;stroke-width:0.105066" />
+        <path
+           d="m 396.58968,153.94419 -0.0746,0.0853 c -0.27599,0.31521 -0.5115,0.57289 -0.74256,0.81114 -6.73308,6.94253 -17.68821,6.94253 -24.42129,0 -3.26188,-3.36324 -5.0582,-7.83436 -5.0582,-12.59091 0,-4.75665 1.79632,-9.22766 5.0582,-12.591 3.26178,-3.36324 7.59791,-5.21544 12.21106,-5.21544 4.61316,0 8.94928,1.8522 12.21106,5.21544 l 0.0792,0.0817 4.17889,-4.30887 0.1825,-0.19747 h -0.22485 c -4.39638,-4.51563 -10.2313,-7.00187 -16.43672,-7.00187 -6.20533,0 -12.06903,2.4983 -16.46904,7.03528 -9.08147,9.36387 -9.08147,24.59974 0,33.96361 4.54121,4.68246 10.50471,7.02323 16.46997,7.02323 5.9635,0 11.92885,-2.34077 16.4682,-7.02227 0.35063,-0.3514 0.67704,-0.72681 1.0024,-1.09945 l 0.0755,-0.0871 -4.51057,-4.10221 z"
+           fill="#59595c"
+           id="path21"
+           style="display:inline;stroke-width:0.105119" />
+        <path
+           d="m 493.06746,118.61684 c -2.80236,-0.77492 -5.71833,-0.37076 -8.23764,1.13725 v -1.52103 h -5.64603 v 0.11591 h -0.099 v 47.90531 h 5.75439 v -35.95801 c 0,-1.01954 0.25028,-2.03171 0.72507,-2.92605 1.50018,-2.7983 4.82896,-3.76031 7.42313,-2.14483 l 0.16174,0.1001 v -6.68645 l -0.0809,-0.0222 z"
+           fill="#59595c"
+           id="path22"
+           style="display:inline;stroke-width:0.102811" />
+        <path
+           d="m 534.05155,154.02185 c -3.42836,3.83397 -8.36325,6.03274 -13.53868,6.03274 -9.91293,0 -17.98475,-7.92379 -18.04871,-17.68677 h 29.24634 v -6.21078 h -28.15427 c 1.85508,-5.02419 5.83509,-8.91751 10.94289,-10.69457 9.3801,-3.27126 19.71496,1.59539 23.03522,10.84944 l 0.0273,0.0769 h 6.55979 l -0.0385,-0.14452 c -3.35608,-12.81372 -16.65788,-20.5503 -29.65235,-17.25118 -12.9907,3.31022 -20.83712,16.43166 -17.48949,29.24815 2.83245,10.81411 12.74733,18.01306 23.5831,18.01306 2.00461,0 4.04115,-0.24657 6.06915,-0.76199 4.73652,-1.20783 8.94595,-3.7552 12.17315,-7.36759 l 0.078,-0.0872 -4.71585,-4.10188 -0.078,0.0872 z"
+           fill="#59595c"
+           id="path23"
+           style="display:inline;stroke-width:0.107472" />
+      </g>
+    </g>
+  </g>
+</svg>
+    </div>
+
+    <!-- TAGLINE -->
+    <div class="cover-tagline">
+      <span class="tag-word">Form.</span>
+      <span class="tag-word italic">Function.</span>
+      <span class="tag-word">Fusion.</span>
+      <div class="tag-rule"></div>
+      <div class="tag-sub">Principal-Led &nbsp;·&nbsp; DE · PA · CT</div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="cover-contact">
+      <div class="cc-name">David C. Ainsworth AIA</div>
+      <div class="cc-line cc-olive">NCARB &nbsp;·&nbsp; MBE &nbsp;·&nbsp; DBE</div>
+      <div class="cc-line" style="margin-top:8px;">203 506 2413</div>
+      <div class="cc-line">david@aubynarch.com</div>
+      <div class="cc-line cc-olive">aubynarch.com</div>
+    </div>
+
+    <!-- CREAM CONTENT PANEL -->
+    <div class="cover-panel">
+      <div>
+        <div class="section-label">About the Firm</div>
+        <div class="about-headline">Architect. Landscape Designer.<br>Owner's Advocate.</div>
+        <p class="body-text">Aubyn Architecture LLC is a multi-discipline professional architecture, landscape design, and consulting firm led by David C. Ainsworth AIA — a licensed architect with over 20 years of experience spanning residential, commercial, institutional, and healthcare design.</p>
+        <p class="body-text">Registered in Delaware, Pennsylvania, and Connecticut, the firm provides full-service design from early feasibility through construction administration. Practice scale is deliberate: boutique, principal-led, every project.</p>
+        <p class="body-text">We bring owner's-side project leadership that most design firms cannot offer — having managed programs at Yale New Haven Health and Temple University, we understand what institutional clients need when complexity increases.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Yrs Experience</div></div>
+          <div class="stat"><div class="stat-num">3</div><div class="stat-label">States Licensed</div></div>
+          <div class="stat"><div class="stat-num">AIA</div><div class="stat-label">Member · NCARB</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="strength-item"><div class="strength-title">Versatility</div><div class="strength-body">From 3,200 SF beach residences to $70M inpatient healthcare programs — diverse scales handled with equal rigor.</div></div>
+        <div class="strength-item"><div class="strength-title">Strategic Thinking</div><div class="strength-body">Owner's-side leadership: navigating regulatory environments, managing stakeholder expectations, aligning design with long-term operational goals.</div></div>
+        <div class="strength-item"><div class="strength-title">Collaboration</div><div class="strength-body">Multidisciplinary teams are where we thrive — engineers, contractors, and consultants unified around a clear design intent.</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════ PAGE 2: PROJECTS + ALDB -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo" role="img" aria-label="Aubyn Architecture LLC — full wordmark logo"><svg
+   viewBox="0 0 665.6 84.0"
+   width="666"
+   height="84"
+   version="1.1"
+   id="svg19"
+   sodipodi:docname="aa-lockup-full_2.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs19">
+    <linearGradient
+       id="swatch1"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#swatch1"
+       id="linearGradient1"
+       x1="196.7707"
+       y1="41.048051"
+       x2="278.16522"
+       y2="41.048051"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview19"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     showguides="true"
+     inkscape:zoom="2.32"
+     inkscape:cx="383.40517"
+     inkscape:cy="42.025862"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1913"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g27" />
+  <title
+     id="title1">Aubyn Architecture — Full Lockup (outlined)</title>
+  <!-- Aubyn icon mark -->
+  <!-- Aubyn -->
+  <!-- Architecture -->
+  <g
+     id="g27">
+    <rect
+       width="364.33176"
+       height="104.14925"
+       fill="#ffffff"
+       id="rect1"
+       x="181.39969"
+       y="-9.7318392"
+       style="display:inline;stroke-width:0.823816" />
+    <path
+       d="m 303.98346,61.685624 v 15.985061 h -9.87115 c -5.44309,0 -9.87114,-4.250871 -9.87114,-9.476294 0,-5.225365 4.42805,-9.476291 9.87114,-9.476291 h 9.99964 v -3.301029 h -9.99964 c -7.34179,0 -13.31486,5.734147 -13.31486,12.782264 0,7.048116 5.97307,12.782264 13.31486,12.782264 h 13.31486 V 61.77738 h -3.34813 z"
+       fill="#59595c"
+       id="path8"
+       style="display:none;stroke-width:0.0579867" />
+    <path
+       d="M 303.98345,21.741048 V 37.72611 h -9.87114 c -5.44309,0 -9.87114,-4.250871 -9.87114,-9.476294 0,-5.225365 4.42805,-9.476292 9.87114,-9.476292 h 9.99963 v -3.301029 h -9.99963 c -7.34179,0 -13.31486,5.734147 -13.31486,12.782264 0,7.048117 5.97307,12.782265 13.31486,12.782265 h 13.31486 V 21.832805 h -3.34814 z"
+       fill="#59595c"
+       id="path24"
+       style="display:none;stroke-width:0.0579867" />
+    <g
+       id="g2">
+      <g
+         id="g1"
+         transform="matrix(0.75039735,0,0,0.75039735,48.918817,19.351154)">
+        <path
+           d="m 348.16832,15.659038 h -8.88574 V 3.2718864 h -3.09532 V 34.359906 h 3.09532 V 18.87836 h 8.88574 c 4.8993,0 8.88575,4.139452 8.88575,9.227914 0,5.088408 -3.98597,9.227915 -8.88575,9.227915 l -8.99954,0.0048 -0.10596,3.214508 h 9.1055 c 6.60888,0 11.98569,-5.583853 11.98569,-12.447236 0,-6.863382 -5.37681,-12.447236 -11.98569,-12.447236 z"
+           fill="#59595c"
+           id="path5"
+           style="stroke-width:0.0542905" />
+        <path
+           d="m 382.96987,15.472495 -4.98317,14.405532 -11.3762,-14.382838 -0.0177,-0.02269 h -4.17303 l 14.29707,18.07626 -6.6183,19.120661 -0.0293,0.08468 h 3.41174 l 12.87572,-37.196921 0.0298,-0.08468 z"
+           fill="#59595c"
+           id="path6"
+           style="stroke-width:0.056602" />
+        <path
+           d="m 397.3053,15.472495 h -7.8586 v 25.564529 h 3.23831 V 18.778467 h 4.62029 c 5.12614,0 9.29626,4.250869 9.29626,9.476292 v 12.782265 h 3.24316 V 28.254759 c 0,-7.048116 -5.62521,-12.782264 -12.53942,-12.782264 z"
+           fill="#59595c"
+           id="path7"
+           style="stroke-width:0.0562729" />
+        <path
+           d="m 319.13156,55.621857 c -1.49184,-0.412528 -3.04415,-0.197373 -4.3853,0.605413 v -0.809717 h -3.00566 v 0.0617 h -0.0527 v 25.502346 h 3.06335 V 61.839387 c 0,-0.542747 0.13323,-1.081574 0.38599,-1.557678 0.79862,-1.489671 2.57069,-2.001795 3.9517,-1.141797 l 0.0861,0.05329 v -3.559529 l -0.0431,-0.01182 z"
+           fill="#59595c"
+           id="path9"
+           style="stroke-width:0.0547315" />
+        <path
+           d="m 340.71016,74.428338 -0.0397,0.0454 c -0.14692,0.167802 -0.27229,0.304975 -0.3953,0.431807 -3.58435,3.695848 -9.4163,3.695848 -13.00065,0 -1.73646,-1.790417 -2.69272,-4.170612 -2.69272,-6.702755 0,-2.5322 0.95626,-4.912339 2.69272,-6.702812 1.73641,-1.790417 4.04474,-2.77643 6.50055,-2.77643 2.45581,0 4.76414,0.986013 6.50054,2.77643 l 0.0422,0.04348 2.22462,-2.293822 0.0972,-0.105126 h -0.1197 c -2.34041,-2.40389 -5.44663,-3.727439 -8.75008,-3.727439 -3.3034,0 -6.42493,1.32997 -8.76727,3.745226 -4.83451,4.984845 -4.83451,13.095647 0,18.080496 2.41751,2.492704 5.59217,3.738806 8.76777,3.738806 3.17466,0 6.35031,-1.246102 8.76683,-3.738297 0.18666,-0.187066 0.36042,-0.386916 0.53363,-0.58529 l 0.0402,-0.04637 -2.4012,-2.18381 z"
+           fill="#59595c"
+           id="path10"
+           style="stroke-width:0.0559602" />
+        <path
+           d="m 359.19964,56.08714 c -3.38774,0 -6.61768,1.491483 -8.88574,4.09718 V 43.699995 h -3.09531 v 37.221522 h 0.0624 v 0.06008 h 3.03751 V 68.53437 c 0,-5.08846 3.98597,-9.22791 8.88575,-9.22791 4.89972,0 8.88573,4.13945 8.88573,9.22791 v 12.447229 h 3.09532 V 68.53437 c 0,-6.863379 -5.3768,-12.44723 -11.98569,-12.44723 z"
+           fill="#59595c"
+           id="path11"
+           style="stroke-width:0.0542911" />
+        <path
+           d="M 380.04577,80.981599 V 55.417071 h -3.2753 v 25.564528 z"
+           fill="#59595c"
+           id="path12"
+           style="stroke-width:0.0565935" />
+        <path
+           d="M 392.719,56.087141 V 43.699995 h -3.2848 v 12.387146 h -4.74873 v 3.214507 h 4.74873 v 21.679951 h 3.2848 V 59.301648 h 4.74873 v -3.214507 z"
+           fill="#59595c"
+           id="path13"
+           style="stroke-width:0.055932" />
+        <path
+           d="m 419.53657,74.469677 c -1.82508,2.04101 -4.45216,3.211524 -7.2073,3.211524 -5.27714,0 -9.57416,-4.218222 -9.60821,-9.415532 h 15.56926 v -3.306304 h -14.9879 c 0.98755,-2.674625 3.10631,-4.74723 5.82544,-5.693244 4.99349,-1.741451 10.49524,0.849305 12.26278,5.775691 l 0.0145,0.04091 h 3.49209 l -0.0205,-0.07693 c -1.7866,-6.82137 -8.8678,-10.939931 -15.7854,-9.183648 -6.91559,1.762191 -11.09262,8.747375 -9.31051,15.570221 1.50785,5.756881 6.78602,9.589235 12.55444,9.589235 1.06715,0 2.1513,-0.131257 3.23091,-0.405643 2.52148,-0.642987 4.76236,-1.999079 6.48036,-3.922131 l 0.0415,-0.04645 -2.51048,-2.183631 -0.0415,0.04643 z"
+           fill="#59595c"
+           id="path14"
+           style="stroke-width:0.0572123" />
+        <path
+           d="m 485.30705,55.478772 v -0.0617 h -3.11497 v 22.258557 h -4.52888 c -5.02468,0 -9.11235,-4.25087 -9.11235,-9.476293 V 55.417071 h -3.17375 v 12.782264 c 0,7.048117 5.51392,12.782262 12.29085,12.782262 h 7.70314 V 55.478772 Z"
+           fill="#59595c"
+           id="path17"
+           style="stroke-width:0.0557136" />
+        <path
+           d="M 458.31051,56.087141 V 43.699995 h -3.28479 v 12.387146 h -4.74874 v 3.214507 h 4.74874 v 21.679956 h 3.28479 V 59.301648 h 4.74874 v -3.214507 z"
+           fill="#59595c"
+           id="path20"
+           style="stroke-width:0.055932" />
+        <path
+           d="m 446.22839,74.428338 -0.0397,0.0454 c -0.14692,0.167802 -0.27229,0.304975 -0.3953,0.431807 -3.58435,3.695848 -9.4163,3.695848 -13.00065,0 -1.73646,-1.790417 -2.69273,-4.170612 -2.69273,-6.702755 0,-2.5322 0.95627,-4.912339 2.69273,-6.702812 1.73641,-1.790417 4.04474,-2.77643 6.50055,-2.77643 2.45581,0 4.76414,0.986013 6.50054,2.77643 l 0.0422,0.04348 2.22463,-2.293822 0.0971,-0.105126 h -0.1197 c -2.3404,-2.40389 -5.44662,-3.727439 -8.75007,-3.727439 -3.3034,0 -6.42494,1.32997 -8.76728,3.745226 -4.83451,4.984845 -4.83451,13.095647 0,18.080496 2.41751,2.492704 5.59218,3.738806 8.76777,3.738806 3.17467,0 6.35032,-1.246102 8.76684,-3.738297 0.18665,-0.187066 0.36042,-0.386916 0.53362,-0.58529 l 0.0402,-0.04637 -2.4012,-2.18381 z"
+           fill="#59595c"
+           id="path21"
+           style="stroke-width:0.0559602" />
+        <path
+           d="m 497.58824,55.621857 c -1.49183,-0.412528 -3.04415,-0.197373 -4.3853,0.605413 v -0.809717 h -3.00566 v 0.0617 h -0.0527 v 25.502346 h 3.06334 V 61.839387 c 0,-0.542747 0.13324,-1.081574 0.38599,-1.557678 0.79862,-1.489671 2.57069,-2.001795 3.9517,-1.141797 l 0.0861,0.05329 v -3.559529 l -0.0431,-0.01182 z"
+           fill="#59595c"
+           id="path22"
+           style="stroke-width:0.0547315" />
+        <path
+           d="m 519.40608,74.469677 c -1.82508,2.04101 -4.45216,3.211524 -7.2073,3.211524 -5.27714,0 -9.57417,-4.218222 -9.60821,-9.415532 h 15.56926 v -3.306304 h -14.9879 c 0.98755,-2.674625 3.1063,-4.74723 5.82544,-5.693244 4.99348,-1.741451 10.49524,0.849305 12.26277,5.775691 l 0.0145,0.04091 h 3.4921 l -0.0205,-0.07693 c -1.78661,-6.82137 -8.86781,-10.939931 -15.7854,-9.183648 -6.91559,1.762191 -11.09262,8.747375 -9.31051,15.570221 1.50785,5.756881 6.78602,9.589235 12.55443,9.589235 1.06716,0 2.15131,-0.131257 3.23091,-0.405643 2.52149,-0.642987 4.76237,-1.999079 6.48037,-3.922131 l 0.0415,-0.04645 -2.51048,-2.183631 -0.0415,0.04643 z"
+           fill="#59595c"
+           id="path23"
+           style="stroke-width:0.0572123" />
+        <path
+           d="m 331.61788,15.534197 v -0.0617 h -3.11497 v 22.258557 h -4.52889 c -5.02467,0 -9.11234,-4.25087 -9.11234,-9.476293 V 15.472495 h -3.17376 v 12.782264 c 0,7.048117 5.51393,12.782262 12.29086,12.782262 h 7.70314 V 15.534197 Z"
+           fill="#59595c"
+           id="path25"
+           style="stroke-width:0.0557136" />
+      </g>
+      <path
+         style="fill:#9dab3a;fill-opacity:1;stroke:url(#linearGradient1);stroke-width:0.125;stroke-dasharray:none"
+         d="M 230.93469,79.664542 C 229.642,79.443436 227.75355,79.047835 226.7381,78.785433 212.16733,75.02014 200.66443,63.249872 197.62381,48.99442 c -1.05575,-4.949696 -1.12669,-9.24329 -0.24015,-14.534174 2.46277,-14.697837 14.28732,-27.2302591 29.3587,-31.1162496 5.07422,-1.308335 5.93859,-1.3562674 24.45767,-1.3562674 h 16.89232 v 4.910727 4.910727 l -17.17982,0.08978 c -16.40212,0.08572 -17.27608,0.110918 -19.30632,0.556611 -6.32921,1.389443 -11.06418,3.840563 -15.36893,7.955939 -4.76499,4.555361 -7.64613,9.939702 -8.70401,16.266279 -0.57089,3.414175 -0.36412,7.731703 0.53933,11.261771 1.22087,4.770338 3.67236,9.132059 7.17744,12.77024 2.6,2.698721 5.20023,4.608846 8.40981,6.17784 3.04595,1.488999 4.66531,2.054407 7.84802,2.740159 2.14026,0.461145 2.87366,0.482786 19.29274,0.569315 l 17.06791,0.08995 V 45.874501 21.461931 h 5.14835 5.14835 v 29.323221 29.32322 l -22.4401,-0.02093 c -20.50972,-0.01912 -22.64228,-0.05548 -24.79043,-0.42292 z"
+         id="path4" />
+    </g>
+  </g>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Aubyn Architecture — Full Lockup (outlined)</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg></div>
+      <div>
+        <div class="section-label">Selected Work</div>
+        <div class="page-headline">Career <em>Highlights</em></div>
+      </div>
+    </div>
+    <div class="projects-cols">
+      <div class="proj-col">
+        <div class="proj-col-head">Design &amp; Architecture</div>
+        <div class="proj-col-sub">Architect of Record — Aubyn Architecture LLC</div>
+        <div class="project-entry"><div class="project-name">Snow's Mixed-Use</div><div class="project-loc">Southbridge, Wilmington, DE &nbsp;·&nbsp; 2,000 SF · 2-Story Commercial Mixed-Use</div><div class="project-type">Mixed-Use</div></div>
+        <div class="project-entry"><div class="project-name">Private Residence, Broadkill Beach</div><div class="project-loc">Milton, DE &nbsp;·&nbsp; 3,200 SF · Raised 2-Story New Construction</div><div class="project-type">Residential</div></div>
+        <div class="project-entry"><div class="project-name">St. Vincent's Medical Center</div><div class="project-loc">New Haven, CT &nbsp;·&nbsp; 1,180 SF · Physicians Lounge Renovation</div><div class="project-type">Healthcare</div></div>
+        <div class="project-entry"><div class="project-name">510 E. Front Street Roof Replacement</div><div class="project-loc">Wilmington, DE &nbsp;·&nbsp; 43,244 SF · Hybrid Metal &amp; EPDM System</div><div class="project-type">Commercial &nbsp;·&nbsp; In Progress</div></div>
+      </div>
+      <div class="proj-col">
+        <div class="proj-col-head">Program &amp; Project Management</div>
+        <div class="proj-col-sub">Owner's Representative — Client-Side Leadership</div>
+        <div class="project-entry"><div class="project-name">Liacouras Walk South: The Cut</div><div class="project-loc">Temple University, Philadelphia, PA &nbsp;·&nbsp; Full City Block · $8M</div><div class="project-type">Landscape / Institutional</div></div>
+        <div class="project-entry"><div class="project-name">NNICU / Maternity &amp; Newborn</div><div class="project-loc">Yale New Haven Health, CT &nbsp;·&nbsp; 120,000 SF · $70M</div><div class="project-type">Healthcare</div></div>
+        <div class="project-entry"><div class="project-name">Smilow Phase 1 Clinical Trials</div><div class="project-loc">Yale New Haven Health, CT &nbsp;·&nbsp; 7,000 SF · $3.8M</div><div class="project-type">Healthcare</div></div>
+        <div class="project-entry"><div class="project-name">Pediatric Specialty Center</div><div class="project-loc">Trumbull, CT &nbsp;·&nbsp; 10,000 SF · $3.5M</div><div class="project-type">Healthcare</div></div>
+        <div class="project-entry"><div class="project-name">Zeego Robotic Operating Room</div><div class="project-loc">Yale New Haven Health, CT &nbsp;·&nbsp; 900 SF · $3.8M</div><div class="project-type">Healthcare</div></div>
+        <div class="project-entry"><div class="project-name">Cell Therapy Laboratory</div><div class="project-loc">Yale New Haven Health, CT &nbsp;·&nbsp; 6,000 SF · $2.6M · ISO 7</div><div class="project-type">Healthcare / Lab</div></div>
+      </div>
+    </div>
+    <div class="aldb-block">
+      <div class="aldb-label">Preferred Delivery Method</div>
+      <div class="aldb-headline">Architect-Led <em>Design-Build.</em></div>
+      <div class="aldb-intro">One contract. One team. One accountable partner from concept through certificate of occupancy. ALDB eliminates the friction between architect and contractor — protecting design intent, schedule, and budget simultaneously.</div>
+      <div class="aldb-grid">
+        <div class="aldb-item"><div class="aldb-num">01</div><div class="aldb-title">Single Point of Contact</div><div class="aldb-body">One contract, one team. Miscommunication between separate architects and contractors is eliminated before it starts.</div></div>
+        <div class="aldb-item"><div class="aldb-num">02</div><div class="aldb-title">Cost Control</div><div class="aldb-body">Builder engaged during design — not after. Cost issues resolved before they become change orders.</div></div>
+        <div class="aldb-item"><div class="aldb-num">03</div><div class="aldb-title">Design Integrity</div><div class="aldb-body">Original design intent faithfully maintained through construction. Architects present, engaged, empowered.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ PAGE 3: MISSION + CONTACT -->
+<div class="page">
+  <div class="mission-split">
+    <div class="mission-left">
+      <div class="mission-label">Mission &amp; Philosophy</div>
+      <div class="mission-headline">Form,<br><em>Function,</em><br>Fusion.</div>
+      <p class="mission-body">Our work finds balance and harmony between the natural and built environment. Elegance in simplicity. Beauty in the subtle.</p>
+      <p class="mission-body">The universal elements — orientation, light, color, air, soil, water, fire, sight, sound, touch, and smell — are critical to our creative process.</p>
+      <p class="mission-body">A dedication to efficient resource use and zero-waste design is not a constraint. It is the discipline that consistently produces more thoughtful, enduring results.</p>
+      <div class="mission-quote">"Design begins with listening and ends with buildings that endure."</div>
+    </div>
+    <div class="mission-right">
+      <div>
+        <div class="section-label" style="margin-bottom:14px;">Core Values</div>
+        <div class="value-item"><div class="value-title">Public Health &amp; Safety</div><div class="value-body">Architects are obligated to protect the public interest — an obligation that now encompasses sustainability of the global environment and universal accessibility. We take that mandate seriously on every project we sign.</div></div>
+        <div class="value-item"><div class="value-title">Design Excellence</div><div class="value-body">Functional layouts. Energy-efficient construction. Environments that are visually compelling and increase market value while delivering genuine human benefit to occupants and community.</div></div>
+        <div class="value-item"><div class="value-title">Client Advocacy</div><div class="value-body">Architecture is self-regulated. Every decision is made in service of your interests, in accordance with the highest professional standards. We have sat on the client side — we know what that actually means.</div></div>
+      </div>
+      <div class="certs-block">
+        <div class="cert-label">Memberships &amp; Certifications</div>
+        <div class="cert-line">AIA — American Institute of Architects</div>
+        <div class="cert-line">NCARB — National Council of Architectural Registration Boards</div>
+        <div class="cert-line">Main Street Wilmington — Board of Directors</div>
+        <div class="cert-line">State of Delaware MBE #21541044</div>
+        <div class="cert-line">City of Wilmington DBE #3824</div>
+        <div class="cert-line" style="margin-top:9px; font-size:9px; color:var(--gray-light);">DE-S5-0008664 &nbsp;·&nbsp; PA-RA408925 &nbsp;·&nbsp; CT-ARI.0013176</div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-footer">
+    <div class="cf-logo" role="img" aria-label="Aubyn Architecture icon mark"><svg
+   viewBox="0 0 500 500"
+   width="500"
+   height="500"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="aa-icon-mark_arch.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs3">
+    <linearGradient
+       id="swatch1"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#swatch1"
+       id="linearGradient1"
+       x1="13.592652"
+       y1="252.5"
+       x2="468.125"
+       y2="252.5"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="1.1313708"
+     inkscape:cx="304.49786"
+     inkscape:cy="324.82718"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1913"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1" />
+  <title
+     id="title1">Aubyn Architecture — Icon Mark</title>
+  <!--
+    Mark anatomy (from image):
+    - Bold C-arc sweeping from top-right, around left, to bottom-right
+    - Two rectangular tabs on right side: upper-right corner piece, lower-right corner piece
+    - Creates the negative space opening in the middle-right
+  -->
+  <!-- Outer boundary of C shape + right tabs -->
+  <!-- Upper right notch tab -->
+  <!-- Lower right notch tab -->
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Aubyn Architecture — Icon Mark</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="g1"
+     transform="matrix(0,-0.69610799,0.69610799,0,285.80765,471.53776)">
+    <g
+       id="g3">
+      <path
+         style="fill:#9dab3a;fill-opacity:1;stroke:url(#linearGradient1);stroke-width:0.75;stroke-dasharray:none"
+         d="m 204.375,468.14652 c -7.21875,-1.23473 -17.76451,-3.4439 -23.43504,-4.90923 C 99.57222,442.21072 35.33644,376.48189 18.35666,296.875 12.46104,269.23436 12.06487,245.25759 17.01559,215.71164 30.76848,133.63435 96.80045,63.649401 180.96371,41.948817 209.29977,34.64267 214.1267,34.375 317.54298,34.375 H 411.875 v 27.42303 27.42303 l -95.9375,0.50138 c -91.59459,0.47869 -96.47506,0.6194 -107.8125,3.10829 -35.3443,7.75908 -61.78582,21.4469 -85.82493,44.42843 -26.60919,25.43855 -42.69834,55.5064 -48.60587,90.83598 -3.18803,19.06581 -2.03338,43.17624 3.01177,62.88923 6.81773,26.63905 20.50758,50.99627 40.08108,71.31299 14.51919,15.0705 29.03967,25.73724 46.96295,34.49898 17.00953,8.31505 26.05256,11.47245 43.82586,15.30191 11.95185,2.57517 16.04737,2.69602 107.73664,3.17924 l 95.3125,0.50231 V 279.4524 143.125 h 28.75 28.75 v 163.75 163.75 l -125.3125,-0.11675 c -114.53267,-0.1067 -126.44156,-0.30986 -138.4375,-2.36173 z"
+         id="path4"
+         transform="matrix(0,1.4365587,-1.4365587,0,677.39168,-410.57947)" />
+      <g
+         id="g2"
+         transform="matrix(1.1173752,0,0,1.1173752,-68.945356,-18.244382)">
+        <path
+           d="m 157.8425,118.61684 c -2.80236,-0.77492 -5.71833,-0.37076 -8.23764,1.13725 v -1.52103 h -5.64604 v 0.11591 h -0.0989 v 47.90531 h 5.75439 v -35.95801 c 0,-1.01954 0.25027,-2.03171 0.72507,-2.92605 1.50018,-2.7983 4.82896,-3.76031 7.42313,-2.14483 l 0.16174,0.1001 v -6.68645 l -0.0809,-0.0222 z"
+           fill="#59595c"
+           id="path9-5"
+           style="display:inline;stroke-width:0.102811" />
+        <path
+           d="m 198.37718,153.94419 -0.0746,0.0853 c -0.27598,0.31521 -0.51149,0.57289 -0.74256,0.81114 -6.73308,6.94253 -17.6882,6.94253 -24.42129,0 -3.26188,-3.36324 -5.0582,-7.83436 -5.0582,-12.59091 0,-4.75665 1.79632,-9.22766 5.0582,-12.591 3.26179,-3.36324 7.59791,-5.21544 12.21107,-5.21544 4.61315,0 8.94928,1.8522 12.21105,5.21544 l 0.0792,0.0817 4.17888,-4.30887 0.18251,-0.19747 h -0.22486 c -4.39637,-4.51563 -10.2313,-7.00187 -16.43672,-7.00187 -6.20532,0 -12.06902,2.4983 -16.46903,7.03528 -9.08147,9.36387 -9.08147,24.59974 0,33.96361 4.54121,4.68246 10.50471,7.02323 16.46996,7.02323 5.9635,0 11.92886,-2.34077 16.46821,-7.02227 0.35062,-0.3514 0.67703,-0.72681 1.00239,-1.09945 l 0.0755,-0.0871 -4.51057,-4.10221 z"
+           fill="#59595c"
+           id="path10-5"
+           style="display:inline;stroke-width:0.105119" />
+        <path
+           d="m 233.10906,119.49086 c -6.36375,0 -12.43109,2.8017 -16.69156,7.69642 V 96.222023 h -5.81445 v 69.919387 h 0.11728 v 0.11287 h 5.70586 v -23.38171 c 0,-9.5585 7.48751,-17.33432 16.69158,-17.33432 9.20397,0 16.69156,7.77582 16.69156,17.33432 v 23.38171 h 5.81446 v -23.38171 c 0,-12.89263 -10.10016,-23.38171 -22.51473,-23.38171 z"
+           fill="#59595c"
+           id="path11-1"
+           style="display:inline;stroke-width:0.101984" />
+        <path
+           d="m 272.26782,166.25428 v -48.02212 h -6.15254 v 48.02212 z"
+           fill="#59595c"
+           id="path12-7"
+           style="display:inline;stroke-width:0.106309" />
+        <path
+           d="M 296.07407,119.49086 V 96.222023 h -6.17038 v 23.268837 h -8.92034 v 6.03835 h 8.92034 v 40.72507 h 6.17038 v -40.72507 h 8.92034 v -6.03835 z"
+           fill="#59595c"
+           id="path13-1"
+           style="display:inline;stroke-width:0.105066" />
+        <path
+           d="m 346.44999,154.02185 c -3.42836,3.83397 -8.36324,6.03274 -13.53868,6.03274 -9.91293,0 -17.98475,-7.92379 -18.04871,-17.68677 h 29.24634 v -6.21078 h -28.15427 c 1.85508,-5.02419 5.83509,-8.91751 10.94289,-10.69457 9.3801,-3.27126 19.71496,1.59539 23.03522,10.84944 l 0.0273,0.0769 h 6.55979 l -0.0385,-0.14452 c -3.35608,-12.81372 -16.65787,-20.5503 -29.65235,-17.25118 -12.9907,3.31022 -20.83711,16.43166 -17.48948,29.24815 2.83244,10.81411 12.74732,18.01306 23.58309,18.01306 2.00461,0 4.04115,-0.24657 6.06915,-0.76199 4.73653,-1.20783 8.94595,-3.7552 12.17315,-7.36759 l 0.078,-0.0872 -4.71585,-4.10188 -0.078,0.0872 z"
+           fill="#59595c"
+           id="path14-1"
+           style="display:inline;stroke-width:0.107472" />
+        <path
+           d="m 469.99765,118.34806 v -0.1159 h -5.85137 v 41.81196 h -8.50736 c -9.43869,0 -17.11723,-7.98512 -17.11723,-17.8009 v -24.01106 h -5.9618 v 24.01106 c 0,13.23965 10.35772,24.01105 23.08796,24.01105 h 14.47009 v -47.90621 z"
+           fill="#59595c"
+           id="path17-5"
+           style="display:inline;stroke-width:0.104656" />
+        <path
+           d="M 419.28555,119.49086 V 96.222023 h -6.17039 v 23.268837 h -8.92033 v 6.03835 h 8.92033 v 40.72508 h 6.17039 v -40.72508 h 8.92034 v -6.03835 z"
+           fill="#59595c"
+           id="path20"
+           style="display:inline;stroke-width:0.105066" />
+        <path
+           d="m 396.58968,153.94419 -0.0746,0.0853 c -0.27599,0.31521 -0.5115,0.57289 -0.74256,0.81114 -6.73308,6.94253 -17.68821,6.94253 -24.42129,0 -3.26188,-3.36324 -5.0582,-7.83436 -5.0582,-12.59091 0,-4.75665 1.79632,-9.22766 5.0582,-12.591 3.26178,-3.36324 7.59791,-5.21544 12.21106,-5.21544 4.61316,0 8.94928,1.8522 12.21106,5.21544 l 0.0792,0.0817 4.17889,-4.30887 0.1825,-0.19747 h -0.22485 c -4.39638,-4.51563 -10.2313,-7.00187 -16.43672,-7.00187 -6.20533,0 -12.06903,2.4983 -16.46904,7.03528 -9.08147,9.36387 -9.08147,24.59974 0,33.96361 4.54121,4.68246 10.50471,7.02323 16.46997,7.02323 5.9635,0 11.92885,-2.34077 16.4682,-7.02227 0.35063,-0.3514 0.67704,-0.72681 1.0024,-1.09945 l 0.0755,-0.0871 -4.51057,-4.10221 z"
+           fill="#59595c"
+           id="path21"
+           style="display:inline;stroke-width:0.105119" />
+        <path
+           d="m 493.06746,118.61684 c -2.80236,-0.77492 -5.71833,-0.37076 -8.23764,1.13725 v -1.52103 h -5.64603 v 0.11591 h -0.099 v 47.90531 h 5.75439 v -35.95801 c 0,-1.01954 0.25028,-2.03171 0.72507,-2.92605 1.50018,-2.7983 4.82896,-3.76031 7.42313,-2.14483 l 0.16174,0.1001 v -6.68645 l -0.0809,-0.0222 z"
+           fill="#59595c"
+           id="path22"
+           style="display:inline;stroke-width:0.102811" />
+        <path
+           d="m 534.05155,154.02185 c -3.42836,3.83397 -8.36325,6.03274 -13.53868,6.03274 -9.91293,0 -17.98475,-7.92379 -18.04871,-17.68677 h 29.24634 v -6.21078 h -28.15427 c 1.85508,-5.02419 5.83509,-8.91751 10.94289,-10.69457 9.3801,-3.27126 19.71496,1.59539 23.03522,10.84944 l 0.0273,0.0769 h 6.55979 l -0.0385,-0.14452 c -3.35608,-12.81372 -16.65788,-20.5503 -29.65235,-17.25118 -12.9907,3.31022 -20.83712,16.43166 -17.48949,29.24815 2.83245,10.81411 12.74733,18.01306 23.5831,18.01306 2.00461,0 4.04115,-0.24657 6.06915,-0.76199 4.73652,-1.20783 8.94595,-3.7552 12.17315,-7.36759 l 0.078,-0.0872 -4.71585,-4.10188 -0.078,0.0872 z"
+           fill="#59595c"
+           id="path23"
+           style="display:inline;stroke-width:0.107472" />
+      </g>
+    </g>
+  </g>
+</svg></div>
+    <div class="cf-details">
+      <div class="cf-item"><div class="ci-label">Phone</div><div class="ci-val">203 506 2413</div></div>
+      <div class="cf-item"><div class="ci-label">Email</div><div class="ci-val">david@aubynarch.com</div></div>
+      <div class="cf-item"><div class="ci-label">Web</div><div class="ci-val">aubynarch.com</div></div>
+      <div class="cf-item"><div class="ci-label">Office</div><div class="ci-val">Wilmington, DE 19801</div></div>
+    </div>
+  </div>
+</div>
+
+</main>
+</main><!-- /main -->
+</main>
+</body>
+</html>

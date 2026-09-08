@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forward System — Wall Assembly Cost Intelligence | Merge4Ward</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --city-dk:#0a2342;--city-md:#1a3d6b;--city-lt:#e8eef6;
+  --grn-dk:#0F4B18;--grn-md:#196B23;--grn-lt:#D8EDD0;--grn-pale:#EDF4E1;
+  --gold:#c89c2a;--gold-lt:#fdf3d4;--warm:#f7f6f2;--line:#dddbd3;
+  --blk:#0f0f10;--mid:#2c2c30;--muted:#6b6b72;--wht:#ffffff;
+  --on-dk:#ffffff;--on-dk-sec:#d4dce8;--on-dk-mut:#a8b8cc;
+  --on-grn:#ffffff;--on-grn-lt:#c8f09a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:15pt;}
+body{font-family:'DM Sans',sans-serif;color:var(--mid);background:var(--wht);
+  -webkit-font-smoothing:antialiased;line-height:1.6;
+  max-width:1300px;margin:0 auto;}
+.hdr{display:flex;justify-content:space-between;align-items:flex-end;
+  padding:0.16in 0.4in 0.12in;border-bottom:3px solid var(--city-dk);
+  background:var(--wht);position:sticky;top:0;z-index:100;}
+.hdr-left{display:flex;align-items:center;gap:12px;}
+.hdr-mark{width:44px;height:44px;background:var(--city-dk);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.hdr-mark span{font-family:'Syne',sans-serif;font-size:0.54rem;font-weight:800;color:var(--gold);}
+.hdr-name{font-family:'Syne',sans-serif;font-size:1.0rem;font-weight:700;color:var(--blk);}
+.hdr-sub{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+.hdr-badge{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--gold);
+  background:var(--city-dk);padding:5px 12px;letter-spacing:.06em;}
+.main{padding:0.26in 0.4in 0.5in;}
+.slider-row{display:flex;align-items:center;gap:18px;
+  background:var(--city-dk);padding:0.14in 0.2in;margin-bottom:0.18in;}
+.slider-label{font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--gold);letter-spacing:.09em;white-space:nowrap;}
+.slider-row input[type=range]{flex:1;accent-color:var(--gold);}
+.slider-val{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--gold);min-width:40px;text-align:right;}
+.slider-note{font-size:0.76rem;color:var(--on-dk-sec);}
+.tier-selector{display:flex;gap:6px;margin-bottom:0.18in;flex-wrap:wrap;}
+.tier-btn{font-family:'DM Mono',monospace;font-size:0.68rem;padding:8px 18px;cursor:pointer;
+  border:1.5px solid var(--line);background:var(--warm);color:var(--muted);
+  letter-spacing:.06em;transition:all .12s;}
+.tier-btn:hover{border-color:var(--grn-md);color:var(--grn-dk);}
+.tier-btn.active{background:var(--grn-dk);border-color:var(--grn-dk);color:var(--on-grn);}
+.tier-btn.export.active{background:var(--city-dk);border-color:var(--city-md);color:var(--on-dk);}
+.summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:0.18in;}
+.sum-card{border:1px solid var(--line);padding:0.14in 0.16in;background:var(--warm);}
+.sum-label{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.sum-val{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;line-height:1;}
+.sum-val.grn{color:var(--grn-dk);}.sum-val.gold{color:var(--gold);}.sum-val.red{color:#7a1f1f;}
+.sum-sub{font-size:0.72rem;color:var(--muted);margin-top:4px;}
+.delta-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:0.62rem;padding:2px 7px;margin-top:5px;}
+.delta-save{background:var(--grn-pale);color:var(--grn-dk);}
+.specs-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);margin-bottom:0.18in;}
+.spec-item{padding:0.1in 0.14in;background:var(--wht);}
+.spec-lbl{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.spec-val{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--blk);}
+.spec-val.hi{color:var(--grn-md);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:0.14in;}
+.asm-panel{border:1px solid var(--line);}
+.asm-head{padding:0.1in 0.14in;border-bottom:2px solid var(--line);
+  font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;
+  display:flex;justify-content:space-between;align-items:center;}
+.asm-head.stick{background:var(--city-lt);color:var(--city-dk);border-bottom-color:var(--city-md);}
+.asm-head.fwd{background:var(--grn-pale);color:var(--grn-dk);border-bottom-color:var(--grn-md);}
+.asm-head.exp{background:var(--city-lt);color:var(--city-dk);border-bottom-color:var(--city-md);}
+.asm-head-note{font-family:'DM Mono',monospace;font-size:0.56rem;font-weight:400;color:var(--muted);}
+.zone-label{font-family:'DM Mono',monospace;font-size:0.6rem;font-weight:500;
+  color:var(--gold);letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 14px 3px;background:var(--city-dk);border-bottom:1px solid rgba(200,156,42,.3);}
+.layer-row{display:grid;grid-template-columns:10px 1fr auto;
+  align-items:start;gap:10px;padding:8px 14px;border-bottom:1px solid var(--line);}
+.layer-row:last-child{border-bottom:none;}
+.layer-row:hover{background:var(--grn-pale);}
+.swatch{width:10px;height:10px;flex-shrink:0;margin-top:4px;border:1px solid rgba(0,0,0,.1);}
+.layer-name{font-size:0.88rem;color:var(--blk);font-weight:500;line-height:1.3;}
+.layer-spec{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);margin-top:2px;}
+.conn-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:0.56rem;
+  padding:1px 5px;margin-top:3px;border:1px solid;}
+.ct-sst{color:#1a4d80;background:#e6f0fa;border-color:#b5d4f4;}
+.ct-rtb{color:#7a5200;background:var(--gold-lt);border-color:var(--gold);}
+.ct-mfr{color:var(--grn-dk);background:var(--grn-pale);border-color:var(--grn-lt);}
+.layer-cost{font-family:'DM Mono',monospace;font-size:0.88rem;font-weight:500;
+  color:var(--blk);white-space:nowrap;text-align:right;padding-top:2px;}
+.asm-total{display:flex;justify-content:space-between;align-items:center;
+  padding:9px 14px;border-top:2px solid var(--line);
+  font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;}
+.asm-total.stick{background:var(--city-lt);color:var(--city-dk);}
+.asm-total.fwd{background:var(--grn-pale);color:var(--grn-dk);}
+.asm-total.exp{background:var(--city-lt);color:var(--city-dk);}
+.conn-panel{border:1px solid var(--line);margin-bottom:0.18in;}
+.conn-head{padding:0.1in 0.14in;border-bottom:2px solid var(--grn-md);background:var(--grn-dk);
+  display:flex;justify-content:space-between;align-items:center;}
+.conn-head-title{font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--on-grn);}
+.conn-head-note{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--on-grn-lt);}
+.conn-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.conn-item{padding:0.12in 0.14in;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+.conn-item:nth-child(3n){border-right:none;}
+.conn-item:nth-last-child(-n+3){border-bottom:none;}
+.conn-sup{font-family:'DM Mono',monospace;font-size:0.62rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px;}
+.conn-sup.sst{color:#1a4d80;}.conn-sup.rtb{color:#7a5200;}
+.conn-name{font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:700;color:var(--blk);margin-bottom:2px;}
+.conn-desc{font-size:0.76rem;color:var(--mid);line-height:1.45;}
+.conn-esr{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);margin-top:3px;}
+.chart-panel{border:1px solid var(--line);padding:0.18in;margin-bottom:0.18in;background:var(--warm);}
+.chart-title{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--city-dk);margin-bottom:0.08in;}
+.chart-legend{display:flex;gap:16px;margin-bottom:0.1in;flex-wrap:wrap;}
+.leg-item{display:flex;align-items:center;gap:7px;font-family:'DM Mono',monospace;font-size:0.64rem;color:var(--muted);}
+.leg-sw{width:12px;height:12px;flex-shrink:0;border:1px solid rgba(0,0,0,.1);}
+.chart-wrap{position:relative;height:210px;}
+.vol-panel{border:1px solid var(--line);margin-bottom:0.18in;}
+.vol-head{padding:0.12in 0.16in;border-bottom:2px solid var(--gold);background:var(--gold-lt);
+  display:flex;justify-content:space-between;align-items:center;}
+.vol-title{font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:800;color:var(--city-dk);}
+.vol-units-note{font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);}
+.vol-units-note strong{color:var(--grn-md);}
+.vol-discount-grid{display:grid;grid-template-columns:repeat(5,1fr);
+  gap:1px;background:var(--line);border-bottom:1px solid var(--line);}
+.vol-disc-item{padding:0.1in 0.14in;background:var(--warm);}
+.vol-disc-cat{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);margin-bottom:4px;}
+.vol-disc-pct{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--gold);line-height:1;}
+.vol-disc-save{font-size:0.72rem;color:var(--grn-md);margin-top:2px;font-weight:500;}
+.vol-disc-note{font-size:0.64rem;color:var(--muted);margin-top:2px;}
+.vol-row{display:grid;grid-template-columns:1fr auto auto;
+  padding:7px 16px;border-bottom:1px solid var(--line);align-items:center;gap:14px;}
+.vol-row:last-of-type{border-bottom:none;}
+.vol-mat{font-size:0.86rem;color:var(--blk);}
+.vol-retail{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);}
+.vol-bulk{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--grn-md);font-weight:500;}
+.vol-total-bar{padding:0.1in 0.16in;border-top:2px solid var(--gold);
+  background:var(--city-dk);display:flex;justify-content:space-between;align-items:center;}
+.vol-total-label{font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--on-dk-sec);}
+.vol-total-val{font-family:'Syne',sans-serif;font-size:0.98rem;font-weight:800;color:var(--gold);}
+.foot-note{margin-top:0.2in;padding:0.14in 0.18in;background:var(--warm);
+  border:1px solid var(--line);border-left:3px solid var(--city-md);
+  font-size:0.72rem;color:var(--muted);line-height:1.65;}
+.foot-note strong{color:var(--mid);font-weight:600;}
+@media(max-width:900px){
+  .two-col,.summary-row{grid-template-columns:1fr;}
+  .conn-grid,.vol-discount-grid{grid-template-columns:repeat(2,1fr);}
+  .specs-strip{grid-template-columns:repeat(3,1fr);}
+  html{font-size:13pt;}
+}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-mark"><span>M4W</span></div>
+    <div>
+      <div class="hdr-name">Merge4Ward LLC &nbsp;·&nbsp; Merge 4 Design LLC &nbsp;·&nbsp; M4Di™ &nbsp;·&nbsp; L.E.E.P., Inc.</div>
+      <div class="hdr-sub">Forward System — Wall Assembly Cost Intelligence &nbsp;·&nbsp; Internal Tool &nbsp;·&nbsp; June 2026</div>
+    </div>
+  </div>
+  <div class="hdr-badge">INTERNAL · NOT FOR DISTRIBUTION</div>
+</div>
+<div class="main">
+  <div class="slider-row">
+    <span class="slider-label">ANNUAL UNIT VOLUME</span>
+    <input type="range" id="unitSlider" min="4" max="120" value="10" step="2">
+    <span class="slider-val" id="unitVal">10</span>
+    <span class="slider-note">units / year — drives volume discount analysis below</span>
+  </div>
+  <div class="tier-selector" id="tierBar">
+    <button class="tier-btn active" data-tier="t1">T1 — Code+</button>
+    <button class="tier-btn" data-tier="t2">T2 — Zero Energy</button>
+    <button class="tier-btn" data-tier="t3">T3 — Positive</button>
+    <button class="tier-btn" data-tier="t4">T4 — Harvest</button>
+    <button class="tier-btn export" data-tier="exp">4WardCrete Export</button>
+  </div>
+  <div class="summary-row" id="summaryRow"></div>
+  <div class="specs-strip" id="specsStrip"></div>
+  <div class="two-col">
+    <div class="asm-panel" id="stickPanel"></div>
+    <div class="asm-panel" id="fwdPanel"></div>
+  </div>
+  <div class="conn-panel">
+    <div class="conn-head">
+      <span class="conn-head-title">SAPK — Site-Assembly Panel Kit: Simpson Strong-Tie &amp; Rothoblaas</span>
+      <span class="conn-head-note">All items carry existing US ICC-ES listings · No new testing required</span>
+    </div>
+    <div class="conn-grid" id="connGrid"></div>
+  </div>
+  <div class="chart-panel">
+    <div class="chart-title">Cost comparison — $/SF wall installed (five scenarios)</div>
+    <div class="chart-legend">
+      <div class="leg-item"><span class="leg-sw" style="background:#5a5a6a"></span>Stick / CMU baseline</div>
+      <div class="leg-item"><span class="leg-sw" style="background:#196B23"></span>Forward System standard</div>
+      <div class="leg-item"><span class="leg-sw" style="background:#4a9040"></span>Fwd + MEP credit</div>
+      <div class="leg-item"><span class="leg-sw" style="background:#c89c2a"></span>Fwd + volume pricing</div>
+      <div class="leg-item"><span class="leg-sw" style="background:#1a3d6b"></span>Fwd + volume + MEP</div>
+    </div>
+    <div class="chart-wrap"><canvas id="mainChart" role="img" aria-label="Cost comparison bar chart"></canvas></div>
+  </div>
+  <div class="vol-panel">
+    <div class="vol-head">
+      <span class="vol-title">Wilmington Hub — Volume Purchasing Analysis</span>
+      <span class="vol-units-note">Based on <strong id="volUnitsDisplay">10</strong> units/yr warehouse buying program</span>
+    </div>
+    <div id="volContent"></div>
+  </div>
+  <div class="foot-note">
+    <strong>Pricing basis:</strong> Mid-Atlantic (Wilmington DE), June 2026. Wall costs = materials + labor per SF gross wall. Volume discount ranges: fiber cement 20–50% bulk (HomeGuide / Angi 2026), SIP panels 8–15% project-level (ACME), connectors 10–18% contractor account (SST), windows 12–22% multi-unit developer pricing, HVAC 8–15% contractor. <strong>ROM targets — actual discounts require executed supply agreements.</strong> SST = Simpson Strong-Tie · RTB = Rothoblaas · MFR = manufacturer ESR listing. MEP savings from SIPA prefab labor data (35–50% field reduction).
+  </div>
+</div>
+<script>
+const TIERS={
+  t1:{label:"T1 — Code+",hers:"55–70",r:"R-23 effective",ach:"<2.0 ACH50",cert:"Energy Star auto",ira45l:"—",mep:2.80,stickTotal:38.50,fwdTotal:36.20,isExport:false,
+    stickLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Drywall ½\" — 2-coat paint",s:"Standard gypsum, tape / mud / paint",v:3.20},
+      {c:"#5a5a50",z:"Structure",n:"2×6 stud framing 16\" OC",s:"Lumber, plates, blocking, headers",v:8.40},
+      {c:"#6b8a3a",z:"Insulation",n:"Fiberglass batt R-19",s:"Kraft-faced, friction-fit, site-installed",v:2.10},
+      {c:"#9a8a60",z:"Sheathing",n:"½\" OSB structural sheathing",s:"Nailed to studs",v:2.80},
+      {c:"#3a6a5a",z:"WRB",n:"Tyvek HomeWrap WRB",s:"Mechanically fastened, taped",v:1.20},
+      {c:"#4a6a9a",z:"Cladding",n:"Allura lap siding",s:"FC, pre-primed, site-painted",v:7.50},
+      {c:"#c89c2a",z:"Labor",n:"Framing labor — site-cut",s:"3–4 week crew, full site-build",v:8.50},
+      {c:"#9a7a1a",z:"Labor",n:"Insulation + sheathing + WRB labor",s:"Separate trades, sequential",v:4.80},
+    ],
+    fwdLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Drywall ½\" — factory hung",s:"Pre-screwed at hub; tape + mud on site",v:2.60,ct:"SST",cp:"MASOZ anchor at sill · ESR-2555"},
+      {c:"#196B23",z:"Structure",n:"ACME 6.5\" SIP — Neopor GPS core",s:"OSB / GPS / OSB · R-23 · ESR-4689 · CLT spine",v:9.80,ct:"MFR",cp:"ACME ESR-4689"},
+      {c:"#2a8a5a",z:"WRB+CI",n:"Barricade Thermo-Brace SIB R-5",s:"WRB + Neopor CI pre-applied · TER 1507-09",v:3.20,ct:"MFR",cp:"TER 1507-09"},
+      {c:"#4a6a9a",z:"Cladding",n:"Allura lap siding",s:"FC 50-yr warranty",v:7.50,ct:"MFR",cp:"50-yr warranty"},
+      {c:"#0F4B18",z:"Connectors",n:"SAPK connector kit — all zones",s:"SST MASOZ + HTT4 · Rothoblaas ALUMEGA + HBS PLATE",v:1.40,ct:"SST+RTB",cp:"ESR-2555 + ESR-4546"},
+      {c:"#9dab3a",z:"Factory",n:"Hub panel assembly — crane-set",s:"Pre-assembled at Wilmington Hub",v:6.00,ct:""},
+      {c:"#c89c2a",z:"Labor",n:"Site install — 55% framing labor reduction",s:"Crane set, joint sealing, cladding",v:5.70,ct:""},
+    ],
+    volItems:[
+      {mat:"ACME SIP panels",retail:"$9.80",disc:12,unit:"$/SF panel"},
+      {mat:"Barricade Thermo-Brace SIB",retail:"$3.20",disc:10,unit:"$/SF"},
+      {mat:"Allura fiber cement lap siding",retail:"$7.50",disc:28,unit:"$/SF installed"},
+      {mat:"Crystal Magnus 4500 windows",retail:"$420",disc:16,unit:"$/unit"},
+      {mat:"Simpson Strong-Tie SAPK connectors",retail:"$1.40",disc:14,unit:"$/SF wall"},
+      {mat:"Rothoblaas ALUMEGA + HBS + tape",retail:"$0.85",disc:12,unit:"$/SF wall"},
+      {mat:"Mini-split HVAC — multi-unit order",retail:"$3,200",disc:12,unit:"$/unit"},
+      {mat:"Pre-hung interior doors",retail:"$280",disc:18,unit:"$/door"},
+    ]},
+  t2:{label:"T2 — Zero Energy Ready",hers:"0–30",r:"R-33+ effective",ach:"<1.0 ACH50",cert:"DOE ZERH",ira45l:"$5,000/unit",mep:5.40,stickTotal:52.80,fwdTotal:44.60,isExport:false,
+    stickLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Drywall ½\"",s:"2-coat finish",v:3.20},
+      {c:"#5a5a50",z:"Structure",n:"2×6 stud framing 16\" OC",s:"Advanced framing, sealed penetrations",v:8.40},
+      {c:"#6b8a3a",z:"Insulation",n:"Closed-cell spray foam R-21 hybrid",s:"2\" ocSF + fiberglass fill",v:5.80},
+      {c:"#9a8a60",z:"Sheathing",n:"½\" OSB sheathing",s:"Structural",v:2.80},
+      {c:"#3a6a5a",z:"WRB",n:"Tyvek HomeWrap WRB",s:"Mechanically fastened",v:1.20},
+      {c:"#2a5a4a",z:"CI",n:"2\" EPS continuous insulation R-8",s:"Outboard CI, mechanically fastened",v:3.40},
+      {c:"#8a8a80",z:"Furring",n:"1\" hat channel furring strip",s:"Rainscreen, galvanized steel",v:2.20},
+      {c:"#4a6a9a",z:"Cladding",n:"Allura panel cladding T2",s:"FC panel, upgrade from lap",v:9.20},
+      {c:"#c89c2a",z:"Labor",n:"Framing + airtight ZEReady detailing",s:"DOE-grade rough-in discipline",v:9.50},
+      {c:"#9a7a1a",z:"Labor",n:"Spray foam + CI + WRB labor",s:"Three separate trades, sequential",v:7.10},
+    ],
+    fwdLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Drywall ½\" — factory hung",s:"Hub pre-assembled",v:2.60,ct:"SST",cp:"MASOZ sill anchor · ESR-2555"},
+      {c:"#196B23",z:"Structure",n:"ACME 6.5\" SIP R-23",s:"OSB / Neopor GPS / OSB · ESR-4689",v:9.80,ct:"MFR",cp:"ACME ESR-4689"},
+      {c:"#2a8a5a",z:"WRB+CI",n:"Barricade Thermo-Brace SIB R-5",s:"WRB + Neopor CI · TER 1507-09",v:3.80,ct:"MFR",cp:"TER 1507-09"},
+      {c:"#1a4060",z:"Foundation",n:"Superior Walls Xi+ (below grade)",s:"Pre-insulated below-grade wall · TER 2211-02",v:0,ct:"MFR",cp:"TER 2211-02"},
+      {c:"#4a6a9a",z:"Cladding",n:"Allura panel cladding T2",s:"FC 50-yr, direct to SIB face",v:9.20,ct:"MFR",cp:""},
+      {c:"#0F4B18",z:"Connectors",n:"SAPK — MASOZ + HTT5 + SCLC",s:"SST foundation + hold-down + stair cassette",v:1.60,ct:"SST+RTB",cp:"ESR-2555 + ESR-4546 + SIGA tape"},
+      {c:"#9dab3a",z:"Factory",n:"Hub assembly — airtight joint sealed",s:"Pre-assembled; <1.0 ACH50 target",v:7.20,ct:""},
+      {c:"#c89c2a",z:"Labor",n:"Crane set + Vitoair ERV rough-in",s:"Reduced trade count vs stick-frame",v:5.40,ct:""},
+    ],
+    volItems:[
+      {mat:"ACME SIP panels",retail:"$9.80",disc:12,unit:"$/SF panel"},
+      {mat:"Barricade Thermo-Brace SIB",retail:"$3.80",disc:10,unit:"$/SF"},
+      {mat:"Allura FC panel cladding",retail:"$9.20",disc:28,unit:"$/SF installed"},
+      {mat:"Crystal Magnus 4500 triple-pane U≤0.18",retail:"$560",disc:16,unit:"$/unit"},
+      {mat:"Vitoair ERV balanced ventilation",retail:"$1,800",disc:11,unit:"$/unit"},
+      {mat:"SPAN Main 40 panel stub",retail:"$1,100",disc:9,unit:"$/unit"},
+      {mat:"SST MASOZ + HTT5 + SCLC kit",retail:"$1.60",disc:14,unit:"$/SF wall"},
+      {mat:"Rothoblaas ALUMEGA + SIGA Rissan",retail:"$0.95",disc:12,unit:"$/SF wall"},
+    ]},
+  t3:{label:"T3 — Positive Energy (PHIUS+)",hers:"-10 to +10",r:"R-38+ effective",ach:"<0.6 ACH50",cert:"PHIUS+",ira45l:"$5,000/unit",mep:7.20,stickTotal:71.40,fwdTotal:55.80,isExport:false,
+    stickLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Drywall ½\"",s:"Airtight all penetrations, 2-coat",v:3.20},
+      {c:"#5a5a50",z:"Structure",n:"2×6 framing — Passive House detailing",s:"Triple-stud corners, thermal bridge-free",v:9.20},
+      {c:"#6b8a3a",z:"Insulation",n:"3.5\" closed-cell spray foam R-21",s:"Full cavity fill, vapor-closed",v:7.80},
+      {c:"#9a8a60",z:"Sheathing",n:"½\" OSB structural sheathing",s:"",v:2.80},
+      {c:"#3a7a5a",z:"WRB",n:"Henry Blueskin self-adhered WRB",s:"Airtight grade, lapped and sealed",v:3.20},
+      {c:"#2a5a4a",z:"CI",n:"3\" polyiso CI R-18",s:"Outboard CI, taped joints",v:6.40},
+      {c:"#8a8a80",z:"Furring",n:"1×4 furring over CI",s:"Rainscreen drainage plane",v:2.80},
+      {c:"#4a6a9a",z:"Cladding",n:"Allura panel + shakes T3",s:"FC premium panels + shakes",v:11.80},
+      {c:"#c89c2a",z:"Labor",n:"PH framing + thermal bridge-free labor",s:"Extreme airtight discipline",v:12.20},
+      {c:"#9a7a1a",z:"Labor",n:"Spray foam + polyiso CI + self-adhered WRB",s:"Three trades",v:12.00},
+    ],
+    fwdLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Drywall ½\" — factory hung",s:"Hub pre-assembled with blocking",v:2.60,ct:"SST",cp:"MASOZ sill · ESR-2555"},
+      {c:"#196B23",z:"Structure",n:"ACME 6.5\" SIP R-23",s:"OSB / Neopor GPS / OSB · ESR-4689",v:9.80,ct:"MFR",cp:"ESR-4689"},
+      {c:"#1a5a50",z:"Outboard CI",n:"ArmorWall Plus FR SIS 2¾\" R-15",s:"MgO / PUR / AWB · ESL-1302 · NFPA 285 compliant",v:11.40,ct:"MFR",cp:"ESL-1302 + ESL-1442"},
+      {c:"#4a6a9a",z:"Cladding",n:"Allura panel + shakes T3",s:"Direct attach to ArmorWall MgO face — no hat channel",v:11.80,ct:"MFR",cp:""},
+      {c:"#0F4B18",z:"Connectors",n:"SAPK — PH grade connector kit",s:"SST MASOZ + HTT5 + SCLC · Rtb ALUMEGA + HBS PLATE EVO + SIGA Rissan",v:2.20,ct:"SST+RTB",cp:"ESR-2555 + ESR-4546 / AC257"},
+      {c:"#9dab3a",z:"Factory",n:"Hub PH assembly — airtight tape system",s:"<0.6 ACH50 target · Mitsubishi H2i rough-in",v:8.40,ct:""},
+      {c:"#c89c2a",z:"Labor",n:"Crane + PH commissioning",s:"No hat channel trade — ArmorWall direct cladding attach",v:7.40,ct:""},
+      {c:"#9dab3a",z:"T3 extra",n:"Cistern stub + drip rough-in",s:"Factory pre-plumbed water module",v:1.20,ct:""},
+    ],
+    volItems:[
+      {mat:"ACME SIP panels",retail:"$9.80",disc:12,unit:"$/SF panel"},
+      {mat:"ArmorWall Plus FR SIS 2¾\" R-15",retail:"$11.40",disc:8,unit:"$/SF"},
+      {mat:"Allura FC panel + shakes premium",retail:"$11.80",disc:22,unit:"$/SF installed"},
+      {mat:"Crystal Magnus 4700 PH U≤0.14",retail:"$720",disc:16,unit:"$/unit"},
+      {mat:"Mitsubishi FX H2i sumo HVAC",retail:"$4,800",disc:14,unit:"$/unit"},
+      {mat:"Enphase IQ8 5.5kW PV + battery",retail:"$8,200",disc:11,unit:"$/unit"},
+      {mat:"SST MASOZ + HTT5 + SCLC kit",retail:"$2.20",disc:15,unit:"$/SF wall"},
+      {mat:"Rothoblaas ALUMEGA + HBS EVO + SIGA",retail:"$1.40",disc:12,unit:"$/SF wall"},
+    ]},
+  t4:{label:"T4 — Harvest / Off-Grid",hers:"Net positive",r:"R-44+ effective",ach:"<0.6 ACH50",cert:"Off-grid verified",ira45l:"$5,000/unit",mep:9.80,stickTotal:84.60,fwdTotal:62.40,isExport:false,
+    stickLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Drywall ½\" — sealed utility chase",s:"Airtight all penetrations",v:3.80},
+      {c:"#5a5a50",z:"Structure",n:"2×8 framing — off-grid discipline",s:"Deep wall, maximum cavity insulation",v:11.40},
+      {c:"#6b8a3a",z:"Insulation",n:"5\" closed-cell spray foam R-30",s:"Full cavity fill, vapor-closed",v:11.20},
+      {c:"#9a8a60",z:"Sheathing",n:"½\" structural OSB sheathing",s:"",v:2.80},
+      {c:"#3a7a5a",z:"WRB",n:"Henry Blueskin self-adhered WRB",s:"Airtight grade",v:3.20},
+      {c:"#2a5a4a",z:"CI",n:"4\" polyiso R-24 — 2 layers, offset joints",s:"Mechanically fastened",v:8.60},
+      {c:"#8a8a80",z:"Furring",n:"1×6 + counter-furring",s:"Double rainscreen drainage plane",v:4.20},
+      {c:"#4a6a9a",z:"Cladding",n:"Allura panel + shakes premium",s:"FC, galvanized fasteners",v:13.20},
+      {c:"#c89c2a",z:"Labor",n:"Deep wall + off-grid thermal detailing",s:"Extreme thermal bridge-free labor",v:15.60},
+      {c:"#9a7a1a",z:"Labor",n:"2× spray foam + 2-layer CI + WRB",s:"Three trades, two CI passes",v:10.60},
+    ],
+    fwdLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Drywall ½\" — factory hung",s:"Hub pre-assembled, sealed utility chase",v:2.60,ct:"SST",cp:"MASOZ sill · ESR-2555"},
+      {c:"#196B23",z:"Structure",n:"ACME 6.5\" SIP R-23",s:"OSB / Neopor GPS / OSB · ESR-4689",v:9.80,ct:"MFR",cp:"ESR-4689"},
+      {c:"#1a5a50",z:"Outboard CI",n:"ArmorWall Plus FR SIS 3¾\" R-21",s:"MgO / PUR · ESL-1302 · maximum CI tier",v:14.20,ct:"MFR",cp:"ESL-1302"},
+      {c:"#4a6a9a",z:"Cladding",n:"Allura panel + shakes premium",s:"Direct attach to ArmorWall MgO face",v:13.20,ct:"MFR",cp:""},
+      {c:"#7a6a2a",z:"Agrivolt.",n:"Agrivoltaic trellis framing stub",s:"Roof-to-wall transition, T4 only",v:1.80,ct:""},
+      {c:"#0F4B18",z:"Connectors",n:"SAPK — off-grid grade kit",s:"SST MASOZ + HTT22 + SCLC · Rtb ALUMEGA + HBS PLATE A4 + SIGA",v:2.80,ct:"SST+RTB",cp:"ESR-2555 + ESR-4546"},
+      {c:"#9dab3a",z:"Factory",n:"Hub off-grid assembly",s:"Island-mode SPAN pre-wired · EcoFlow stub",v:9.20,ct:""},
+      {c:"#c89c2a",z:"Labor",n:"Crane + 8.5–12kW PV + battery commissioning",s:"Agrivoltaic trellis attachment",v:8.80,ct:""},
+    ],
+    volItems:[
+      {mat:"ACME SIP panels",retail:"$9.80",disc:12,unit:"$/SF panel"},
+      {mat:"ArmorWall Plus FR SIS 3¾\" R-21",retail:"$14.20",disc:8,unit:"$/SF"},
+      {mat:"Allura FC panel + shakes premium",retail:"$13.20",disc:22,unit:"$/SF"},
+      {mat:"Crystal Magnus 4700 PH triple-pane",retail:"$720",disc:16,unit:"$/unit"},
+      {mat:"EcoFlow DELTA Pro Ultra 90kWh rack",retail:"$14,800",disc:14,unit:"$/unit"},
+      {mat:"8.5–12kW agrivoltaic PV + rail kit",retail:"$9,600",disc:13,unit:"$/unit"},
+      {mat:"SST MASOZ + HTT22 + SCLC kit",retail:"$2.80",disc:15,unit:"$/SF wall"},
+      {mat:"Rothoblaas ALUMEGA + HBS A4 + SIGA",retail:"$1.80",disc:12,unit:"$/SF wall"},
+    ]},
+  exp:{label:"4WardCrete — Caribbean Export",hers:"ICC 500-2023",r:"AAC non-comb.",ach:"250 mph wind",cert:"CUBiC + FEMA P-361",ira45l:"FEMA HMGP",mep:4.20,stickTotal:48.20,fwdTotal:39.80,isExport:true,
+    stickLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Lime plaster + paint finish",s:"CMU or poured concrete face",v:6.80},
+      {c:"#5a5a50",z:"Structure",n:"8\" CMU structural wall",s:"Grouted cells · #5 rebar 24\" OC",v:14.20},
+      {c:"#9a8a60",z:"Moisture",n:"Parge coat + moisture barrier",s:"Site-applied, tropical specification",v:2.40},
+      {c:"#2a5a4a",z:"CI",n:"2\" EPS outboard insulation",s:"Mechanically fastened",v:2.80},
+      {c:"#3a6a5a",z:"WRB",n:"Fiberglass mat WRB",s:"Mechanically fastened, taped",v:1.20},
+      {c:"#4a6a9a",z:"Cladding",n:"Stucco exterior — 2 coat painted",s:"Local materials, Jamaica / Caribbean",v:6.40},
+      {c:"#c89c2a",z:"Labor",n:"Masonry labor — CMU block lay",s:"Skilled trade · grouting + rebar · slow",v:14.40},
+    ],
+    fwdLayers:[
+      {c:"#8a8a80",z:"Interior",n:"Lime wash or direct paint",s:"On AAC face — no separate drywall",v:1.80,ct:"MFR",cp:"AERCON ESR-1652"},
+      {c:"#1a6a7a",z:"Structure",n:"100mm AERCON AAC panel",s:"3-hr ASTM E119 · ESR-1652 · non-combustible",v:8.40,ct:"MFR",cp:"ESR-1652"},
+      {c:"#196B23",z:"Frame",n:"G235 LGS structural frame",s:"AISI S240 · CUBiC recognized · container pre-assembled",v:7.20,ct:"SST",cp:"ESR-4205 G235"},
+      {c:"#1a6a7a",z:"Ext. AAC",n:"100mm AERCON AAC exterior",s:"Structural + insulating + fire layer",v:8.40,ct:"MFR",cp:"ESR-1652"},
+      {c:"#4a6a9a",z:"Cladding",n:"Allura FC cladding — tropical MANDATORY",s:"Hurricane-rated · G235 screws · ICC 500 required",v:6.80,ct:"MFR",cp:"ICC 500 req."},
+      {c:"#0F4B18",z:"Connectors",n:"SAPK export kit — G235 / G185 spec",s:"SST MASOZ G185 + #14 SD G235 · Rtb ALUMEGA A4 + INFI tape",v:1.80,ct:"SST+RTB",cp:"ESR-2555 + ESR-4546"},
+      {c:"#9dab3a",z:"Container",n:"Container factory kit assembly",s:"LGS + AAC staged · QR ALDi-coded sequence",v:5.20,ct:""},
+      {c:"#c89c2a",z:"Labor",n:"Site crane erect + AAC panel set",s:"~40% of CMU timeline with trained crew",v:6.20,ct:""},
+    ],
+    volItems:[
+      {mat:"AERCON AAC 100mm panels",retail:"$8.40",disc:14,unit:"$/SF installed"},
+      {mat:"G235 LGS stud + track (coil stock)",retail:"$7.20",disc:16,unit:"$/SF frame"},
+      {mat:"Allura FC — tropical spec G235 fasteners",retail:"$6.80",disc:22,unit:"$/SF installed"},
+      {mat:"SST MASOZ G185 + #14 SD G235 kit",retail:"$1.80",disc:14,unit:"$/SF wall"},
+      {mat:"Rothoblaas ALUMEGA A4 + INFI tape",retail:"$1.10",disc:12,unit:"$/SF wall"},
+      {mat:"PEX plumbing prefab module",retail:"$1.40",disc:12,unit:"$/SF"},
+      {mat:"Mini-split — G235 tropical-rated",retail:"$2,800",disc:12,unit:"$/unit"},
+      {mat:"Container logistics + ALDi QR kit label",retail:"$800",disc:15,unit:"$/unit"},
+    ]}
+};
+const CONNECTORS={
+  t1:[
+    {sup:"SST",name:"MASOZ Mudsill Anchor",desc:"Foundation-to-factory-sheathed-panel interface · no separate blocking required",esr:"ESR-2555 · IBC/IRC listed"},
+    {sup:"SST",name:"HTT4 Hold-Down",desc:"CFS stud to foundation at shear wall ends · uplift + shear resistance",esr:"ESR-1188"},
+    {sup:"SST",name:"SDWS Timber Screw",desc:"CLT-to-CLT surface splines · wood-to-wood structural fastening",esr:"IAPMO ER-192"},
+    {sup:"SST",name:"SDS Heavy-Duty Connector",desc:"CFS-to-wood connections · stair cassette fastening",esr:"ESR-1374"},
+    {sup:"RTB",name:"ALUMEGA Concealed Connector",desc:"CLT-to-CFS top track bearing · concealed + fire-documented",esr:"ESR-4546 / AC233"},
+    {sup:"RTB",name:"HBS PLATE Screw",desc:"Metal plate to CLT timber · anti-embrittlement geometry · pan head",esr:"ESR-4546 / ETA-11/0030"},
+  ],
+  t2:[
+    {sup:"SST",name:"MASOZ Mudsill Anchor",desc:"Factory-sheathed SIP+SIB panel to foundation slab",esr:"ESR-2555 · IBC/IRC"},
+    {sup:"SST",name:"HTT5 Hold-Down",desc:"Higher-load shear wall · T2 DOE-ZERH required",esr:"ESR-1188"},
+    {sup:"SST",name:"SCLC Stair Cassette Ledger",desc:"Prefab stair cassette — hub-built · lowered onto connector on site",esr:"C-C-2024 catalog"},
+    {sup:"SST",name:"SDWH Timber-Hex Screw",desc:"CLT floor-to-wall connections · hex drive for high torque",esr:"IAPMO ER-192"},
+    {sup:"RTB",name:"ALUMEGA + HBS PLATE",desc:"CLT/CFS bearing connection + plate screw · fire-documented",esr:"ESR-4546"},
+    {sup:"RTB",name:"SIGA Rissan Tape",desc:"SIP joint airtight tape · wall-to-floor transition sealing",esr:"Per manufacturer specification"},
+  ],
+  t3:[
+    {sup:"SST",name:"MASOZ Mudsill Anchor",desc:"Pre-sheathed SIP + ArmorWall panel set to concrete slab",esr:"ESR-2555"},
+    {sup:"SST",name:"HTT5 Hold-Down",desc:"CFS shear wall hold-down · Passive House grade",esr:"ESR-1188"},
+    {sup:"SST",name:"SCLC Stair Cassette Ledger",desc:"Hub-built prefab stair cassette connection",esr:"C-C-2024"},
+    {sup:"SST",name:"SDHR Combo-Head Screw",desc:"Metal plate to CLT · partially threaded · black e-coat finish",esr:"IAPMO ER-192"},
+    {sup:"RTB",name:"ALUMEGA + HBS PLATE EVO",desc:"CLT/CFS bearing · C4 corrosion class · EVO coating AC257-approved",esr:"ESR-4546 / AC257"},
+    {sup:"RTB",name:"SIGA Rissan + FENTRIM IS",desc:"Airtight tapes at SIP + ArmorWall panel interfaces",esr:"Per manufacturer specification"},
+  ],
+  t4:[
+    {sup:"SST",name:"MASOZ Mudsill Anchor",desc:"Factory SIP + ArmorWall 3¾\" panel to slab foundation",esr:"ESR-2555"},
+    {sup:"SST",name:"HTT22 Hold-Down",desc:"Maximum load off-grid shear wall · highest capacity hold-down",esr:"ESR-1188"},
+    {sup:"SST",name:"SCLC Stair Cassette Ledger",desc:"Hub-built prefab stair cassette",esr:"C-C-2024"},
+    {sup:"SST",name:"SDHR Combo-Head Screw",desc:"CLT-to-CFS metal plate connections · partially threaded",esr:"IAPMO ER-192"},
+    {sup:"RTB",name:"ALUMEGA + HBS PLATE A4",desc:"Stainless steel A4 specification · coastal and off-grid service class",esr:"ESR-4546 / ETA-11/0030"},
+    {sup:"RTB",name:"SIGA Rissan + TEAKstrip sill",desc:"Full airtight system at all SIP + ArmorWall transitions",esr:"Per manufacturer specification"},
+  ],
+  exp:[
+    {sup:"SST",name:"MASOZ G185 Mudsill",desc:"G185 tropical coating · AAC panel to concrete slab interface",esr:"ESR-2555"},
+    {sup:"SST",name:"#14 Self-Drill SD G235",desc:"LGS stud-to-AAC face · G235 tropical coating · HVHZ capable",esr:"AISI S240 Table B4.2"},
+    {sup:"SST",name:"SDWS G235 Timber Screw",desc:"Wood spline connections · G235 tropical-rated coating",esr:"IAPMO ER-192"},
+    {sup:"SST",name:"SDS Heavy-Duty G235",desc:"LGS frame-to-frame connections · 250 mph wind specification",esr:"ESR-1374"},
+    {sup:"RTB",name:"ALUMEGA A4 Stainless",desc:"CLT/CFS bearing A4 stainless · Caribbean salt-air service class",esr:"ESR-4546"},
+    {sup:"RTB",name:"INFI Tape + TEAKstrip",desc:"Airtight + capillary break system · tropical deployment standard",esr:"Per manufacturer specification"},
+  ]
+};
+let activeTier='t1',unitCount=10,chartRef=null;
+function fmtD(n){return '$'+n.toFixed(2);}
+function connTag(ct){
+  if(!ct)return '';
+  if(ct==='SST')return '<span class="conn-tag ct-sst">SST</span>';
+  if(ct==='RTB')return '<span class="conn-tag ct-rtb">RTB</span>';
+  if(ct==='MFR')return '<span class="conn-tag ct-mfr">MFR</span>';
+  if(ct==='SST+RTB')return '<span class="conn-tag ct-sst">SST</span>&nbsp;<span class="conn-tag ct-rtb">RTB</span>';
+  return '';
+}
+function volFactor(u){return u>=80?.18:u>=40?.12:u>=20?.08:.04;}
+function catDisc(u,base){return u>=80?base+6:u>=40?base+4:u>=20?base+2:base;}
+function render(){
+  const T=TIERS[activeTier],C=CONNECTORS[activeTier],isExp=T.isExport;
+  const fwdTot=T.fwdLayers.reduce((a,l)=>a+l.v,0);
+  const stickTot=T.stickLayers.reduce((a,l)=>a+l.v,0);
+  const fwdMep=fwdTot-T.mep;
+  const vf=volFactor(unitCount);
+  const fwdVol=(fwdTot*(1-vf*.55)).toFixed(2);
+  const fwdVolMep=(parseFloat(fwdVol)-T.mep).toFixed(2);
+  document.getElementById('summaryRow').innerHTML=`
+    <div class="sum-card"><div class="sum-label">${isExp?'CMU Baseline':'Stick Frame'} — installed</div><div class="sum-val red">${fmtD(stickTot)}<span style="font-size:.8rem;font-weight:400;color:var(--muted)">/SF</span></div><div class="sum-sub">Materials + site labor, no factory credit</div></div>
+    <div class="sum-card"><div class="sum-label">Forward System — standard</div><div class="sum-val grn">${fmtD(fwdTot)}<span style="font-size:.8rem;font-weight:400;color:var(--muted)">/SF</span></div><div class="sum-sub">Partial factory assembly, hub credit</div><div class="delta-tag delta-save">− $${(stickTot-fwdTot).toFixed(2)}/SF vs baseline</div></div>
+    <div class="sum-card"><div class="sum-label">Fwd + MEP factory credit</div><div class="sum-val grn">${fmtD(fwdMep)}<span style="font-size:.8rem;font-weight:400;color:var(--muted)">/SF</span></div><div class="sum-sub">Modular MEP at −${fmtD(T.mep)}/SF</div><div class="delta-tag delta-save">− $${(stickTot-fwdMep).toFixed(2)}/SF total savings</div></div>
+    <div class="sum-card"><div class="sum-label">Fwd + volume + MEP (${unitCount} units/yr)</div><div class="sum-val gold">${fwdVolMep}<span style="font-size:.8rem;font-weight:400;color:var(--muted)">/SF</span></div><div class="sum-sub">~${Math.round(vf*55)}% blended discount applied</div><div class="delta-tag delta-save">− $${(stickTot-parseFloat(fwdVolMep)).toFixed(2)}/SF vs baseline</div></div>`;
+  document.getElementById('specsStrip').innerHTML=`
+    <div class="spec-item"><div class="spec-lbl">Tier</div><div class="spec-val hi">${T.label.split('—')[0].trim()}</div></div>
+    <div class="spec-item"><div class="spec-lbl">HERS / Rating</div><div class="spec-val">${T.hers}</div></div>
+    <div class="spec-item"><div class="spec-lbl">R-Value</div><div class="spec-val">${T.r}</div></div>
+    <div class="spec-item"><div class="spec-lbl">Airtightness</div><div class="spec-val">${T.ach}</div></div>
+    <div class="spec-item"><div class="spec-lbl">Certification</div><div class="spec-val">${T.cert}</div></div>
+    <div class="spec-item"><div class="spec-lbl">IRA §45L / Incentive</div><div class="spec-val hi">${T.ira45l}</div></div>`;
+  let sl='',cz='';
+  T.stickLayers.forEach(l=>{if(l.z!==cz){sl+=`<div class="zone-label">${l.z}</div>`;cz=l.z;}sl+=`<div class="layer-row"><span class="swatch" style="background:${l.c}"></span><div><div class="layer-name">${l.n}</div><div class="layer-spec">${l.s}</div></div><div class="layer-cost">${fmtD(l.v)}</div></div>`;});
+  document.getElementById('stickPanel').innerHTML=`<div class="asm-head stick"><span>${isExp?'CMU Baseline':'Stick Frame'} — interior → exterior</span></div>${sl}<div class="asm-total stick"><span>Total installed</span><span>${fmtD(stickTot)}/SF</span></div>`;
+  let fl='';cz='';
+  T.fwdLayers.forEach(l=>{if(l.z!==cz){fl+=`<div class="zone-label">${l.z}</div>`;cz=l.z;}const esr=l.cp?` · <span style="font-family:'DM Mono';font-size:.6rem;color:var(--muted)">${l.cp}</span>`:'';fl+=`<div class="layer-row"><span class="swatch" style="background:${l.c}"></span><div><div class="layer-name">${l.n}&nbsp;${connTag(l.ct||'')}</div><div class="layer-spec">${l.s}${esr}</div></div><div class="layer-cost">${l.v===0?'—':fmtD(l.v)}</div></div>`;});
+  const hcls=isExp?'exp':'fwd';
+  document.getElementById('fwdPanel').innerHTML=`<div class="asm-head ${hcls}"><span>Forward System — interior → exterior</span><span class="asm-head-note">SST = Simpson Strong-Tie · RTB = Rothoblaas · MFR = ESR listing</span></div>${fl}<div class="asm-total ${hcls}"><span>Total installed</span><span>${fmtD(fwdTot)}/SF</span></div>`;
+  let cg='';
+  C.forEach(cn=>{const isSst=cn.sup==='SST';cg+=`<div class="conn-item"><div class="conn-sup ${isSst?'sst':'rtb'}">${cn.sup} — ${isSst?'Simpson Strong-Tie':'Rothoblaas'}</div><div class="conn-name">${cn.name}</div><div class="conn-desc">${cn.desc}</div><div class="conn-esr">${cn.esr}</div></div>`;});
+  document.getElementById('connGrid').innerHTML=cg;
+  if(chartRef)chartRef.destroy();
+  chartRef=new Chart(document.getElementById('mainChart'),{type:'bar',data:{labels:['Stick / CMU','Fwd Standard','Fwd + MEP','Fwd + Volume','Fwd + Vol + MEP'],datasets:[{data:[stickTot,fwdTot,fwdMep,parseFloat(fwdVol),parseFloat(fwdVolMep)],backgroundColor:['#5a5a6a','#196B23','#4a9040','#c89c2a','#1a3d6b'],borderWidth:0,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+c.raw.toFixed(2)+'/SF'}}},scales:{y:{grid:{color:'rgba(0,0,0,.06)'},ticks:{color:'#6b6b72',font:{family:"'DM Mono'",size:11},callback:v=>'$'+v},border:{display:false}},x:{grid:{display:false},ticks:{color:'#6b6b72',font:{family:"'DM Mono'",size:10}},border:{display:false}}}}});
+  document.getElementById('volUnitsDisplay').textContent=unitCount;
+  const cats=[{cat:'SIP panels',base:10,note:'ACME project-level pricing'},{cat:'Cladding (Allura)',base:22,note:'Bulk warehouse pricing'},{cat:'Windows (Crystal)',base:14,note:'Multi-unit developer pricing'},{cat:'Connectors (SST+RTB)',base:11,note:'Contractor direct account'},{cat:'HVAC systems',base:10,note:'Volume contractor pricing'}];
+  let dh='<div class="vol-discount-grid">';
+  cats.forEach(c=>{const d=catDisc(unitCount,c.base);dh+=`<div class="vol-disc-item"><div class="vol-disc-cat">${c.cat}</div><div class="vol-disc-pct">${d}%</div><div class="vol-disc-save">~$${(fwdTot*(d/100)*.3).toFixed(2)}/SF impact</div><div class="vol-disc-note">${c.note}</div></div>`;});
+  dh+='</div>';
+  let rh='';
+  T.volItems.forEach(vi=>{const rn=parseFloat(vi.retail.replace('$','').replace(',',''));const bn=rn*(1-vi.disc/100);const bs=bn>100?'$'+bn.toLocaleString('en-US',{maximumFractionDigits:0}):'$'+bn.toFixed(2);rh+=`<div class="vol-row"><span class="vol-mat">${vi.mat}</span><span class="vol-retail">${vi.retail} ${vi.unit} retail</span><span class="vol-bulk">${bs} bulk (−${vi.disc}%)</span></div>`;});
+  const annSav=Math.round((fwdTot-parseFloat(fwdVol))*1350*unitCount);
+  document.getElementById('volContent').innerHTML=dh+rh+`<div class="vol-total-bar"><span class="vol-total-label">Blended wall assembly impact at ${unitCount} units/yr</span><span class="vol-total-val">$${(fwdTot-parseFloat(fwdVol)).toFixed(2)}/SF savings · ~$${annSav.toLocaleString()} annual materials savings</span></div>`;
+}
+document.getElementById('tierBar').querySelectorAll('.tier-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.getElementById('tierBar').querySelectorAll('.tier-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeTier=btn.dataset.tier;render();});});
+document.getElementById('unitSlider').addEventListener('input',function(){unitCount=parseInt(this.value);document.getElementById('unitVal').textContent=unitCount;render();});
+render();
+</script>
+</body>
+</html>
