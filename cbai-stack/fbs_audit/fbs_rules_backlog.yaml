@@ -1,0 +1,14 @@
+# FBS Constructability Rule Backlog - capture rules here as identified, then code into fbs_audit.py
+# lifecycle: proposed -> coded -> committed. Nothing identified is lost. Every entry cites source + standard.
+rules:
+  - {id: FTG-04, title: "Stepped footing at grade change (lap >= 2x step, >= ftg thickness, continuous)", category: footing, citation: "IRC R403.1.5", source: "Claymont v6 review 2026-09-08 (garage 6in drop as Z-offset, not a step)", status: proposed}
+  - {id: FTG-05, title: "Footing on undisturbed/compacted bearing; min soil bearing", category: footing, citation: "IRC R401.4 / Table R401.4.1", source: "rule #19", status: proposed}
+  - {id: WALL-04, title: "Wall bears centered on its footing (eccentricity in tolerance)", category: wall, citation: "IRC R403.1; HUD RSDG", source: "Claymont v6 review 2026-09-08 (footings not re-centered after party move)", status: proposed}
+  - {id: WALL-05, title: "CMU wall thickness/reinforcement adequate for unbalanced backfill height", category: wall, citation: "IRC R404 / Table R404.1.1; NCMA", source: "Claymont v6 review 2026-09-08 (8in CMU, backfill unverified)", status: proposed}
+  - {id: WALL-06, title: "Wall stacks over wall below (plan alignment foundation->roof, no drift)", category: wall, citation: "IRC R301.1; HUD load path", source: "memory #20 WALL-STACKING DEFECT", status: proposed}
+  - {id: OPEN-02, title: "Opening jamb bearing - king/jack (wood) or pilaster/grouted-cell (masonry)", category: opening, citation: "IRC R602.7 / R606; NCMA pilaster", source: "Claymont v6 review 2026-09-08 (8ft garage jambs)", status: proposed}
+  - {id: OPEN-03, title: "Opening does not break required continuity (grade beam / bond beam runs through)", category: opening, citation: "IRC R403.1", source: "Claymont v6 review 2026-09-08 (garage voids grade beam)", status: proposed}
+  - {id: BEAR-01, title: "Minimum bearing - 1.5in wood, 3in masonry", category: bearing, citation: "IRC R502.6; masonry 3in", source: "memory #19", status: proposed}
+  - {id: FIRE-01, title: "Fireblocking at floor lines and 10ft horizontal max", category: fire, citation: "IBC 718 / IRC R302.11", source: "memory #19", status: proposed}
+  - {id: FIRE-02, title: "Fire-rated assemblies cite a listed design no. (UL/GA)", category: fire, citation: "NGC WoodBook UL/GA", source: "memory #19; Claymont A-502 2HR bases", status: proposed}
+  - {id: SLAB-01, title: "Slab-on-grade control/expansion joints", category: slab, citation: "ACI / IRC R506", source: "memory #19", status: proposed}
