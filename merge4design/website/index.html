@@ -3,200 +3,294 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Merge 4 Design LLC — Wilmington-Rooted. Built to Deliver.</title>
+<title>Merge 4 Design LLC — Pre-Design &amp; Pre-Development, Wilmington, Delaware</title>
+<meta name="description" content="Merge 4 Design LLC is Wilmington's pre-design and pre-development team: M4Di FeasOps fixed-price feasibility, entitlement and code consulting, as-built documentation, 3D modeling and pre-inspection construction reviews.">
+<link rel="canonical" href="https://merge4design.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://merge4design.com/">
+<meta property="og:title" content="Merge 4 Design — Wilmington-rooted. Built to deliver.">
+<meta property="og:description" content="Pre-design, pre-development, entitlement and code consulting for mission-driven projects.">
+<meta property="og:image" content="https://merge4design.com/assets/projects/claymont-exterior.webp">
+<meta name="theme-color" content="#196B24">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Merge 4 Design LLC",
+  "description": "Pre-design and pre-development services: fixed-price feasibility, entitlement and code consulting, as-built documentation, 3D modeling and pre-inspection construction reviews.",
+  "url": "https://merge4design.com/",
+  "telephone": "+1-302-367-5726",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "500 Delaware Ave, Ste 1 #1551",
+    "addressLocality": "Wilmington",
+    "addressRegion": "DE",
+    "postalCode": "19899",
+    "addressCountry": "US"
+  },
+  "areaServed": ["Delaware", "Maryland", "Pennsylvania", "New Jersey"]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
 <style>
+/* ========================================================
+   TOKENS — Brand DNA v2.0, M4D palette (Idiom B: Syne / DM Sans)
+   ======================================================== */
 :root {
+  --font-display: 'Syne', Arial, sans-serif;
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
-  --text-h1:    clamp(2.75rem, 5.5vw, 4.5rem);
-  --text-h2:    clamp(1.6rem, 2.8vw, 2.5rem);
+  --text-h1:    clamp(2.6rem, 5.5vw, 4.4rem);
+  --text-h2:    clamp(1.75rem, 3vw, 2.6rem);
   --text-h3:    1.15rem;
   --text-body:  1rem;
-  --text-small: 0.8125rem;
+  --text-small: 0.875rem;
   --text-label: 0.6875rem;
   --space-1:4px;--space-2:8px;--space-3:16px;--space-4:24px;
   --space-5:32px;--space-6:48px;--space-7:64px;--space-8:96px;--space-9:128px;
   --max-w: 1240px;
   --gutter: clamp(24px, 5vw, 64px);
   --transition: 200ms ease;
-  /* M4D color tokens */
-  --m4d-primary:       #5a6b2c;
-  --m4d-primary-dark:  #3f4c1e;
-  --m4d-primary-light: #7d9140;
-  --m4d-black:         #111111;
-  --m4d-dark:          #1c1c1c;
-  --m4d-mid:           #444444;
-  --m4d-light:         #f2f1ee;
-  --m4d-rule:          #d8d7d4;
-  --m4d-bg:            #f2f1ee;
-  --m4d-text:          #111111;
-  --m4d-muted:         #555550;
+
+  --m4d-green:      #196B24;   /* M4D Green — primary */
+  --m4d-green-dk:   #11501a;
+  --m4d-gold:       #B8860B;   /* Heritage Gold — accent */
+  --m4d-gold-lt:    #d9a82e;   /* gold for text on near-black */
+  --m4d-ink:        #1E1F1C;   /* Near-black */
+  --m4d-grey:       #63666A;   /* Cool Grey 10C */
+  --m4d-rule:       #d6d6d6;   /* neutral hairline — borders only, no grey fills */
+  --m4d-white:      #ffffff;
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-sans);font-size:var(--text-body);line-height:1.65;color:var(--m4d-text);background:var(--m4d-bg);-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-sans);font-size:var(--text-body);line-height:1.65;color:var(--m4d-ink);background:#fff;-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+section{padding:var(--space-9) 0;scroll-margin-top:84px}
 
 .container{max-width:var(--max-w);margin:0 auto;padding:0 var(--gutter)}
-.label{display:inline-block;font-size:var(--text-label);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m4d-primary);margin-bottom:var(--space-4)}
-.divider{width:40px;height:3px;background:var(--m4d-primary);margin-bottom:var(--space-5)}
-.rule{border:none;border-top:1px solid var(--m4d-rule);margin:var(--space-6) 0}
+.label{display:inline-block;font-size:var(--text-label);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m4d-green);margin-bottom:var(--space-4)}
+.divider{width:40px;height:3px;background:var(--m4d-gold);margin-bottom:var(--space-5)}
+h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:-.01em}
+section h2{font-size:var(--text-h2);font-weight:700;line-height:1.1;margin-bottom:var(--space-5)}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:var(--space-3) var(--gutter);display:flex;justify-content:space-between;align-items:center;background:rgba(242,241,238,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--m4d-rule)}
-.nav-logo{display:flex;align-items:center;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m4d-text);text-decoration:none}
-.nav-links{display:flex;gap:var(--space-6);list-style:none}
-.nav-links a{font-size:var(--text-small);font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--m4d-muted);text-decoration:none;transition:color var(--transition)}
-.nav-links a:hover{color:var(--m4d-primary)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:var(--space-3) var(--gutter);display:flex;justify-content:space-between;align-items:center;background:#ffffff;border-bottom:1px solid var(--m4d-rule)}
+.nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--m4d-ink)}
+.nav-logo svg{height:44px;width:auto}
+.nav-logo span{font-family:var(--font-display);font-size:1.05rem;font-weight:700;letter-spacing:.02em}
+.nav-links{display:flex;gap:var(--space-5);list-style:none;align-items:center}
+.nav-links a{font-size:.8125rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--m4d-grey);text-decoration:none;transition:color var(--transition)}
+.nav-links a:hover{color:var(--m4d-green)}
+.nav-links .nav-cta{background:var(--m4d-green);color:#fff;padding:var(--space-2) var(--space-4)}
+.nav-links .nav-cta:hover{background:var(--m4d-green-dk);color:#fff}
 
 /* HERO */
-.hero{min-height:100vh;background:var(--m4d-black);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:64px;position:relative;overflow:hidden}
-.hero-bg-icon{position:absolute;right:-40px;top:50%;transform:translateY(-50%);pointer-events:none}
-.hero-content{padding:var(--space-9) 0 var(--space-8) var(--gutter);max-width:580px;position:relative;z-index:2}
-.hero h1{font-size:var(--text-h1);font-weight:300;line-height:1.05;letter-spacing:-0.02em;color:#ffffff;margin-bottom:var(--space-5)}
-.hero h1 strong{font-weight:600;color:var(--m4d-primary-light)}
-.hero-sub{font-size:1.0625rem;color:rgba(255,255,255,.6);max-width:460px;margin-bottom:var(--space-6);line-height:1.7}
-.btn{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--text-small);font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:var(--space-3) var(--space-5);background:var(--m4d-primary);color:#fff;border:2px solid var(--m4d-primary);transition:all var(--transition)}
-.btn:hover{background:var(--m4d-primary-dark);border-color:var(--m4d-primary-dark)}
-.btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
-.btn-outline:hover{background:var(--m4d-primary);border-color:var(--m4d-primary)}
-.btn-dark{background:var(--m4d-black);border-color:var(--m4d-black);color:#fff}
-.btn-dark:hover{background:var(--m4d-primary);border-color:var(--m4d-primary)}
+.hero{min-height:100vh;background:var(--m4d-ink);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:77px 0 0;position:relative;overflow:hidden}
+.hero-bg-icon{position:absolute;right:-60px;top:50%;transform:translateY(-50%);width:520px;opacity:.06;pointer-events:none}
+.hero-content{padding:var(--space-9) 0 var(--space-8) var(--gutter);max-width:600px;position:relative;z-index:2}
+.hero .label{color:var(--m4d-gold-lt)}
+.hero h1{font-size:var(--text-h1);font-weight:700;line-height:1.04;letter-spacing:-.02em;color:#fff;margin-bottom:var(--space-5)}
+.hero h1 strong{font-weight:700;color:var(--m4d-gold-lt)}
+.hero-sub{font-size:1.0625rem;color:rgba(255,255,255,.78);max-width:480px;margin-bottom:var(--space-6);line-height:1.7}
+.btn{display:inline-flex;align-items:center;gap:var(--space-2);font-size:.8125rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:var(--space-3) var(--space-5);background:var(--m4d-green);color:#fff;border:2px solid var(--m4d-green);transition:all var(--transition)}
+.btn:hover{background:var(--m4d-green-dk);border-color:var(--m4d-green-dk)}
+.btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+.btn-outline:hover{background:var(--m4d-green);border-color:var(--m4d-green)}
+.hero-actions{display:flex;gap:var(--space-3);flex-wrap:wrap}
 
 .hero-right{padding:var(--space-9) var(--gutter) var(--space-9) var(--space-7);position:relative;z-index:2}
 .hero-stats{display:flex;flex-direction:column;gap:var(--space-6)}
-.hero-stat{border-left:3px solid var(--m4d-primary);padding-left:var(--space-4)}
-.hero-stat-num{font-size:2.5rem;font-weight:200;line-height:1;color:#fff;letter-spacing:-0.02em}
-.hero-stat-lbl{font-size:var(--text-small);color:rgba(255,255,255,.45);margin-top:var(--space-1);letter-spacing:.04em}
-
-/* SECTIONS */
-section{padding:var(--space-9) 0}
-section h2{font-size:var(--text-h2);font-weight:300;line-height:1.1;letter-spacing:-0.015em;margin-bottom:var(--space-5)}
+.hero-stat{border-left:3px solid var(--m4d-gold);padding-left:var(--space-4)}
+.hero-stat-num{font-family:var(--font-display);font-size:2.4rem;font-weight:700;line-height:1;color:#fff;letter-spacing:-.02em}
+.hero-stat-lbl{font-size:var(--text-small);color:rgba(255,255,255,.7);margin-top:var(--space-1);letter-spacing:.03em}
 
 /* WHY */
-.why{background:#fff}
 .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);align-items:start}
-.why-points{display:flex;flex-direction:column;gap:var(--space-5);margin-top:var(--space-6)}
+.why-intro p{font-size:1.0625rem;color:var(--m4d-grey);margin-bottom:var(--space-4)}
+.why-kicker{font-size:var(--text-label);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--m4d-green);margin-bottom:var(--space-5)}
+.why-points{display:flex;flex-direction:column;gap:var(--space-5)}
 .why-point{display:flex;gap:var(--space-4);align-items:flex-start}
-.why-point-marker{flex-shrink:0;width:32px;height:32px;background:var(--m4d-primary);display:flex;align-items:center;justify-content:center}
+.why-point-marker{flex-shrink:0;width:32px;height:32px;background:var(--m4d-green);display:flex;align-items:center;justify-content:center}
 .why-point-marker svg{width:16px;height:16px}
-.why-point-text h4{font-size:var(--text-h3);font-weight:600;margin-bottom:var(--space-1)}
-.why-point-text p{font-size:var(--text-small);color:var(--m4d-muted);line-height:1.6}
-.why-intro p{font-size:1.0625rem;color:var(--m4d-muted);margin-bottom:var(--space-4)}
+.why-point-text h4{font-size:var(--text-h3);font-weight:700;margin-bottom:var(--space-1)}
+.why-point-text p{font-size:var(--text-small);color:var(--m4d-grey);line-height:1.6}
 
 /* PROCESS */
-.process{background:var(--m4d-bg)}
-.process-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:var(--space-7);border:1px solid var(--m4d-rule)}
-.process-step{padding:var(--space-6) var(--space-5);border-right:1px solid var(--m4d-rule);position:relative}
+.process{border-top:1px solid var(--m4d-rule)}
+.process-steps{display:grid;grid-template-columns:repeat(3,1fr);margin-top:var(--space-7);border:1px solid var(--m4d-rule)}
+.process-step{padding:var(--space-6) var(--space-5);border-right:1px solid var(--m4d-rule)}
 .process-step:last-child{border-right:none}
-.process-step-num{font-size:3.5rem;font-weight:200;line-height:1;color:var(--m4d-primary);opacity:.35;margin-bottom:var(--space-3);letter-spacing:-0.03em}
-.process-step h3{font-size:1.1rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:var(--space-4);color:var(--m4d-black)}
+.process-step-num{font-family:var(--font-display);font-size:3rem;font-weight:700;line-height:1;color:var(--m4d-gold);margin-bottom:var(--space-3)}
+.process-step h3{font-size:1.15rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:var(--space-2)}
+.process-step .lead{font-size:var(--text-small);color:var(--m4d-grey);margin-bottom:var(--space-4)}
 .process-step ul{list-style:none;display:flex;flex-direction:column;gap:var(--space-2)}
-.process-step ul li{font-size:var(--text-small);color:var(--m4d-muted);padding-left:var(--space-4);position:relative}
-.process-step ul li::before{content:'—';position:absolute;left:0;color:var(--m4d-primary);font-weight:600}
-.process-principle{margin-top:var(--space-6);padding:var(--space-5);background:var(--m4d-primary);color:#fff;font-size:var(--text-small);font-weight:500;letter-spacing:.04em}
+.process-step ul li{font-size:var(--text-small);color:var(--m4d-ink);padding-left:var(--space-4);position:relative}
+.process-step ul li::before{content:'—';position:absolute;left:0;color:var(--m4d-green);font-weight:600}
+.process-principle{margin-top:var(--space-6);padding:var(--space-5);background:var(--m4d-green);color:#fff;font-size:var(--text-small);font-weight:500;letter-spacing:.03em}
 
 /* SERVICES */
-.services{background:#fff}
-.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6);margin-top:var(--space-7)}
-.service-block{padding:var(--space-5) 0;border-top:3px solid var(--m4d-primary)}
-.service-block h3{font-size:var(--text-h3);font-weight:600;margin-bottom:var(--space-4)}
-.service-block ul{list-style:none;display:flex;flex-direction:column;gap:var(--space-2)}
-.service-block ul li{font-size:var(--text-small);color:var(--m4d-muted);padding-left:var(--space-3);position:relative}
-.service-block ul li::before{content:'·';position:absolute;left:0;color:var(--m4d-primary);font-weight:700}
+.services{border-top:1px solid var(--m4d-rule)}
+.feas{display:grid;grid-template-columns:1fr 1.35fr;gap:var(--space-7);align-items:start;margin-top:var(--space-6);padding:var(--space-6);border:1px solid var(--m4d-rule);border-top:4px solid var(--m4d-green)}
+.feas h3{font-size:clamp(1.4rem,2.2vw,1.9rem);font-weight:700;line-height:1.15;margin-bottom:var(--space-4)}
+.feas p{color:var(--m4d-grey);margin-bottom:var(--space-3)}
+.feas .powered{font-size:var(--text-small);color:var(--m4d-grey);border-top:1px solid var(--m4d-rule);padding-top:var(--space-3);margin-top:var(--space-4)}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3)}
+.tier{border:1px solid var(--m4d-rule);border-top:3px solid var(--m4d-gold);padding:var(--space-4)}
+.tier-code{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--m4d-green);line-height:1}
+.tier-name{font-weight:600;font-size:.95rem;margin:var(--space-2) 0 var(--space-1)}
+.tier-price{font-family:var(--font-display);font-size:1.35rem;font-weight:700;margin-bottom:var(--space-2)}
+.tier p{font-size:.8125rem;color:var(--m4d-grey);line-height:1.55;margin:0}
+.tier-note{grid-column:1/-1;font-size:.8125rem;color:var(--m4d-grey);margin-top:var(--space-2)}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5) var(--space-6);margin-top:var(--space-7)}
+.service-block{padding-top:var(--space-4);border-top:3px solid var(--m4d-green)}
+.service-block h3{font-size:var(--text-h3);font-weight:700;margin-bottom:var(--space-3)}
+.service-block p{font-size:var(--text-small);color:var(--m4d-grey);line-height:1.6;margin-bottom:var(--space-3)}
+.service-block ul{list-style:none;display:flex;flex-direction:column;gap:var(--space-1)}
+.service-block ul li{font-size:var(--text-small);color:var(--m4d-ink);padding-left:var(--space-3);position:relative}
+.service-block ul li::before{content:'·';position:absolute;left:0;color:var(--m4d-green);font-weight:700}
+.service-note{font-size:.8125rem;color:var(--m4d-grey);font-style:italic}
+
+/* WORK */
+.work{border-top:1px solid var(--m4d-rule)}
+.work-feature{display:grid;grid-template-columns:1.6fr 1fr;gap:var(--space-6);align-items:stretch;margin-bottom:var(--space-7)}
+.work-img{position:relative;overflow:hidden;background:#fff;border:1px solid var(--m4d-rule)}
+.work-img img{width:100%;height:100%;object-fit:cover;transition:transform 400ms ease}
+.work-card:hover .work-img img,.work-feature:hover .work-img img{transform:scale(1.02)}
+.work-feature .work-img{aspect-ratio:16/9}
+.work-thumbs{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);margin-top:var(--space-3)}
+.work-thumbs .work-img{aspect-ratio:16/9}
+.work-feature-info{display:flex;flex-direction:column;justify-content:center}
+.work-tag{font-size:var(--text-label);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--m4d-green);margin-bottom:var(--space-2)}
+.work-title{font-size:var(--text-h3);font-weight:700;margin-bottom:var(--space-1);transition:color var(--transition)}
+.work-card:hover .work-title{color:var(--m4d-green)}
+.work-feature-info .work-title{font-size:clamp(1.35rem,2vw,1.75rem)}
+.work-loc{font-size:var(--text-small);color:var(--m4d-grey);margin-bottom:var(--space-3)}
+.work-desc{font-size:var(--text-small);color:var(--m4d-ink);line-height:1.7;margin-bottom:var(--space-3)}
+.work-role{font-size:.8125rem;color:var(--m4d-grey);border-left:3px solid var(--m4d-gold);padding-left:var(--space-3);margin-bottom:var(--space-4)}
+.work-role b{color:var(--m4d-ink);font-weight:600}
+.work-specs{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3) var(--space-4);border-top:1px solid var(--m4d-rule);padding-top:var(--space-4)}
+.work-spec-label{font-size:var(--text-label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m4d-grey)}
+.work-spec-value{font-size:var(--text-small);font-weight:600}
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}
+.work-card .work-img{aspect-ratio:16/10;margin-bottom:var(--space-4)}
 
 /* TEAM */
-.team{background:var(--m4d-bg)}
-.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-6) var(--space-8);margin-top:var(--space-7)}
-.team-card{display:grid;grid-template-columns:auto 1fr;gap:var(--space-5);align-items:start;padding:var(--space-5);background:#fff;border-top:3px solid transparent;transition:border-color var(--transition)}
-.team-card:hover{border-color:var(--m4d-primary)}
-.team-card-avatar{width:64px;height:64px;background:var(--m4d-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.team-card-avatar span{font-size:1.4rem;font-weight:300;color:#fff;letter-spacing:-0.02em}
-.team-card-name{font-size:var(--text-h3);font-weight:600;margin-bottom:2px}
-.team-card-role{font-size:var(--text-small);color:var(--m4d-primary);font-weight:500;margin-bottom:var(--space-3)}
-.team-card-bio{font-size:var(--text-small);color:var(--m4d-muted);line-height:1.6;margin-bottom:var(--space-3)}
-.team-card-strength{font-size:var(--text-small);font-weight:600;color:var(--m4d-black);font-style:italic}
+.team{border-top:1px solid var(--m4d-rule)}
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-5) var(--space-6);margin-top:var(--space-7)}
+.team-card{display:grid;grid-template-columns:auto 1fr;gap:var(--space-5);align-items:start;padding:var(--space-5);background:#fff;border:1px solid var(--m4d-rule);border-top:3px solid var(--m4d-green)}
+.team-card-avatar{width:64px;height:64px;background:var(--m4d-green);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.team-card-avatar span{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:#fff}
+.team-card-name{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:2px}
+.team-card-role{font-size:var(--text-small);color:var(--m4d-green);font-weight:600;margin-bottom:var(--space-3)}
+.team-card-bio{font-size:var(--text-small);color:var(--m4d-grey);line-height:1.6;margin-bottom:var(--space-3)}
+.team-card-strength{font-size:var(--text-small);font-weight:600;color:var(--m4d-ink);font-style:italic}
+.team-note{margin-top:var(--space-6);font-size:var(--text-small);color:var(--m4d-grey);font-style:italic}
 
 /* CONTACT */
-.contact{background:var(--m4d-black);color:#fff}
-.contact .label{color:var(--m4d-primary-light)}
+.contact{background:var(--m4d-ink);color:#fff;padding:0}
+.contact .label{color:var(--m4d-gold-lt)}
 .contact h2{color:#fff}
-.contact .divider{background:var(--m4d-primary)}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr}
+.contact-left{padding:var(--space-8) var(--gutter)}
 .contact-team{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5) var(--space-6)}
-.contact-person h4{font-size:var(--text-h3);font-weight:500;color:#fff;margin-bottom:4px}
-.contact-person-role{font-size:var(--text-small);color:var(--m4d-primary-light);margin-bottom:var(--space-2)}
-.contact-person a{display:block;font-size:var(--text-small);color:rgba(255,255,255,.5);text-decoration:none;transition:color var(--transition)}
-.contact-person a:hover{color:var(--m4d-primary-light)}
-.contact-company{border-top:1px solid rgba(255,255,255,.1);padding-top:var(--space-6);margin-top:var(--space-6)}
-.contact-company h4{color:#fff;font-size:1rem;font-weight:600;margin-bottom:var(--space-3)}
-.contact-company p{font-size:var(--text-small);color:rgba(255,255,255,.45);line-height:1.7}
-.contact-company a{color:rgba(255,255,255,.45);text-decoration:none}
-.contact-cta{background:var(--m4d-primary);padding:var(--space-8);display:flex;flex-direction:column;justify-content:center}
-.contact-cta h3{font-size:1.75rem;font-weight:300;color:#fff;margin-bottom:var(--space-4);line-height:1.2}
-.contact-cta p{color:rgba(255,255,255,.75);font-size:var(--text-small);margin-bottom:var(--space-5);line-height:1.7}
-.contact-cta .btn{background:var(--m4d-black);border-color:var(--m4d-black);align-self:flex-start}
-.contact-cta .btn:hover{background:#fff;border-color:#fff;color:var(--m4d-black)}
+.contact-person h4{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:4px}
+.contact-person-role{font-size:var(--text-small);color:var(--m4d-gold-lt);margin-bottom:var(--space-2)}
+.contact-person a{display:block;font-size:var(--text-small);color:rgba(255,255,255,.78);text-decoration:none;transition:color var(--transition)}
+.contact-person a:hover{color:var(--m4d-gold-lt)}
+.contact-company{border-top:1px solid rgba(255,255,255,.14);padding-top:var(--space-5);margin-top:var(--space-6)}
+.contact-company h4{color:#fff;font-size:1rem;font-weight:700;margin-bottom:var(--space-2)}
+.contact-company p{font-size:var(--text-small);color:rgba(255,255,255,.72);line-height:1.7}
+.contact-company a{color:rgba(255,255,255,.72);text-decoration:none}
+.contact-cta{background:var(--m4d-green);padding:var(--space-8) var(--gutter);display:flex;flex-direction:column;justify-content:center}
+.contact-cta h3{font-size:1.7rem;font-weight:700;color:#fff;margin-bottom:var(--space-4);line-height:1.2}
+.contact-cta p{color:rgba(255,255,255,.88);font-size:var(--text-small);margin-bottom:var(--space-5);line-height:1.7}
+.contact-cta .btn{background:var(--m4d-ink);border-color:var(--m4d-ink);align-self:flex-start}
+.contact-cta .btn:hover{background:#fff;border-color:#fff;color:var(--m4d-ink)}
 
 /* FOOTER */
-footer{background:var(--m4d-black);border-top:1px solid rgba(255,255,255,.08);padding:var(--space-5) var(--gutter);display:flex;justify-content:space-between;align-items:center}
-.footer-logo{display:flex;align-items:center;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35)}
-.footer-meta{font-size:var(--text-small);color:rgba(255,255,255,.25)}
+footer{background:#fff;border-top:1px solid var(--m4d-rule);padding:var(--space-5) var(--gutter)}
+.footer-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-4);max-width:var(--max-w);margin:0 auto}
+.footer-logo{display:flex;align-items:center;gap:12px;color:var(--m4d-ink);text-decoration:none}
+.footer-logo svg{height:40px;width:auto}
+.footer-logo span{font-family:var(--font-display);font-weight:700;font-size:.95rem}
+footer p{font-size:var(--text-small);color:var(--m4d-grey)}
+.footer-sub{max-width:var(--max-w);margin:var(--space-4) auto 0;padding-top:var(--space-4);border-top:1px solid var(--m4d-rule)}
+.footer-sub p{font-size:12px;line-height:1.6}
+.footer-sub a{color:var(--m4d-green)}
+
+/* ACCESSIBILITY */
+.skip-link{position:absolute;top:-48px;left:0;background:var(--m4d-green);color:#fff;padding:10px 20px;font-size:14px;font-weight:500;z-index:9999;transition:top .2s;text-decoration:none}
+.skip-link:focus{top:0}
+a:focus-visible,button:focus-visible{outline:2px solid var(--m4d-gold);outline-offset:3px}
 
 /* ANIMATIONS */
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .hero-content .label{animation:fadeUp .5s ease both}
 .hero-content h1{animation:fadeUp .5s .1s ease both}
 .hero-content .hero-sub{animation:fadeUp .5s .2s ease both}
-.hero-content .btn{animation:fadeUp .5s .3s ease both}
+.hero-content .hero-actions{animation:fadeUp .5s .3s ease both}
 .hero-right{animation:fadeUp .6s .2s ease both}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 /* RESPONSIVE */
+@media(max-width:1000px){
+  .feas{grid-template-columns:1fr;gap:var(--space-5)}
+  .services-grid{grid-template-columns:1fr 1fr}
+}
 @media(max-width:900px){
+  .work-feature,.work-grid{grid-template-columns:1fr}
   .hero{grid-template-columns:1fr;min-height:auto}
-  .hero-content{padding:calc(64px + var(--space-7)) var(--gutter) var(--space-6);max-width:100%}
-  .hero-right{padding:var(--space-6) var(--gutter)}
+  .hero-content{padding:var(--space-7) var(--gutter) var(--space-6);max-width:100%}
+  .hero-right{padding:var(--space-4) var(--gutter) var(--space-7)}
   .hero-stats{flex-direction:row;flex-wrap:wrap;gap:var(--space-5)}
   .why-grid,.contact-grid{grid-template-columns:1fr}
   .process-steps{grid-template-columns:1fr}
   .process-step{border-right:none;border-bottom:1px solid var(--m4d-rule)}
-  .services-grid{grid-template-columns:1fr 1fr}.team-grid,.contact-team{grid-template-columns:1fr}
-  nav .nav-links{display:none}
-  footer{flex-direction:column;gap:var(--space-3);text-align:center}
+  .team-grid,.contact-team{grid-template-columns:1fr}
+  .nav-links li:not(:last-child){display:none}
+}
+@media(max-width:640px){
+  .services-grid,.tiers{grid-template-columns:1fr}
+  .nav-logo span{display:none}
+  .nav-logo svg{height:40px}
+  .feas{padding:var(--space-4)}
+  .team-card{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
-<nav>
-  <a href="#" class="nav-logo">
-    <img src="data:image/jpeg;base64,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" alt="M4D" height="52" width="auto" style="display:block;margin-right:10px">
-    Merge 4 Design
+<nav aria-label="Main">
+  <a href="#" class="nav-logo" aria-label="Merge 4 Design home">
+    <svg viewBox="0 0 1000 577" role="img" aria-hidden="true"><path d="M 116.111 1.090 L 0.000 1.090 L 0.000 575.112 L 74.844 575.112 L 74.844 91.755 L 250.962 575.112 L 325.806 575.112 L 392.646 391.669 L 317.768 391.669 L 288.295 473.650 L 116.111 1.090 Z M 504.509 571.399 L 580.061 571.399 L 580.061 373.557 L 654.311 373.557 L 654.311 298.005 L 580.061 298.005 L 580.061 0.000 L 460.876 0.000 L 325.045 371.426 L 504.509 371.426 L 504.509 571.399 Z M 501.904 298.005 L 501.923 91.755 L 426.774 298.005 L 501.904 298.005 Z M 748.735 576.202 L 774.906 573.189 L 800.219 567.758 L 824.560 560.033 L 847.812 550.136 L 869.860 538.192 L 890.590 524.324 L 909.886 508.655 L 927.633 491.309 L 943.715 472.410 L 958.017 452.081 L 970.424 430.445 L 980.821 407.626 L 989.093 383.747 L 995.123 358.932 L 998.797 333.305 L 1000.000 306.989 L 1000.000 269.213 L 998.797 242.896 L 995.123 217.269 L 989.093 192.455 L 980.821 168.576 L 970.424 145.757 L 958.017 124.121 L 943.715 103.791 L 927.633 84.892 L 909.886 67.546 L 890.590 51.878 L 869.860 38.009 L 847.812 26.065 L 824.560 16.169 L 800.219 8.444 L 774.906 3.013 L 748.735 0.000 L 600.903 0.000 L 600.903 75.552 L 753.444 75.552 L 771.542 78.527 L 788.999 83.102 L 805.742 89.195 L 821.699 96.723 L 836.795 105.604 L 850.958 115.756 L 864.115 127.095 L 876.193 139.540 L 887.117 153.008 L 896.816 167.417 L 905.215 182.685 L 912.243 198.728 L 917.825 215.465 L 921.889 232.813 L 924.361 250.689 L 925.168 269.012 L 925.168 306.989 L 924.361 325.512 L 921.889 343.389 L 917.825 360.737 L 912.243 377.474 L 905.215 393.517 L 896.816 408.784 L 887.117 423.193 L 876.193 436.661 L 864.115 449.106 L 850.958 460.446 L 836.795 470.597 L 821.699 479.478 L 805.742 487.006 L 788.999 493.099 L 771.542 497.674 L 753.444 500.649 L 600.903 500.649 L 600.903 576.202 L 748.735 576.202 Z" fill="#196B24" fill-rule="evenodd"/></svg>
+    <span>Merge 4 Design</span>
   </a>
   <ul class="nav-links">
-    <li><a href="#why">Why Us</a></li>
-    <li><a href="#process">Process</a></li>
     <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#work">Work</a></li>
     <li><a href="#team">Team</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
 </nav>
 
+<main id="main-content">
+
 <!-- HERO -->
-<section class="hero" style="padding:0">
-  <div class="hero-bg-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="320" height="320" style="opacity:0.06">
-  <path d="M 28,320 L 28,80 L 122,220 L 216,80 L 216,320" fill="none" stroke="white" stroke-width="32" stroke-linejoin="miter" stroke-linecap="butt"/>
-  <line x1="330" y1="80" x2="242" y2="222" stroke="white" stroke-width="32" stroke-linecap="butt"/>
-  <line x1="228" y1="222" x2="372" y2="222" stroke="white" stroke-width="32" stroke-linecap="butt"/>
-  <line x1="330" y1="155" x2="330" y2="320" stroke="white" stroke-width="32" stroke-linecap="butt"/>
-  <path d="M 240,80 L 240,320 M 240,80 Q 410,80 410,200 Q 410,320 240,320" fill="none" stroke="white" stroke-width="32" stroke-linejoin="round" stroke-linecap="butt"/>
-</svg></div>
+<section class="hero" aria-label="Merge 4 Design introduction">
+  <svg class="hero-bg-icon" viewBox="0 0 1000 577" aria-hidden="true"><path d="M 116.111 1.090 L 0.000 1.090 L 0.000 575.112 L 74.844 575.112 L 74.844 91.755 L 250.962 575.112 L 325.806 575.112 L 392.646 391.669 L 317.768 391.669 L 288.295 473.650 L 116.111 1.090 Z M 504.509 571.399 L 580.061 571.399 L 580.061 373.557 L 654.311 373.557 L 654.311 298.005 L 580.061 298.005 L 580.061 0.000 L 460.876 0.000 L 325.045 371.426 L 504.509 371.426 L 504.509 571.399 Z M 501.904 298.005 L 501.923 91.755 L 426.774 298.005 L 501.904 298.005 Z M 748.735 576.202 L 774.906 573.189 L 800.219 567.758 L 824.560 560.033 L 847.812 550.136 L 869.860 538.192 L 890.590 524.324 L 909.886 508.655 L 927.633 491.309 L 943.715 472.410 L 958.017 452.081 L 970.424 430.445 L 980.821 407.626 L 989.093 383.747 L 995.123 358.932 L 998.797 333.305 L 1000.000 306.989 L 1000.000 269.213 L 998.797 242.896 L 995.123 217.269 L 989.093 192.455 L 980.821 168.576 L 970.424 145.757 L 958.017 124.121 L 943.715 103.791 L 927.633 84.892 L 909.886 67.546 L 890.590 51.878 L 869.860 38.009 L 847.812 26.065 L 824.560 16.169 L 800.219 8.444 L 774.906 3.013 L 748.735 0.000 L 600.903 0.000 L 600.903 75.552 L 753.444 75.552 L 771.542 78.527 L 788.999 83.102 L 805.742 89.195 L 821.699 96.723 L 836.795 105.604 L 850.958 115.756 L 864.115 127.095 L 876.193 139.540 L 887.117 153.008 L 896.816 167.417 L 905.215 182.685 L 912.243 198.728 L 917.825 215.465 L 921.889 232.813 L 924.361 250.689 L 925.168 269.012 L 925.168 306.989 L 924.361 325.512 L 921.889 343.389 L 917.825 360.737 L 912.243 377.474 L 905.215 393.517 L 896.816 408.784 L 887.117 423.193 L 876.193 436.661 L 864.115 449.106 L 850.958 460.446 L 836.795 470.597 L 821.699 479.478 L 805.742 487.006 L 788.999 493.099 L 771.542 497.674 L 753.444 500.649 L 600.903 500.649 L 600.903 576.202 L 748.735 576.202 Z" fill="#ffffff" fill-rule="evenodd"/></svg>
   <div class="hero-content">
-    <span class="label">Architecture · Compliance · Delivery</span>
+    <span class="label">Pre-Design · Pre-Development · Consulting</span>
     <h1><strong>Wilmington-rooted.</strong><br>Built to deliver.</h1>
-    <p class="hero-sub">A right-sized team combining design leadership, construction expertise, and deep regulatory fluency across Delaware, Maryland, Pennsylvania, and New Jersey.</p>
-    <a href="#contact" class="btn btn-outline">Talk to Our Team →</a>
+    <p class="hero-sub">The pre-design and pre-development team for mission-driven projects. We define scope, cost and code pathway before design begins — then help the work pass inspection once it's built.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn">Talk to Our Team →</a>
+      <a href="#services" class="btn btn-outline">Our Services</a>
+    </div>
   </div>
   <div class="hero-right">
     <div class="hero-stats">
@@ -205,8 +299,8 @@ footer{background:var(--m4d-black);border-top:1px solid rgba(255,255,255,.08);pa
         <div class="hero-stat-lbl">Combined years of experience</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-num">30+</div>
-        <div class="hero-stat-lbl">Years inside Wilmington L&amp;I</div>
+        <div class="hero-stat-num">60+</div>
+        <div class="hero-stat-lbl">Combined years inside Wilmington L&amp;I</div>
       </div>
       <div class="hero-stat">
         <div class="hero-stat-num">DE · MD · PA · NJ</div>
@@ -223,30 +317,93 @@ footer{background:var(--m4d-black);border-top:1px solid rgba(255,255,255,.08);pa
       <div class="why-intro">
         <span class="label">The Difference</span>
         <div class="divider"></div>
-        <h2>Projects don't fail because someone couldn't draw.</h2>
-        <p>They fail because decisions get delayed, approvals get messy, scope drifts, and the team loses alignment.</p>
-        <p>Merge 4 Design was built to reduce those failure points — by pairing senior design leadership with Wilmington-specific regulatory fluency from day one.</p>
+        <h2>Community projects deserve a real budget before they need a design.</h2>
+        <p>Too many nonprofits, CDCs and small developers reach the design team with funding secured and a deadline attached — but a budget never tied to an actual scope. The project starts underfunded, fees and services get cut, and the building is value-engineered away from its purpose.</p>
+        <p>Merge 4 Design changes that sequence. We define the project, its true cost and its approval pathway first — so funders can underwrite a real number and owners can hire any architect with a clear scope.</p>
       </div>
       <div>
-        <div style="font-size:var(--text-small);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m4d-primary);margin-bottom:var(--space-5)">What Owners Get</div>
+        <div class="why-kicker">What Owners Get</div>
         <div class="why-points">
           <div class="why-point">
-            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-            <div class="why-point-text"><h4>Clear direction early</h4><p>Options with real consequences, not endless iterations.</p></div>
+            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="why-point-text"><h4>A go / no-go answer early</h4><p>A benchmark budget and a clear decision before design fees are spent.</p></div>
           </div>
           <div class="why-point">
-            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-            <div class="why-point-text"><h4>Fewer approval surprises</h4><p>Code, scope, and permitting flagged early — not at the counter.</p></div>
+            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="why-point-text"><h4>Fewer approval surprises</h4><p>Zoning, code and permitting issues flagged early — not at the counter.</p></div>
           </div>
           <div class="why-point">
-            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-            <div class="why-point-text"><h4>Right-sized team</h4><p>Accountable, and built to fit the project — not padded for overhead.</p></div>
+            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="why-point-text"><h4>Right-sized, senior-led team</h4><p>Accountable, and built to fit the project — not padded for overhead.</p></div>
           </div>
           <div class="why-point">
-            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
-            <div class="why-point-text"><h4>Wilmington fluency</h4><p>Deep roots in the local building and policy community means we understand how review actually works — on paper and in practice.</p></div>
+            <div class="why-point-marker"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><polyline points="3,8 7,12 13,4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="why-point-text"><h4>Wilmington code fluency</h4><p>Deep roots in the local building and policy community mean we understand how review actually works — on paper and in practice.</p></div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <span class="label">Services</span>
+    <div class="divider"></div>
+    <h2>Everything a project needs before design — and the checks that keep it moving.</h2>
+
+    <div class="feas">
+      <div>
+        <span class="label" style="margin-bottom:var(--space-3)">Signature Service</span>
+        <h3>M4Di FeasOps™ — fixed-price feasibility.</h3>
+        <p>A benchmark budget funders and lenders can underwrite, produced before an architect is hired. Using publicly available site and property data, each tier ends in a go / no-go document you can attach to a funding request — or hand to any architect with a clearly defined scope.</p>
+        <p class="powered">Powered by M4Di cost intelligence: CSI-structured ROM estimates, capital-stack modeling (NMTC, LIHTC, CDFI and grant sources) and Mid-Atlantic community-development cost benchmarks.</p>
+      </div>
+      <div class="tiers">
+        <div class="tier"><div class="tier-code">P1</div><div class="tier-name">Site + Zoning Check</div><div class="tier-price">$4,000</div><p>Zoning and site review, order-of-magnitude budget, key risks, go / no-go.</p></div>
+        <div class="tier"><div class="tier-code">P2</div><div class="tier-name">Program + Budget</div><div class="tier-price">$6,000</div><p>P1 plus program fit, an updated budget and phasing options.</p></div>
+        <div class="tier"><div class="tier-code">P3</div><div class="tier-name">Full Feasibility</div><div class="tier-price">$8,000</div><p>P2 plus funding strategy, schedule range and a scope ready for architect selection.</p></div>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-block">
+        <h3>Entitlement + Code Consulting</h3>
+        <ul>
+          <li>Approvals and permitting pathway</li>
+          <li>Zoning variance and entitlement strategy</li>
+          <li>Building code and amendment review</li>
+          <li>Wilmington Chapter 48 expertise</li>
+          <li>Historic and preservation review navigation</li>
+          <li>Mass timber code pathways (IBC Types IV-A/B/C)</li>
+        </ul>
+      </div>
+      <div class="service-block">
+        <h3>As-Built Digital Documentation</h3>
+        <p>Measured drawings and a digital model of existing buildings — ready for owners, lenders and design teams.</p>
+      </div>
+      <div class="service-block">
+        <h3>3D Modeling + Renderings</h3>
+        <p>BIM models and photorealistic renderings for funding presentations, community meetings and design decisions.</p>
+      </div>
+      <div class="service-block" id="pre-inspection">
+        <h3>Pre-Inspection Construction Reviews</h3>
+        <p>An ICC Certified Building Official reviews the work before each City inspection and issues a written corrective-action report.</p>
+        <ul>
+          <li>Footings, foundation, framing, rough-ins</li>
+          <li>Pre-drywall and pre-close visits</li>
+          <li>Per review, or one lump sum for every scheduled inspection</li>
+        </ul>
+        <p class="service-note" style="margin-top:var(--space-3)">Advisory; does not replace City of Wilmington inspections.</p>
+      </div>
+      <div class="service-block">
+        <h3>Specification Writing</h3>
+        <p>Consulting support for outline and full CSI-format specifications, prepared for the project's design team.</p>
+      </div>
+      <div class="service-block">
+        <h3>Construction-Document Production</h3>
+        <p>Consulting support for BIM modeling, detailing and sheet production, working with the project's architect or engineer.</p>
       </div>
     </div>
   </div>
@@ -262,121 +419,91 @@ footer{background:var(--m4d-black);border-top:1px solid rgba(255,255,255,.08);pa
       <div class="process-step">
         <div class="process-step-num">01</div>
         <h3>Discover</h3>
-        <p style="font-size:var(--text-small);color:var(--m4d-muted);margin-bottom:var(--space-4)">Align goals, constraints, and stakeholders fast.</p>
+        <p class="lead">Align goals, constraints and stakeholders fast.</p>
         <ul>
           <li>Site and context review</li>
-          <li>Existing conditions check</li>
-          <li>Early code/ADA/life safety flags</li>
+          <li>Existing conditions and as-built capture</li>
+          <li>Early zoning, code, ADA and life-safety flags</li>
           <li>Decision priorities: budget, schedule, approvals, operations</li>
         </ul>
       </div>
       <div class="process-step">
         <div class="process-step-num">02</div>
         <h3>Decide</h3>
-        <p style="font-size:var(--text-small);color:var(--m4d-muted);margin-bottom:var(--space-4)">Present clear options and define the pathway.</p>
+        <p class="lead">Put a real number and a clear pathway in front of you.</p>
         <ul>
-          <li>Concept options with pros and cons</li>
+          <li>Go / no-go recommendation with cost and funding</li>
           <li>Permitting and entitlement strategy</li>
-          <li>Phased approach for occupied facilities</li>
-          <li>ROM cost/schedule: range-based, reality-based</li>
+          <li>Phasing options for occupied or funded-in-stages projects</li>
+          <li>ROM cost and schedule: range-based, reality-based</li>
         </ul>
       </div>
       <div class="process-step">
         <div class="process-step-num">03</div>
         <h3>Deliver</h3>
-        <p style="font-size:var(--text-small);color:var(--m4d-muted);margin-bottom:var(--space-4)">Execute with discipline.</p>
+        <p class="lead">Support your design team and keep construction on track.</p>
         <ul>
-          <li>Coordinated documentation and review readiness</li>
+          <li>Specification and document-production support</li>
           <li>Stakeholder and agency coordination</li>
-          <li>Construction support mindset</li>
+          <li>Pre-inspection reviews before each City inspection</li>
           <li>Fewer surprises, fewer rework loops</li>
         </ul>
       </div>
     </div>
-    <div class="process-principle">Senior leadership stays involved — from first conversation through delivery.</div>
+    <div class="process-principle">Senior leadership stays involved — from first conversation through final inspection.</div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section class="services" id="services">
+<!-- WORK -->
+<section class="work" id="work">
   <div class="container">
-    <span class="label">Services</span>
+    <span class="label">Selected Work</span>
     <div class="divider"></div>
-    <h2>Services that match real project needs.</h2>
-    <div class="services-grid">
-      <div class="service-block">
-        <h3>Design + Documentation</h3>
-        <ul>
-          <li>Programming and space planning</li>
-          <li>Concept through construction documents</li>
-          <li>Specifications and buildability integration</li>
-          <li>Visualization and BIM support</li>
-          <li>CLT / SIP hybrid construction systems</li>
-          <li>A-900 Assembly Drawing Series</li>
-          <li>Forward Housing System design</li>
-        </ul>
+    <h2>Built ideas, not just drawings.</h2>
+
+    <!-- FEATURED PROJECT — to rotate the feature, swap this block with a card below -->
+    <div class="work-feature">
+      <div>
+        <div class="work-img"><img src="assets/projects/claymont-exterior.webp" width="963" height="537" alt="Exterior rendering of the Claymont Hybrid Townhomes — four attached CLT/SIP panelized townhomes on a Wilmington residential street"></div>
+        <div class="work-thumbs">
+          <div class="work-img"><img src="assets/projects/claymont-interior.webp" width="880" height="491" alt="Interior rendering of a Claymont Hybrid Townhome living space with exposed timber ceiling" loading="lazy"></div>
+          <div class="work-img"><img src="assets/projects/claymont-roof.webp" width="784" height="424" alt="Rendering of the Claymont Hybrid Townhomes roof deck level" loading="lazy"></div>
+        </div>
       </div>
-      <div class="service-block">
-        <h3>Regulatory + Compliance Strategy</h3>
-        <ul>
-          <li>Approvals pathway planning</li>
-          <li>Code and amendment fluency</li>
-          <li>Review readiness support</li>
-          <li>Historic and preservation review navigation</li>
-          <li>Wilmington Chapter 48 expertise</li>
-          <li>Zoning variance and entitlement strategy</li>
-          <li>Mass timber IBC compliance — Types IV-A/B/C</li>
-        </ul>
-      </div>
-      <div class="service-block">
-        <h3>Owner Advocacy + Coordination</h3>
-        <ul>
-          <li>Project management and coordination</li>
-          <li>Stakeholder alignment and meeting leadership</li>
-          <li>Scope clarity and decision tracking</li>
-          <li>Phasing and logistics planning</li>
-        </ul>
-      </div>
-      <div class="service-block" id="pre-inspection">
-        <h3>Construction Phase Observation</h3>
-        <ul>
-          <li>Pre-inspection jobsite observation</li>
-          <li>Written corrective action report</li>
-          <li>Footings, foundation, framing, rough-ins</li>
-          <li>Pre-drywall and pre-close visits</li>
-          <li>Residential and commercial projects</li>
-          <li>Led by ICC Certified Building Official</li>
-          <li>Available as single visit or full program</li>
-        </ul>
+      <div class="work-feature-info">
+        <p class="work-tag">Featured — Residential · CLT/SIP Hybrid · In Construction</p>
+        <h3 class="work-title">Claymont Hybrid Townhomes</h3>
+        <p class="work-loc">N. Claymont Street, Wilmington, DE</p>
+        <p class="work-desc">Delaware's first CLT/SIP hybrid residential project — four attached townhomes pairing cross-laminated timber party walls with structural insulated panel envelopes. Developed with L.E.E.P., Inc. and delivered to market as The Forward Home.</p>
+        <p class="work-role"><b>M4D:</b> pre-design, pre-development, entitlement and code consulting · <b>Architect:</b> Aubyn Architecture</p>
+        <div class="work-specs">
+          <div><div class="work-spec-label">Units</div><div class="work-spec-value">4 Attached</div></div>
+          <div><div class="work-spec-label">System</div><div class="work-spec-value">CLT / SIP Hybrid</div></div>
+          <div><div class="work-spec-label">Priced</div><div class="work-spec-value">Low $200s</div></div>
+          <div><div class="work-spec-label">Occupancy</div><div class="work-spec-value">Winter 2026</div></div>
+          <div><div class="work-spec-label">Delivery</div><div class="work-spec-value">Panelized Off-Site</div></div>
+          <div><div class="work-spec-label">Status</div><div class="work-spec-value">In Construction</div></div>
+        </div>
       </div>
     </div>
-    <!-- M4Di Predevelopment Intelligence -->
-    <div style="margin-top:var(--space-8);border-top:3px solid var(--m4d-primary);padding-top:var(--space-6)">
-      <div style="display:grid;grid-template-columns:1fr 2fr;gap:var(--space-7);align-items:start">
-        <div>
-          <div style="font-size:var(--text-small);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--m4d-primary);margin-bottom:var(--space-3)">Predevelopment Intelligence</div>
-          <h3 style="font-size:var(--text-h3);font-weight:600;margin-bottom:var(--space-4);line-height:1.25">M4Di™ OI Tool — Built-in from day one.</h3>
-          <p style="font-size:var(--text-small);color:var(--m4d-muted);line-height:var(--leading-body)">Every M4D engagement benefits from in-house predevelopment cost intelligence. We produce order-of-magnitude ROM estimates, capital stack analysis, and feasibility modeling before a single line is drawn — so you make decisions with real cost data, not assumptions.</p>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)">
-          <div style="border-left:2px solid var(--m4d-primary);padding-left:var(--space-4)">
-            <div style="font-size:var(--text-small);font-weight:600;color:var(--m4d-ink);margin-bottom:6px">OI Tool™ &amp; ALDi Gates</div>
-            <p style="font-size:13px;color:var(--m4d-muted);line-height:1.6">CSI-structured ROM estimates using BLS regional labor data. G0 order-of-magnitude through G4 closeout. Confidence levels stated explicitly at every gate.</p>
-          </div>
-          <div style="border-left:2px solid var(--m4d-primary);padding-left:var(--space-4)">
-            <div style="font-size:var(--text-small);font-weight:600;color:var(--m4d-ink);margin-bottom:6px">Capital Stack Analysis</div>
-            <p style="font-size:13px;color:var(--m4d-muted);line-height:1.6">NMTC, LIHTC, CDFI, and grant financing structures modeled at feasibility stage. Built for nonprofit and mission-owner community development projects.</p>
-          </div>
-          <div style="border-left:2px solid var(--m4d-primary);padding-left:var(--space-4)">
-            <div style="font-size:var(--text-small);font-weight:600;color:var(--m4d-ink);margin-bottom:6px">ALDDB™ Benchmarks</div>
-            <p style="font-size:13px;color:var(--m4d-muted);line-height:1.6">Proprietary closed-project cost database. Mid-Atlantic community development benchmarks including CLT/SIP hybrid system costs — first in the regional market.</p>
-          </div>
-          <div style="border-left:2px solid var(--m4d-primary);padding-left:var(--space-4)">
-            <div style="font-size:var(--text-small);font-weight:600;color:var(--m4d-ink);margin-bottom:6px">Forward Housing System</div>
-            <p style="font-size:13px;color:var(--m4d-muted);line-height:1.6">Climate-aware, mission-driven residential delivery. Forward Home Kits and Forward Emergency Shelter Kits — coming soon through Merge4Ward. Not the cheap version. The forward-looking one.</p>
-          </div>
-        </div>
-      </div>
+
+    <div class="work-grid">
+      <article class="work-card">
+        <div class="work-img"><img src="assets/projects/soulfully-conscious-cafe.webp" width="1269" height="711" alt="Exterior rendering of Soulfully Conscious Community Cafe — two-story mixed-use corner building with ground-floor cafe and large storefront glazing in Wilmington" loading="lazy"></div>
+        <p class="work-tag">Mixed Use · New Construction · Permit Phase</p>
+        <h3 class="work-title">Soulfully Conscious Community Cafe</h3>
+        <p class="work-loc">38 E. 23rd Street, Wilmington, DE</p>
+        <p class="work-desc">A neighborhood-corner community building: ground-floor cafe and market with a rooftop urban-farm concept and two residential units above.</p>
+        <p class="work-role"><b>M4D:</b> pre-design, pre-development, entitlement and code consulting · <b>Architect:</b> Aubyn Architecture</p>
+      </article>
+      <article class="work-card">
+        <div class="work-img"><img src="assets/projects/lamott-daycare.webp" width="1058" height="572" alt="Exterior rendering of the LaMott Daycare early learning center" loading="lazy"></div>
+        <p class="work-tag">Adaptive Reuse · Education · Predevelopment</p>
+        <h3 class="work-title">LaMott Daycare</h3>
+        <p class="work-loc">LaMott, PA</p>
+        <p class="work-desc">A new two-story early learning center designed as an adaptive reuse of an existing foundation footprint. Schematic design is complete; the project is now assembling its funding stack to advance.</p>
+        <p class="work-role"><b>M4D:</b> pre-design, pre-development, entitlement and code consulting · <b>Architect:</b> Aubyn Architecture</p>
+      </article>
     </div>
   </div>
 </section>
@@ -389,112 +516,105 @@ footer{background:var(--m4d-black);border-top:1px solid rgba(255,255,255,.08);pa
     <h2>Decades of experience. Deep local roots.</h2>
     <div class="team-grid">
       <div class="team-card">
-        <div class="team-card-avatar"><span>TK</span></div>
+        <div class="team-card-avatar" aria-hidden="true"><span>TK</span></div>
         <div>
           <div class="team-card-name">Trevor Knight</div>
-          <div class="team-card-role">Business Development | Regulatory Compliance</div>
-          <div class="team-card-bio">30 years in the City of Wilmington's License &amp; Inspection Department. Critical role in adopting Wilmington's current Building Code Amendments. Board of Standards and Appeals. Historic Review &amp; Preservation Board.</div>
+          <div class="team-card-role">Managing Principal · Regulatory Compliance + Business Development</div>
+          <div class="team-card-bio">ICC Certified Building Official. 30 years in the City of Wilmington's Department of Licenses &amp; Inspections, including a critical role in adopting Wilmington's current building code amendments. Board of Standards and Appeals; Historic Review &amp; Preservation Board.</div>
           <div class="team-card-strength">Regulatory strategy + approvals clarity</div>
         </div>
       </div>
       <div class="team-card">
-        <div class="team-card-avatar"><span>LL</span></div>
+        <div class="team-card-avatar" aria-hidden="true"><span>LL</span></div>
         <div>
           <div class="team-card-name">Leo L. Lynch</div>
-          <div class="team-card-role">Architecture &amp; Construction Management | Design Lead</div>
-          <div class="team-card-bio">40 years across architecture, construction management, and compliance on the East Coast. Over 30 years in Wilmington's Department of License &amp; Inspection — Deputy Commissioner and Acting Director.</div>
+          <div class="team-card-role">Principal · Specifications + Construction Documentation</div>
+          <div class="team-card-bio">40 years across design, construction management and compliance on the East Coast, including more than 30 years at Wilmington's Department of Licenses &amp; Inspections as Deputy Commissioner and Acting Director.</div>
           <div class="team-card-strength">Buildable documents + review-ready delivery</div>
         </div>
       </div>
       <div class="team-card">
-        <div class="team-card-avatar"><span>DA</span></div>
+        <div class="team-card-avatar" aria-hidden="true"><span>DA</span></div>
         <div>
-          <div class="team-card-name">David C. Ainsworth</div>
-          <div class="team-card-role">Architecture &amp; Design Lead | Estimates &amp; Specifications</div>
-          <div class="team-card-bio">20+ years across architecture, landscape design, and project management. Key role in a 120,000 SF, $75M NICU / Labor &amp; Birth / Maternal Special Care program. AIA + NCARB.</div>
-          <div class="team-card-strength">Complex coordination + execution discipline</div>
+          <div class="team-card-name">David C. Ainsworth, AIA</div>
+          <div class="team-card-role">Principal · Predevelopment + Cost Estimating</div>
+          <div class="team-card-bio">25+ years in architecture and owner-side project management, including a 120,000 SF, $70M+ NICU / Labor &amp; Birth / Maternal Special Care program. Creator of the M4Di cost-intelligence method and unit-price library behind FeasOps™. Architecture services are provided separately through Aubyn Architecture LLC.</div>
+          <div class="team-card-strength">Real numbers + execution discipline</div>
         </div>
       </div>
       <div class="team-card">
-        <div class="team-card-avatar"><span>TD</span></div>
+        <div class="team-card-avatar" aria-hidden="true"><span>TD</span></div>
         <div>
           <div class="team-card-name">Travis Davis</div>
-          <div class="team-card-role">Architecture &amp; Project Management | BIM + Visualization</div>
-          <div class="team-card-bio">8+ years in architectural design, BIM technology, project management, and 3D rendering. Extensive experience collaborating with community citizen groups. NCARB.</div>
+          <div class="team-card-role">Principal · BIM, 3D Modeling + Visualization</div>
+          <div class="team-card-bio">8+ years in BIM production, 3D visualization, rendering and project delivery on civic, community, commercial and multifamily work. Extensive experience collaborating with community citizen groups. NCARB.</div>
           <div class="team-card-strength">Visualization + BIM coordination + stakeholder communication</div>
         </div>
       </div>
     </div>
-    <p style="margin-top:var(--space-6);font-size:var(--text-small);color:var(--m4d-muted);font-style:italic">Selected experience reflects work performed by team members in prior roles and organizations.</p>
+    <p class="team-note">Selected experience reflects work performed by team members in prior roles and organizations.</p>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
-  <div class="container" style="padding:0">
-    <div class="contact-grid">
-      <div style="padding:var(--space-8) var(--gutter)">
-        <span class="label">Start the Conversation</span>
-        <div class="divider"></div>
-        <h2>Let's talk about your project.</h2>
-        <div class="contact-team">
-          <div class="contact-person">
-            <h4>Trevor Knight</h4>
-            <div class="contact-person-role">Business Development</div>
-            <a href="/cdn-cgi/l/email-protection#b7c3c5d2c1d8c583d3f7dad2c5d0d283d3d2c4ded0d999d4d8da"><span class="__cf_email__" data-cfemail="bacec8dfccd5c88edefad7dfc8dddf8ededfc9d3ddd494d9d5d7">[email&#160;protected]</span></a>
-            <a href="tel:3023675726">302.367.5726</a>
-          </div>
-          <div class="contact-person">
-            <h4>Leo L. Lynch</h4>
-            <div class="contact-person-role">Architecture &amp; Construction</div>
-            <a href="/cdn-cgi/l/email-protection#29454c461d4d69444c5b4e4c1d4d4c5a404e47074a4644"><span class="__cf_email__" data-cfemail="38545d570c5c78555d4a5f5d0c5c5d4b515f56165b5755">[email&#160;protected]</span></a>
-            <a href="tel:3023451072">302.345.1072</a>
-          </div>
-          <div class="contact-person">
-            <h4>David C. Ainsworth</h4>
-            <div class="contact-person-role">Architecture &amp; Design Lead</div>
-            <a href="/cdn-cgi/l/email-protection#81e5e0f7e8e5b5e5c1ece4f3e6e4b5e5e4f2e8e6efafe2eeec"><span class="__cf_email__" data-cfemail="254144534c411141654840574240114140564c424b0b464a48">[email&#160;protected]</span></a>
-            <a href="tel:2035062413">203.506.2413</a>
-          </div>
-          <div class="contact-person">
-            <h4>Travis Davis</h4>
-            <div class="contact-person-role">Project Management &amp; BIM</div>
-            <a href="/cdn-cgi/l/email-protection#74000615021d074010341911061311401011071d131a5a171b19"><span class="__cf_email__" data-cfemail="a0d4d2c1d6c9d394c4e0cdc5d2c7c594c4c5d3c9c7ce8ec3cfcd">[email&#160;protected]</span></a>
-            <a href="tel:3023176608">302.317.6608</a>
-          </div>
+  <div class="contact-grid">
+    <div class="contact-left">
+      <span class="label">Start the Conversation</span>
+      <div class="divider"></div>
+      <h2>Let's talk about your project.</h2>
+      <div class="contact-team">
+        <div class="contact-person">
+          <h4>Trevor Knight</h4>
+          <div class="contact-person-role">Business Development</div>
+          <a href="mailto:trevor4d@merge4design.com">trevor4d@merge4design.com</a>
+          <a href="tel:+13023675726">302.367.5726</a>
         </div>
-        <div class="contact-company">
-          <h4>Merge 4 Design LLC</h4>
-          <p>500 Delaware Ave. Ste 1 #1551<br>Wilmington, DE 19899<br><a href="tel:13023675726">+1 302 367 5726</a><br><a href="http://merge4design.com">merge4design.com</a></p>
+        <div class="contact-person">
+          <h4>Leo L. Lynch</h4>
+          <div class="contact-person-role">Specifications + Documentation</div>
+          <a href="mailto:leo4d@merge4design.com">leo4d@merge4design.com</a>
+          <a href="tel:+13023451072">302.345.1072</a>
+        </div>
+        <div class="contact-person">
+          <h4>David C. Ainsworth</h4>
+          <div class="contact-person-role">Predevelopment + Estimating</div>
+          <a href="mailto:david4d@merge4design.com">david4d@merge4design.com</a>
+          <a href="tel:+12035062413">203.506.2413</a>
+        </div>
+        <div class="contact-person">
+          <h4>Travis Davis</h4>
+          <div class="contact-person-role">BIM + Visualization</div>
+          <a href="mailto:travis4d@merge4design.com">travis4d@merge4design.com</a>
+          <a href="tel:+13023176608">302.317.6608</a>
         </div>
       </div>
-      <div class="contact-cta">
-        <h3>Give us a call — we are ready to discuss how we can make your project a success.</h3>
-        <p>Whether you have a site, a program, or just a question about the approval process — we'll give you a straight answer in the first conversation.</p>
-        <a href="/cdn-cgi/l/email-protection#21555344574e531545614c445346441545445248464f0f424e4c" class="btn">Send a Message →</a>
+      <div class="contact-company">
+        <h4>Merge 4 Design LLC</h4>
+        <p>500 Delaware Ave., Ste 1 #1551<br>Wilmington, DE 19899<br><a href="tel:+13023675726">+1 302 367 5726</a><br><a href="https://merge4design.com">merge4design.com</a></p>
       </div>
+    </div>
+    <div class="contact-cta">
+      <h3>Have a site, a program or a funding deadline? Start with a real number.</h3>
+      <p>Whether you need a FeasOps package, an approvals pathway or a pre-inspection review — we'll give you a straight answer in the first conversation.</p>
+      <a href="mailto:trevor4d@merge4design.com?subject=Project%20Inquiry" class="btn">Send a Message →</a>
     </div>
   </div>
 </section>
 
+</main>
+
 <footer>
-  <div class="footer-logo">
-    <img src="data:image/jpeg;base64,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" alt="M4D" height="22" width="auto" style="display:block;margin-right:8px;opacity:0.6">
-    Merge 4 Design LLC
+  <div class="footer-row">
+    <a href="#" class="footer-logo" aria-label="Merge 4 Design home">
+      <svg viewBox="0 0 1000 577" aria-hidden="true"><path d="M 116.111 1.090 L 0.000 1.090 L 0.000 575.112 L 74.844 575.112 L 74.844 91.755 L 250.962 575.112 L 325.806 575.112 L 392.646 391.669 L 317.768 391.669 L 288.295 473.650 L 116.111 1.090 Z M 504.509 571.399 L 580.061 571.399 L 580.061 373.557 L 654.311 373.557 L 654.311 298.005 L 580.061 298.005 L 580.061 0.000 L 460.876 0.000 L 325.045 371.426 L 504.509 371.426 L 504.509 571.399 Z M 501.904 298.005 L 501.923 91.755 L 426.774 298.005 L 501.904 298.005 Z M 748.735 576.202 L 774.906 573.189 L 800.219 567.758 L 824.560 560.033 L 847.812 550.136 L 869.860 538.192 L 890.590 524.324 L 909.886 508.655 L 927.633 491.309 L 943.715 472.410 L 958.017 452.081 L 970.424 430.445 L 980.821 407.626 L 989.093 383.747 L 995.123 358.932 L 998.797 333.305 L 1000.000 306.989 L 1000.000 269.213 L 998.797 242.896 L 995.123 217.269 L 989.093 192.455 L 980.821 168.576 L 970.424 145.757 L 958.017 124.121 L 943.715 103.791 L 927.633 84.892 L 909.886 67.546 L 890.590 51.878 L 869.860 38.009 L 847.812 26.065 L 824.560 16.169 L 800.219 8.444 L 774.906 3.013 L 748.735 0.000 L 600.903 0.000 L 600.903 75.552 L 753.444 75.552 L 771.542 78.527 L 788.999 83.102 L 805.742 89.195 L 821.699 96.723 L 836.795 105.604 L 850.958 115.756 L 864.115 127.095 L 876.193 139.540 L 887.117 153.008 L 896.816 167.417 L 905.215 182.685 L 912.243 198.728 L 917.825 215.465 L 921.889 232.813 L 924.361 250.689 L 925.168 269.012 L 925.168 306.989 L 924.361 325.512 L 921.889 343.389 L 917.825 360.737 L 912.243 377.474 L 905.215 393.517 L 896.816 408.784 L 887.117 423.193 L 876.193 436.661 L 864.115 449.106 L 850.958 460.446 L 836.795 470.597 L 821.699 479.478 L 805.742 487.006 L 788.999 493.099 L 771.542 497.674 L 753.444 500.649 L 600.903 500.649 L 600.903 576.202 L 748.735 576.202 Z" fill="#196B24" fill-rule="evenodd"/></svg>
+      <span>Merge 4 Design LLC</span>
+    </a>
+    <p>© 2026 Merge 4 Design LLC · Wilmington, Delaware</p>
   </div>
-  <p>© 2026 Merge 4 Design LLC · Registered Architect: Delaware</p>
-  <!-- M4Di Partner Display — Trademark Public Notice -->
-<div style="border-top:1px solid #CCCCCC;margin-top:16px;padding-top:14px;font-family:Arial,sans-serif;font-size:11px;color:#666666;line-height:1.6;">
-  Merge 4 Design LLC is the founding operating entity of
-  <strong>M4Di™ — Merge 4 Development Institute</strong>,
-  a predevelopment cost intelligence platform serving nonprofit,
-  CDFI, and mission-driven developers in the Mid-Atlantic region.
-  M4Di currently operates as a program of M4D under fiscal sponsorship
-  of Central Baptist CDC, Wilmington, Delaware.<br>
-  <span style="color:#196b23;">M4Di™ &nbsp;·&nbsp; ALDi™ &nbsp;·&nbsp; FeasOps™ &nbsp;·&nbsp; M4Di.Oi™ &nbsp;·&nbsp; ALDDB™</span>
-  &nbsp;— Draft marks. © 2026 Merge 4 Design LLC d/b/a M4Di.
-  All marks pending legal confirmation.
-</div>
+  <div class="footer-sub">
+    <p>Architecture services are provided by <a href="https://aubynarch.com/">Aubyn Architecture LLC</a>. M4Di — Merge 4 Development Institute — is a program of Merge 4 Design LLC, currently in formation. M4Di™ and FeasOps™ are draft marks pending legal confirmation.</p>
+  </div>
 </footer>
 
 </body>
